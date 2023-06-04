@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% import "bootstrap/wtf.html" as wtf %} {% block
+content %}
+
+<h3 class="title">Welcome, {{name}}!</h3>
+
+<h4 class="title">Add Your Brands Links</h4>
+
+<!--    <button class="show-modal"> Add Button</button>-->
+
+<!--       <div class="modal">-->
+<!--       <button class="close-modal">&times;</button>-->
+<div class="boxx">
+  {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+</div>
+
+<div class="overlay hidden"></div>
+
+{% for post in all_posts %} {% if post.author_name == current_user.name%}
+
+<h2 class="post-title">
+  <p>
+    <a href=" {{post.yourlink}}" target="_blank"> {{ post.linkname }} </a
+    >(Clicks)
+  </p>
+</h2>
+
+{% endif %} {% endfor %} {% for post in all_posts %} {% if post.author_name ==
+current_user.name%}
+<h3 class="title">
+  <a href="{{ url_for('profile', sub_path=post.author_name) }}" target="_blank"
+    >Share Your Brands</a
+  >
+</h3>
+{% endif %} {% endfor %} {% endblock %}

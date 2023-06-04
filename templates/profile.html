@@ -1,0 +1,23 @@
+{% extends "base2.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+<div class="box">
+
+<div class="row">
+     {% for post in all_posts %}
+
+
+
+             <h2 class="post-title">
+            <p><a href=" {{post.yourlink}}" target="_blank"> {{ post.linkname }} </a>(Clicks)</p>
+            </h2>
+
+
+        {% endfor %}
+
+      </div>
+  </div>
+</div>
+{% endblock %}
+

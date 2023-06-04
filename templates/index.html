@@ -1,0 +1,30 @@
+{% extends "base2.html" %}
+{% block content %}
+
+  <div class="box">
+
+<div class="row">
+
+    <h3 class="title">Welcome</h3>
+
+    <div class="col-lg-8 col-md-10 mx-auto">
+
+              {% for post in all_posts %}
+
+
+          <h2 class="post-title">
+            <a href=" {{post.yourlink}}"> {{ post.linkname}}</a>
+            <a href="{{ url_for('profile', sub_path=post.author_name) }}" target="_blank">Posted by  {{ post.author_name}}</a>
+
+            </h2>
+        <hr>
+        {% endfor %}
+
+      </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
