@@ -14,7 +14,7 @@
 
           <h2 class="post-title">
             <a href=" {{post.yourlink}}"> {{ post.linkname}}</a>
-            <a href="{{ url_for('profile', sub_path=post.author_name) }}" target="_blank">Posted by  {{ post.author_name}}</a>
+            <a href="{{ url_for('user_blp.profile', sub_path=post.author_name) }}" target="_blank">Posted by  {{ post.author_name}}</a>
 
             </h2>
         <hr>
@@ -27,4 +27,4 @@
 
 
 
-{% endblock %}
+{% endblock content %}
