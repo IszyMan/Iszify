@@ -23,15 +23,15 @@
 
 
 <!--        <li class="nav-item">-->
-<!--        <a class="nav-link" href="{{ url_for('home') }}">Home</a>-->
+<!--        <a class="nav-link" href="{{ url_for('user_blp.home') }}">Home</a>-->
 
 <!--      </li>-->
 
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+        <a class="nav-link" href="{{ url_for('auth_blp.login') }}">Login</a>
       </li>
      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('home') }}">Create Brand</a>
+        <a class="nav-link" href="{{ url_for('user_blp.home') }}">Create Brand</a>
 
       </li>
 
@@ -48,7 +48,7 @@
    <div class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+        <a class="nav-link" href="{{ url_for('auth_blp.logout') }}">Log Out</a>
       </li>
 
 
@@ -59,7 +59,7 @@
   </div>
 </nav>
        {% block content %}
-       {% endblock %}
+       {% endblock content %}
 </body>
 
 </html>
