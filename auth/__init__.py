@@ -44,13 +44,17 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        if not email or not password:
+            flash('All inputs are required', 'danger')
+            return redirect(url_for('auth_blp.login'))
+
         user_ = User.query.filter_by(email=email).first()
         # Email doesn't exist or password incorrect.
         if not user_:
             flash("That email does not exist, please try again.")
             return redirect(url_for('auth_blp.login'))
         elif not check_password_hash(user_.password, password):
-            flash('Password incorrect, please try again.')
+            flash('Password incorrect, please try again.', 'danger')
             return redirect(url_for('auth_blp.login'))
         else:
             login_user(user_)
