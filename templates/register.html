@@ -5,6 +5,12 @@
 <div class="box">
 	<h1>Register</h1>
     {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    
+    <style>
+        .btn-primary {
+            margin-top: 10px;
+        }
+    </style>
 </div>
 
 {% endblock content %}
