@@ -3,7 +3,6 @@ from wtforms import StringField, SubmitField, PasswordField, SelectField
 from wtforms.validators import DataRequired, URL, Email, EqualTo
 
 
-
 class GenerateBrandName(FlaskForm):
     brandname = StringField("Brand Name", validators=[DataRequired()])
     submit = SubmitField("Create your Brand!")
@@ -13,8 +12,7 @@ class RegisterForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(),
-                                                                      EqualTo('password')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField("Sign Me Up!")
 
 
