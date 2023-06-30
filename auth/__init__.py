@@ -14,12 +14,17 @@ def register():
     form = RegisterForm()
     if request.method == "POST":
         email = request.form.get('email')
+        name = request.form.get('name')
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
+
+        # if the email or/and password fields are empty
         if not email or not password:
+            # flash this message to the user
             flash('All fields are required', 'danger')
             return redirect(url_for('auth_blp.register'))
 
+        # if the password and confirm password are not same
         if password != confirm_password:
             flash('Password does\'t match')
             return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
@@ -30,13 +35,13 @@ def register():
             return redirect(url_for('auth_blp.login'))
 
         hash_and_salted_password = generate_password_hash(
-            request.form.get('password'),
+            password,
             method='pbkdf2:sha256',
             salt_length=8
         )
         new_user = User(
-            email=request.form.get('email'),
-            name=request.form.get('name'),
+            email=email,
+            name=name,
             password=hash_and_salted_password,
         )
         db.session.add(new_user)
@@ -77,4 +82,5 @@ def login():
 @auth_blp.route('/logout')
 def logout():
     logout_user()
+    flash('logged out successfully', 'success')
     return redirect(url_for('user_blp.home'))
