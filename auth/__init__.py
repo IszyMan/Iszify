@@ -15,9 +15,14 @@ def register():
     if request.method == "POST":
         email = request.form.get('email')
         password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
         if not email or not password:
             flash('All fields are required', 'danger')
             return redirect(url_for('auth_blp.register'))
+
+        if password != confirm_password:
+            flash('Password does\'t match')
+            return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
 
         if User.query.filter_by(email=request.form.get('email')).first():
             # User already exists
@@ -36,8 +41,9 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        login_user(new_user)
-        return redirect(url_for("user_blp.admin"))
+        # login_user(new_user)
+        flash('Registration successful', 'success')
+        return redirect(url_for("auth_blp.login"))
 
     return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
 
