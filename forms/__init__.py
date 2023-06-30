@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SelectField
-from wtforms.validators import DataRequired, URL, Email
+from wtforms.validators import DataRequired, URL, Email, EqualTo
 
 
 
@@ -10,9 +10,11 @@ class GenerateBrandName(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
-    name = StringField("Name", validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(),
+                                                                      EqualTo('password')])
     submit = SubmitField("Sign Me Up!")
 
 
