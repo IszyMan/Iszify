@@ -9,6 +9,6 @@ class User(UserMixin, db.Model):
     brand_id = db.Column(db.Integer, db.ForeignKey("brand_name.brandname"))
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
+    name = db.Column(db.String(100))
     brand = relationship("ChooseBrandName", back_populates="brand")
     posts = relationship("CreateProfile", back_populates="author")
