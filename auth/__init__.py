@@ -13,6 +13,11 @@ auth_blp = Blueprint("auth_blp", __name__)
 def register():
     form = RegisterForm()
     if request.method == "POST":
+        email = request.form.get('email')
+        password = request.form.get('password')
+        if not email or not password:
+            flash('All fields are required', 'danger')
+            return redirect(url_for('auth_blp.register'))
 
         if User.query.filter_by(email=request.form.get('email')).first():
             # User already exists
