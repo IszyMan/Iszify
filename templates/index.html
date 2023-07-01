@@ -1,55 +1,11 @@
 {% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+  {% endblock head %}
 {% block content %}
 
   <div class="box">
-    <style>
-  
-      .hero-section {
-        background-image: url('hero-background.jpg');
-        background-size: cover;
-        background-position: center;
-        color: #fff;
-        text-align: center;
-        padding: 200px 0;
-      }
-  
-      .cta-section {
-        background-color: #f7f7f7;
-        text-align: center;
-        padding: 100px 0;
-      }
-  
-      .features-section {
-        text-align: center;
-        padding: 100px 0;
-      }
-
-
-      .jumbotron {
-        background-color: #ffffff;
-        color: #000000;
-        padding: 80px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 60px;
-      }
-      .jumbotron p {
-        font-size: 20px;
-      }
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      .btn {
-        background-color: #000000;
-        color: #ffffff;
-        font-size: 20px;
-        padding: 10px 20px;
-      }
-    </style>
-  </head>
-  <body>
   
   <div class="jumbotron">
     <h1>Welcome to your brand homepage!</h1>
