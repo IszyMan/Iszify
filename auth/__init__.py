@@ -9,8 +9,8 @@ from extensions import db
 auth_blp = Blueprint("auth_blp", __name__)
 
 
-@auth_blp.route('/register', methods=["GET", "POST"])
-def register():
+@auth_blp.route('/register/<brandie>/', methods=["GET", "POST"])
+def register(brandie):
     form = RegisterForm()
     if request.method == "POST":
         email = request.form.get('email')
@@ -44,6 +44,8 @@ def register():
             name=name,
             password=hash_and_salted_password,
         )
+        new_brand = ChooseBrandName(brandname=brandie)
+        db.session.add(new_brand)
         db.session.add(new_user)
         db.session.commit()
         # login_user(new_user)

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% import "bootstrap/wtf.html" as wtf %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
   {% endblock head %}
@@ -60,14 +60,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action='' method='post'>
+        <div>
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Brand Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "secondary"}) }}
             <div id="emailHelp" class="form-text">Your brand is your identity</div>
           </div>
-          <button type="submit" class="btn btn-primary">Continue</button>
-        </form>
+        </div>
+        <style>
+          .btn-secondary {
+              margin-top: 10px;
+              font-size: 1rem;
+              padding: 5px;
+          }
+      </style>
       </div>
     </div>
   </div>
