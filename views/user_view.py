@@ -14,12 +14,15 @@ def home():
     posts = CreateProfile.query.all()
     if request.method == "POST":
         brand_name = request.form.get('brandname').lower()
+        if not brand_name:
+            flash('Data Required', 'danger')
+            return redirect(url_for('user_blp.home'))
         user_ = ChooseBrandName.query.filter_by(brandname=brand_name).first()
         if user_:
             # User already exists
             flash("Brand Name already exists!")
-            return redirect(url_for('home'))
-        return redirect(url_for('auth_blp.register', brandie=brand_name))
+            return redirect(url_for('user_blp.home'))
+        return redirect(url_for('auth_blp.register', brandie=brand_name.upper()))
     return render_template("index.html", all_posts=posts, form=form)
 
 

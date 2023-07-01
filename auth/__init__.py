@@ -22,7 +22,7 @@ def register(brandie):
         if not email or not password:
             # flash this message to the user
             flash('All fields are required', 'danger')
-            return redirect(url_for('auth_blp.register'))
+            return redirect(url_for('auth_blp.register', brandie=brandie))
 
         # if the password and confirm password are not same
         if password != confirm_password:
@@ -52,7 +52,9 @@ def register(brandie):
         flash('Registration successful', 'success')
         return redirect(url_for("auth_blp.login"))
 
-    return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
+    return render_template("register.html",
+                           logged_in=current_user.is_authenticated,
+                           form=form, brandie=brandie)
 
 
 @auth_blp.route('/login', methods=["GET", "POST"])

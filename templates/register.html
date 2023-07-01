@@ -4,6 +4,7 @@
 
 <div class="box">
 	<h1>Register</h1>
+    <div class='my-3'>Brand Name: <br /> <span class='text-success fw-bold'>{{ brandie }}</span></div>
     {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
     
     <style>
