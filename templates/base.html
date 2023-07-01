@@ -43,7 +43,7 @@
     <div class="container">
       <!-- The navbar brand -->
       <!-- The navbar brand -->
-      <a href="" class="navbar-brand">Link2ru</a>
+      <a href="{{url_for('user_blp.home')}}" class="navbar-brand">Link2ru</a>
       <!-- Bootstrap nav toggler -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
         aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
         <!-- If the user is logged in, this nav links appears -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="" class="nav-link">Home</a>
+            <a href="{{url_for('user_blp.home')}}" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
             <a href="" class="nav-link">Profile</a>
