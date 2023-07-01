@@ -2,7 +2,99 @@
 {% block content %}
 
   <div class="box">
+    <style>
+  
+      .hero-section {
+        background-image: url('hero-background.jpg');
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        text-align: center;
+        padding: 200px 0;
+      }
+  
+      .cta-section {
+        background-color: #f7f7f7;
+        text-align: center;
+        padding: 100px 0;
+      }
+  
+      .features-section {
+        text-align: center;
+        padding: 100px 0;
+      }
 
+
+      .jumbotron {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 60px;
+      }
+      .jumbotron p {
+        font-size: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .btn {
+        background-color: #000000;
+        color: #ffffff;
+        font-size: 20px;
+        padding: 10px 20px;
+      }
+    </style>
+  </head>
+  <body>
+  
+  <div class="jumbotron">
+    <h1>Welcome to your brand homepage!</h1>
+    <p>This is where you can personalize your brand for your customers to see.</p>
+    <a href="#" class="btn">Get started</a>
+  </div>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Boost Your Brand</h2>
+      <p>Take your brand to the next level with our powerful customization features.</p>
+      <a href="#register" class="btn btn-secondary">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <!--<h2>Features</h2>-->
+      <div class="row">
+        <div class="col-md-4">
+          <i class="fa fa-heart fa-3x"></i>
+          <h4>Personalized Experience</h4>
+          <p>Create a unique and personalized brand experience for your customers.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-cogs fa-3x"></i>
+          <h4>Easy Customization</h4>
+          <p>Customize your brand's appearance and content with ease.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fa fa-lightbulb fa-3x"></i>
+          <h4>Innovative Solutions</h4>
+          <p>Stay ahead of the competition with our innovative brand solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+    
+<!-- 
 <div class="row">
 
     <h3 class="title">Welcome</h3>
@@ -21,7 +113,7 @@
         {% endfor %}
 
       </div>
-  </div>
+  </div> -->
 </div>
 
 
