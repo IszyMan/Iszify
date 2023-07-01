@@ -10,7 +10,9 @@
   <div class="jumbotron">
     <h1>Welcome to your brand homepage!</h1>
     <p>This is where you can personalize your brand for your customers to see.</p>
-    <a href="#" class="btn">Get started</a>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Get Started
+    </button>
   </div>
 
   <!-- CTA Section -->
@@ -18,7 +20,9 @@
     <div class="container">
       <h2>Boost Your Brand</h2>
       <p>Take your brand to the next level with our powerful customization features.</p>
-      <a href="#register" class="btn btn-secondary">Get Started</a>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Get Started
+      </button>
     </div>
   </section>
 
@@ -47,7 +51,27 @@
   </section>
 
 
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enter your brand name</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action='' method='post'>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Brand Name</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">Your brand is your identity</div>
+          </div>
+          <button type="submit" class="btn btn-primary">Continue</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
     
 <!-- 
