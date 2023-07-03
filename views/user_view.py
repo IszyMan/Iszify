@@ -20,9 +20,9 @@ def home():
         user_ = ChooseBrandName.query.filter_by(brandname=brand_name).first()
         if user_:
             # User already exists
-            flash("Brand Name already exists!")
+            flash("Brand Name already exists!", "danger")
             return redirect(url_for('user_blp.home'))
-        return redirect(url_for('auth_blp.register', brandie=brand_name.upper()))
+        return redirect(url_for('auth_blp.register', brandie=brand_name))
     return render_template("index.html", all_posts=posts, form=form)
 
 
