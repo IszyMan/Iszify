@@ -11,19 +11,19 @@ user_blp = Blueprint("user_blp", __name__)
 @user_blp.route('/', methods=["GET", "POST"])
 def home():
     form = GenerateBrandName()
-    posts = CreateProfile.query.all()
+    # posts = CreateProfile.query.all()
     if request.method == "POST":
         brand_name = request.form.get('brandname').lower()
         if not brand_name:
-            flash('Data Required', 'danger')
+            flash('Input Required', 'danger')
             return redirect(url_for('user_blp.home'))
-        user_ = ChooseBrandName.query.filter_by(brandname=brand_name).first()
+        user_ = User.query.filter_by(brand_name=brand_name).first()
         if user_:
-            # User already exists
+            # User with that brand already exists
             flash("Brand Name already exists!", "danger")
             return redirect(url_for('user_blp.home'))
         return redirect(url_for('auth_blp.register', brandie=brand_name))
-    return render_template("index.html", all_posts=posts, form=form)
+    return render_template("index.html", form=form)
 
 
 @user_blp.route('/join', methods=["GET", "POST"])
@@ -32,13 +32,13 @@ def join():
     form = GenerateBrandName()
     if request.method == "POST":
         brand_name = request.form.get('brandname')
-        user_ = ChooseBrandName.query.filter_by(brandname=brand_name).first()
+        user_ = User.query.filter_by(brand_name=brand_name).first()
         if user_:
             # User already exists
             flash("Brand Name already exists!")
             return redirect(url_for('home'))
 
-        new_user = ChooseBrandName(brandname=brand_name)
+        new_user = User(brand_name=brand_name)
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
