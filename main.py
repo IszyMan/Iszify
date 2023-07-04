@@ -14,6 +14,7 @@ def create_app():
     # The configuration for the URI of the database, the link2ru.db is the name of this project's dev database
     app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(base_dir, 'link2ru.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SERVER_NAME'] = os.getenv('SERVER_NAME', 'localhost:5000')
 
     login_manager.init_app(app)
     db.init_app(app)
