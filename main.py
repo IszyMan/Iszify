@@ -1,7 +1,7 @@
 from flask import Flask
 from auth import auth_blp
 from views.user_view import user_blp
-from extensions import login_manager, db, bootstrap
+from extensions import login_manager, db, bootstrap, migrate
 from models import User
 
 
@@ -15,6 +15,7 @@ def create_app():
     login_manager.init_app(app)
     db.init_app(app)
     bootstrap.init_app(app)
+    migrate.init_app(app)
 
     @login_manager.user_loader
     def load_user(user_id):
