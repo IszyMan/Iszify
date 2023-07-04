@@ -25,7 +25,10 @@ def register(brandie):
         if not all(required_fields):
             # Display a flash message to the user indicating that all fields are required
             flash('All fields are required', 'danger')
-            return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
+            return render_template("register.html",
+                                   logged_in=current_user.is_authenticated, form=form,
+                                   brandie=brandie.upper()
+                                   )
 
         # if the password and confirm password are not same
         if password != confirm_password:
@@ -53,6 +56,7 @@ def register(brandie):
             email=email,
             first_name=first_name,
             last_name=last_name,
+            username=username,
             password=hash_and_salted_password,
             brand_name=brandie
         )

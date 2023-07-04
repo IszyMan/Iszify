@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
+    username = db.Column(db.String(100), unique=True, nullable=False)
     brand_name = db.Column(db.String(100))
     profile_link = db.Column(db.String(250), unique=True)
     # brand = relationship("ChooseBrandName", back_populates="brand") #THIS IS NOT IN USE
