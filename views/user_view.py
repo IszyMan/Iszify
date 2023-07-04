@@ -60,7 +60,7 @@ def admin():
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("user_blp.admin"))
-    return render_template("admin.html", all_posts=posts, name=current_user.name, logged_in=True, form=form)
+    return render_template("admin.html", all_posts=posts, name=current_user.first_name.title(), logged_in=True, form=form)
 
 
 @user_blp.route('/<path:sub_path>', methods=["GET", "POST"])
