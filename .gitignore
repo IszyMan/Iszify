@@ -117,7 +117,7 @@ venv.bak/
 mail.txt
 scissor.db
 #migrations/
-*.db
+#*.db
 flask_session/
 
 # Spyder project settings
