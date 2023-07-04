@@ -71,3 +71,11 @@ def profile(sub_path):
         if profiles.first_name == sub_path:
             requested_profile = profiles
     return render_template("profile.html", all_posts=requested_profile, current_user=current_user)
+
+
+@user_blp.route('/', subdomain="<brandie>")
+def brand(brandie):
+    check_brand = User.query.filter_by(brand_name=brandie.lower()).first()
+    if not check_brand:
+        return render_template("404.html")
+    return render_template("brand.html", brandie=brandie.upper())
