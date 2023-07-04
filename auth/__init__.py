@@ -62,7 +62,7 @@ def register(brandie):
 def login():
     form = LoginForm()
     if request.method == "POST":
-        email = request.form.get('email')
+        email = request.form.get('email').lower()
         password = request.form.get('password')
 
         if not email or not password:
