@@ -13,8 +13,9 @@ auth_blp = Blueprint("auth_blp", __name__)
 def register(brandie):
     form = RegisterForm()
     if request.method == "POST":
-        email = request.form.get('email')
-        name = request.form.get('name')
+        email = request.form.get('email').lower()
+        first_name = request.form.get('first_name').lower()
+        last_name = request.form.get('last_name').lower()
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
 
@@ -41,11 +42,11 @@ def register(brandie):
         )
         new_user = User(
             email=email,
-            name=name,
+            first_name=first_name,
+            last_name=last_name,
             password=hash_and_salted_password,
+            brand_name=brandie
         )
-        new_brand = ChooseBrandName(brandname=brandie)
-        db.session.add(new_brand)
         db.session.add(new_user)
         db.session.commit()
         # login_user(new_user)
