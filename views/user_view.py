@@ -68,6 +68,6 @@ def profile(sub_path):
     requested_profile = ''
     all_profiles = User.query.all()
     for profiles in all_profiles:
-        if profiles.name == sub_path:
+        if profiles.first_name == sub_path:
             requested_profile = profiles
     return render_template("profile.html", all_posts=requested_profile, current_user=current_user)
