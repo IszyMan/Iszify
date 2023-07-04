@@ -15,20 +15,29 @@ def register(brandie):
     if request.method == "POST":
         email = request.form.get('email').lower()
         first_name = request.form.get('first_name').lower()
+        username = request.form.get('username').lower()
         last_name = request.form.get('last_name').lower()
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
 
-        # if the email or/and password fields are empty
-        if not email or not password:
-            # flash this message to the user
+        # Check if any of the required fields (email, password, confirm_password, first_name, last_name, username) are empty
+        required_fields = [email, password, confirm_password, first_name, last_name, username]
+        if not all(required_fields):
+            # Display a flash message to the user indicating that all fields are required
             flash('All fields are required', 'danger')
-            return redirect(url_for('auth_blp.register', brandie=brandie.upper()))
+            return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
 
         # if the password and confirm password are not same
         if password != confirm_password:
             flash('Password does\'t match')
             return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
+
+        if User.query.filter_by(username=username).first():
+            # Username already exists
+            flash("Username already exists, please try again.")
+            return render_template("register.html",
+                                   logged_in=current_user.is_authenticated,
+                                   form=form, brandie=brandie.upper())
 
         if User.query.filter_by(email=request.form.get('email')).first():
             # User already exists
