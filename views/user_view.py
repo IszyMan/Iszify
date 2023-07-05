@@ -55,6 +55,7 @@ def admin():
         new_post = CreateProfile(
             linkname=form.linkname.data,
             yourlink=form.yourlink.data,
+            product=form.product.data,
             author=current_user
         )
         db.session.add(new_post)
