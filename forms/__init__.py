@@ -25,6 +25,7 @@ class LoginForm(FlaskForm):
 
 
 class CreatePostForm(FlaskForm):
+    product = StringField("Product", validators=[DataRequired()])
     linkname = StringField("Link Name ", validators=[DataRequired()])
     yourlink = StringField("URL", validators=[DataRequired(), URL()])
 
