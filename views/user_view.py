@@ -91,4 +91,4 @@ def brand(brandname):
     check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
     if not check_brand:
         return render_template("404.html")
-    return render_template("brand.html", brandname=brandname.upper())
+    return render_template("brand.html", brandie=brandname.upper())
