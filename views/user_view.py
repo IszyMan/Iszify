@@ -11,7 +11,6 @@ user_blp = Blueprint("user_blp", __name__)
 @user_blp.route('/', methods=["GET", "POST"])
 def home():
     form = GenerateBrandName()
-    brand_url = f"{request.host_url}{current_user.brand_name}"
     # posts = CreateProfile.query.all()
     if request.method == "POST":
         brand_name = request.form.get('brandname').lower()
@@ -24,7 +23,7 @@ def home():
             flash("Brand Name already exists!", "danger")
             return redirect(url_for('user_blp.home'))
         return redirect(url_for('auth_blp.register', brandie=brand_name))
-    return render_template("index.html", form=form, current_user=current_user, brand_url=brand_url)
+    return render_template("index.html", form=form)
 
 
 @user_blp.route('/join', methods=["GET", "POST"])
