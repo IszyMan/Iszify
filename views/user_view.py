@@ -80,3 +80,10 @@ def profile(sub_path):
 #     if not check_brand:
 #         return render_template("404.html")
 #     return render_template("brand.html", brandie=brandie.upper())
+
+@user_blp.route('/<brandname>/', methods=["GET", "POST"])
+def brand(brandname):
+    check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
+    if not check_brand:
+        return render_template("404.html")
+    return render_template("brand.html", brandname=brandname.upper())
