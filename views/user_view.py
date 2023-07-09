@@ -79,16 +79,16 @@ def profile(sub_path):
     return render_template("profile.html", all_posts=requested_profile, current_user=current_user)
 
 
-# @user_blp.route('/', subdomain="<brandie>")
-# def brand(brandie):
-#     check_brand = User.query.filter_by(brand_name=brandie.lower()).first()
-#     if not check_brand:
-#         return render_template("404.html")
-#     return render_template("brand.html", brandie=brandie.upper())
-
-@user_blp.route('/<brandname>/', methods=["GET", "POST"])
-def brand(brandname):
-    check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
+@user_blp.route('/', subdomain="<brandie>")
+def brand(brandie):
+    check_brand = User.query.filter_by(brand_name=brandie.lower()).first()
     if not check_brand:
         return render_template("404.html")
-    return render_template("brand.html", brandie=brandname.upper())
+    return render_template("brand.html", brandie=brandie.upper())
+
+# @user_blp.route('/<brandname>/', methods=["GET", "POST"])
+# def brand(brandname):
+#     check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
+#     if not check_brand:
+#         return render_template("404.html")
+#     return render_template("brand.html", brandie=brandname.upper())
