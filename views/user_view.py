@@ -92,3 +92,14 @@ def brand(brandname):
     if not check_brand:
         return render_template("404.html")
     return render_template("brand.html", brandie=brandname.upper())
+
+
+@user_blp.route('/<brandname>/<linkname>', methods=["GET", "POST"])
+def product(brandname, linkname):
+    check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
+    if not check_brand:
+        return render_template("404.html")
+    check_product = CreateProfile.query.filter_by(linkname=linkname.lower()).first()
+    if not check_product:
+        return render_template("404.html")
+    return render_template("product.html", brandie=brandname.upper(), linkname=linkname.upper())
