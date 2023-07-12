@@ -16,6 +16,7 @@
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
 
   <!-- ............Linked Javascript File............. -->
 
@@ -39,7 +40,7 @@
     -->
   <a name="top"></a>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
+  <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark py-3 nav-border">
     <div class="container">
       <!-- The navbar brand -->
       <!-- The navbar brand -->
@@ -80,7 +81,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ url_for("auth_blp.logout") }}" class="nav-link">Logout</a>
+            <a href="{{ url_for('auth_blp.logout') }}" class="nav-link">Logout</a>
           </li>
           {% block link %}
 
@@ -100,7 +101,7 @@
             <a href="" class="nav-link">Contact</a>
           </li>
           <li class="nav-item">
-            <a href="{{ url_for("auth_blp.login") }}" class="nav-link">Login</a>
+            <a href="{{ url_for('auth_blp.login') }}" class="nav-link">Login</a>
           </li>
         </ul>
         {% endif %}
@@ -159,6 +160,9 @@
   </script> -->
 
   <!-- @@@@@@@@@@@@@@@@@@@@@@@ -->
+
+
+
 
   <!-- Bootsrap popper -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
