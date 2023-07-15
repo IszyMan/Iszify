@@ -64,7 +64,7 @@ def register(brandie):
         db.session.commit()
         # login_user(new_user)
         flash('Registration successful', 'success')
-        return redirect(url_for("auth_blp.login"))
+        return redirect(url_for("user_blp.admin"))
 
     return render_template("register.html",
                            logged_in=current_user.is_authenticated,
