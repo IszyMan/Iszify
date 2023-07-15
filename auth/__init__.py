@@ -62,7 +62,7 @@ def register(brandie):
         )
         db.session.add(new_user)
         db.session.commit()
-        # login_user(new_user)
+        login_user(new_user)
         flash('Registration successful', 'success')
         return redirect(url_for("user_blp.admin"))
 
