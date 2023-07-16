@@ -22,7 +22,7 @@
     {%if all_posts%}
     {% for post in all_posts %}
     <div class='card p-3 mt-2'>
-        <p class='h3 mb-4 mt-3 text-muted fw-bold'>{{ post.linkname.upper() }}</p>
+        <a class='h3 mb-4 mt-3 text-muted fw-bold text-decoration-none' href='{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}</a>
         <div style='display: flex; justify-content: space-evenly;'>
             {%if post.twitter_link%}
             <a href='{{post.twitter_link}}' target='_blank'>
