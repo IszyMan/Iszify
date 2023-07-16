@@ -24,10 +24,18 @@
     <div class='card'>
         <p>{{ post.linkname.upper() }}</p>
         <div>
+            {%if post.twitter_link%}
             <a href='{{post.twitter_link}}' target='_blank'>Twitter Link</a> <br>
+            {%endif%}
+            {%if post.amazon_link%}
             <a href='{{post.amazon_link}}' target='_blank'>Amazon Link</a> <br>
+            {%endif%}
+            {%if post.facebook_link%}
             <a href='{{post.facebook_link}}' target='_blank'>FaceBook Link</a> <br>
+            {%endif%}
+            {%if post.youtube_link%}
             <a href='{{post.youtube_link}}' target='_blank'>YouTube Link</a>
+            {%endif%}
         </div>
     </div>
     {% endfor %}
