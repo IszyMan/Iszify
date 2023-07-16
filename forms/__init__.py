@@ -27,7 +27,7 @@ class LoginForm(FlaskForm):
 class CreatePostForm(FlaskForm):
     product = StringField("Product", validators=[DataRequired()])
     linkname = StringField("Link Name ", validators=[DataRequired()])
-    yourlink = StringField("URL", validators=[DataRequired(), URL()])
+    twitter_link = StringField("URL", validators=[DataRequired(), URL()])
 
     # categories = SelectField(u'Category', choices=[("Fashion", 'Fashion'), ("Travel", 'Travel')])
 
