@@ -89,7 +89,7 @@ def admin():
         )
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for("user_blp.admin"))
+        return redirect(url_for("user_blp.brand", brandname=current_user.brand_name))
     return render_template("admin.html", all_posts=posts,
                            name=current_user.first_name.title(),
                            logged_in=True,
@@ -120,7 +120,7 @@ def brand(brandname):
     if not check_brand:
         return render_template("404.html")
     check_brand_posts = CreateProfile.query.filter_by(author_id=check_brand.id).all()
-    return render_template("brand.html", brandie=brandname.upper(), all_posts=check_brand_posts)
+    return render_template("brand.html", brandie=brandname.upper(), all_posts=check_brand_posts[::-1])
 
 
 @user_blp.route('/<brandname>/<linkname>', methods=["GET", "POST"])
