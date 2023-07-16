@@ -5,7 +5,6 @@ from extensions import db
 from flask_login import login_user, login_required, current_user
 from utils import *
 
-
 user_blp = Blueprint("user_blp", __name__)
 
 
@@ -61,24 +60,24 @@ def admin():
         facebook_link = form.facebook_link.data
         product_ = form.product.data
 
-        if twitter_link:
-            if not check_if_twitter_url_is_valid(twitter_link):
-                flash("Invalid Twitter URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-        if amazon_link:
-            if not check_if_amazon_url_is_valid(amazon_link):
-                flash("Invalid Amazon URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-        if youtube_link:
-            if not check_if_youtube_url_is_valid(youtube_link):
-                flash("Invalid Youtube URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-        if facebook_link:
-            if not check_if_facebook_url_is_valid(facebook_link):
-                flash("Invalid Facebook URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-
         if form.validate_on_submit():
+            if twitter_link:
+                if not check_if_twitter_url_is_valid(twitter_link) or not check_if_url_is_valid(twitter_link):
+                    flash("Invalid Twitter URL", "danger")
+                    return redirect(url_for("user_blp.admin"))
+            if amazon_link:
+                if not check_if_amazon_url_is_valid(amazon_link) or not check_if_url_is_valid(amazon_link):
+                    flash("Invalid Amazon URL", "danger")
+                    return redirect(url_for("user_blp.admin"))
+            if youtube_link:
+                if not check_if_youtube_url_is_valid(youtube_link) or not check_if_url_is_valid(youtube_link):
+                    flash("Invalid Youtube URL", "danger")
+                    return redirect(url_for("user_blp.admin"))
+            if facebook_link:
+                if not check_if_facebook_url_is_valid(facebook_link) or not check_if_url_is_valid(facebook_link):
+                    flash("Invalid Facebook URL", "danger")
+                    return redirect(url_for("user_blp.admin"))
+
             new_post = CreateProfile(
                 linkname=linkname,
                 twitter_link=twitter_link,
