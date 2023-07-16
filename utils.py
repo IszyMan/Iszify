@@ -1,10 +1,10 @@
-#
-# def check_if_url_is_valid(url):
-#     try:
-#         requests.get(url)
-#         return True
-#     except requests.ConnectionError:
-#         return False
+
+def check_if_url_is_valid(url):
+    try:
+        requests.get(url)
+        return True
+    except requests.ConnectionError:
+        return False
 
 
 def check_if_amazon_url_is_valid(url):
