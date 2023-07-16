@@ -52,16 +52,27 @@ def admin():
     form = CreatePostForm()
     brand_url = f"{request.host_url}{current_user.brand_name}"
     posts = CreateProfile.query.all()
-    if form.validate_on_submit():
-        new_post = CreateProfile(
-            linkname=form.linkname.data,
-            yourlink=form.yourlink.data,
-            product=form.product.data,
-            author=current_user
-        )
-        db.session.add(new_post)
-        db.session.commit()
-        return redirect(url_for("user_blp.admin"))
+    if request.method == "POST":
+        linkname = form.linkname.data
+        twitter_link = form.yourlink.data
+        amazon_link = form.amazon_link.data
+        youtube_link = form.youtube_link.data
+        facebook_link = form.facebook_link.data
+        product_ = form.product.data
+
+        if form.validate_on_submit():
+            new_post = CreateProfile(
+                linkname=linkname,
+                twitter_link=twitter_link,
+                amazon_link=amazon_link,
+                youtube_link=youtube_link,
+                facebook_link=facebook_link,
+                product=product_,
+                author=current_user
+            )
+            db.session.add(new_post)
+            db.session.commit()
+            return redirect(url_for("user_blp.admin"))
     return render_template("admin.html", all_posts=posts,
                            name=current_user.first_name.title(),
                            logged_in=True,
