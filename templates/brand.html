@@ -19,8 +19,22 @@
 </style>
 
 <div class="containerr mt-5">
+    {%if all_posts%}
+    {% for post in all_posts %}
+    <div class='card'>
+        <p>{{ post.linkname.upper() }}</p>
+        <div>
+            <a href='{{post.twitter_link}}' target='_blank'>Twitter Link</a> <br>
+            <a href='{{post.amazon_link}}' target='_blank'>Amazon Link</span> <br>
+            <a href='{{post.facebook_link}}' target='_blank'>FaceBook Link</span> <br>
+            <a href='{{post.youtube_link}}' target='_blank'>YouTube Link</span> <br>
+        </div>
+    </div>
+    {% endfor %}
+    {%else%}
     <h1>
         THIS IS {{brandie}}'S SPECIAL PAGE
     </h1>
+    {%endif%}
 </div>
 {% endblock content %}
