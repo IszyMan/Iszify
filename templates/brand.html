@@ -22,19 +22,27 @@
     {%if all_posts%}
     {% for post in all_posts %}
     <div class='card'>
-        <p>{{ post.linkname.upper() }}</p>
-        <div>
+        <p class='h3 mb-4 mt-3'>{{ post.linkname.upper() }}</p>
+        <div style='display: flex; justify-content: space-evenly;'>
             {%if post.twitter_link%}
-            <a href='{{post.twitter_link}}' target='_blank'>Twitter Link</a> <br>
+            <a href='{{post.twitter_link}}' target='_blank'>
+                <i class="fa-brands fa-twitter h1 text-info"></i>
+            </a>
             {%endif%}
             {%if post.amazon_link%}
-            <a href='{{post.amazon_link}}' target='_blank'>Amazon Link</a> <br>
+            <a href='{{post.amazon_link}}' target='_blank'>
+                <i class="fa-brands fa-amazon h1 text-warning"></i>
+            </a>
             {%endif%}
             {%if post.facebook_link%}
-            <a href='{{post.facebook_link}}' target='_blank'>FaceBook Link</a> <br>
+            <a href='{{post.facebook_link}}' target='_blank'>
+                <i class="fa-brands fa-facebook h1"></i>
+            </a>
             {%endif%}
             {%if post.youtube_link%}
-            <a href='{{post.youtube_link}}' target='_blank'>YouTube Link</a>
+            <a href='{{post.youtube_link}}' target='_blank'>
+                <i class="fa-brands fa-youtube h1 text-danger"></i>
+            </a>
             {%endif%}
         </div>
     </div>
