@@ -1,9 +1,14 @@
+from urllib import request
+from urllib.error import HTTPError, URLError
 
-def check_if_url_is_valid(url):
+
+def validate_url(url):
+    if not url.startswith('http://') and not url.startswith('https://'):
+        url = 'http://' + url
     try:
-        requests.get(url)
+        request.urlopen(url)
         return True
-    except requests.ConnectionError:
+    except (HTTPError, URLError):
         return False
 
 
