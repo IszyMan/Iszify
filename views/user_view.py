@@ -54,7 +54,7 @@ def admin():
     posts = CreateProfile.query.all()
     if request.method == "POST":
         linkname = form.linkname.data
-        twitter_link = form.yourlink.data
+        twitter_link = form.twitter_link.data
         amazon_link = form.amazon_link.data
         youtube_link = form.youtube_link.data
         facebook_link = form.facebook_link.data
