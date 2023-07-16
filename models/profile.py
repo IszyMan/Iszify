@@ -11,4 +11,7 @@ class CreateProfile(UserMixin, db.Model):
     product = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, default="")
     linkname = db.Column(db.String(250), nullable=False)
-    yourlink = db.Column(db.String(250), nullable=False)
+    twitter_link = db.Column(db.String(250), default="")
+    facebook_link = db.Column(db.String(250), default="")
+    amazon_link = db.Column(db.String(250), default="")
+    youtube_link = db.Column(db.String(250), default="")
