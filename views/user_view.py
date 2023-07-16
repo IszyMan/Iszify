@@ -119,7 +119,8 @@ def brand(brandname):
     check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
     if not check_brand:
         return render_template("404.html")
-    return render_template("brand.html", brandie=brandname.upper())
+    check_brand_posts = CreateProfile.query.filter_by(author_id=check_brand.id).all()
+    return render_template("brand.html", brandie=brandname.upper(), all_posts=check_brand_posts)
 
 
 @user_blp.route('/<brandname>/<linkname>', methods=["GET", "POST"])
