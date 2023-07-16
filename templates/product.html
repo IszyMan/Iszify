@@ -1,6 +1,25 @@
 {%extends 'base.html'%}
 {% block content %}
 <div>
-    
+    {%if check_product.twitter_link%}
+            <a href='{{check_product.twitter_link}}' target='_blank'>
+                <i class="fa-brands fa-twitter h1 text-info"></i>
+            </a>
+            {%endif%}
+            {%if check_product.amazon_link%}
+            <a href='{{check_product.amazon_link}}' target='_blank'>
+                <i class="fa-brands fa-amazon h1 text-warning"></i>
+            </a>
+            {%endif%}
+            {%if check_product.facebook_link%}
+            <a href='{{check_product.facebook_link}}' target='_blank'>
+                <i class="fa-brands fa-facebook h1"></i>
+            </a>
+            {%endif%}
+            {%if check_product.youtube_link%}
+            <a href='{{check_product.youtube_link}}' target='_blank'>
+                <i class="fa-brands fa-youtube h1 text-danger"></i>
+            </a>
+            {%endif%}
 </div>
 {%endblock content%}
