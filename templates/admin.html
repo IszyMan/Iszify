@@ -2,20 +2,37 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 
+<div style='
+background: linear-gradient(
+  135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)
+);
+-webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(20px); max-width: 500px;
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+' class='p-2 mb-3 m-auto'>
 <h3 class="title text-center">Welcome, {{name}}!</h3>
 
 <p class=" text-center">
 Your brand url: 
-  <a href="/{{current_user.brand_name}}">{{ brand_url }}</a>
+  <a href="/{{current_user.brand_name}}" class='text-decoration-none text-success fw-bold'>{{ brand_url }}</a>
 </p>
-
-<h4 class="title text-center">Add Your Brands Links</h4>
+</div>
 
 <!--    <button class="show-modal"> Add Button</button>-->
 
 <!--       <div class="modal">-->
 <!--       <button class="close-modal">&times;</button>-->
-<div class="boxx bg-secondary p-4 m-auto" style='max-width: 500px;'>
+<div class="boxx p-4 m-auto" style='max-width: 500px;
+background: linear-gradient(
+  135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)
+);
+-webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(20px);
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+'>
+
+<h4 class="title text-center mb-4">Add Your Brands Links</h4>
+
   <!--{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }} -->
 
   <form method="POST">
