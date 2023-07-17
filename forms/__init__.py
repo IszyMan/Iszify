@@ -4,11 +4,11 @@ from wtforms.validators import DataRequired, URL, Email, EqualTo
 from wtforms.widgets import TextInput
 
 
-class PlaceholderInput(TextInput):
-    def __call__(self, field, **kwargs):
-        if 'placeholder' not in kwargs:
-            kwargs['placeholder'] = field.label.text
-        return super(PlaceholderInput, self).__call__(field, **kwargs)
+# class PlaceholderInput(TextInput):
+#     def __call__(self, field, **kwargs):
+#         if 'placeholder' not in kwargs:
+#             kwargs['placeholder'] = field.label.text
+#         return super(PlaceholderInput, self).__call__(field, **kwargs)
 
 
 class GenerateBrandName(FlaskForm):
@@ -33,12 +33,12 @@ class LoginForm(FlaskForm):
 
 
 class CreatePostForm(FlaskForm):
-    product = StringField("Product", validators=[DataRequired()])
-    linkname = StringField("Link Name ", validators=[DataRequired()])
-    twitter_link = StringField("Twitter Url", validators=[DataRequired(), URL()])
-    facebook_link = StringField("Facebook Url", validators=[DataRequired(), URL()])
-    amazon_link = StringField("Amazon Url", validators=[DataRequired(), URL()])
-    youtube_link = StringField("Youtube Url", validators=[DataRequired(), URL()])
+    product = StringField("Product", validators=[DataRequired()], render_kw={"placeholder": "Product"})
+    linkname = StringField("Link Name ", validators=[DataRequired()], render_kw={"placeholder": "Link name"})
+    twitter_link = StringField("Twitter Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Twitter link"})
+    facebook_link = StringField("Facebook Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Facebook link"})
+    amazon_link = StringField("Amazon Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Amazon link"})
+    youtube_link = StringField("Youtube Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Youtube link"})
 
     # categories = SelectField(u'Category', choices=[("Fashion", 'Fashion'), ("Travel", 'Travel')])
 
