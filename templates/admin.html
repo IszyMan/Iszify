@@ -6,12 +6,12 @@
 background: linear-gradient(
   135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)
 ); max-width: 500px;
-' class='p-2 mb-3 m-auto bg-info'>
+' class='p-2 mb-3 m-auto bg-success text-white'>
 <h3 class="title text-center">Welcome, {{name}}!</h3>
 
 <p class=" text-center">
 Your brand url: 
-  <a href="/{{current_user.brand_name}}" class='text-muted fw-bold'>{{ brand_url }}</a>
+  <a href="/{{current_user.brand_name}}" class='text-light fw-bold'>{{ brand_url }}</a>
 </p>
 </div>
 
@@ -28,7 +28,7 @@ backdrop-filter: blur(20px);
 box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 '>
 
-<h4 class="title text-center mb-4">Add Your Brands Links</h4>
+<h4 class="title text-center text-muted mb-4">Add Your Brands Links</h4>
 
   <!--{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }} -->
 
