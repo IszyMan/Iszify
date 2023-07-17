@@ -1,6 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SelectField
 from wtforms.validators import DataRequired, URL, Email, EqualTo
+from wtforms.widgets import TextInput
+
+
+class PlaceholderInput(TextInput):
+    def __call__(self, field, **kwargs):
+        if 'placeholder' not in kwargs:
+            kwargs['placeholder'] = field.label.text
+        return super(PlaceholderInput, self).__call__(field, **kwargs)
 
 
 class GenerateBrandName(FlaskForm):
