@@ -2,21 +2,45 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 
-<h3 class="title">Welcome, {{name}}!</h3>
+<h3 class="title text-center">Welcome, {{name}}!</h3>
 
-<p class="">
+<p class=" text-center">
 Your brand url: 
   <a href="/{{current_user.brand_name}}">{{ brand_url }}</a>
 </p>
 
-<h4 class="title">Add Your Brands Links</h4>
+<h4 class="title text-center">Add Your Brands Links</h4>
 
 <!--    <button class="show-modal"> Add Button</button>-->
 
 <!--       <div class="modal">-->
 <!--       <button class="close-modal">&times;</button>-->
-<div class="boxx" style='max-width: 500px;'>
-  {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+<div class="boxx bg-secondary p-4 m-auto" style='max-width: 500px;'>
+  <!--{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }} -->
+
+  <form method="POST">
+    {{ form.csrf_token }}
+    <div class="mb-3">
+        {{ form.product(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.linkname(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.twitter_link(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.facebook_link(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.amazon_link(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.youtube_link(class="form-control") }}
+    </div>
+    {{ form.submit(class="btn btn-primary bg-success p-2", style='font-size: 1rem') }}
+</form>
+
 </div>
 
 <div class="overlay hidden"></div>
