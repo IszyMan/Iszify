@@ -84,7 +84,12 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 <div class="containerr mt-5 m-auto" style="max-width: 500px;">
   {%if all_posts%}
   {% for post in all_posts %}
-  <div class='card p-3 mt-2'>
+  <div class='card p-3 mt-4' style="background: linear-gradient(
+    135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)
+  );
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px 0 rgba(147, 142, 142, 0.37);">
       <a class='h3 mb-4 mt-3 text-muted fw-bold text-decoration-none'>{{ post.linkname.upper() }}</a>
       <div style='display: flex; justify-content: space-evenly;'>
           {%if post.twitter_link%}
