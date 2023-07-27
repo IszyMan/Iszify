@@ -131,5 +131,7 @@ def product(brandname, linkname):
     check_product = CreateProfile.query.filter_by(linkname=linkname.lower()).first()
     if not check_product:
         return render_template("404.html")
+    check_product.clicks += 1
+    db.session.commit()
     return render_template("product.html", brandie=brandname.upper(), linkname=linkname.upper(),
                            check_product=check_product)
