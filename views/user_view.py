@@ -89,7 +89,7 @@ def admin():
         )
         db.session.add(new_post)
         db.session.commit()
-        return redirect(url_for("user_blp.brand", brandname=current_user.brand_name))
+        return redirect(url_for("user_blp.admin"))
     return render_template("admin.html", all_posts=posts,
                            name=current_user.first_name.title(),
                            logged_in=True,
