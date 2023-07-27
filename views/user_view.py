@@ -144,4 +144,5 @@ def delete_product(linkname):
         return render_template("404.html")
     db.session.delete(check_product)
     db.session.commit()
+    flash('Product deleted', 'success')
     return redirect(url_for('user_blp.admin'))
