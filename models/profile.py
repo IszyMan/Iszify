@@ -15,3 +15,4 @@ class CreateProfile(UserMixin, db.Model):
     facebook_link = db.Column(db.String(250), default="")
     amazon_link = db.Column(db.String(250), default="")
     youtube_link = db.Column(db.String(250), default="")
+    clicks = db.Column(db.Integer, default=0)
