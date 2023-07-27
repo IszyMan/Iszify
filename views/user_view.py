@@ -61,9 +61,9 @@ def admin():
         facebook_link = form.facebook_link.data
         product_ = form.product.data
 
-        if not linkname:
-            flash("Link Name Required", "danger")
-            return redirect(url_for("user_blp.admin"))
+        # if not linkname:
+        #     flash("Link Name Required", "danger")
+        #     return redirect(url_for("user_blp.admin"))
 
         check_if_linkname_exists = CreateProfile.query.filter_by(linkname=linkname).first()
         if check_if_linkname_exists:
