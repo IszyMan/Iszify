@@ -135,3 +135,13 @@ def product(brandname, linkname):
     db.session.commit()
     return render_template("product.html", brandie=brandname.upper(), linkname=linkname.upper(),
                            check_product=check_product)
+
+
+@user_blp.route('/delete/<linkname>')
+def delete_product(linkname):
+    check_product = CreateProfile.query.filter_by(linkname=linkname.lower()).first()
+    if not check_product:
+        return render_template("404.html")
+    db.session.delete(check_product)
+    db.session.commit()
+    return redirect(url_for('user_blp.admin'))
