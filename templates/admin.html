@@ -83,7 +83,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 {% endfor %} -->
 <div class="containerr mt-5 m-auto" style="max-width: 500px;">
   {%if all_posts%}
-  {% for post in all_posts %}
+  {% for post in all_posts|reverse %}
   <div class='card p-3 mt-4' style="background: linear-gradient(
     135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)
   );
