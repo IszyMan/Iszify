@@ -105,7 +105,8 @@ def admin():
                            logged_in=True,
                            form=form,
                            brand_url=brand_url,
-                           brandie=brandname)
+                           brandie=brandname,
+                           host_url=request.host_url)
 
 
 @user_blp.route('/<path:sub_path>', methods=["GET", "POST"])
