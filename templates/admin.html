@@ -84,6 +84,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 <div class="containerr mt-5 m-auto" style="max-width: 500px;">
   {%if all_posts%}
   {% for post in all_posts|reverse %}
+  <span style="display: none" id="{{post.id}}">
+    {{host_url}}{{brandie.lower()}}/{{post.linkname}}
+  </span>
   <div class='card p-3 mt-4' style="background: linear-gradient(
     135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)
   );
@@ -93,7 +96,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       <div class="d-flex justify-content-center">
       <a class='h3 mb-5 mt-3 text-muted fw-bold text-decoration-none text-center' href='{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}
       </a>
-      <i class="fa fa-copy ms-2 h6 mt-4" id="copyme" style="cursor: pointer;"></i>
+      <i class="fa fa-copy ms-2 h6 mt-4" id="copyme{{post.id}}" style="cursor: pointer;"></i>
       </div>
       <div style='display: flex; justify-content: space-evenly;'>
           {%if post.twitter_link%}
@@ -137,16 +140,29 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 </div>
 
 <script>
-  const copyme = document.getElementById("copyme");
-  copyme.addEventListener("click", () => {
-    const el = document.createElement("textarea");
-    el.value = "{{host_url}}/{{current_user.brand_name}}/{{post.linkname}}";
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-    alert("Copied!");
+  document.addEventListener("DOMContentLoaded", function () {
+    const copyIcons = document.querySelectorAll(".fa-copy");
+
+    copyIcons.forEach((icon) => {
+      icon.addEventListener("click", function () {
+        const postId = icon.id.replace("copyme", "");
+        const linkSpan = document.getElementById(postId);
+
+        if (linkSpan) {
+          const textArea = document.createElement("textarea");
+          textArea.value = linkSpan.innerText;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textArea);
+
+          // Optionally, you can display a notification or a tooltip to indicate successful copy
+          alert("Link copied to clipboard!");
+        }
+      });
+    });
   });
 </script>
+
 
 {% endblock content %}
