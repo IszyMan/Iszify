@@ -53,6 +53,7 @@ def admin():
     form = CreatePostForm()
     brand_url = f"{request.host_url}{current_user.brand_name}"
     posts = CreateProfile.query.all()
+    brandname = current_user.brand_name
     if request.method == "POST":
         linkname = form.linkname.data
         twitter_link = form.twitter_link.data
@@ -103,7 +104,8 @@ def admin():
                            name=current_user.first_name.title(),
                            logged_in=True,
                            form=form,
-                           brand_url=brand_url)
+                           brand_url=brand_url,
+                           brandie=brandname)
 
 
 @user_blp.route('/<path:sub_path>', methods=["GET", "POST"])
