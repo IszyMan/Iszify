@@ -90,7 +90,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px 0 rgba(147, 142, 142, 0.37);">
-      <a class='h3 mb-5 mt-3 text-muted fw-bold text-decoration-none text-center'>{{ post.linkname.upper() }}</a>
+      <a class='h3 mb-5 mt-3 text-muted fw-bold text-decoration-none text-center' href='{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}</a>
       <div style='display: flex; justify-content: space-evenly;'>
           {%if post.twitter_link%}
           <a href='{{post.twitter_link}}' target='_blank'>
