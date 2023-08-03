@@ -94,9 +94,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px 0 rgba(147, 142, 142, 0.37);">
       <div class="d-flex justify-content-center">
-      <a class='h3 mb-5 mt-3 text-muted fw-bold text-decoration-none text-center' href='{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}
+      <a class='h3 mb-5 mt-3 text-primary fw-bold text-decoration-none text-center' href='{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}
       </a>
-      <i class="fa fa-copy ms-2 h6 mt-4" id="copyme{{post.id}}" style="cursor: pointer;"></i>
+      <!-- <i class="fa fa-copy ms-3 h6 mt-4 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i> -->
       </div>
       <div style='display: flex; justify-content: space-evenly;'>
           {%if post.twitter_link%}
@@ -123,9 +123,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       <p class="position-relative text-muted rounded p-1 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center" style="width: fit-content;">
         <!-- <i class="fa fa-hand-pointer h3"></i> -->
         <!-- <i class="fa-solid fa-hand-pointer h5">clicks</i> -->
-        <span class="">clicks</span>
+        <span class="ms-4">Clicks</span>
         <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
-        margin-left: -15px;
+        margin-left: -25px;
         ">
           {{post.clicks}}
           <span class="visually-hidden">Clicks</span>
@@ -133,6 +133,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         <a href="/delete/{{post.linkname}}">
           <i class="fa fa-trash-alt text-danger ms-5"></i>
         </a>
+      <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i>
       </p>
   </div>
   {% endfor %}
