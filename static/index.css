@@ -1,3 +1,31 @@
+body {
+  background: url('nat2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('nat2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* Apply the filter to the background image */
+  filter: brightness(35%) contrast(120%) sepia(20%);
+  z-index: -1;
+  /* Send the pseudo-element to the background */
+}
+
+
+
+
 .hero-section {
     background-image: url('hero-background.jpg');
     background-size: cover;
@@ -8,15 +36,16 @@
   }
 
   .cta-section {
-    background-color: #f7f7f7;
+    background-color: #f7f7f75f;
     text-align: center;
     padding: 100px 0;
   }
 
   .features {
-    background-color: #fefbd8;
+    background-color: #fefbd859;
     text-align: center;
     padding: 100px 0;
+    /* color: #ffffff !important; */
   }
 
   .features-section {
@@ -26,10 +55,11 @@
 
 
   .jumbotron {
-    background-color: azure;
-    color: #000000;
+    background-color: rgba(240, 255, 255, 0.298);
+    /* color: #000000; */
     padding: 80px 0;
     text-align: center;
+    color: #ffffff !important;
   }
   .jumbotron h1 {
     font-size: 60px;
@@ -43,7 +73,7 @@
   }
   .btn {
     background-color: #000000;
-    color: #ffffff;
+    color: #ffffff !important;
     font-size: 20px;
     padding: 10px 20px;
   }
