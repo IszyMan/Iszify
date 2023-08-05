@@ -17,7 +17,7 @@ body::before {
     background-size: cover;
     background-repeat: no-repeat;
     /* Apply the filter to the background image */
-    filter: brightness(70%) contrast(120%) sepia(20%);
+    filter: brightness(55%) contrast(120%) sepia(20%);
     z-index: -1;
     /* Send the pseudo-element to the background */
 }
