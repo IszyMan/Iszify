@@ -8,6 +8,10 @@ body {
     background-attachment: fixed;
 }
 
+nav{
+    background: none !important;
+}
+
 body::before {
     content: "";
     position: absolute;

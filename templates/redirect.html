@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/redirect.css') }}">
+  {% endblock head %}
+{% block content %}
+
+<div class="join">
+<div class="button">
+    <span>Create <br> Product</span>
+  </div>
+  <div class="button">
+    <span>Bio <br> Link</span>
+  </div>
+</div>
+
+{% endblock content %}
