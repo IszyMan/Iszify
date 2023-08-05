@@ -1,7 +1,27 @@
 body {
     background: url('../boy.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 100vh;
 }
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../boy.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* Apply the filter to the background image */
+    filter: brightness(70%) contrast(120%) sepia(20%);
+    z-index: -1;
+    /* Send the pseudo-element to the background */
+}
+
 
 .form-control.p-3.mt-4 {
     background: none !important;
@@ -17,7 +37,17 @@ body {
 .form-control.p-3.mt-4::placeholder {
     color: white !important;
 }
-  
+
+
+.mybtn {
+    background: palevioletred !important;
+    border: none !important;
+    color: white !important;
+    font-size: 18px !important;
+    border-radius: 10px !important;
+}
+
+
 /* .form-control.p-3.mt-4:-webkit-autofill,
 .form-control.p-3.mt-4:-webkit-autofill:hover, 
 .form-control.p-3.mt-4:-webkit-autofill:focus, 
@@ -30,9 +60,9 @@ body {
 /* Target autofill for all major browsers */
 /* Chrome and Safari */
 .form-control.p-3.mt-4:-webkit-autofill,
-.form-control.p-3.mt-4:-webkit-autofill:hover, 
-.form-control.p-3.mt-4:-webkit-autofill:focus, 
-.form-control.p-3.mt-4:-webkit-autofill:active{
+.form-control.p-3.mt-4:-webkit-autofill:hover,
+.form-control.p-3.mt-4:-webkit-autofill:focus,
+.form-control.p-3.mt-4:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px rgba(255, 255, 255, 0) inset !important;
     background: none !important;
 }
@@ -41,7 +71,8 @@ body {
 .form-control.p-3.mt-4:-moz-autofill {
     /* Customize the styles for Firefox autofill */
     /* For example, you can change the background color */
-    background: none !important; /* Change this to the color you want */
+    background: none !important;
+    /* Change this to the color you want */
     /* Add other styles as needed */
 }
 
@@ -50,7 +81,8 @@ body {
     .form-control.p-3.mt-4:-ms-input-placeholder {
         /* Customize the styles for Microsoft Edge autofill */
         /* For example, you can change the background color */
-        background: none !important; /* Change this to the color you want */
+        background: none !important;
+        /* Change this to the color you want */
         /* Add other styles as needed */
     }
 }

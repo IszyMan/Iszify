@@ -12,12 +12,13 @@
   class=" p-5 mb-5"
   style="
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    border-top: 7px solid lightgreen;
+    border-top: 7px solid palevioletred;
     max-width: 500px;
   margin: auto;
+  margin-top: 2rem;
     "
 >
-  <h3 class="text-muted">Login</h3>
+  <h3 class="text-light">Login</h3>
   {{ form.hidden_tag() }}
 
   
@@ -40,12 +41,12 @@
 
 
   <!-- For submit button -->
-  {{ form.submit(size=20, class='btn btn-success mt-4 w-100 p-2')}}
+  {{ form.submit(size=20, class='mybtn mt-4 w-100 p-2')}}
 
-  <p class="text-muted mt-3 small">
+  <p class="text-light mt-3 small">
     Forgot password?
     <a
-      class="text-muted fw-bold"
+      class="text-warning fw-bold"
       style="text-decoration: none; font-weight: 500"
       href=""
       >Reset</a
