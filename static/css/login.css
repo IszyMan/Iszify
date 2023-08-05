@@ -4,6 +4,8 @@ body {
     background-repeat: no-repeat;
     position: relative;
     height: 100vh;
+    padding-bottom: 10px;
+    background-attachment: fixed;
 }
 
 body::before {

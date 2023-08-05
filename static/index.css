@@ -4,6 +4,9 @@ body {
   background-repeat: no-repeat;
   position: relative;
   background-attachment: fixed;
+  /* height: fit-content; */
+  /* min-height: 1050px; */
+  padding-bottom: 20px;
 }
 
 body::before {
