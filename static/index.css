@@ -24,6 +24,14 @@ body::before {
 }
 
 
+.my-btn{
+  background-color: rgb(84, 178, 209) !important;
+  color: #ffffff !important;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px !important;
+  border: none !important;
+}
 
 
 .hero-section {
