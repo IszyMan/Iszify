@@ -47,6 +47,12 @@ def join():
     return render_template("join.html", form=form, current_user=current_user)
 
 
+@user_blp.route('/redirect')
+@login_required
+def redirect_me():
+    return render_template("redirect.html")
+
+
 @user_blp.route('/admin', methods=["GET", "POST"])
 @login_required
 def admin():
