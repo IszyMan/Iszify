@@ -1,26 +1,40 @@
 .input-field {
     position: relative;
     margin-bottom: 25px;
-  }
-  
-  .input-field label {
+}
+
+.input-field label {
     position: absolute;
     left: 0;
     top: 0;
     font-size: 16px;
     color: #9b9b9b;
     transition: 0.5s all;
-  }
-  
-  .input-field input:focus ~ label,
-  .input-field input:valid ~ label {
+}
+
+.input-field input:focus~label,
+.input-field input:valid~label {
     top: -20px;
     font-size: 12px;
     color: #5264AE;
-  }
+}
 
-  body{
+body {
     background: url('../boy.jpg');
     background-size: cover;
-  }
-  
+}
+
+.form-control.p-3.mt-4 {
+    background: none !important;
+    /* semi-transparent white */
+    border: 1px solid white !important;
+    color: white !important;
+}
+
+.form-control.p-3.mt-4:focus {
+    outline: white !important;
+}
+
+.form-control.p-3.mt-4::placeholder {
+    color: white !important;
+}

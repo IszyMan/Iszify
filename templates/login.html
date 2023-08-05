@@ -22,20 +22,20 @@
   
   <!-- For Emails validations -->
   <!-- {{ form.email.label(class='label') }} -->
-  {% if form.email.errors %} {{ form.email(class="form-control p-3 mt-4",
-  required=False, placeholder="Enter email") }} {% for error in
+  {% if form.email.errors %} {{ form.email(class="form-control p-3 mt-4 shadow-none",
+  required=False, placeholder="Enter email", id='formfield') }} {% for error in
   form.email.errors %}
   <small class="text-danger mt-1"><i class="fa fas fa-exclamation-circle"></i>&nbsp;&nbsp;{{ error }}</small>
-  {% endfor %} {% else %} {{ form.email(class="form-control p-3 mt-4",
-  required=False, placeholder="Enter email") }} {% endif %}
+  {% endfor %} {% else %} {{ form.email(class="form-control p-3 mt-4 shadow-none",
+  required=False, placeholder="Enter email", id='formfield') }} {% endif %}
   <!-- For password validations -->
   <!-- {{ form.password.label(class='label') }} -->
-  {% if form.password.errors %} {{ form.password(class="form-control p-3 mt-4
-  lead", required=False, placeholder='Enter password') }} {% for error in
+  {% if form.password.errors %} {{ form.password(class="form-control p-3 mt-4 shadow-none
+  lead", required=False, placeholder='Enter password', id='formfield') }} {% for error in
   form.password.errors %}
   <small class="text-danger mt-1"><i class="fa fas fa-exclamation-circle"></i>&nbsp;&nbsp;{{ error }}</small>
-  {% endfor %} {% else %} {{ form.password(class="form-control p-3 mt-4 lead",
-  required=False, placeholder='Enter password') }} {% endif %}
+  {% endfor %} {% else %} {{ form.password(class="form-control p-3 mt-4 shadow-none lead",
+  required=False, placeholder='Enter password', id='formfield') }} {% endif %}
 
 
   <!-- For submit button -->
