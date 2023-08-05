@@ -92,7 +92,9 @@ def login():
             return redirect(url_for('auth_blp.login'))
         else:
             login_user(user_)
-            return redirect(url_for('user_blp.admin'))
+            # return redirect(url_for('user_blp.admin'))
+            return redirect(url_for("user_blp.redirect_me"))
+
 
     return render_template("login.html", logged_in=current_user.is_authenticated, form=form)
 
