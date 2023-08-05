@@ -6,6 +6,7 @@ body {
   background-attachment: fixed;
   /* height: fit-content; */
   /* min-height: 1050px; */
+  min-height: 100vh;
   padding-bottom: 20px;
 }
 
