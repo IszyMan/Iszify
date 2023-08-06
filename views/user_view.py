@@ -61,12 +61,12 @@ def admin():
     posts = CreateProfile.query.all()
     brandname = current_user.brand_name
     if request.method == "POST":
-        linkname = form.linkname.data
-        twitter_link = form.twitter_link.data
-        amazon_link = form.amazon_link.data
-        youtube_link = form.youtube_link.data
-        facebook_link = form.facebook_link.data
-        product_ = form.product.data
+        linkname = form.linkname.data.lower()
+        twitter_link = form.twitter_link.data.lower()
+        amazon_link = form.amazon_link.data.lower()
+        youtube_link = form.youtube_link.data.lower()
+        facebook_link = form.facebook_link.data.lower()
+        product_ = form.product.data.lower()
 
         # if not linkname:
         #     flash("Link Name Required", "danger")
