@@ -12,6 +12,8 @@ auth_blp = Blueprint("auth_blp", __name__)
 @auth_blp.route('/register/<brandie>/', methods=["GET", "POST"])
 def register(brandie):
     form = RegisterForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('user_blp.admin'))
     if request.method == "POST":
         email = request.form.get('email').lower()
         first_name = request.form.get('first_name').lower()
@@ -74,6 +76,8 @@ def register(brandie):
 @auth_blp.route('/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('user_blp.admin'))
     if request.method == "POST":
         email = request.form.get('email').lower()
         password = request.form.get('password')
