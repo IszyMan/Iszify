@@ -57,8 +57,9 @@ def redirect_me():
 @login_required
 def admin():
     form = CreatePostForm()
+    user_id = current_user.id
     brand_url = f"{request.host_url}{current_user.brand_name}"
-    posts = CreateProfile.query.all()
+    posts = CreateProfile.query.filter_by(author_id=user_id).all()
     brandname = current_user.brand_name
     if request.method == "POST":
         linkname = form.linkname.data.lower()
@@ -101,7 +102,8 @@ def admin():
             youtube_link=youtube_link,
             facebook_link=facebook_link,
             product=product_,
-            author=current_user
+            author=current_user,
+            author_id=user_id
         )
         db.session.add(new_post)
         db.session.commit()
