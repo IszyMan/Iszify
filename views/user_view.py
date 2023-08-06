@@ -13,6 +13,8 @@ user_blp = Blueprint("user_blp", __name__)
 def home():
     form = GenerateBrandName()
     # posts = CreateProfile.query.all()
+    if current_user.is_authenticated:
+        return redirect(url_for('user_blp.admin'))
     if request.method == "POST":
         brand_name = request.form.get('brandname').lower()
         if not brand_name:
