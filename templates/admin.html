@@ -130,7 +130,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
           {{post.clicks}}
           <span class="visually-hidden">Clicks</span>
         </span>
-        <a href="/delete/{{post.linkname}}">
+        <a href="/delete/{{post.linkname}}" onclick="return confirmDelete()">
           <i class="fa fa-trash-alt text-danger ms-5"></i>
         </a>
       <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i>
@@ -163,6 +163,10 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       });
     });
   });
+
+    function confirmDelete() {
+      return confirm('Are you sure you want to delete?');
+    }
 </script>
 
 
