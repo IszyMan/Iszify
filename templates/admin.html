@@ -7,12 +7,12 @@ background: linear-gradient(
   135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)
 ); max-width: 500px;
 ' class='p-2 mb-3 m-auto bg-success text-white'>
-<h3 class="title text-center">Welcome, {{name}}!</h3>
+  <h3 class="title text-center">Welcome, {{name}}!</h3>
 
-<p class=" text-center">
-Your brand url: 
-  <a href="/{{current_user.brand_name}}" class='text-light fw-bold'>{{ brand_url }}</a>
-</p>
+  <p class=" text-center">
+    Your brand url:
+    <a href="/{{current_user.brand_name}}" class='text-light fw-bold'>{{ brand_url }}</a>
+  </p>
 </div>
 
 <!--    <button class="show-modal"> Add Button</button>-->
@@ -28,32 +28,32 @@ backdrop-filter: blur(20px);
 box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 '>
 
-<h4 class="title text-center text-muted mb-4">Add Your Brands Links</h4>
+  <h4 class="title text-center text-muted mb-4">Add Your Brands Links</h4>
 
   <!--{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }} -->
 
   <form method="POST">
     {{ form.csrf_token }}
     <div class="mb-3">
-        {{ form.product(class="form-control") }}
+      {{ form.product(class="form-control") }}
     </div>
     <div class="mb-3">
-        {{ form.linkname(class="form-control") }}
+      {{ form.linkname(class="form-control") }}
     </div>
     <div class="mb-3">
-        {{ form.twitter_link(class="form-control") }}
+      {{ form.twitter_link(class="form-control") }}
     </div>
     <div class="mb-3">
-        {{ form.facebook_link(class="form-control") }}
+      {{ form.facebook_link(class="form-control") }}
     </div>
     <div class="mb-3">
-        {{ form.amazon_link(class="form-control") }}
+      {{ form.amazon_link(class="form-control") }}
     </div>
     <div class="mb-3">
-        {{ form.youtube_link(class="form-control") }}
+      {{ form.youtube_link(class="form-control") }}
     </div>
     {{ form.submit(class="btn btn-success border bg-success p-2", style='font-size: 1rem') }}
-</form>
+  </form>
 
 </div>
 
@@ -93,48 +93,51 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px 0 rgba(147, 142, 142, 0.37);">
-      <div class="d-flex justify-content-center">
-      <a class='h3 mb-5 mt-3 text-muted fw-bold text-decoration-none text-center' href='{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}
+    <div class="d-flex justify-content-center">
+      <a class='h3 mb-5 mt-3 text-muted fw-bold text-decoration-none text-center' href='{{url_for(' user_blp.product',
+        brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}
       </a>
       <!-- <i class="fa fa-copy ms-3 h6 mt-4 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i> -->
-      </div>
-      <div style='display: flex; justify-content: space-evenly;'>
-          {%if post.twitter_link%}
-          <a href='{{post.twitter_link}}' target='_blank'>
-              <i class="fa-brands fa-twitter h1 text-info"></i>
-          </a>
-          {%endif%}
-          {%if post.amazon_link%}
-          <a href='{{post.amazon_link}}' target='_blank'>
-              <i class="fa-brands fa-amazon h1 text-warning"></i>
-          </a>
-          {%endif%}
-          {%if post.facebook_link%}
-          <a href='{{post.facebook_link}}' target='_blank'>
-              <i class="fa-brands fa-facebook h1"></i>
-          </a>
-          {%endif%}
-          {%if post.youtube_link%}
-          <a href='{{post.youtube_link}}' target='_blank'>
-              <i class="fa-brands fa-youtube h1 text-danger"></i>
-          </a>
-          {%endif%}
-      </div> <hr>
-      <p class="position-relative text-muted rounded p-1 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center" style="width: fit-content;">
-        <!-- <i class="fa fa-hand-pointer h3"></i> -->
-        <!-- <i class="fa-solid fa-hand-pointer h5">clicks</i> -->
-        <span class="ms-4">Clicks</span>
-        <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
+    </div>
+    <div style='display: flex; justify-content: space-evenly;'>
+      {%if post.twitter_link%}
+      <a href='{{post.twitter_link}}' target='_blank'>
+        <i class="fa-brands fa-twitter h1 text-info"></i>
+      </a>
+      {%endif%}
+      {%if post.amazon_link%}
+      <a href='{{post.amazon_link}}' target='_blank'>
+        <i class="fa-brands fa-amazon h1 text-warning"></i>
+      </a>
+      {%endif%}
+      {%if post.facebook_link%}
+      <a href='{{post.facebook_link}}' target='_blank'>
+        <i class="fa-brands fa-facebook h1"></i>
+      </a>
+      {%endif%}
+      {%if post.youtube_link%}
+      <a href='{{post.youtube_link}}' target='_blank'>
+        <i class="fa-brands fa-youtube h1 text-danger"></i>
+      </a>
+      {%endif%}
+    </div>
+    <hr>
+    <p class="position-relative text-muted rounded p-1 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
+      style="width: fit-content;">
+      <!-- <i class="fa fa-hand-pointer h3"></i> -->
+      <!-- <i class="fa-solid fa-hand-pointer h5">clicks</i> -->
+      <span class="ms-4">Clicks</span>
+      <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
         margin-left: -25px;
         ">
-          {{post.clicks}}
-          <span class="visually-hidden">Clicks</span>
-        </span>
-        <a href="/delete/{{post.linkname}}" onclick="return confirmDelete()">
-          <i class="fa fa-trash-alt text-danger ms-5"></i>
-        </a>
+        {{post.clicks}}
+        <span class="visually-hidden">Clicks</span>
+      </span>
+      <a href="/delete/{{post.linkname}}" onclick="return confirmDelete()">
+        <i class="fa fa-trash-alt text-danger ms-5"></i>
+      </a>
       <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i>
-      </p>
+    </p>
   </div>
   {% endfor %}
   {%endif%}
@@ -164,9 +167,9 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     });
   });
 
-    function confirmDelete() {
-      return confirm('Are you sure you want to delete?');
-    }
+  function confirmDelete() {
+    return confirm('Are you sure you want to delete?');
+  }
 </script>
 
 
