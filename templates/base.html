@@ -46,7 +46,7 @@
       <!-- The navbar brand -->
       <!-- The navbar brand -->
       {% if current_user.is_authenticated %}
-      <a href="{{url_for('user_blp.admin')}}" class="navbar-brand ">LinkTools</a>
+      <a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand ">LinkTools</a>
       {% else %}
       <a href="{{url_for('user_blp.home')}}" class="navbar-brand ">LinkTools</a>
       {% endif %}
@@ -62,7 +62,7 @@
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             {% if current_user.is_authenticated %}
-            <a href="{{url_for('user_blp.admin')}}" class="nav-link ">Home</a>
+            <a href="{{url_for('user_blp.dashboard')}}" class="nav-link ">Home</a>
             {% else %}
             <a href="{{url_for('user_blp.home')}}" class="nav-link ">Home</a>
             {% endif %}
