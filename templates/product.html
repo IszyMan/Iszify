@@ -3,26 +3,30 @@
 <div>
     <h1 class='text-muted text-center my-4'>{{check_product.linkname.upper()}}</h1>
 </div>
-<div class='card border m-auto' style='width: fit-content;'>
+<div class='card border m-auto' style='max-width: 600px;'>
     {%if check_product.twitter_link%}
-            <a href='{{check_product.twitter_link}}' target='_blank'>
-                <img src='{{ url_for('static', filename='twitter.jpg') }}' class=' p-2 card border mt-1' style='max-width: 300px;' />
-            </a>
-            {%endif%}
-            {%if check_product.amazon_link%}
-            <a href='{{check_product.amazon_link}}' target='_blank'>
-                <img src='{{ url_for('static', filename='amazon.jpg') }}' class='p-2 card border mt-1' style='max-width: 300px;' />
-            </a>
-            {%endif%}
-            {%if check_product.facebook_link%}
-            <a href='{{check_product.facebook_link}}' target='_blank'>
-                <img src='{{ url_for('static', filename='facebook.jpg') }}' class=' p-2 card border mt-1' style='max-width: 300px;' />
-            </a>
-            {%endif%}
-            {%if check_product.youtube_link%}
-            <a href='{{check_product.youtube_link}}' target='_blank'>
-                <img src='{{ url_for('static', filename='youtube.jpg') }}' class=' p-2 card border mt-1' style='max-width: 300px;' />
-            </a>
-            {%endif%}
+    <a href='{{check_product.twitter_link}}' target='_blank'>
+        <img src="{{ url_for('static', filename='twitter.jpg') }}" class=' p-2 card border mt-1'
+            style='width: 100%;' />
+    </a>
+    {%endif%}
+    {%if check_product.amazon_link%}
+    <a href='{{check_product.amazon_link}}' target='_blank'>
+        <img src="{{ url_for('static', filename='amazon.jpg') }}" class='p-2 card border mt-1'
+            style='width: 100%;' />
+    </a>
+    {%endif%}
+    {%if check_product.facebook_link%}
+    <a href='{{check_product.facebook_link}}' target='_blank'>
+        <img src="{{ url_for('static', filename='facebook.jpg') }}" class=' p-2 card border mt-1'
+            style='width: 100%;' />
+    </a>
+    {%endif%}
+    {%if check_product.youtube_link%}
+    <a href='{{check_product.youtube_link}}' target='_blank'>
+        <img src="{{ url_for('static', filename='youtube.jpg') }}" class=' p-2 card border mt-1'
+            style='width: 100%;' />
+    </a>
+    {%endif%}
 </div>
 {%endblock content%}
