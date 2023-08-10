@@ -9,3 +9,61 @@
     </div>
 </div>
 {% endblock car %}
+
+{% block content %}
+
+<div class="">
+    <div class="rows">
+      {% if all_posts %}
+        {% for post in all_posts|reverse %}
+          <div class="cols">
+            <div class=" mb-4 card">
+              <div class="">
+                <a class='card-title mb-5 mt-3 text-muted fw-bold text-decoration-none text-center' href="{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}">{{ post.linkname.upper() }} </a>
+                <!-- Add more content here as needed -->
+                <div style='display: flex; justify-content: space-evenly;' class="card-body">
+                    {%if post.twitter_link%}
+                    <a href='{{post.twitter_link}}' target='_blank'>
+                      <i class="fa-brands fa-twitter h1 text-info"></i>
+                    </a>
+                    {%endif%}
+                    {%if post.amazon_link%}
+                    <a href='{{post.amazon_link}}' target='_blank'>
+                      <i class="fa-brands fa-amazon h1 text-warning"></i>
+                    </a>
+                    {%endif%}
+                    {%if post.facebook_link%}
+                    <a href='{{post.facebook_link}}' target='_blank'>
+                      <i class="fa-brands fa-facebook h1"></i>
+                    </a>
+                    {%endif%}
+                    {%if post.youtube_link%}
+                    <a href='{{post.youtube_link}}' target='_blank'>
+                      <i class="fa-brands fa-youtube h1 text-danger"></i>
+                    </a>
+                    {%endif%}
+                  </div>
+                  <hr>
+                  <p class="position-relative text-muted rounded p-1 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center card-text"
+                    style="width: fit-content;">
+                    <span class="ms-4">Clicks</span>
+                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
+                      margin-left: -25px;
+                      ">
+                      {{post.clicks}}
+                      <span class="visually-hidden">Clicks</span>
+                    </span>
+                    <a href="/delete/{{post.linkname}}" onclick="return confirmDelete()">
+                      <i class="fa fa-trash-alt text-danger ms-5"></i>
+                    </a>
+                    <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i>
+                  </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock content %}
