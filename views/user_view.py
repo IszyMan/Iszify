@@ -35,8 +35,9 @@ def dashboard():
     user_id = current_user.id
     brand_url = f"{request.host_url}{current_user.brand_name}"
     posts = CreateProfile.query.filter_by(author_id=user_id).all()
+    host_url = request.host_url
     brandie = current_user.brand_name
-    return render_template("dashboard.html", all_posts=posts, brand_url=brand_url, brandie=brandie)
+    return render_template("dashboard.html", all_posts=posts, brand_url=brand_url, brandie=brandie, host_url=host_url)
 
 
 @user_blp.route('/join', methods=["GET", "POST"])
@@ -177,4 +178,4 @@ def delete_product(linkname):
     db.session.delete(check_product)
     db.session.commit()
     flash('Product deleted', 'success')
-    return redirect(url_for('user_blp.admin'))
+    return redirect(url_for('user_blp.dashboard'))
