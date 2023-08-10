@@ -5,7 +5,7 @@
 {% block car %}
 <div class="dashdiv">
     <div class="d-flex justify-content-end py-3 container">
-        <a href="" class="btn">Create Product</a>
+        <a href="{{url_for('user_blp.admin')}}" class="btn">Create Product</a>
     </div>
 </div>
 {% endblock car %}
@@ -13,38 +13,41 @@
 {% block content %}
 
 <div class="">
+    {% if all_posts %}
     <div class="rows">
-      {% if all_posts %}
         {% for post in all_posts|reverse %}
+        <span style="display: none" id="{{post.id}}">
+            {{host_url}}{{brandie.lower()}}/{{post.linkname}}
+          </span>
           <div class="cols">
             <div class=" mb-4 stylethis">
               <div class="card">
                 <a class=' text-muted h4 py-3 fw-bold text-decoration-none text-center' href="{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}">{{ post.linkname.upper() }} </a>
                 <!-- Add more content here as needed -->
-                <div style='display: flex; justify-content: space-evenly;' class="border mt-3 w-75 m-auto py-2 stylethis">
+                <div style='display: flex; justify-content: space-evenly; align-items: center;' class="mt-3 w-75 m-auto">
                     {%if post.twitter_link%}
                     <a href='{{post.twitter_link}}' target='_blank'>
-                      <i class="fa-brands fa-twitter h4 text-info"></i>
+                      <i class="fa-brands fa-twitter h4 text-info stylethis2 rounded-circle p-2"></i>
                     </a>
                     {%endif%}
                     {%if post.amazon_link%}
                     <a href='{{post.amazon_link}}' target='_blank'>
-                      <i class="fa-brands fa-amazon h4 text-warning"></i>
+                      <i class="fa-brands fa-amazon h4 text-warning stylethis2 rounded-circle p-2"></i>
                     </a>
                     {%endif%}
                     {%if post.facebook_link%}
                     <a href='{{post.facebook_link}}' target='_blank'>
-                      <i class="fa-brands fa-facebook h4"></i>
+                      <i class="fa-brands fa-facebook h4 stylethis2 rounded-circle p-2"></i>
                     </a>
                     {%endif%}
                     {%if post.youtube_link%}
                     <a href='{{post.youtube_link}}' target='_blank'>
-                      <i class="fa-brands fa-youtube h4 text-danger"></i>
+                      <i class="fa-brands fa-youtube h4 text-danger stylethis2 rounded-circle p-2"></i>
                     </a>
                     {%endif%}
                   </div>
                   <hr>
-                  <p class="position-relative text-muted rounded p-1 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
+                  <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
                     style="width: fit-content;">
                     <span class="ms-4">Clicks</span>
                     <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
@@ -62,8 +65,42 @@
             </div>
           </div>
         {% endfor %}
+        </div>
+        {% else %}
+        <div class="stylethis2 m-auto" style="width: fit-content;">
+            <h1 class="text-center m-auto p-3">No Products Yet</h1>
+        </div>
       {% endif %}
     </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const copyIcons = document.querySelectorAll(".fa-copy");
+  
+      copyIcons.forEach((icon) => {
+        icon.addEventListener("click", function () {
+          const postId = icon.id.replace("copyme", "");
+          const linkSpan = document.getElementById(postId);
+  
+          if (linkSpan) {
+            const textArea = document.createElement("textarea");
+            textArea.value = linkSpan.innerText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+  
+            // Optionally, you can display a notification or a tooltip to indicate successful copy
+            alert("Link copied to clipboard!");
+          }
+        });
+      });
+    });
+  
+    function confirmDelete() {
+      return confirm('Are you sure you want to delete?');
+    }
+  </script>
 
 {% endblock content %}
