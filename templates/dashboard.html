@@ -17,11 +17,11 @@
       {% if all_posts %}
         {% for post in all_posts|reverse %}
           <div class="cols">
-            <div class=" mb-4 card">
-              <div class="card-body">
-                <a class='card-title mb-5 mt-3 text-muted fw-bold text-decoration-none text-center' href="{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}">{{ post.linkname.upper() }} </a>
+            <div class=" mb-4 stylethis">
+              <div class="card">
+                <a class=' text-muted h4 py-3 fw-bold text-decoration-none text-center' href="{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}">{{ post.linkname.upper() }} </a>
                 <!-- Add more content here as needed -->
-                <div style='display: flex; justify-content: space-evenly;' class="border">
+                <div style='display: flex; justify-content: space-evenly;' class="border mt-3 w-75 m-auto py-2 stylethis">
                     {%if post.twitter_link%}
                     <a href='{{post.twitter_link}}' target='_blank'>
                       <i class="fa-brands fa-twitter h4 text-info"></i>
@@ -44,7 +44,7 @@
                     {%endif%}
                   </div>
                   <hr>
-                  <p class="position-relative text-muted rounded p-1 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center card-text"
+                  <p class="position-relative text-muted rounded p-1 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
                     style="width: fit-content;">
                     <span class="ms-4">Clicks</span>
                     <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
