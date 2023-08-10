@@ -32,7 +32,11 @@ def home():
 @user_blp.route('/dashboard', methods=["GET", "POST"])
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    user_id = current_user.id
+    brand_url = f"{request.host_url}{current_user.brand_name}"
+    posts = CreateProfile.query.filter_by(author_id=user_id).all()
+    brandie = current_user.brand_name
+    return render_template("dashboard.html", all_posts=posts, brand_url=brand_url, brandie=brandie)
 
 
 @user_blp.route('/join', methods=["GET", "POST"])
