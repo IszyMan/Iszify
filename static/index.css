@@ -98,10 +98,10 @@ nav{
   .jumbotron p {
     font-size: 20px;
   }
-  .container {
+  /* .container {
     max-width: 800px;
     margin: 0 auto;
-  }
+  } */
   .btn {
     background-color: #000000;
     color: #ffffff !important;
