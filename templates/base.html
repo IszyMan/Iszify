@@ -80,6 +80,11 @@
           <li class="nav-item">
             <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-light ">Logout</a>
           </li>
+          <li class="mx-3">
+            <div class="d-flex justify-content-end align-item-center py-2">
+              <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
+          </div>
+          </li>
           {% block link %}
 
           {% endblock link %}
