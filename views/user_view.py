@@ -29,6 +29,12 @@ def home():
     return render_template("index.html", form=form)
 
 
+@user_blp.route('/dashboard', methods=["GET", "POST"])
+@login_required
+def dashboard():
+    return render_template("dashboard.html")
+
+
 @user_blp.route('/join', methods=["GET", "POST"])
 def join():
     # Every render_template has a logged_in variable set.
