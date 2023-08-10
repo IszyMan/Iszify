@@ -22,7 +22,8 @@ def register(brandie):
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
 
-        # Check if any of the required fields (email, password, confirm_password, first_name, last_name, username) are empty
+        # Check if any of the required fields (email, password, confirm_password, first_name, last_name, username)
+        # are empty
         required_fields = [email, password, confirm_password, first_name, last_name, username]
         if not all(required_fields):
             # Display a flash message to the user indicating that all fields are required
@@ -66,7 +67,7 @@ def register(brandie):
         db.session.commit()
         login_user(new_user)
         flash('Registration successful', 'success')
-        return redirect(url_for("user_blp.redirect_me"))
+        return redirect(url_for("user_blp.dashboard"))
 
     return render_template("register.html",
                            logged_in=current_user.is_authenticated,
@@ -98,7 +99,6 @@ def login():
             login_user(user_)
             # return redirect(url_for('user_blp.admin'))
             return redirect(url_for("user_blp.dashboard"))
-
 
     return render_template("login.html", logged_in=current_user.is_authenticated, form=form)
 
