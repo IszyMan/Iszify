@@ -61,28 +61,24 @@
         <!-- If the user is logged in, this nav links appears -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            {% if current_user.is_authenticated %}
-            <a href="{{url_for('user_blp.dashboard')}}" class="nav-link ">Home</a>
-            {% else %}
-            <a href="{{url_for('user_blp.home')}}" class="nav-link ">Home</a>
-            {% endif %}
+            <a href="{{url_for('user_blp.dashboard')}}" class="nav-link text-light">Home</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="" class="nav-link ">Profile</a>
           </li>
 
           <li class="nav-item">
             <a href="" class="nav-link ">Post</a>
-          </li>
-          <li class="nav-item">
+          </li> -->
+          <!-- <li class="nav-item">
             <a href="" class="nav-link ">About</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link ">Contact</a>
+            <a href="" class="nav-link ">Contact</a> -->
           </li>
 
           <li class="nav-item">
-            <a href="{{ url_for('auth_blp.logout') }}" class="nav-link ">Logout</a>
+            <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-light ">Logout</a>
           </li>
           {% block link %}
 
@@ -93,13 +89,13 @@
         <!-- If the user is not logged in, this nav links appears -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="" class="nav-link text-white">Home</a>
+            <a href="{{url_for('user_blp.home')}}" class="nav-link text-white">Home</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="" class="nav-link text-white">About</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link text-white">Contact</a>
+            <a href="" class="nav-link text-white">Contact</a> -->
           </li>
           <li class="nav-item">
             <a href="{{ url_for('auth_blp.login') }}" class="nav-link text-white">Login</a>
