@@ -179,3 +179,9 @@ def delete_product(linkname):
     db.session.commit()
     flash('Product deleted', 'success')
     return redirect(url_for('user_blp.dashboard'))
+
+
+# SHORTEN URL SECTION
+@user_blp.route('/shorten_url', methods=['GET', 'POST'])
+def shorten_url():
+    pass
