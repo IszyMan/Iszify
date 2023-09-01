@@ -184,4 +184,4 @@ def delete_product(linkname):
 # SHORTEN URL SECTION
 @user_blp.route('/shorten_url', methods=['GET', 'POST'])
 def shorten_url():
-    pass
+    return render_template("shorten.html")
