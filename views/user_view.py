@@ -171,6 +171,7 @@ def product(brandname, linkname):
 
 
 @user_blp.route('/delete/<linkname>')
+@login_required
 def delete_product(linkname):
     check_product = CreateProfile.query.filter_by(linkname=linkname.lower()).first()
     if not check_product:
@@ -183,5 +184,35 @@ def delete_product(linkname):
 
 # SHORTEN URL SECTION
 @user_blp.route('/shorten_url', methods=['GET', 'POST'])
+@login_required
 def shorten_url():
+    if request.method == 'POST':
+        original_url = request.form.get('originalUrl')
+        custom_url = request.form.get('customUrl', None)
+        if Urlshort.query.filter_by(url=original_url).first():
+            flash('URL already exists', 'danger')
+            return render_template("shorten.html")
+        if not validate_url(original_url):
+            flash('Please enter a valid URL', 'danger')
+            return render_template("shorten.html")
+
+        if custom_url:
+            short_url = custom_url
+        else:
+            short_url = generate_short_url()
+            print(generate_short_url())
+
+        url = Urlshort(
+            author=current_user,
+            author_id=current_user.id,
+            url=original_url,
+            short_url=short_url,
+        )
+        url.save()
+        flash('URL has been shortened successfully!', 'success')
+        return render_template("shorten.html",
+                               shortened_url=f"{request.host_url}{short_url}",
+                               original_url=original_url
+                               )
+
     return render_template("shorten.html")
