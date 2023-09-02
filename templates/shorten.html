@@ -6,7 +6,7 @@
 <section class="body2">
 <div class="container containered mt-5">
     <h1 class="text-center">Short URL Generator</h1>
-    <form action="#" method="POST" class="needs-validation" novalidate>
+    <form action="" method="POST">
         <div class="mb-3">
             <label for="originalUrl" class="form-label">Enter the URL to shorten:</label>
             <input type="url" class="form-control" id="originalUrl" name="originalUrl" placeholder="https://example.com" required>
@@ -20,6 +20,23 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block">Shorten URL</button>
     </form>
+</div>
+<div>
+    {% if shortened_url %}
+    <div class="container containered mt-5">
+        <div class="mb-3">
+            <label for="shortUrl" class="form-label">Original URL:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="originalUrl" value="{{ original_url }}" readonly>
+            </div>
+            <label for="shortUrl" class="form-label">Short URL:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="shortUrl" value="{{ shortened_url }}" readonly>
+                <button class="btn btn-outline-secondary" type="button" id="copyButton">Copy</button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 </section>
 {% endblock content %}
