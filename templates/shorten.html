@@ -32,11 +32,29 @@
             <label for="shortUrl" class="form-label">Short URL:</label>
             <div class="input-group">
                 <input type="text" class="form-control" id="shortUrl" value="{{ shortened_url }}" readonly>
-                <button class="btn btn-outline-secondary" type="button" id="copyButton">Copy</button>
+                <button class="btn btn-outline-secondary" type="button" id="copyButton"
+                onclick="copyToClipboard('{{ shortened_url }}')"
+                >Copy</button>
             </div>
         </div>
     </div>
     {% endif %}
 </div>
+<div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">
+    <a href="{{url_for('user_blp.display_urls')}}" class="text-center text-decoration-none text-white">
+        Stats
+    </a>
+</div>
 </section>
+<script>
+    function copyToClipboard(text) {
+        var input = document.createElement('input');
+        input.setAttribute('value', text);
+        document.body.appendChild(input);
+        input.select();
+        var result = document.execCommand('copy');
+        document.body.removeChild(input);
+        return result;
+    }
+</script>
 {% endblock content %}
