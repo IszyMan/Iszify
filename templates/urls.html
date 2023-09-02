@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/urls.css') }}">
+  {% endblock head %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Shortened URLs</h1>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for url in urls %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Short URL</h5>
+                    <p class="card-text"><a href="{{ request.host_url }}{{ url.short_url }}" target="_blank">{{ request.host_url }}{{ url.short_url }}</a></p>
+                    <h5 class="card-title">Original URL</h5>
+                    <p class="card-text"><a href="{{ url.url }}" target="_blank">{{ url.url }}</a></p>
+                    <h5 class="card-title">Clicks</h5>
+                    <p class="card-text">{{ url.clicks }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
