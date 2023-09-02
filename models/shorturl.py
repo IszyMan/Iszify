@@ -2,9 +2,13 @@ from flask_login import UserMixin
 from extensions import db
 from sqlalchemy.orm import relationship
 from hashids import Hashids
-from main import create_app
+# from main import create_app
+from urllib import request
+from urllib.error import HTTPError, URLError
 
-secret = create_app().app.config['SECRET_KEY']
+secret = 'any-secret-key-you-choose'
+print("secret")
+print(secret)
 
 hashids = Hashids(min_length=6, salt=secret)
 
@@ -18,10 +22,14 @@ class Urlshort(UserMixin, db.Model):
     url = db.Column(db.String(250))
     short_url = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
-    created = db.Column(db.DateTime, nullable=False)
+    created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
     def __repr__(self):
         return f"Urlshort('{self.url}', '{self.short_url}', '{self.clicks}', '{self.created}')"
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 # generate short url
@@ -38,3 +46,14 @@ def generate_short_url():
     # Generate the short URL using the counter
     hashid = hashids.encode(counter)
     return hashid
+
+
+# validate url
+def validate_url(url):
+    if not url.startswith('http://') and not url.startswith('https://'):
+        url = 'http://' + url
+    try:
+        request.urlopen(url)
+        return True
+    except (HTTPError, URLError):
+        return False
