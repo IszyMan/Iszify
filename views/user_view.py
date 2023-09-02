@@ -226,9 +226,7 @@ def shorten_url():
 # redirect short url to the original url
 @user_blp.route('/<short_url>/')
 def redirect_to_url(short_url):
-    url = Urlshort.query.filter_by(short_url=short_url).first()
-    if not url:
-        print('Invalid URL')
+    url = Urlshort.query.filter_by(short_url=short_url).first_or_404()
     url.clicks += 1
     db.session.commit()
     print(url.url)
