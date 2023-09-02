@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/short.css') }}">
+  {% endblock head %}
+{% block content %}
+<section class="body2">
+<div class="container containered mt-5">
+    <h1 class="text-center">Short URL Generator</h1>
+    <form action="#" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <label for="originalUrl" class="form-label">Enter the URL to shorten:</label>
+            <input type="url" class="form-control" id="originalUrl" name="originalUrl" placeholder="https://example.com" required>
+            <div class="invalid-feedback">
+                Please enter a valid URL.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="customUrl" class="form-label">Custom short URL (optional):</label>
+            <input type="text" class="form-control" id="customUrl" name="customUrl" placeholder="Custom short URL">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Shorten URL</button>
+    </form>
+</div>
+</section>
+{% endblock content %}
