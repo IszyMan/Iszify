@@ -147,7 +147,7 @@ def profile(sub_path):
 #         return render_template("404.html")
 #     return render_template("brand.html", brandie=brandie.upper())
 
-@user_blp.route('/<brandname>/', methods=["GET", "POST"])
+@user_blp.route('/brand/<brandname>/', methods=["GET", "POST"])
 def brand(brandname):
     check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
     if not check_brand:
@@ -189,7 +189,9 @@ def shorten_url():
     if request.method == 'POST':
         original_url = request.form.get('originalUrl')
         custom_url = request.form.get('customUrl', None)
-        if Urlshort.query.filter_by(url=original_url).first():
+        if Urlshort.query.filter_by(
+                author_id=current_user.id,
+                url=original_url).first():
             flash('URL already exists', 'danger')
             return render_template("shorten.html")
         if not validate_url(original_url):
@@ -198,6 +200,9 @@ def shorten_url():
 
         if custom_url:
             short_url = custom_url
+            if Urlshort.query.filter_by(short_url=short_url).first():
+                flash('Custom URL already exists', 'danger')
+                return render_template("shorten.html")
         else:
             short_url = generate_short_url()
             print(generate_short_url())
@@ -216,3 +221,23 @@ def shorten_url():
                                )
 
     return render_template("shorten.html")
+
+
+# redirect short url to the original url
+@user_blp.route('/<short_url>/')
+def redirect_to_url(short_url):
+    url = Urlshort.query.filter_by(short_url=short_url).first()
+    if not url:
+        print('Invalid URL')
+    url.clicks += 1
+    db.session.commit()
+    print(url.url)
+    return redirect(url.url)
+
+
+# display all shortened urls with their original urls and clicks
+@user_blp.route('/urls')
+@login_required
+def display_urls():
+    urls = Urlshort.query.filter_by(author_id=current_user.id).all()
+    return render_template("urls.html", urls=urls)
