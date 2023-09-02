@@ -1,0 +1,18 @@
+body {
+    background-color: #f8f9fa;
+}
+.containered {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-block{
+    background: rgb(215, 135, 82) !important;
+    padding: 2px 5px !important;
+    border: none !important;
+    font-size: .8rem;
+}
