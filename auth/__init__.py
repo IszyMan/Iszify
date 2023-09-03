@@ -9,7 +9,7 @@ from extensions import db
 auth_blp = Blueprint("auth_blp", __name__)
 
 
-@auth_blp.route('/register/<brandie>/', methods=["GET", "POST"])
+@auth_blp.route('/auth/register/<brandie>/', methods=["GET", "POST"])
 def register(brandie):
     form = RegisterForm()
     if current_user.is_authenticated:
@@ -74,7 +74,7 @@ def register(brandie):
                            form=form, brandie=brandie.upper())
 
 
-@auth_blp.route('/login', methods=["GET", "POST"])
+@auth_blp.route('/auth/login', methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if current_user.is_authenticated:
@@ -103,7 +103,7 @@ def login():
     return render_template("login.html", logged_in=current_user.is_authenticated, form=form)
 
 
-@auth_blp.route('/logout')
+@auth_blp.route('/auth/logout')
 def logout():
     logout_user()
     flash('logged out successfully', 'success')
