@@ -29,7 +29,7 @@ def home():
     return render_template("index.html", form=form)
 
 
-@user_blp.route('/dashboard', methods=["GET", "POST"])
+@user_blp.route('/user/dashboard', methods=["GET", "POST"])
 @login_required
 def dashboard():
     user_id = current_user.id
@@ -66,7 +66,7 @@ def redirect_me():
     return render_template("redirect.html")
 
 
-@user_blp.route('/admin', methods=["GET", "POST"])
+@user_blp.route('/user/admin', methods=["GET", "POST"])
 @login_required
 def admin():
     form = CreatePostForm()
@@ -183,7 +183,7 @@ def delete_product(linkname):
 
 
 # SHORTEN URL SECTION
-@user_blp.route('/shorten_url', methods=['GET', 'POST'])
+@user_blp.route('/urls/shorten_url', methods=['GET', 'POST'])
 @login_required
 def shorten_url():
     if request.method == 'POST':
@@ -234,7 +234,7 @@ def redirect_to_url(short_url):
 
 
 # display all shortened urls with their original urls and clicks
-@user_blp.route('/urls')
+@user_blp.route('/stats/urls')
 @login_required
 def display_urls():
     urls = Urlshort.query.filter_by(author_id=current_user.id).all()
