@@ -194,9 +194,9 @@ def shorten_url():
                 url=original_url).first():
             flash('URL already exists', 'danger')
             return render_template("shorten.html")
-        if not validate_url(original_url):
-            flash('Please enter a valid URL', 'danger')
-            return render_template("shorten.html")
+        # if not validate_url(original_url):
+            # flash('Please enter a valid URL', 'danger')
+            # return render_template("shorten.html")
 
         if custom_url:
             short_url = custom_url
