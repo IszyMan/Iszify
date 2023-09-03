@@ -239,3 +239,15 @@ def redirect_to_url(short_url):
 def display_urls():
     urls = Urlshort.query.filter_by(author_id=current_user.id).all()
     return render_template("urls.html", urls=urls)
+
+
+# delete a shortened url
+@user_blp.route('/urls/delete/<int:url_id>')
+@login_required
+def delete_url(url_id):
+    # check if the url exists and if its for the current user
+    url = Urlshort.query.filter_by(id=url_id, author_id=current_user.id).first_or_404()
+    db.session.delete(url)
+    db.session.commit()
+    flash('URL deleted', 'success')
+    return redirect(url_for('user_blp.display_urls'))
