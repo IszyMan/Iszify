@@ -11,7 +11,7 @@ background: linear-gradient(
 
   <p class=" text-center">
     Your brand url:
-    <a href="/{{current_user.brand_name}}" class='text-light fw-bold'>{{ brand_url }}</a>
+    <a href="/brand/{{current_user.brand_name}}" class='text-light fw-bold'>{{ brand_url }}</a>
   </p>
 </div>
 
@@ -41,16 +41,7 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       {{ form.linkname(class="form-control") }}
     </div>
     <div class="mb-3">
-      {{ form.twitter_link(class="form-control") }}
-    </div>
-    <div class="mb-3">
-      {{ form.facebook_link(class="form-control") }}
-    </div>
-    <div class="mb-3">
-      {{ form.amazon_link(class="form-control") }}
-    </div>
-    <div class="mb-3">
-      {{ form.youtube_link(class="form-control") }}
+      {{ form.link(class="form-control") }}
     </div>
     {{ form.submit(class="btn btn-success border bg-success p-2", style='font-size: 1rem') }}
   </form>
@@ -99,24 +90,14 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
       <!-- <i class="fa fa-copy ms-3 h6 mt-4 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i> -->
     </div>
     <div style='display: flex; justify-content: space-evenly;'>
-      {%if post.twitter_link%}
-      <a href='{{post.twitter_link}}' target='_blank'>
+      {%if post.link_name == "Twitter" %}
+      <a href='{{post.link}}' target='_blank'>
         <i class="fa-brands fa-twitter h1 text-info"></i>
       </a>
       {%endif%}
-      {%if post.amazon_link%}
-      <a href='{{post.amazon_link}}' target='_blank'>
-        <i class="fa-brands fa-amazon h1 text-warning"></i>
-      </a>
-      {%endif%}
-      {%if post.facebook_link%}
-      <a href='{{post.facebook_link}}' target='_blank'>
-        <i class="fa-brands fa-facebook h1"></i>
-      </a>
-      {%endif%}
-      {%if post.youtube_link%}
-      <a href='{{post.youtube_link}}' target='_blank'>
-        <i class="fa-brands fa-youtube h1 text-danger"></i>
+      {% if post.link_name == "Facebook" %}
+      <a href='{{post.link}}' target='_blank'>
+        <i class="fa-brands fa-facebook h1 text-primary"></i>
       </a>
       {%endif%}
     </div>
