@@ -22,25 +22,25 @@
     {%if all_posts%}
     {% for post in all_posts %}
     <div class='card p-3 mt-2'>
-        <a class='h3 mb-4 mt-3 text-muted fw-bold text-decoration-none' href='{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}</a>
+        <a class='h3 mb-4 mt-3 text-muted fw-bold text-decoration-none' href='{{url_for("user_blp.product", brandname=brandie.lower(), linkname=post.linkname)}}'>{{ post.linkname.upper() }}</a>
         <div style='display: flex; justify-content: space-evenly;'>
-            {%if post.twitter_link%}
-            <a href='{{post.twitter_link}}' target='_blank'>
+            {%if post.link_name=="Twitter" %}
+            <a href='{{post.link}}' target='_blank'>
                 <i class="fa-brands fa-twitter h1 text-info"></i>
             </a>
             {%endif%}
-            {%if post.amazon_link%}
-            <a href='{{post.amazon_link}}' target='_blank'>
+            {%if post.link_name=="Amazon" %}
+            <a href='{{post.link}}' target='_blank'>
                 <i class="fa-brands fa-amazon h1 text-warning"></i>
             </a>
             {%endif%}
-            {%if post.facebook_link%}
-            <a href='{{post.facebook_link}}' target='_blank'>
+            {%if post.link_name=="Facebook" %}
+            <a href='{{post.link}}' target='_blank'>
                 <i class="fa-brands fa-facebook h1"></i>
             </a>
             {%endif%}
-            {%if post.youtube_link%}
-            <a href='{{post.youtube_link}}' target='_blank'>
+            {%if post.link_name=="Youtube" %}
+            <a href='{{post.link}}' target='_blank'>
                 <i class="fa-brands fa-youtube h1 text-danger"></i>
             </a>
             {%endif%}
