@@ -35,10 +35,7 @@ class LoginForm(FlaskForm):
 class CreatePostForm(FlaskForm):
     product = StringField("Product", validators=[DataRequired()], render_kw={"placeholder": "Product"})
     linkname = StringField("Link Name ", validators=[DataRequired()], render_kw={"placeholder": "Link name"})
-    twitter_link = StringField("Twitter Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Twitter link"})
-    facebook_link = StringField("Facebook Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Facebook link"})
-    amazon_link = StringField("Amazon Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Amazon link"})
-    youtube_link = StringField("Youtube Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Youtube link"})
+    link = StringField("Twitter Url", validators=[DataRequired(), URL()], render_kw={"placeholder": "Twitter link"})
 
     # categories = SelectField(u'Category', choices=[("Fashion", 'Fashion'), ("Travel", 'Travel')])
 
