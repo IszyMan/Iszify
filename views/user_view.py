@@ -3,8 +3,7 @@ from forms import *
 from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
-from utils import check_if_amazon_url_is_valid, check_if_youtube_url_is_valid, \
-    check_if_twitter_url_is_valid, check_if_facebook_url_is_valid
+from utils import get_platform
 
 user_blp = Blueprint("user_blp", __name__)
 
@@ -35,9 +34,15 @@ def dashboard():
     user_id = current_user.id
     brand_url = f"{request.host_url}{current_user.brand_name}"
     posts = CreateProfile.query.filter_by(author_id=user_id).all()
+
+    url_short = Urlshort.query.filter_by(author_id=user_id).all()
+
     host_url = request.host_url
     brandie = current_user.brand_name
-    return render_template("dashboard.html", all_posts=posts, brand_url=brand_url, brandie=brandie, host_url=host_url)
+    return render_template("dashboard.html",
+                           all_posts=posts, brand_url=brand_url,
+                           brandie=brandie, host_url=host_url,
+                           url_short=url_short,)
 
 
 @user_blp.route('/join', methods=["GET", "POST"])
@@ -71,15 +76,12 @@ def redirect_me():
 def admin():
     form = CreatePostForm()
     user_id = current_user.id
-    brand_url = f"{request.host_url}{current_user.brand_name}"
+    brand_url = f"{request.host_url}brand/{current_user.brand_name}"
     posts = CreateProfile.query.filter_by(author_id=user_id).all()
     brandname = current_user.brand_name
     if request.method == "POST":
         linkname = form.linkname.data.lower()
-        twitter_link = form.twitter_link.data.lower()
-        amazon_link = form.amazon_link.data.lower()
-        youtube_link = form.youtube_link.data.lower()
-        facebook_link = form.facebook_link.data.lower()
+        link = form.link.data.lower()
         product_ = form.product.data.lower()
 
         # if not linkname:
@@ -91,29 +93,10 @@ def admin():
             flash("Link Name already exists!", "danger")
             return redirect(url_for("user_blp.admin"))
 
-        if twitter_link:
-            if not check_if_twitter_url_is_valid(twitter_link):
-                flash("Invalid Twitter URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-        if amazon_link:
-            if not check_if_amazon_url_is_valid(amazon_link):
-                flash("Invalid Amazon URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-        if youtube_link:
-            if not check_if_youtube_url_is_valid(youtube_link) :
-                flash("Invalid Youtube URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-        if facebook_link:
-            if not check_if_facebook_url_is_valid(facebook_link) :
-                flash("Invalid Facebook URL", "danger")
-                return redirect(url_for("user_blp.admin"))
-
         new_post = CreateProfile(
             linkname=linkname,
-            twitter_link=twitter_link,
-            amazon_link=amazon_link,
-            youtube_link=youtube_link,
-            facebook_link=facebook_link,
+            link=link,
+            link_name=get_platform(link),
             product=product_,
             author=current_user,
             author_id=user_id
