@@ -6,8 +6,9 @@
 <div class="dashdiv">
     <div class="d-flex justify-content-end py-3 container align-item-center">
         <div>
-        <a href="{{url_for('user_blp.admin')}}" class="btn" style="margin-right: .6rem;">Create Product</a>
+        <a href="{{url_for('user_blp.admin')}}" class="btn" style="margin-right: .6rem;">Create Bio</a>
         <a href="{{url_for('user_blp.shorten_url')}}" class="btn">Shorten Url</a>
+        <a href="" class="btn">QR Codes</a>  
     </div>
     </div>
 </div>
@@ -61,7 +62,7 @@
         </div>
         {% else %}
         <div class="stylethis2 m-auto" style="width: fit-content;">
-            <h1 class="text-center m-auto p-3">No Products Yet</h1>
+            <h1 class="text-center m-auto p-3">No Link Yet</h1>
         </div>
       {% endif %}
 <!-- url short -->
