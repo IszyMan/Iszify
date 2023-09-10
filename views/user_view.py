@@ -82,7 +82,6 @@ def admin():
     if request.method == "POST":
         linkname = form.linkname.data.lower()
         link = form.link.data.lower()
-        product_ = form.product.data.lower()
 
         # if not linkname:
         #     flash("Link Name Required", "danger")
@@ -97,7 +96,6 @@ def admin():
             linkname=linkname,
             link=link,
             link_name=get_platform(link),
-            product=product_,
             author=current_user,
             author_id=user_id
         )
