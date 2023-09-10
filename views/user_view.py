@@ -101,6 +101,7 @@ def admin():
         )
         db.session.add(new_post)
         db.session.commit()
+        flash("Link Added", "success")
         return redirect(url_for("user_blp.admin"))
     return render_template("admin.html", all_posts=posts,
                            name=current_user.first_name.title(),
