@@ -24,7 +24,7 @@
           </span>
           <div class="cols">
             <div class=" mb-4 stylethis">
-              <div class="card">
+              <div class="card card_this">
                 <a class=' text-muted h4 py-3 fw-bold text-decoration-none text-center' href="{{url_for('user_blp.product', brandname=brandie.lower(), linkname=post.linkname)}}">{{ post.linkname.upper() }} </a>
                 <!-- Add more content here as needed -->
                 <div style='display: flex; justify-content: space-evenly; align-items: center;' class="mt-3 w-75 m-auto">
@@ -66,7 +66,7 @@
       {% endif %}
 <!-- url short -->
       {% if url_short %}
-      <h5 class="mt-4">SHORTENED URLS</h5>
+      <h5 class="mt-4 text-center">SHORTENED URLS</h5>
       <div class="rows">
         {% for url in url_short|reverse %}
         
