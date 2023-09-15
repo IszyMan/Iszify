@@ -233,3 +233,11 @@ def delete_url(url_id):
     db.session.commit()
     flash('URL deleted', 'success')
     return redirect(url_for('user_blp.display_urls'))
+
+
+@user_blp.route('/qr_codes', methods=['GET'])
+@login_required
+def qr_codes():
+    # query for short urls for a current user
+    urls = Urlshort.query.filter_by(author_id=current_user.id).all()
+    return render_template("qr_codes.html", urls=urls)
