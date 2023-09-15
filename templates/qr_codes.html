@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/gr_codes.css') }}">
+{% endblock head %}
+{% block content %}
+<!-- display in grids -->
+<div class="rw_this">
+    {% for url in urls|reverse %}
+
+    <div class="col_this card p-3">
+        <a href="{{ request.host_url }}{{ url.short_url }}" class="text-center mx-auto">
+            {{ request.host_url }}{{ url.short_url }}
+        </a>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
+            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" />
+    </div>
+
+    {% endfor %}
+
+</div>
+{% endblock content %}
