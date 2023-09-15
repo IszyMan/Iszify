@@ -15,6 +15,12 @@
                     <p class="card-text"><a href="{{ request.host_url }}{{ url.short_url }}" target="_blank">{{ request.host_url }}{{ url.short_url }}</a></p>
                     <h5 class="card-title">Original URL</h5>
                     <p class="card-text"><a href="{{ url.url }}" target="_blank">{{ url.url }}</a></p>
+                    <p>
+                        <img
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
+                      alt="QR Code"
+                    />
+                    </p>
                     <h5 class="card-title">Clicks</h5>
                     <p class="card-text">{{ url.clicks }}</p>
                 </div>
