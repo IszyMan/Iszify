@@ -36,6 +36,12 @@
                 onclick="copyToClipboard('{{ shortened_url }}')"
                 >Copy</button>
             </div>
+            <div class="d-flex mx-auto mt-4">
+                <img
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ shortened_url }}"
+                      alt="QR Code" class="mx-auto"
+                    />
+            </div>
         </div>
     </div>
     {% endif %}
