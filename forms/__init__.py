@@ -12,8 +12,8 @@ from wtforms.widgets import TextInput
 
 
 class GenerateBrandName(FlaskForm):
-    brandname = StringField("Brand Name", validators=[DataRequired()])
-    submit = SubmitField("Create your Brand!")
+    brandname = StringField("Bio Name", validators=[DataRequired()])
+    submit = SubmitField("Create your Bio!")
 
 
 class RegisterForm(FlaskForm):
