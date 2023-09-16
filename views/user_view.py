@@ -156,12 +156,13 @@ def product(brandname, linkname):
 @login_required
 def delete_product(linkname):
     check_product = CreateProfile.query.filter_by(linkname=linkname.lower()).first()
+    referer = request.headers.get('Referer')
     if not check_product:
         return render_template("404.html")
     db.session.delete(check_product)
     db.session.commit()
     flash('Product deleted', 'success')
-    return redirect(url_for('user_blp.dashboard'))
+    return redirect(referer or url_for('user_blp.dashboard'))
 
 
 # SHORTEN URL SECTION
