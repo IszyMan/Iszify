@@ -235,6 +235,7 @@ def delete_url(url_id):
     return redirect(url_for('user_blp.display_urls'))
 
 
+# This is the page to display all the qr codes for the current user
 @user_blp.route('/qr_codes', methods=['GET'])
 @login_required
 def qr_codes():
