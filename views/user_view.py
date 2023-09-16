@@ -229,10 +229,11 @@ def display_urls():
 def delete_url(url_id):
     # check if the url exists and if its for the current user
     url = Urlshort.query.filter_by(id=url_id, author_id=current_user.id).first_or_404()
+    referer = request.headers.get('Referer')
     db.session.delete(url)
     db.session.commit()
     flash('URL deleted', 'success')
-    return redirect(url_for('user_blp.display_urls'))
+    return redirect(referer or url_for('user_blp.display_urls'))
 
 
 # This is the page to display all the qr codes for the current user
