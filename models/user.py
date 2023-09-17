@@ -18,6 +18,7 @@ class User(UserMixin, db.Model):
     # brand = relationship("ChooseBrandName", back_populates="brand") #THIS IS NOT IN USE
     posts = relationship("CreateProfile", back_populates="author")
     urlshort = relationship("Urlshort", back_populates="author")
+    qr_code = relationship("QrCode", back_populates="author")
 
 
 def get_profile_link(brand_name):
