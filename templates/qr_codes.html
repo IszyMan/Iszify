@@ -5,6 +5,7 @@
 {% block content %}
 <!-- display in grids -->
 <div class="container containered mt-5" style="max-width: 600px;">
+  {% if not n %}
   <h1 class="text-center">Short URL Generator</h1>
   <form action="" method="POST">
       <div class="mb-3">
@@ -16,6 +17,35 @@
       </div>
       <button type="submit" class="btn btn-primary btn-block">Create QR</button>
   </form>
+  {% endif %}
+  {% if n %}
+  <!-- Add this div at the bottom of your existing HTML content -->
+<div id="overlay" class="overlay">
+  <div class="overlay-content">
+      <div id="qrcode-details" class="qrcode-details">
+          <!-- QR code details content goes here -->
+          
+          <p>Details of existing QR code:</p>
+          <div class="col_this card p-3">
+            <a href="{{ url }}" class="text-center mx-auto w-100">
+                {{ url }}
+            </a>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url }}"
+                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />
+    
+            <!-- Add a Font Awesome download icon and trash icon side by side -->
+            <div class="d-flex justify-content-around align-items-center mt-5 mb-4 w-100 position-absolute bottom-0">
+                <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
+                    <i class="fas fa-download h4"></i>
+                </a>
+            </div>
+    
+            <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
+        </div>
+      </div>
+  </div>
+</div>
+{% endif %}
 
   <!-- button to view all qr codes created -->
   <div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">
@@ -23,10 +53,29 @@
           View QR Codes
       </a>
 </div>
+</div>
+
+<!-- overlay -->
+
+
+
 
 <script>
     function confirmDelete() {
       return confirm('Are you sure you want to delete?');
+    }
+
+    function downloadQR(qrUrl, id) {
+        fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = "qr_code_" + id + ".png";
+                link.click();
+                window.URL.revokeObjectURL(url);
+            });
     }
 </script>
 {% endblock content %}

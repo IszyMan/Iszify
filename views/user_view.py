@@ -250,6 +250,13 @@ def qr_codes():
             return render_template("qr_codes.html")
         if not url.startswith('http://') and not url.startswith('https://'):
             url = 'http://' + url
+        # check if the url exists
+        existing_qr_code = QrCode.query.filter_by(
+            author_id=current_user.id,
+            url=url).first()
+        if existing_qr_code:
+            flash('QR Code already exists', 'danger')
+            return render_template("qr_codes.html", n=1, url=existing_qr_code.url)
         new_qr_code = QrCode(
             author=current_user,
             author_id=current_user.id,
@@ -258,7 +265,7 @@ def qr_codes():
         new_qr_code.save()
         flash('QR Code has been generated successfully!', 'success')
         return redirect(url_for('user_blp.display_qr_codes'))
-    return render_template("qr_codes.html")
+    return render_template("qr_codes.html", n=0)
 
 
 # display all qr codes for the current user
