@@ -37,12 +37,14 @@ def dashboard():
 
     url_short = Urlshort.query.filter_by(author_id=user_id).all()
 
+    qr_codes_ = QrCode.query.filter_by(author_id=user_id).all()
+
     host_url = request.host_url
     brandie = current_user.brand_name
     return render_template("dashboard.html",
                            all_posts=posts, brand_url=brand_url,
                            brandie=brandie, host_url=host_url,
-                           url_short=url_short,)
+                           url_short=url_short, qr_codes_=qr_codes_)
 
 
 @user_blp.route('/join', methods=["GET", "POST"])
@@ -238,9 +240,42 @@ def delete_url(url_id):
 
 
 # This is the page to display all the qr codes for the current user
-@user_blp.route('/qr_codes', methods=['GET'])
+@user_blp.route('/qr_codes', methods=['GET', 'POST'])
 @login_required
 def qr_codes():
-    # query for short urls for a current user
-    urls = Urlshort.query.filter_by(author_id=current_user.id).all()
-    return render_template("qr_codes.html", urls=urls)
+    if request.method == 'POST':
+        url = request.form.get('url')
+        if not url:
+            flash('Please enter a URL', 'danger')
+            return render_template("qr_codes.html")
+        if not url.startswith('http://') and not url.startswith('https://'):
+            url = 'http://' + url
+        new_qr_code = QrCode(
+            author=current_user,
+            author_id=current_user.id,
+            url=url,
+        )
+        new_qr_code.save()
+        flash('QR Code has been generated successfully!', 'success')
+        return redirect(url_for('user_blp.display_qr_codes'))
+    return render_template("qr_codes.html")
+
+
+# display all qr codes for the current user
+@user_blp.route('/stats/qr_codes')
+@login_required
+def display_qr_codes():
+    qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
+    return render_template("display_qr.html", urls=qrcodes)
+
+
+# delete a qr code
+@user_blp.route('/qr_codes/delete/<int:qr_id>')
+@login_required
+def delete_qr_code(qr_id):
+    # check if the qr code exists and if its for the current user
+    qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first_or_404()
+    referer = request.headers.get('Referer')
+    qrcode.delete()
+    flash('QR Code deleted', 'success')
+    return redirect(referer or url_for('user_blp.display_qr_codes'))
