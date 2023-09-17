@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/display_codes.css') }}">
+{% endblock head %}
+{% block content %}
+<!-- display in grids -->
+<div class="rw_this">
+    {% for url in urls|reverse %}
+
+    <div class="col_this card p-3">
+        <a href="{{ url.url }}" class="text-center mx-auto w-100">
+            {{ url.url }}
+        </a>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.url }}"
+            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />
+
+        <!-- Add a Font Awesome download icon and trash icon side by side -->
+        <div class="d-flex justify-content-around align-items-center mt-5 mb-4 w-100 position-absolute bottom-0">
+            <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
+                <i class="fas fa-download h4"></i>
+            </a>
+            <a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
+                <i class="fas fa-trash-alt text-danger h4"></i>
+            </a>
+        </div>
+
+        <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
+    </div>
+
+    {% endfor %}
+</div>
+
+<script>
+    function confirmDelete() {
+      return confirm('Are you sure you want to delete?');
+    }
+
+    function downloadQR(qrUrl, id) {
+        fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = "qr_code_" + id + ".png";
+                link.click();
+                window.URL.revokeObjectURL(url);
+            });
+    }
+</script>
+{% endblock content %}
