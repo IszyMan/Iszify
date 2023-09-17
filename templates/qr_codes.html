@@ -4,35 +4,24 @@
 {% endblock head %}
 {% block content %}
 <!-- display in grids -->
-<div class="rw_this">
-    {% for url in urls|reverse %}
+<div class="container containered mt-5" style="max-width: 600px;">
+  <h1 class="text-center">Short URL Generator</h1>
+  <form action="" method="POST">
+      <div class="mb-3">
+          <label for="originalUrl" class="form-label">Enter the URL to create QR code:</label>
+          <input type="url" class="form-control" id="originalUrl" name="url" placeholder="https://example.com" required>
+          <div class="invalid-feedback">
+              Please enter a valid URL.
+          </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Create QR</button>
+  </form>
 
-    <div class="col_this card p-3">
-        <a href="{{ request.host_url }}{{ url.short_url }}" class="text-center mx-auto">
-            {{ request.host_url }}{{ url.short_url }}
-        </a>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
-            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" />
-
-            <hr>
-            <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
-              style="width: fit-content;">
-              <span class="ms-4">Clicks</span>
-              <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
-                margin-left: -25px;
-                ">
-                {{url.clicks}}
-                <span class="visually-hidden">Clicks</span>
-              </span>
-              <a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()">
-                <i class="fa fa-trash-alt text-danger ms-5"></i>
-              </a>
-              <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
-            </p>
-    </div>
-
-    {% endfor %}
-
+  <!-- button to view all qr codes created -->
+  <div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">
+      <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-center text-decoration-none text-white">
+          View QR Codes
+      </a>
 </div>
 
 <script>
