@@ -260,7 +260,7 @@ def qr_codes():
         new_qr_code = QrCode(
             author=current_user,
             author_id=current_user.id,
-            url=url,
+            url=url
         )
         new_qr_code.save()
         flash('QR Code has been generated successfully!', 'success')
