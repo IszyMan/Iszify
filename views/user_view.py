@@ -211,6 +211,12 @@ def shorten_url():
 # redirect short url to the original url
 @user_blp.route('/<short_url>/')
 def redirect_to_url(short_url):
+    if short_url == 'qr-code':
+        return redirect(url_for('user_blp.qr_code_info'))
+    if short_url == 'url-shortener':
+        return redirect(url_for('user_blp.url_shortener_info'))
+    if short_url == 'biolink':
+        return redirect(url_for('user_blp.biolink'))
     url = Urlshort.query.filter_by(short_url=short_url).first_or_404()
     url.clicks += 1
     db.session.commit()
@@ -286,3 +292,19 @@ def delete_qr_code(qr_id):
     qrcode.delete()
     flash('QR Code deleted', 'success')
     return redirect(referer or url_for('user_blp.display_qr_codes'))
+
+
+# qr code for all users (logged in or not )
+@user_blp.route('/qr-code')
+def qr_code_info():
+    return render_template("qr_code_info.html")
+
+
+@user_blp.route('/biolink')
+def biolink():
+    return render_template("biolink.html")
+
+
+@user_blp.route('/url-shortener')
+def url_shortener_info():
+    return render_template("url_shortener_info.html")
