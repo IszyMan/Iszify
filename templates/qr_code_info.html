@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='qr_code_info.css') }}">
+  {% endblock head %}
+{% block content %}
+<div class="container-fluid bg-info text-white text-center py-5">
+    <h1>Generate QR Codes</h1>
+    <p class="lead">Create QR codes for your links, contacts, and more.</p>
+    <a href="{{ url_for('user_blp.home') }}" class="btn btn btn-lg" style="background: rgb(49, 161, 171) !important;">Get Started</a>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="text-center">Easy to Use</h2>
+            <p class="text-center">Our QR code generator is user-friendly and requires no technical expertise.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Customizable</h2>
+            <p class="text-center">Tailor your QR codes with colors and styles to match your brand.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Multiple Types</h2>
+            <p class="text-center">Generate QR codes for websites, contacts, WiFi access, and more.</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
