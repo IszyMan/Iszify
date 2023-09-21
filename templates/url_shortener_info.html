@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='url_shortener_info.css') }}">
+  {% endblock head %}
+{% block content %}
+
+<div class="container-fluid bg-primary text-white text-center py-5">
+    <h1>Welcome to URL Shortener</h1>
+    <p class="lead">Shorten long URLs quickly and easily.</p>
+    <a href="{{ url_for('user_blp.home') }}" class="btn btn btn-lg" style="background: rgb(49, 79, 171) !important;">Get Started</a>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="text-center">Easy to Use</h2>
+            <p class="text-center">Our platform allows you to shorten URLs with just one click. No technical skills required.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Customizable</h2>
+            <p class="text-center">Customize your short URLs to make them memorable and meaningful for your audience.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Analytics</h2>
+            <p class="text-center">Track the performance of your short URLs with detailed analytics and insights.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
