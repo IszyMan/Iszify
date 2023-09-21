@@ -80,6 +80,18 @@
           <li class="nav-item">
             <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-light ">Logout</a>
           </li>
+
+          <!-- <li class="nav-item">
+            <a href="{{ url_for('user_blp.qr_code_info') }}" class="nav-link text-white">QR Code</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url_for('user_blp.biolink') }}" class="nav-link text-white">Bio Link</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-white">Url Shortener</a> -->
+          </li>
           {% block link %}
 
           {% endblock link %}
@@ -102,8 +114,20 @@
           <li class="nav-item">
             <a href="" class="nav-link text-white">Contact</a> -->
           </li>
+          
           <li class="nav-item">
             <a href="{{ url_for('auth_blp.login') }}" class="nav-link text-white">Login</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('user_blp.qr_code_info') }}" class="nav-link text-white">QR Code</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url_for('user_blp.biolink') }}" class="nav-link text-white">Bio Link</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-white">Url Shortener</a>
           </li>
         </ul>
         {% endif %}
