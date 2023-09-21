@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='biolink.css') }}">
+  {% endblock head %}
+{% block content %}
+<div class="container-fluid bg-success text-white text-center py-5">
+    <h1>Create Your Bio Link Page</h1>
+    <p class="lead">Share all your important links in one place.</p>
+    <a href="{{ url_for('user_blp.home') }}" class="btn btn btn-lg" style="background: rgb(49, 171, 67) !important;">Get Started</a>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="text-center">Personalize</h2>
+            <p class="text-center">Customize your bio link page with your own profile picture and bio.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Multiple Links</h2>
+            <p class="text-center">Add links to your social media profiles, websites, and more.</p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Easy Sharing</h2>
+            <p class="text-center">Share your bio link with your audience through social media, email, and more.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
