@@ -98,8 +98,10 @@
         </ul>
         <ul class="navbar-nav ms-auto mt-2">
           <li class="nav-item d-flex justify-content-end align-items-start">
+             <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="text-decoration-none nav-item d-flex justify-content-end align-items-start">
               <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
-          </li>
+          </a>
+            </li>
         </ul>
 
         {% else %}
