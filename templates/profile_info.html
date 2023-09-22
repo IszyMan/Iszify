@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile_info.css') }}">
+  {% endblock head %}
+{% block content %}
+<h2 class="text-center text-muted mb-5">MY PROFILE</h2>
+<section class="row">
+    <div class="px-3 py-4 h-50 col-lg-8 col-md-6 my-auto" style="background: rgb(242, 245, 210); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+        <!-- current user info -->
+        <p class="h6"><span class="text-muted">NAME:</span> {{ current_user.last_name.title() }} {{ current_user.first_name.title() }}</p>
+        <p class="h6"><span class="text-muted">EMAIL:</span> {{ current_user.email }}</p>
+        <p class="h6"><span class="text-muted">BRAND:</span> {{ current_user.brand_name }}</p>
+        <p class="h6"><span class="text-muted">USERNAME:</span> {{ current_user.username }}</p>
+        <p class="h6"><span class="text-muted">BRAND LINK:</span> <a href="{{ request.host_url }}brand/{{ current_user.brand_name }}" target="_blank">{{ request.host_url }}brand/{{ current_user.brand_name }}</a></p>
+    </div>
+    
+    <div class="py-5 col-lg-3 col-md-3" style="background: rgb(245, 214, 210); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); text-align: center;">
+        <!-- QR code -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}brand/{{ current_user.brand_name }}"
+             alt="QR Code"
+             class="mx-auto d-block img-thumbnail mt-3"
+             style="width: 150px; height: 150px; border: 4px solid #333; border-radius: 10px;"
+        />
+        <a href="javascript:void(0);" onclick="downloadQR('{{ request.host_url }}brand/{{ current_user.brand_name }}', '{{current_user.id}}')" class=" px-2"
+      >
+        <i class="fas fa-download h6 mt-3 bg-primary text-light py-2 rounded px-3"></i>
+    </a>
+    </div>
+    
+</section>
+
+<script>
+    function downloadQR(qrUrl, id) {
+        fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = "qr_code_" + id + ".jpg";
+                link.click();
+                window.URL.revokeObjectURL(url);
+            });
+    }
+</script>
+{% endblock content %}
