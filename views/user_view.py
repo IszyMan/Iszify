@@ -308,3 +308,9 @@ def biolink():
 @user_blp.route('/url-shortener')
 def url_shortener_info():
     return render_template("url_shortener_info.html")
+
+
+@user_blp.route('/profile/<username>')
+@login_required
+def profile_info(username):
+    return render_template("profile_info.html")
