@@ -7,7 +7,14 @@
 <div class="container-fluid bg-primary text-white text-center py-5">
     <h1>Welcome to URL Shortener</h1>
     <p class="lead">Shorten long URLs quickly and easily.</p>
-    <a href="{{ url_for('user_blp.home') }}" class="btn btn btn-lg" style="background: rgb(49, 79, 171) !important;">Get Started</a>
+    <form method="post" action="#" data-trigger="shorten-form" class="mt-3 mb-5 border rounded p-3">
+		<div class="input-group input-group-lg align-items-center">
+		<input type="text" class="form-control " placeholder="Paste a long url" name="url" id="url">
+		<div class="input-group-append">
+		<button class="btn btn-primary" type="submit">Shorten</button>
+		</div>
+		</div>
+		</form>
 </div>
 
 <div class="container mt-5">
