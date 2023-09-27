@@ -15,11 +15,8 @@ def home():
     if current_user.is_authenticated:
         return redirect(url_for('user_blp.admin'))
     if request.method == "POST" and "bt1" in request.form:
-        print(request.form.get('bt1'))
-        print("bt1")
         original_url = request.form.get('url')
         short_url = generate_short_url()
-        print(generate_short_url())
 
         url = Urlshort(
             url=original_url,
@@ -31,17 +28,17 @@ def home():
                                shortened_url=f"{request.host_url}{short_url}",
                                original_url=original_url, show=1
                                )
-        # elif request.form.get('bt2'):
-        #     brand_name = request.form.get('brandname').lower()
-        #     if not brand_name:
-        #         flash('Input Required', 'danger')
-        #         return redirect(url_for('user_blp.home'))
-        #     user_ = User.query.filter_by(brand_name=brand_name).first()
-        #     if user_:
-        #         # User with that brand already exists
-        #         flash("Brand Name already exists!", "danger")
-        #         return redirect(url_for('user_blp.home'))
-        #     return redirect(url_for('auth_blp.register', brandie=brand_name))
+    elif request.method == "POST" and "bt2" in request.form:
+        brand_name = request.form.get('brandname').lower()
+        if not brand_name:
+            flash('Input Required', 'danger')
+            return redirect(url_for('user_blp.home'))
+        user_ = User.query.filter_by(brand_name=brand_name).first()
+        if user_:
+            # User with that brand already exists
+            flash("Brand Name already exists!", "danger")
+            return redirect(url_for('user_blp.home'))
+        return redirect(url_for('auth_blp.register', brandie=brand_name))
     return render_template("index.html")
 
 
