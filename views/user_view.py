@@ -10,22 +10,39 @@ user_blp = Blueprint("user_blp", __name__)
 
 @user_blp.route('/', methods=["GET", "POST"])
 def home():
-    form = GenerateBrandName()
+    # form = GenerateBrandName()
     # posts = CreateProfile.query.all()
     if current_user.is_authenticated:
         return redirect(url_for('user_blp.admin'))
-    if request.method == "POST":
-        brand_name = request.form.get('brandname').lower()
-        if not brand_name:
-            flash('Input Required', 'danger')
-            return redirect(url_for('user_blp.home'))
-        user_ = User.query.filter_by(brand_name=brand_name).first()
-        if user_:
-            # User with that brand already exists
-            flash("Brand Name already exists!", "danger")
-            return redirect(url_for('user_blp.home'))
-        return redirect(url_for('auth_blp.register', brandie=brand_name))
-    return render_template("index.html", form=form)
+    if request.method == "POST" and "bt1" in request.form:
+        print(request.form.get('bt1'))
+        print("bt1")
+        original_url = request.form.get('url')
+        short_url = generate_short_url()
+        print(generate_short_url())
+
+        url = Urlshort(
+            url=original_url,
+            short_url=short_url,
+        )
+        url.save()
+        # flash('URL has been shortened successfully!', 'success')
+        return render_template("index.html",
+                               shortened_url=f"{request.host_url}{short_url}",
+                               original_url=original_url, show=1
+                               )
+        # elif request.form.get('bt2'):
+        #     brand_name = request.form.get('brandname').lower()
+        #     if not brand_name:
+        #         flash('Input Required', 'danger')
+        #         return redirect(url_for('user_blp.home'))
+        #     user_ = User.query.filter_by(brand_name=brand_name).first()
+        #     if user_:
+        #         # User with that brand already exists
+        #         flash("Brand Name already exists!", "danger")
+        #         return redirect(url_for('user_blp.home'))
+        #     return redirect(url_for('auth_blp.register', brandie=brand_name))
+    return render_template("index.html")
 
 
 @user_blp.route('/user/dashboard', methods=["GET", "POST"])
@@ -180,8 +197,8 @@ def shorten_url():
             flash('URL already exists', 'danger')
             return render_template("shorten.html")
         # if not validate_url(original_url):
-            # flash('Please enter a valid URL', 'danger')
-            # return render_template("shorten.html")
+        # flash('Please enter a valid URL', 'danger')
+        # return render_template("shorten.html")
 
         if custom_url:
             short_url = custom_url
