@@ -16,10 +16,17 @@
       <strong><p class="fs-5 mb-5 text-center">Create short or customise URLs for free </p></strong>
       <form method="POST" action="" class="mt-3 mb-5 border rounded p-3">
 		<div class="input-group input-group-lg align-items-center">
-		<input type="text" class="form-control border-0" placeholder="Paste a long url" name="url" id="url">
-		<div class="input-group-append">
-		<button class="btn btn-primary" type="submit" name="bt1">Shorten</button>
-		</div>
+      {% if show %}
+      <input type="text" class="form-control border-0" placeholder="" value="{{ shortened_url }}" disabled name="url" id="url">
+      <div class="input-group-append">
+        <button class="btn btn-primary" name="bt1">Copy</button>
+        </div>
+      {% else %}
+      <input type="text" class="form-control border-0" placeholder="Paste a long url" name="url" id="url">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit" name="bt1">Shorten</button>
+        </div>
+      {% endif %}
 		</div>
 		</form>
       <div >
