@@ -18,8 +18,9 @@
 		<div class="input-group input-group-lg align-items-center">
       {% if show %}
       <input type="text" class="form-control border-0" placeholder="" value="{{ shortened_url }}" disabled name="url" id="url">
-      <div class="input-group-append">
-        <button class="btn btn-primary" name="bt1">Copy</button>
+      <div class="input-group-append border">
+        <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" onclick="copyText()" style="cursor: pointer;"></i> -->
+        <span class="btn btn-primary" onclick="copyText()" name="bt1">Copy</span>
         </div>
       {% else %}
       <input type="text" class="form-control border-0" placeholder="Paste a long url" name="url" id="url">
@@ -29,6 +30,18 @@
       {% endif %}
 		</div>
 		</form>
+    {% if show %}
+    <div class="row">
+      <div class="col md-4">
+        <!-- qr code link -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ shortened_url }}"
+                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />
+      </div>
+      <div class="col md-8">
+        <h1>Register to get QR code and get more of your link</h1>
+      </div>
+    </div>
+    {% endif %}
       <div >
       	<p>
 		<ul class="list-unstyled mb-2 text-muted small">
@@ -277,9 +290,21 @@
     
     // Check the value of `showValue` and show the button if it's "true"
     if (showValue == 1) {
-      document.getElementById("myButton").click();
+      document.getElementById("myButton");
     }
   });
+
+  async function copyText() {
+    var copyText = document.getElementById("url");
+    try {
+        await navigator.clipboard.writeText(copyText.value);
+        alert("Short url copied");
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+    }
+}
+
+
 </script>
 
 
