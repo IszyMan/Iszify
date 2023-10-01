@@ -8,7 +8,7 @@ body {
   /* min-height: 1050px; */
   background-color: white !important;
   min-height: 100vh;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 }
 
 nav{
@@ -121,8 +121,8 @@ nav{
   /* footer */
 
 footer{
-  background: #241468;
-  margin-top: 7rem;
+  background: #38373c;
+  /* margin-top: 7rem; */
 }
 
 .footer-div{
@@ -135,10 +135,10 @@ footer{
 }
 
 
-.footer-brand img{
+/* .footer-brand img{
   filter: grayscale(100%) brightness(10);
   width: 3rem;
-}
+} */
 
 .footer-brand{
   display: flex;
