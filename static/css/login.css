@@ -18,10 +18,11 @@ body::before {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 105vh;
     background: url('../boy.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     /* Apply the filter to the background image */
     filter: brightness(55%) contrast(120%) sepia(20%);
     z-index: -1;
