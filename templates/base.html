@@ -81,7 +81,7 @@
             <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-dark ">Logout</a>
           </li>
 
-          <!-- <li class="nav-item">
+           <li class="nav-item">
             <a href="{{ url_for('user_blp.qr_code_info') }}" class="nav-link text-white">QR Code</a>
           </li>
 
@@ -90,8 +90,8 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-white">Url Shortener</a> -->
-          </li>
+            <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-white">Url Shortener</a>
+
           {% block link %}
 
           {% endblock link %}
@@ -133,6 +133,7 @@
         <div class="col-md-3 text-end flex-fill" id="login-menu">
 
             <a href="{{ url_for('auth_blp.login') }}" class="btn btn-outline-primary me-3 fw-bold align-items-center">Login</a>
+            <a href="#" class="btn btn-outline-primary me-3 fw-bold align-items-center">Register</a>
 
         </div>
 
