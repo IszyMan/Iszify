@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock head %}
+{% block content %}
+<div class="">
+    {% if biolinks %}
+    <div class="rows">
+        {% for post in biolinks|reverse %}
+          <div class="cols">
+            <div class=" mb-4 stylethis">
+              <div class="card card_this">
+                <a class=' text-muted h4 py-3 fw-bold text-decoration-none text-center'>{{ post.linkname.upper() }} </a>
+                <!-- Add more content here as needed -->
+                <div style='display: flex; justify-content: space-evenly; align-items: center;' class="mt-3 w-75 m-auto">
+                    {%if post.link_name=="Twitter" %}
+                    <a href='{{post.link}}' target='_blank'>
+                      <i class="fa-brands fa-twitter h4 text-info stylethis2 rounded-circle p-2"></i>
+                    </a>
+                    {%endif%}
+                    {%if post.link_name=="Facebook" %}
+                    <a href='{{post.link}}' target='_blank'>
+                      <i class="fa-brands fa-facebook h4 text-primary stylethis2 rounded-circle p-2"></i>
+                    </a>
+                    {%endif%}
+                  </div>
+                  <hr>
+                  <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
+                    style="width: fit-content;">
+                    <span class="ms-4">Clicks</span>
+                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
+                      margin-left: -25px;
+                      ">
+                      {{post.clicks}}
+                      <span class="visually-hidden">Clicks</span>
+                    </span>
+                    <a href="/delete/{{post.linkname}}" onclick="return confirmDelete()">
+                      <i class="fa fa-trash-alt text-danger ms-5"></i>
+                    </a>
+                    <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i>
+                  </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        {% else %}
+
+      {% endif %}
+<!-- url short -->
+      {% if url_short %}
+      <h5 class="mt-4 text-center">SHORTENED URLS</h5>
+      <div class="rows">
+        {% for url in url_short|reverse %}
+        
+          <div class="cols">
+            <div class=" mb-4 stylethis">
+              <div class="card">
+                <!-- Add more content here as needed -->
+                <div class="mt-3 w-75 m-auto">
+                    <!-- original and short url -->
+                    <p>{{url.url}}</p> <br>
+                    <a href='{{url.short_url}}' target='_blank'>
+                      {{host_url}}{{url.short_url}}
+                    </a>
+                  </div>
+                  <hr>
+                  <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
+                    style="width: fit-content;">
+                    <span class="ms-4">Clicks</span>
+                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
+                      margin-left: -25px;
+                      ">
+                      {{url.clicks}}
+                      <span class="visually-hidden">Clicks</span>
+                    </span>
+                    <a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()">
+                      <i class="fa fa-trash-alt text-danger ms-5"></i>
+                    </a>
+                    <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
+                  </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <!-- <div class="stylethis2 m-auto" style="width: fit-content;">
+            <h1 class="text-center m-auto p-3">No Products Yet</h1>
+        </div> -->
+      {% endif %}
+
+      <!-- qr code -->
+      {% if qr_codes_ %}
+      <h5 class="mt-4 text-center">QR CODES</h5>
+
+      <div class="rw_this">
+        {% for url in qr_codes_|reverse %}
+    
+        <div class="col_this card p-3">
+            <a href="{{ url.url }}" class="text-center mx-auto w-100">
+                {{ url.url }}
+            </a>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.url }}"
+                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />
+    
+            <!-- Add a Font Awesome download icon and trash icon side by side -->
+            <div class="d-flex justify-content-around align-items-center mt-5 mb-4 w-100 position-absolute bottom-0">
+                <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
+                    <i class="fas fa-download h4"></i>
+                </a>
+                <a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
+                    <i class="fas fa-trash-alt text-danger h4"></i>
+                </a>
+            </div>
+    
+            <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
+        </div>
+    
+        {% endfor %}
+    </div>
+    {% endif %}
+    </div>
+{% endblock content %}
