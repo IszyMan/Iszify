@@ -8,7 +8,7 @@ body {
   /* min-height: 1050px; */
   background-color: white !important;
   min-height: 100vh;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 }
 
 nav{
@@ -116,3 +116,46 @@ nav{
   /* body{
     background: #373636;
   } */
+
+
+  /* footer */
+
+footer{
+  background: #38373c;
+  /* margin-top: 7rem; */
+}
+
+.footer-div{
+  width: 90%;
+  margin: auto;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  /* display: flex;
+  justify-content: space-between; */
+}
+
+
+/* .footer-brand img{
+  filter: grayscale(100%) brightness(10);
+  width: 3rem;
+} */
+
+.footer-brand{
+  display: flex;
+  align-items: center;
+}
+
+.footer-brand span{
+  font-size: .7rem;
+  margin-left: .3rem;
+  font-weight: 700;
+}
+
+.divclass{
+  margin-right: 5rem;
+}
+
+.mydiv{
+  /* border: 1px solid red; */
+  width: 14rem;
+}

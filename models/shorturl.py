@@ -17,7 +17,7 @@ hashids = Hashids(min_length=6, salt=secret)
 class Urlshort(UserMixin, db.Model):
     __tablename__ = "url_shortener"
     id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     author = relationship("User", back_populates="urlshort")
     url = db.Column(db.String(250))
     short_url = db.Column(db.String(250))

@@ -14,14 +14,34 @@
       <h1 class="display-4 fw-bolder my-4"><strong>Automatic, Secure<br>& Dynamic<br>  <span class="gradient-primary clip-text" data-toggle="typed" data-list="Links.,QR Codes.,Bio Pages."></span></strong></h1>
 
       <strong><p class="fs-5 mb-5 text-center">Create short or customise URLs for free </p></strong>
-      <form method="post" action="#" data-trigger="shorten-form" class="mt-3 mb-5 border rounded p-3">
+      <form method="POST" action="" class="mt-3 mb-5 border rounded p-3">
 		<div class="input-group input-group-lg align-items-center">
-		<input type="text" class="form-control border-0" placeholder="Paste a long url" name="url" id="url">
-		<div class="input-group-append">
-		<button class="btn btn-primary" type="submit">Shorten</button>
-		</div>
+      {% if show %}
+      <input type="text" class="form-control border-0" placeholder="" value="{{ shortened_url }}" disabled name="url" id="url">
+      <div class="input-group-append border">
+        <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" onclick="copyText()" style="cursor: pointer;"></i> -->
+        <span class="btn btn-primary" onclick="copyText()" name="bt1">Copy</span>
+        </div>
+      {% else %}
+      <input type="text" class="form-control border-0" placeholder="Paste a long url" name="url" id="url">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit" name="bt1">Shorten</button>
+        </div>
+      {% endif %}
 		</div>
 		</form>
+    {% if show %}
+    <div class="row">
+      <div class="col md-4">
+        <!-- qr code link -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ shortened_url }}"
+                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />
+      </div>
+      <div class="col md-8">
+        <h1>Register to get QR code and get more of your link</h1>
+      </div>
+    </div>
+    {% endif %}
       <div >
       	<p>
 		<ul class="list-unstyled mb-2 text-muted small">
@@ -143,6 +163,10 @@
   </section>
 <hr>
 
+<button type="button" class="btn btn-primary my-btn px-4 py-3 fw-bold mb-1 d-none" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="myButton">
+  Show
+</button>
+
 
 
 
@@ -159,7 +183,10 @@
       <div class="modal-body">
         <div>
           <div class="mb-3">
-            {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "secondary"}) }}
+            <form action="" method="post" class="form-group">
+              <input type="text" class="form-control" name="brandname">
+              <button type="submit" class="btn btn-secondary" name="bt2">Submit</button>
+            </form>
             <div id="emailHelp" class="form-text">Your bio is your identity</div>
           </div>
         </div>
@@ -174,6 +201,45 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal -->
+{% if show %}
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Your Shortened Link</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Short URL</h5>
+                <p class="card-text text-center"><a href="{{ shortened_url }}" target="_blank">{{ shortened_url }}</a></p>
+                <h5 class="card-title text-center">Original URL</h5>
+                <p class="card-text text-center"><a href="{{ original_url }}" target="_blank">{{ original_url }}</a></p>
+                <p class="d-flex justify-content-center m-auto align-items-center">
+                    <img
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ shortened_url }}"
+                  alt="QR Code" style="display: flex; justify-content: center;" class="img-thumbnail mt-3"
+                />
+                </p>
+
+                <div class="d-flex justify-content-around align-items-center mt-5 mb-4 w-100">
+                  <a href="javascript:void(0);" onclick="downloadQR('{{ original_url }}', '{{ original_url.id }}')" class="bg-primary rounded px-2 py-1 text-white" style="width: fit-content;">
+                      <i class="fas fa-download h4"></i>
+                  </a>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  {% endif %}
 
     
 <!-- 
@@ -196,8 +262,50 @@
 
       </div>
   </div> -->
+
+  <span id="showValue" style="display: none;">{{ show }}</span>
 </div>
 
+
+<script>
+  function downloadQR(qrUrl, id) {
+        fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = "qr_code_" + id + ".png";
+                link.click();
+                window.URL.revokeObjectURL(url);
+            });
+    }
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var showValueSpan = document.getElementById("showValue");
+    var showValue = showValueSpan.textContent; // Get the value as lowercase
+    
+    // Check the value of `showValue` and show the button if it's "true"
+    if (showValue == 1) {
+      document.getElementById("myButton");
+    }
+  });
+
+  async function copyText() {
+    var copyText = document.getElementById("url");
+    try {
+        await navigator.clipboard.writeText(copyText.value);
+        alert("Short url copied");
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+    }
+}
+
+
+</script>
 
 
 

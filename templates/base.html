@@ -78,7 +78,7 @@
 <!--          </li>-->
 
           <li class="nav-item">
-            <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-dark ">Logout</a>
+            <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-light ">Logout</a>
           </li>
 
            <li class="nav-item">
@@ -174,10 +174,53 @@
       {% endfor %} {% endif %} {% endwith %} {% block content %}
       {% endblock content %}
     </div>
-
     
     </div>
   </section>
+
+  <footer>
+    <div class="footer-div row p-3 mb-2 bg-dark text-white">
+        <div class="col-md-3 divclass">
+            <!-- The navbar brand -->
+            <!-- The navbar brand -->
+            <a href="" class="footer-brand text-decoration-none">
+                <h3>LinkTools</h3>
+            </a>
+            <p class="text-light mt-5 pclass3">We are your best pick for everything.</p>
+        </div>
+
+        <div class="text-light  d-flex flex-column col-md-3 mydiv">
+            <h4>SOLUTIONS</h4> <br>
+            <h6 >URL SHORTENER</h6><br>
+            <h6>QR CODES</h6><br>
+            <h6>Link-In-BIO </h6>
+        </div>
+
+        <div class="text-light  d-flex flex-column col-md-3 mydiv">
+            <h5>COMPANY</h5> <br>
+            <h6 >ABOUT US</h6><br>
+            <h6>CONTACT US</h6><br>
+            <h6>GET STARTED </h6>
+        </div>
+
+        <div class="text-light d-flex flex-column col-md-3 mydiv">
+            <h5>Social Media</h5>
+            <div class="d-flex">
+            <span class="p-2">
+                <i class="fa-brands fa-facebook social p-1 rounded"></i>
+            </span>
+            <span class="p-2">
+                <i class="fa-brands fa-instagram social p-1 rounded"></i>
+            </span>
+            <span class="p-2">
+                <i class="fa-brands fa-twitter social p-1 rounded"></i>
+            </span>
+            <span class="p-2">
+                <i class="fa-brands fa-whatsapp social p-1 rounded"></i>
+            </span>
+            </div>
+        </div>
+</footer>
 
   <!-- Icon tha redirects back to the top of the page -->
   <a href="#top" class="up" style="position: fixed; left: 10px; bottom: 60px"><i class="fa fas fa-arrow-alt-circle-up fs-4"></i></a>
