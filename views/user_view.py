@@ -258,7 +258,7 @@ def redirect_to_url(short_url):
 
 
 # display all shortened urls with their original urls and clicks
-@user_blp.route('/stats/urls')
+@user_blp.route('/stats/urls', methods=['GET'])
 @login_required
 def display_urls():
     urls = Urlshort.query.filter_by(author_id=current_user.id).all()
@@ -308,7 +308,7 @@ def qr_codes():
 
 
 # display all qr codes for the current user
-@user_blp.route('/stats/qr_codes')
+@user_blp.route('/stats/qr_codes', methods=['GET'])
 @login_required
 def display_qr_codes():
     qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
@@ -347,3 +347,11 @@ def url_shortener_info():
 @login_required
 def profile_info(username):
     return render_template("profile_info.html")
+
+
+# list all bio links
+@user_blp.route('/biolinks', methods=['GET'])
+@login_required
+def display_biolinks():
+    biolinks = CreateProfile.query.filter_by(author_id=current_user.id).all()
+    return render_template("biolinks.html", biolinks=biolinks)
