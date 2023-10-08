@@ -168,6 +168,25 @@ def product(brandname, linkname):
                            check_product=check_product)
 
 
+# update brandname to user model
+@user_blp.route('/update/brandname', methods=["POST"])
+@login_required
+def update_brandname():
+    brandname = request.form.get('brandname')
+    if not brandname:
+        flash('Input Required', 'danger')
+        return redirect(url_for('user_blp.dashboard'))
+    user_ = User.query.filter_by(brand_name=brandname.lower()).first()
+    if user_:
+        # User with that brand already exists
+        flash("Brand Name already exists!", "danger")
+        return redirect(url_for('user_blp.dashboard'))
+    current_user.brand_name = brandname.lower()
+    db.session.commit()
+    flash('Brand Name updated successfully!', 'success')
+    return redirect(url_for('user_blp.admin'))
+
+
 @user_blp.route('/delete/<linkname>')
 @login_required
 def delete_product(linkname):
