@@ -9,8 +9,8 @@ from extensions import db
 auth_blp = Blueprint("auth_blp", __name__)
 
 
-@auth_blp.route('/auth/register/<brandie>/', methods=["GET", "POST"])
-def register(brandie):
+@auth_blp.route('/auth/register', methods=["GET", "POST"])
+def register():
     form = RegisterForm()
     if current_user.is_authenticated:
         return redirect(url_for('user_blp.admin'))
@@ -29,8 +29,7 @@ def register(brandie):
             # Display a flash message to the user indicating that all fields are required
             flash('All fields are required', 'danger')
             return render_template("register.html",
-                                   logged_in=current_user.is_authenticated, form=form,
-                                   brandie=brandie.upper()
+                                   logged_in=current_user.is_authenticated, form=form
                                    )
 
         # if the password and confirm password are not same
@@ -43,7 +42,7 @@ def register(brandie):
             flash("Username already exists, please try again.")
             return render_template("register.html",
                                    logged_in=current_user.is_authenticated,
-                                   form=form, brandie=brandie.upper())
+                                   form=form)
 
         if User.query.filter_by(email=request.form.get('email')).first():
             # User already exists
@@ -60,8 +59,7 @@ def register(brandie):
             first_name=first_name,
             last_name=last_name,
             username=username,
-            password=hash_and_salted_password,
-            brand_name=brandie
+            password=hash_and_salted_password
         )
         db.session.add(new_user)
         db.session.commit()
@@ -71,7 +69,7 @@ def register(brandie):
 
     return render_template("register.html",
                            logged_in=current_user.is_authenticated,
-                           form=form, brandie=brandie.upper())
+                           form=form)
 
 
 @auth_blp.route('/auth/login', methods=["GET", "POST"])
