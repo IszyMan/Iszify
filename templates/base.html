@@ -178,6 +178,7 @@
     </div>
   </section>
 
+     {% if not current_user.is_authenticated %}
   <footer>
     <div class="footer-div row p-3 mb-2 bg-dark text-white">
         <div class="col-md-3 divclass">
@@ -190,14 +191,14 @@
         </div>
 
         <div class="text-light  d-flex flex-column col-md-3 mydiv">
-            <h4>SOLUTIONS</h4> <br>
+            <h4>SOLUTIONS</h4> <br><br>
             <h6 >URL SHORTENER</h6><br>
             <h6>QR CODES</h6><br>
             <h6>Link-In-BIO </h6>
         </div>
 
         <div class="text-light  d-flex flex-column col-md-3 mydiv">
-            <h5>COMPANY</h5> <br>
+            <h5>COMPANY</h5> <br><br>
             <h6 >ABOUT US</h6><br>
             <h6>CONTACT US</h6><br>
             <h6>GET STARTED </h6>
@@ -220,8 +221,9 @@
             </span>
             </div>
         </div>
+    </div>
 </footer>
-
+   {% endif %}
   <!-- Icon tha redirects back to the top of the page -->
   <a href="#top" class="up" style="position: fixed; left: 10px; bottom: 60px"><i class="fa fas fa-arrow-alt-circle-up fs-4"></i></a>
 
