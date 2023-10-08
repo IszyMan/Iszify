@@ -184,7 +184,7 @@
       <div class="modal-body">
         <div>
           <div class="mb-3">
-            <form action="" method="post" class="form-group">
+            <form action="{{url_for('user_blp.update_brandname')}}" method="post" class="form-group">
               <input type="text" class="form-control" name="brandname">
               <button type="submit" class="btn btn-secondary" name="bt2">Submit</button>
             </form>
@@ -215,9 +215,13 @@
       <div class="modal-body">
         <a href="{{url_for('user_blp.shorten_url')}}" class="btn">Create Short Url</a>
         <a href="{{url_for('user_blp.qr_codes')}}" class="btn">Create QR Codes</a>
+        {% if not current_user.brand_name %}
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
           Create Link-in-Bio
         </button>
+        {% else %}
+        <a href="{{url_for('user_blp.admin')}}" class="btn">Create Link-in-Bio</a>
+        {% endif %}
       </div>
     </div>
   </div>
