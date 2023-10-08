@@ -6,10 +6,10 @@
 <div class="dashdiv">
      <div class="d-flex flex-row">
         <div class="p-2">
-        <a href="#" class="btn" style="margin-right: .6rem;">CREATE NEW</a>
-        <a href="{{url_for('user_blp.shorten_url')}}" class="btn">Create Short Url</a>
-        <a href="{{url_for('user_blp.qr_codes')}}" class="btn">Create QR Codes</a>
-        <a href="{{url_for('user_blp.admin')}}" class="btn" style="margin-right: .6rem;">Create Link-in-Bio</a>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+      CREATE NEW
+    </button>
+       
     </div>
     </div>
 
@@ -171,6 +171,57 @@
     {% endif %}
     </div>
   </div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Choose Your Bio Name</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="mb-3">
+            <form action="" method="post" class="form-group">
+              <input type="text" class="form-control" name="brandname">
+              <button type="submit" class="btn btn-secondary" name="bt2">Submit</button>
+            </form>
+            <div id="emailHelp" class="form-text">Your bio is your identity</div>
+          </div>
+        </div>
+        <style>
+          .btn-secondary {
+              margin-top: 10px;
+              font-size: 1rem;
+              padding: 5px;
+          }
+      </style>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Create New</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <a href="{{url_for('user_blp.shorten_url')}}" class="btn">Create Short Url</a>
+        <a href="{{url_for('user_blp.qr_codes')}}" class="btn">Create QR Codes</a>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Create Link-in-Bio
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
