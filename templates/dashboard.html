@@ -24,9 +24,7 @@
            <div class="row">
         <div class="col-sm">
             <div class="card width-full d-flex" style="background-color:lavender;">
-                <div class="image-block align-items-center justify-content-center width-6/12">
-            <h1 class="text-center m-auto p-3">Go to Links</h1>
-                </div>
+            <a href="{{url_for('user_blp.display_urls')}}" class="text-center m-auto p-3">Go to Links</a>
              </div>
 
         </div>
@@ -34,14 +32,14 @@
 
        <div class="col-sm">
             <div class="card width-full d-flex"  style="background-color:lavenderblush;">
-            <h1 class="text-center m-auto p-3">Go to QR CODES</h1>
+            <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-center m-auto p-3">Go to QR CODES</a>
              </div>
         </div>
 
 
       <div class="col-sm">
             <div class="card width-full d-flex"  style="background-color:lavender;">
-            <h1 class="text-center m-auto p-3">Go to Link-In-Bio</h1>
+            <a href="{{url_for('user_blp.display_biolinks')}}" class="text-center m-auto p-3">Go to Link-In-Bio</a>
              </div>
         </div>
 
