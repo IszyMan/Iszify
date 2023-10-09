@@ -355,3 +355,8 @@ def profile_info(username):
 def display_biolinks():
     biolinks = CreateProfile.query.filter_by(author_id=current_user.id).all()
     return render_template("biolinks.html", biolinks=biolinks)
+
+
+@user_blp.route('/see', methods=['GET'])
+def see():
+    return render_template('base2.html')
