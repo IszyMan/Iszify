@@ -43,11 +43,14 @@
   <!-- Navbar -->
   <section class="d-flex">
     <div class="d-flex flex-column bg-dark" style="width: 12rem; position: fixed; top: 0; bottom: 0;">
-      <a href="" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Dashboard</a>
-      <a href="" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">Bio-Link</a>
-      <a href="" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">QR-Code</a>
-      <a href="" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">URL Shortener</a>
-      <a href="" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Logout</a>
+      <a href="{{url_for('user_blp.dashboard')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Dashboard</a>
+      <a href="{{ url_for('user_blp.biolink') }}" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">Bio-Link</a>
+      <a href="{{ url_for('user_blp.qr_code_info') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">QR-Code</a>
+      <a href="{{ url_for('user_blp.url_shortener_info') }}" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">URL Shortener</a>
+      <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Logout</a>
+      <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="px-4 text-decoration-none">
+        <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
+    </a>
     </div>
  
 
