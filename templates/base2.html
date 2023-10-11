@@ -17,10 +17,12 @@
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index2.css') }}">
 
   <!-- ............Linked Javascript File............. -->
 
   <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/script2.js') }}" defer></script>
 
   <!-- ............................................ -->
 
@@ -42,7 +44,7 @@
   <a name="top"></a>
   <!-- Navbar -->
   <section class="d-flex">
-    <div class="d-flex flex-column bg-dark" style="width: 12rem; position: fixed; top: 0; bottom: 0;">
+    <div class="d-flex flex-column bg-dark side_fold">
       <a href="{{url_for('user_blp.dashboard')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Dashboard</a>
       <a href="{{ url_for('user_blp.biolink') }}" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">Bio-Link</a>
       <a href="{{ url_for('user_blp.qr_code_info') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">QR-Code</a>
@@ -55,8 +57,10 @@
  
 
  
-
-  <div class="container mt-5" style="margin-left: 12rem;">
+  <div class="container mt-2 main" style="margin-left: 12rem;">
+    <div style="width: fit-content; cursor: pointer;" class="mt-2 hamburger">
+      <i class="fa-solid fa-bars h4 rounded text-white bg-dark p-2"></i>
+    </div> <br>
 
 {% block car %}
 
