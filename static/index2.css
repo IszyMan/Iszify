@@ -1,0 +1,35 @@
+.hamburger{
+    display: none;
+}
+
+.side_fold{
+    width: 12rem; 
+    position: fixed; 
+    top: 0; 
+    bottom: 0;
+    left: 0;
+}
+
+.active{
+    left: 0 !important;
+}
+
+/* media query for small screens */
+@media screen and (max-width: 768px){
+    .hamburger{
+        display: block;
+        cursor: pointer;
+    }
+
+    .side_fold{
+        left: -12rem;
+    }
+
+    .active{
+        left: 0 !important;
+    }
+
+    .main{
+        margin-left: 0 !important;
+    }
+}
