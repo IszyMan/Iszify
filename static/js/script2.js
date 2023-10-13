@@ -3,5 +3,4 @@ const overlay = document.querySelector('.side_fold'); // Use querySelector to ge
 
 function toggleActiveClass() {
     overlay.classList.toggle('active');
-    alert('hello');
 }
