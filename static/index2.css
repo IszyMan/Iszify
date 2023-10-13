@@ -8,6 +8,7 @@
     top: 0; 
     bottom: 0;
     left: 0;
+    z-index: 1;
 }
 
 .active{
@@ -19,6 +20,7 @@
     .hamburger{
         display: block;
         cursor: pointer;
+        z-index: 999;
     }
 
     .side_fold{
