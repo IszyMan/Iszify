@@ -1,5 +1,5 @@
-.hamburger{
-    display: none;
+.hamburger, .haburger{
+    display: none !important;
 }
 
 .side_fold{
@@ -9,16 +9,13 @@
     bottom: 0;
     left: 0;
     z-index: 1;
-}
-
-.active{
-    left: 0 !important;
+    transition: left 0.5s ease; /* You can adjust the duration and easing function */
 }
 
 /* media query for small screens */
 @media screen and (max-width: 768px){
-    .hamburger{
-        display: block;
+    .hamburger, .haburger{
+        display: block !important;
         cursor: pointer;
         z-index: 999;
     }
@@ -27,8 +24,9 @@
         left: -12rem;
     }
 
-    .active{
+    .active {
         left: 0 !important;
+        transition: left 0.5s ease; /* You can adjust the duration and easing function */
     }
 
     .main{
