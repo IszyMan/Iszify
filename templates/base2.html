@@ -44,7 +44,14 @@
   <a name="top"></a>
   <!-- Navbar -->
   <section class="d-flex">
+    
     <div class="d-flex flex-column bg-dark side_fold">
+
+      <div style="width: fit-content; cursor: pointer;" class="mt-2 haburger px-4 ms-auto" onclick="toggleActiveClass()">
+        <!-- <i class="fa-solid fa-bars h4 rounded text-white bg-dark p-2"></i> -->
+        <i class="fa-solid fa-x h6 rounded text-white bg-dark"></i>
+      </div>
+
       <a href="{{url_for('user_blp.dashboard')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Dashboard</a>
       <a href="{{ url_for('user_blp.biolink') }}" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">Bio-Link</a>
       <a href="{{ url_for('user_blp.qr_code_info') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">QR-Code</a>
