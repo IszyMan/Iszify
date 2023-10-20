@@ -2,31 +2,60 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/urls.css') }}">
   {% endblock head %}
-{% block content %}
-<div class="container mt-5">
-    <h1 class="text-center">Shortened URLs</h1>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+{% block content %}
+
+<div class="container mt-5">
+
+<main style="margin-top: 88px">
+       <div class="row mb-4 ">
+
+          <div class="container-fluid align-self-end mt-5">
+               <h3><b>SHORTENED LINKS</b></h3>
+        <button type="button" class="btn">
+      <i class="fa fa-calendar px-2 "></i>Filter by Date
+        </button>
+
+      </div>
+      </div>
+</main>
+    <div class="container-fluid">
+
         {% for url in urls|reverse %}
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Short URL</h5>
-                    <p class="card-text"><a href="{{ request.host_url }}{{ url.short_url }}" target="_blank">{{ request.host_url }}{{ url.short_url }}</a></p>
-                    <h5 class="card-title">Original URL</h5>
+
+            <div class="card " style="background-color:lavender;">
+                <div class="row">
+                 <div class="col-sm mt-5">
+                     <div >
+                     <h5 class="card-title">URL TITLE</h5>
+                    <p class="card-text"><strong><a href="{{ request.host_url }}{{ url.short_url }}" target="_blank">{{ request.host_url }}{{ url.short_url }}</a></strong></p>
+
                     <p class="card-text"><a href="{{ url.url }}" target="_blank">{{ url.url }}</a></p>
-                    <p>
+                         <div><p>
+                        <i class="fa fa-bar-chart"></i>Click Data ({{ url.clicks }})
+                        <i class="fa fa-calendar px-2 "></i> Oct 20, 2023
+                         <i class="fa fa-copy px-2" id="" style="cursor: pointer;"></i> Copy
+                         </p></div>
+
+                     </div>
+                     </div>
+                <div class="col-sm mt-5 mb-5">
+
                         <img
                       src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
-                      alt="QR Code"
-                    />
-                    </p>
-                    <h5 class="card-title">Clicks</h5>
-                    <p class="card-text">{{ url.clicks }}</p>
+                      alt="QR Code"/>
+
+
+
                 </div>
-            </div>
-        </div>
+
+                    </div>
+                </div>
+        <hr>
+
         {% endfor %}
-    </div>
+      </div>
+
 </div>
 {% endblock content %}
