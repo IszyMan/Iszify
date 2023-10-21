@@ -13,6 +13,7 @@
 
           <div class="container-fluid align-self-end mt-5">
                <h3><b>QR CODES</b></h3>
+              {% if urls %}
         <button type="button" class="btn">
       <i class="fa fa-calendar px-2 "></i>Filter by Date
         </button>
@@ -62,6 +63,17 @@
         </div>
     <hr>
     {% endfor %}
+      {% else %}
+        <div class="card " style="background-color:lavender;">
+                <div class="row">
+                 <div class="col-sm mt-5">
+                  <h2 class="text-center"><b>No QR Code Yet</b></h2>
+                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
+                    </div>
+                </div>
+         </div>
+        {% endif %}
+
 </div>
 
 <script>
