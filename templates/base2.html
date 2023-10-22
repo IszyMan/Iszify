@@ -43,8 +43,97 @@
     -->
   <a name="top"></a>
   <!-- Navbar -->
+  <nav
+       id="main-navbar"
+       class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+
+        <!-- Bootstrap Sidebar toggler -->
+      <div style="width: fit-content; cursor: pointer;" class="mt-2 hamburger" onclick="toggleActiveClass()">
+      <i class="fa-solid fa-bars h4 rounded text-white bg-dark p-2"></i>
+    </div> <br>
+
+
+      <!-- Brand -->
+
+        <strong><a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand text-warning "> LINKTOOLS</a></strong>
+
+       <!--Search form -->
+        <div class="mx-5">
+      <form class="d-none d-md-flex input-group w-auto my-auto text-center">
+        <input
+               autocomplete="off"
+               type="search"
+               class="form-control rounded"
+               placeholder='Search.. '
+               style="min-width: 225px "
+               />
+        <span class="input-group-text border-0"
+              ><i class="fas fa-search text-center"></i
+          ></span>
+      </form>
+         </div>
+      <!-- Right links -->
+      <ul class="navbar-nav ms-auto d-flex flex-row">
+        <!-- Notification dropdown -->
+        <li class="nav-item dropdown">
+          <a
+             class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
+             href="#"
+             id="navbarDropdownMenuLink"
+             role="button"
+             data-mdb-toggle="dropdown"
+             aria-expanded="false"
+             >
+            <i class="fas fa-bell"></i>
+            <span class="badge rounded-pill badge-notification bg-danger"
+                  >1</span
+              >
+          </a>
+          <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuLink"
+              >
+            <li><a class="dropdown-item" href="#">Some news</a></li>
+            <li><a class="dropdown-item" href="#">Another news</a></li>
+            <li>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </li>
+          </ul>
+        </li>
+
+
+
+        <!-- Avatar -->
+        <li class="nav-item dropdown">
+          <a
+             class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
+             href="{{url_for('user_blp.profile_info', username=current_user.username)}}"
+             id="navbarDropdownMenuLink"
+             role="button"
+             data-mdb-toggle="dropdown"
+             aria-expanded="false"
+             >
+            <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
+          </a>
+          <ul
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="navbarDropdownMenuLink"
+              >
+            <li><a class="dropdown-item" href="#">My profile</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- Container wrapper -->
+
+  </nav>
+
   <section class="d-flex">
-    
+    <hr>
     <div class="d-flex flex-column bg-dark side_fold">
 
       <div style="width: 100%; cursor: pointer;" class="mt-2 px-4 d-flex justify-content-between align-items-center">
@@ -52,23 +141,28 @@
         <!-- <i class="fa-solid fa-bars h4 rounded text-white bg-dark p-2"></i> -->
         <i class="fa-solid fa-x h6 rounded text-white bg-dark ms-auto haburger p-1r" onclick="toggleActiveClass()"></i>
       </div>
-
-      <a href="{{url_for('user_blp.dashboard')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Dashboard</a>
-      <a href="{{ url_for('user_blp.biolink') }}" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">Bio-Link</a>
-      <a href="{{ url_for('user_blp.qr_code_info') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">QR-Code</a>
-      <a href="{{ url_for('user_blp.url_shortener_info') }}" class="text-decoration-none text-white fw-bold px-4" style="width: 100%;">URL Shortener</a>
-      <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;">Logout</a>
-      <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="px-4 text-decoration-none">
-        <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
-    </a>
+      <a href="#"  class="text-decoration-none text-white fw-bold px-4 my-5 active" style="width: 100%;">CREATE NEW <i class="fa fa-plus fa-fw me-3"></i></a>
+      <a href="{{url_for('user_blp.dashboard')}}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-th" aria-hidden="true"></i>  Dashboard</a>
+      <a href="{{ url_for('user_blp.biolink') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Link</a>
+      <a href="{{ url_for('user_blp.qr_code_info') }}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
+      <a href="{{ url_for('user_blp.url_shortener_info') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-link" aria-hidden="true"></i>
+   URL Shortener</a>
+      <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-user-circle h3 text-muted mr-5"></i>
+        <div class="d-flex flex-column align-items-center ">
+         <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="px-4 text-decoration-none my-5">
+          <span class="fw-bold text-muted ">{{current_user.username.upper()}}</span><br>
+          <small class="fw-bold mr-5 text-muted ">{{current_user.email}}</small>
+         </a>
+            </div>
+       </div>
     </div>
- 
 
- 
+
+
   <div class="container mt-2 main" style="margin-left: 12rem;">
-    <div style="width: fit-content; cursor: pointer;" class="mt-2 hamburger" onclick="toggleActiveClass()">
-      <i class="fa-solid fa-bars h4 rounded text-white bg-dark p-2"></i>
-    </div> <br>
+
 
 {% block car %}
 
@@ -116,7 +210,6 @@
   <footer>
     <div class="footer-div row p-3 mb-2 bg-dark text-white">
         <div class="col-md-3 divclass">
-            <!-- The navbar brand -->
             <!-- The navbar brand -->
             <a href="" class="footer-brand text-decoration-none">
                 <h3>LinkTools</h3>
