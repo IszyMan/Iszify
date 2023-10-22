@@ -3,12 +3,14 @@ from extensions import db
 from sqlalchemy.orm import relationship
 
 
+
 # create qr code table
 class QrCode(UserMixin, db.Model):
     __tablename__ = "qr_code"
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     url = db.Column(db.Text)
+    tracking_id = db.Column(db.String(250), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     author = relationship("User", back_populates="qr_code")
 
@@ -29,3 +31,6 @@ class QrCode(UserMixin, db.Model):
     @classmethod
     def find_by_id(cls, id):
         return cls.query.filter_by(id=id).first()
+
+
+class ScanData()
