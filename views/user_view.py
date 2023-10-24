@@ -292,6 +292,8 @@ def qr_codes():
             url = 'http://' + url
 
         url = url + f"/scan?tracking_id={tracking_id}"
+        print(url, "this is the url")
+        print(tracking_id, "this is the tracking id")
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id,
