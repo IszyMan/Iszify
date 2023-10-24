@@ -284,14 +284,18 @@ def delete_url(url_id):
 def qr_codes():
     if request.method == 'POST':
         url = request.form.get('url')
+        tracking_id = generate_tracking_id()
         if not url:
             flash('Please enter a URL', 'danger')
             return render_template("qr_codes.html")
         if not url.startswith('http://') and not url.startswith('https://'):
             url = 'http://' + url
+
+        url = url + f"/scan?tracking_id={tracking_id}"
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id,
+            tracking_id=tracking_id,
             url=url).first()
         if existing_qr_code:
             flash('QR Code already exists', 'danger')
