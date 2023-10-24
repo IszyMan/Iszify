@@ -39,6 +39,7 @@ class QrCode(UserMixin, db.Model):
     # add scan and tracking id to the url before saving to the database
     def add_tracking_id(self, url):
         self.url = url + f"/scan?tracking_id={self.tracking_id}"
+        print(self.url, "this is the url")
         self.save()
 
 
