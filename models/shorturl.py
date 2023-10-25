@@ -5,6 +5,12 @@ from hashids import Hashids
 # from main import create_app
 from urllib import request
 from urllib.error import HTTPError, URLError
+from secrets import token_hex
+
+
+def generate_tracking_id():
+    return token_hex(16)
+
 
 secret = 'any-secret-key-you-choose'
 print("secret")
@@ -20,6 +26,7 @@ class Urlshort(UserMixin, db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     author = relationship("User", back_populates="urlshort")
     url = db.Column(db.String(250))
+    tracking_id = db.Column(db.String(250), nullable=True)
     short_url = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
