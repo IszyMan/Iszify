@@ -207,6 +207,7 @@ def shorten_url():
     if request.method == 'POST':
         original_url = request.form.get('originalUrl')
         custom_url = request.form.get('customUrl', None)
+        tracking_id = generate_tracking_id()
         if Urlshort.query.filter_by(
                 author_id=current_user.id,
                 url=original_url).first():
@@ -225,10 +226,13 @@ def shorten_url():
             short_url = generate_short_url()
             print(generate_short_url())
 
+        short_url = f"{short_url}/scan?tracking_id={tracking_id}"
+
         url = Urlshort(
             author=current_user,
             author_id=current_user.id,
             url=original_url,
+            tracking_id=tracking_id,
             short_url=short_url,
         )
         url.save()
