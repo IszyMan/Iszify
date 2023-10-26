@@ -64,26 +64,3 @@ def validate_url(url):
         return True
     except (HTTPError, URLError):
         return False
-
-
-class ShortUrlSacnData(db.Model):
-    __tablename__ = "short_url_scan_data"
-    id = db.Column(db.Integer, primary_key=True)
-    tracking_id = db.Column(db.String(50), db.ForeignKey("url_shortener.tracking_id"))
-    ip_address = db.Column(db.String(20))
-    user_agent = db.Column(db.String(200))
-
-    def __repr__(self):
-        return f"ScanData('{self.tracking_id}', '{self.ip_address}', '{self.user_agent}')"
-
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
-
-    @classmethod
-    def find_by_tracking_id(cls, tracking_id):
-        return cls.query.filter_by(tracking_id=tracking_id).all()
-
-    @classmethod
-    def find_by_id(cls, id):
-        return cls.query.filter_by(id=id).first()
