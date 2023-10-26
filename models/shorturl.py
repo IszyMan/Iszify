@@ -26,7 +26,6 @@ class Urlshort(UserMixin, db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     author = relationship("User", back_populates="urlshort")
     url = db.Column(db.String(250))
-    tracking_id = db.Column(db.String(250), nullable=True)
     short_url = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
