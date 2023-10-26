@@ -5,12 +5,6 @@ from hashids import Hashids
 # from main import create_app
 from urllib import request
 from urllib.error import HTTPError, URLError
-from secrets import token_hex
-
-
-def generate_tracking_id():
-    return token_hex(16)
-
 
 secret = 'any-secret-key-you-choose'
 print("secret")
