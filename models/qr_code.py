@@ -1,11 +1,6 @@
 from flask_login import UserMixin
 from extensions import db
 from sqlalchemy.orm import relationship
-from secrets import token_hex
-
-
-def generate_tracking_id():
-    return token_hex(16)
 
 
 # create qr code table
