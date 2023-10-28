@@ -293,7 +293,6 @@ def qr_codes():
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id,
-            tracking_id=tracking_id,
             url=url).first()
         if existing_qr_code:
             flash('QR Code already exists', 'danger')
