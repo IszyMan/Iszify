@@ -284,7 +284,6 @@ def delete_url(url_id):
 def qr_codes():
     if request.method == 'POST':
         url = request.form.get('url')
-        tracking_id = generate_tracking_id()
         if not url:
             flash('Please enter a URL', 'danger')
             return render_template("qr_codes.html")
