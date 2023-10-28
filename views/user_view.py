@@ -290,7 +290,6 @@ def qr_codes():
         if not url.startswith('http://') and not url.startswith('https://'):
             url = 'http://' + url
 
-        url = url + f"/scan?tracking_id={tracking_id}"
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id,
