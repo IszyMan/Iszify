@@ -308,20 +308,6 @@ def qr_codes():
     return render_template("qr_codes.html", n=0)
 
 
-@user_blp.route('/scan', methods=['GET'])
-def scan():
-    tracking_id = request.args.get('tracking_id')
-    user_agent = request.headers.get('User-Agent')
-    ip_address = request.remote_addr
-
-    # Create a new entry in the database
-    scan_data = ScanData(tracking_id=tracking_id, ip_address=ip_address, user_agent=user_agent)
-    db.session.add(scan_data)
-    db.session.commit()
-
-    return jsonify({'message': 'Data captured and stored in the database'})
-
-
 # display all qr codes for the current user
 @user_blp.route('/stats/qr_codes', methods=['GET'])
 @login_required
