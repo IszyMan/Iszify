@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
 from forms import *
 from models import *
 from extensions import db
@@ -289,6 +289,7 @@ def qr_codes():
             return render_template("qr_codes.html")
         if not url.startswith('http://') and not url.startswith('https://'):
             url = 'http://' + url
+
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id,
