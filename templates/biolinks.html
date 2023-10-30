@@ -3,6 +3,9 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {% endblock head %}
 {% block content %}
+
+<main style="margin-top: 78px">
+  <div class="container pt-4">
 <div class="">
     {% if biolinks %}
     <div class="rows">
@@ -45,6 +48,17 @@
         {% endfor %}
         </div>
         {% else %}
+
+
+        <div class="card " style="background-color:lavender;">
+                <div class="row">
+                 <div class="col-sm mt-5">
+                  <h2 class="text-center"><b>Create Bio Link</b></h2>
+                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
+                    </div>
+                </div>
+         </div>
+
 
       {% endif %}
 <!-- url short -->
@@ -121,4 +135,6 @@
     </div>
     {% endif %}
     </div>
+  </div>
+</main>
 {% endblock content %}

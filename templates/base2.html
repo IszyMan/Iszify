@@ -77,53 +77,40 @@
       <!-- Right links -->
       <ul class="navbar-nav ms-auto d-flex flex-row">
         <!-- Notification dropdown -->
-        <li class="nav-item dropdown">
-          <a
-             class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"
-             href="#"
-             id="navbarDropdownMenuLink"
-             role="button"
-             data-mdb-toggle="dropdown"
-             aria-expanded="false"
-             >
-            <i class="fas fa-bell"></i>
-            <span class="badge rounded-pill badge-notification bg-danger"
-                  >1</span
-              >
-          </a>
-          <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-              >
-            <li><a class="dropdown-item" href="#">Some news</a></li>
-            <li><a class="dropdown-item" href="#">Another news</a></li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </li>
+<!--        <li class="nav-item dropdown">-->
+<!--          <a-->
+<!--             class="nav-link me-3 me-lg-0 dropdown-toggle hidden-arrow"-->
+<!--             href="#"-->
+<!--             id="#"-->
+<!--             role="button"-->
+<!--             data-bs-toggle="dropdown"-->
+<!--             aria-expanded="false"-->
+<!--             >-->
+<!--            <i class="fas fa-bell"></i>-->
+<!--            <span class="badge rounded-pill badge-notification bg-danger"-->
+<!--                  >1</span-->
+<!--              >-->
+<!--          </a>-->
 
-
+<!--        </li>-->
 
         <!-- Avatar -->
         <li class="nav-item dropdown">
           <a
              class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
-             href="{{url_for('user_blp.profile_info', username=current_user.username)}}"
+             href="#"
              id="navbarDropdownMenuLink"
              role="button"
-             data-mdb-toggle="dropdown"
-             aria-expanded="false"
-             >
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
+            <i class="fas fa-bell h3 "></i>
+           <span class="badge rounded-pill badge-notification bg-danger fw-bold mx-2">1</span>
             <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
           </a>
-          <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-              >
-            <li><a class="dropdown-item" href="#">My profile</a></li>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{{url_for('user_blp.profile_info', username=current_user.username)}}">My profile</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('auth_blp.logout') }}">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -134,19 +121,37 @@
 
   <section class="d-flex">
     <hr>
-    <div class="d-flex flex-column bg-dark side_fold">
+    <div class="d-flex flex-column bg-dark side_fold mt-5">
 
       <div style="width: 100%; cursor: pointer;" class="mt-2 px-4 d-flex justify-content-between align-items-center">
-        <strong><a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand text-warning ">LinkTools</a></strong>
+
         <!-- <i class="fa-solid fa-bars h4 rounded text-white bg-dark p-2"></i> -->
         <i class="fa-solid fa-x h6 rounded text-white bg-dark ms-auto haburger p-1r" onclick="toggleActiveClass()"></i>
       </div>
-      <a href="#"  class="text-decoration-none text-white fw-bold px-4 my-5 active" style="width: 100%;">CREATE NEW <i class="fa fa-plus fa-fw me-3"></i></a>
+<!--      <a href="#"  class="text-decoration-none text-white fw-bold px-4 my-5 active" style="width: 100%;">CREATE NEW <i class="fa fa-plus fa-fw me-3"></i></a>-->
+
+
+   <div class="btn-group dropend mt-5">
+  <a class="btn btn-secondary dropdown-toggle ml-3" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    CREATE NEW
+  </a>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="{{url_for('user_blp.shorten_url')}}"><i class="fa fa-link" aria-hidden="true"></i> Create Short URL</a><br>
+    <a class="dropdown-item" href="{{url_for('user_blp.qr_codes')}}"><i class="fa fa-qrcode" aria-hidden="true"></i> QR Codes</a><br>
+    <a class="dropdown-item" href="{{url_for('user_blp.admin')}}"><i class="fa fa-hashtag" aria-hidden="true"></i> Link In Bio</a>
+  </div>
+</div>
+
+     <br>
+        <hr>
       <a href="{{url_for('user_blp.dashboard')}}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-th" aria-hidden="true"></i>  Dashboard</a>
-      <a href="{{ url_for('user_blp.biolink') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Link</a>
-      <a href="{{ url_for('user_blp.qr_code_info') }}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
-      <a href="{{ url_for('user_blp.url_shortener_info') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-link" aria-hidden="true"></i>
-   URL Shortener</a>
+      <a href="{{url_for('user_blp.display_urls')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-link" aria-hidden="true"></i>
+   Links</a>
+       <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
+
+        <a href="{{url_for('user_blp.display_biolinks')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Link</a>
+
       <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-user-circle h3 text-muted mr-5"></i>
@@ -189,7 +194,7 @@
   </div>
 
 </section>
-
+</body>
 
   <div class=" mt-5 px-4 px-lg-5">
     {% block any %}
@@ -203,12 +208,12 @@
     <!-- web content -->
     <!--  -->
     
-    </div>
+
   </section>
 
      {% if not current_user.is_authenticated %}
   <footer>
-    <div class="footer-div row p-3 mb-2 bg-dark text-white">
+    <div class="footer-div row p-3 mb-2 text-white">
         <div class="col-md-3 divclass">
             <!-- The navbar brand -->
             <a href="" class="footer-brand text-decoration-none">
@@ -277,6 +282,6 @@
     integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
     crossorigin="anonymous"></script>
   {% block script %}{% endblock script %}
-</body>
+
 
 </html>

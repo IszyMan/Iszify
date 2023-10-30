@@ -1,6 +1,9 @@
 {% extends "base2.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
+
+<main style="margin-top: 58px">
+  <div class="container pt-4">
 <div class="dashdiv">
     <div class="d-flex justify-content-end py-3 container align-item-center">
         <div>
@@ -143,7 +146,8 @@ box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   {% endfor %}
   {%endif%}
 </div>
-
+  </div>
+</main>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const copyIcons = document.querySelectorAll(".fa-copy");
