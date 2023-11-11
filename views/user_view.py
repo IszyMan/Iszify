@@ -208,6 +208,32 @@ def delete_product(linkname):
     return redirect(referer or url_for('user_blp.dashboard'))
 
 
+@user_blp.route('/qr_code/stats/<int:qr_id>', methods=['GET'])
+@login_required
+def qr_code_stats(qr_id):
+    qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
+    if not qr_codes:
+        flash('No stats for this QR Code', 'info')
+        return redirect(url_for('user_blp.display_qr_codes'))
+    # Extract dates and click counts
+    dates = [entry.date for entry in qr_codes]
+    clicks = [entry.clicks for entry in qr_codes]
+
+    # Create a simple bar chart using Matplotlib
+    plt.figure(figsize=(10, 6))
+    plt.bar(dates, clicks)
+    plt.xlabel('Date')
+    plt.ylabel('Number of Clicks')
+    plt.title('Clicks Over Time')
+
+    # Convert the plot to a PNG image
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    return render_template("qr_code_stats.html", plot_url=plot_url)
+
+
 # SHORTEN URL SECTION
 @user_blp.route('/urls/shorten_url', methods=['GET', 'POST'])
 @login_required
