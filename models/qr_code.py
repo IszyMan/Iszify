@@ -9,6 +9,7 @@ class QrCode(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     url = db.Column(db.Text)
+    # title = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     author = relationship("User", back_populates="qr_code")
 

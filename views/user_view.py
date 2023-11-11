@@ -7,8 +7,10 @@ from utils import get_platform
 from PIL import Image
 import qrcode
 from io import BytesIO
+import pandas as pd
+import matplotlib.pyplot as plt
+import io
 import base64
-
 
 user_blp = Blueprint("user_blp", __name__)
 
@@ -319,6 +321,39 @@ def qr_codes():
 def display_qr_codes():
     qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
     return render_template("display_qr.html", urls=qrcodes)
+
+
+# Sample data (you should replace this with your actual data source)
+click_data = [
+    {"date": "2023-11-01", "clicks": 10},
+    {"date": "2023-11-02", "clicks": 15},
+    {"date": "2023-11-03", "clicks": 8},
+    # Add more data here
+]
+
+
+# View all qr codes details for the current user
+@user_blp.route('/stats/qr_codes/details/<int:qr_id>', methods=['GET'])
+@login_required
+def qr_codes_details(qr_id):
+    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    # Extract dates and click counts
+    dates = [entry['date'] for entry in click_data]
+    clicks = [entry['clicks'] for entry in click_data]
+
+    # Create a simple bar chart using Matplotlib
+    plt.figure(figsize=(10, 6))
+    plt.bar(dates, clicks)
+    plt.xlabel('Date')
+    plt.ylabel('Number of Clicks')
+    plt.title('Clicks Over Time')
+
+    # Convert the plot to a PNG image
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
 
 
 # delete a qr code

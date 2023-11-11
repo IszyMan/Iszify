@@ -19,5 +19,7 @@ MarkupSafe
 SQLAlchemy
 typing_extensions
 visitor
-Werkzeug
+Werkzeug==2.3.0
 WTForms
+matplotlib==3.8.1
+pandas
