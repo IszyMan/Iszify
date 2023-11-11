@@ -8,6 +8,7 @@ from PIL import Image
 import qrcode
 from io import BytesIO
 import pandas as pd
+from datetime import datetime
 import matplotlib.pyplot as plt
 import io
 import base64
@@ -251,6 +252,8 @@ def shorten_url():
 # redirect short url to the original url
 @user_blp.route('/<short_url>/')
 def redirect_to_url(short_url):
+    current_date = datetime.now().strftime("%d-%b-%Y")
+    print(current_date, "current date")
     if short_url == 'qr-code':
         return redirect(url_for('user_blp.qr_code_info'))
     if short_url == 'url-shortener':
@@ -260,6 +263,17 @@ def redirect_to_url(short_url):
     url = Urlshort.query.filter_by(short_url=short_url).first()
     if not url:
         url = QrCode.query.filter_by(short_url=short_url).first_or_404()
+        record = QrcodeRecord.query.filter_by(qr_code_id=url.id, date=current_date).first()
+        if not record:
+            new_record = QrcodeRecord(
+                qr_code_id=url.id,
+                date=current_date,
+                clicks=1
+            )
+            db.session.add(new_record)
+        else:
+            record.clicks += 1
+
     url.clicks += 1
     db.session.commit()
     print(url.url)
