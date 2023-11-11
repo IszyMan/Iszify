@@ -42,7 +42,7 @@ class QrCode(UserMixin, db.Model):
         return cls.query.filter_by(id=id).first()
 
 
-def generate_short_url():
+def generate_short_url2():
     last_url = QrCode.query.order_by(QrCode.id.desc()).first()
 
     if not last_url:
