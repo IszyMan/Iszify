@@ -7,8 +7,6 @@ from urllib import request
 from urllib.error import HTTPError, URLError
 
 secret = 'any-secret-key-you-choose'
-print("secret")
-print(secret)
 
 hashids = Hashids(min_length=6, salt=secret)
 
