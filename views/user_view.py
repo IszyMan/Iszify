@@ -257,7 +257,9 @@ def redirect_to_url(short_url):
         return redirect(url_for('user_blp.url_shortener_info'))
     if short_url == 'biolink':
         return redirect(url_for('user_blp.biolink'))
-    url = Urlshort.query.filter_by(short_url=short_url).first_or_404()
+    url = Urlshort.query.filter_by(short_url=short_url).first()
+    if not url:
+        url = QrCode.query.filter_by(short_url=short_url).first_or_404()
     url.clicks += 1
     db.session.commit()
     print(url.url)
@@ -307,7 +309,8 @@ def qr_codes():
         new_qr_code = QrCode(
             author=current_user,
             author_id=current_user.id,
-            url=url
+            url=url,
+            short_url=generate_short_url2()
         )
         new_qr_code.save()
         flash('QR Code has been generated successfully!', 'success')
