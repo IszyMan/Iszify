@@ -1,0 +1,145 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <style>
+        img {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            margin: 20px;
+            border: 10px solid #ffcc00;
+            border-radius: 10px;
+        }
+    </style>
+    <script>
+        function get_user_location() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var location = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
+
+            // Set the value of the 'user_location' input
+            var userLocationInput = document.getElementById("user_location");
+            if (userLocationInput) {
+                userLocationInput.value = JSON.stringify(location);
+            } else {
+                console.error("Element with id 'user_location' not found.");
+            }
+        });
+    } else {
+        alert("Geolocation is not supported by your browser.");
+    }
+}
+
+
+        function get_device_info() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var location = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
+
+            var deviceInfo = {
+                user_location: location,
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+                deviceName: getDeviceNameFromUserAgent(navigator.userAgent)
+            };
+
+            // Set the scanned_data input field with the JSON data
+            var scannedData = JSON.stringify(deviceInfo);
+            document.getElementById("scanned_data").value = scannedData;
+
+            // Make an asynchronous request to the server to handle the data
+            sendScanData(scannedData);
+        });
+    } else {
+        alert("Geolocation is not supported by your browser.");
+    }
+}
+
+// Function to attempt extracting the device name from the user agent string
+function getDeviceNameFromUserAgent(userAgent) {
+    // Extract the device name using a regular expression
+    var match = userAgent.match(/(?:iPad|iPhone|iPod|Android|Windows Phone|Windows NT|BlackBerry|Kindle)\s*([\w\s]+)?/i);
+    
+    if (match && match[1]) {
+        return match[1].trim();
+    }
+
+    // If the device name cannot be extracted, return 'unknown'
+    return 'unknown';
+}
+
+// Function to send scanned data to the server using AJAX
+function sendScanData(scannedData) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/scan_qr_code", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Handle the server response
+                var responseData = JSON.parse(xhr.responseText);
+                // Check if a redirect URL is provided
+                if (responseData.redirect_url) {
+                    // Redirect the user to the specified URL
+                    window.location.href = responseData.redirect_url;
+                } else {
+                    // Handle other responses as needed
+                    console.log("Server response:", xhr.responseText);
+                }
+            } else {
+                // Handle errors or other status codes
+                console.error("Error:", xhr.statusText);
+            }
+        }
+    };
+
+    console.log("scannedData:", scannedData);
+    xhr.send(scannedData);
+}
+
+// Call the get_device_info function when the document is ready
+document.addEventListener("DOMContentLoaded", function() {
+    get_device_info();
+});
+
+
+
+// console.log("Executing get_user_location");
+// get_user_location();
+// console.log("Executing get_device_info");
+// get_device_info();
+    </script>
+</head>
+<body>
+    <h1>QR Code Scanner</h1>
+    
+    {% if qr_code_image %}
+        <!-- Display the QR code image -->
+        <img src="data:image/png;base64,{{ qr_code_image }}" alt="QR Code">
+        <form method="post" action="/scan_qr_code" onsubmit="get_user_location(); get_device_info();">
+            <!-- <input type="hidden" name="scanned_data" id="scanned_data" value=""> -->
+            <input type="hidden" name="scanned_data" value="{{ scanned_data }}">
+            <input type="hidden" name="user_location" id="user_location" value="">
+            <input type="hidden" name="device_info" id="device_info" value="">
+            <button type="submit">Scan QR Code</button>
+        </form>
+        
+    {% else %}
+        <p>No QR code data found.</p>
+    {% endif %}
+</body>
+</html>
