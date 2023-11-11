@@ -8,20 +8,7 @@
 <main style="margin-top: 58px">
   <div class="container pt-4">
 
-
-    <div class="row mb-4 ">
-
-          <div class="container-fluid align-self-end mt-5">
-               <h3><b>QR CODES</b></h3>
-              {% if urls %}
-        <button type="button" class="btn">
-      <i class="fa fa-calendar px-2 "></i>Filter by Date
-        </button>
-
-      </div>
-      </div>
-
-    <div class="container-fluid">
+     <div class="container-fluid">
 
     {% for url in urls|reverse %}
 
@@ -41,12 +28,9 @@
         <!-- Add a Font Awesome download icon and trash icon side by side -->
         <div class="col-sm mt-3 ml-5 text-center">
             <button> <a href="" onclick="return confirmDelete()" class="">
-                <i class="fa fa-ellipsis-h h4"></i>
+                <i class="bi bi-three-dots-vertical h3"></i>
             </a> </button>
-          <button> <a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
-                <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
-            </a></button>
-            <button> <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
+           <button> <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
                 <i class="fas fa-download h4"></i> Download
             </a></button>
             <button> <a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
@@ -65,37 +49,15 @@
         </div>
     <hr>
     {% endfor %}
-      {% else %}
-        <div class="card " style="background-color:lavender;">
-                <div class="row">
-                 <div class="col-sm mt-5">
-                  <h2 class="text-center"><b>No QR Code Yet</b></h2>
-                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
-                    </div>
-                </div>
-         </div>
-        {% endif %}
+      <div class="row">
+      <div class="col-sm mt-5">
+          {% for url in urls %}
+           {{ url.id  }}
+          {% endfor %}
 
-</div>
-
-<script>
-    function confirmDelete() {
-      return confirm('Are you sure you want to delete?');
-    }
-
-    function downloadQR(qrUrl, id) {
-        fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
-            .then(response => response.blob())
-            .then(blob => {
-                var url = window.URL.createObjectURL(blob);
-                var link = document.createElement('a');
-                link.href = url;
-                link.download = "qr_code_" + id + ".png";
-                link.click();
-                window.URL.revokeObjectURL(url);
-            });
-    }
-</script>
+          <img src="data:image/png;base64,{{ plot_url }}" alt="Clicks Chart">
+      </div>
+  </div>
   </div>
 </main>
 {% endblock content %}
