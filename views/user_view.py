@@ -4,6 +4,11 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from utils import get_platform
+from PIL import Image
+import qrcode
+from io import BytesIO
+import base64
+
 
 user_blp = Blueprint("user_blp", __name__)
 
@@ -361,3 +366,47 @@ def display_biolinks():
 @user_blp.route('/see', methods=['GET'])
 def see():
     return render_template('base2.html')
+
+
+# @user_blp.route('/qrqr', methods=['GET'])
+# def qrqr():
+#     data_to_encode = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+#
+#     # Generate QR code
+#     qr = qrcode.QRCode(
+#         version=1,
+#         error_correction=qrcode.constants.ERROR_CORRECT_L,
+#         box_size=10,
+#         border=4,
+#     )
+#     qr.add_data(data_to_encode)
+#     qr.make(fit=True)
+#
+#     # Create an image from the QR Code instance
+#     img = qr.make_image(fill_color="black", back_color="white")
+#
+#     # Save the image to BytesIO
+#     img_bytes_io = BytesIO()
+#     img.save(img_bytes_io)
+#     img_bytes_io.seek(0)
+#
+#     # Save the image to the database
+#     qr_code_data = QRCodeData(qr_code_image=img_bytes_io.read())
+#     db.session.add(qr_code_data)
+#     db.session.commit()
+#     return "DONE"
+#
+#
+# @user_blp.route('/qrqr2', methods=['GET'])
+# def qrqr2():
+#     # Query the database for the latest QR code data
+#     latest_qr_code_data = QRCodeData.query.order_by(QRCodeData.id.desc()).all()
+#
+#     if latest_qr_code_data:
+#         # Convert the binary image data to a base64-encoded string
+#         base64_image = base64.b64encode(latest_qr_code_data.qr_code_image).decode('utf-8')
+#
+#         # Pass the base64-encoded image data to the template
+#         return render_template('grgr.html', qr_code_image=base64_image)
+#
+#     return "No QR code data found."
