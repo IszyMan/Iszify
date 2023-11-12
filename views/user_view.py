@@ -5,7 +5,7 @@ from extensions import db
 from flask_login import login_user, login_required, current_user
 from utils import get_platform
 from PIL import Image
-import qrcode
+# import qrcode
 from io import BytesIO
 import pandas as pd
 import matplotlib.pyplot as plt
