@@ -8,6 +8,7 @@ from PIL import Image
 # import qrcode
 from io import BytesIO
 import pandas as pd
+from datetime import datetime
 import matplotlib.pyplot as plt
 import io
 import base64
@@ -207,6 +208,32 @@ def delete_product(linkname):
     return redirect(referer or url_for('user_blp.dashboard'))
 
 
+@user_blp.route('/qr_code/stats/<int:qr_id>', methods=['GET'])
+@login_required
+def qr_code_stats(qr_id):
+    qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
+    if not qr_codes:
+        flash('No stats for this QR Code', 'info')
+        return redirect(url_for('user_blp.display_qr_codes'))
+    # Extract dates and click counts
+    dates = [entry.date for entry in qr_codes]
+    clicks = [entry.clicks for entry in qr_codes]
+
+    # Create a simple bar chart using Matplotlib
+    plt.figure(figsize=(10, 6))
+    plt.bar(dates, clicks)
+    plt.xlabel('Date')
+    plt.ylabel('Number of Clicks')
+    plt.title('Clicks Over Time')
+
+    # Convert the plot to a PNG image
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    return render_template("qr_code_stats.html", plot_url=plot_url)
+
+
 # SHORTEN URL SECTION
 @user_blp.route('/urls/shorten_url', methods=['GET', 'POST'])
 @login_required
@@ -251,6 +278,8 @@ def shorten_url():
 # redirect short url to the original url
 @user_blp.route('/<short_url>/')
 def redirect_to_url(short_url):
+    current_date = datetime.now().strftime("%d-%b-%Y")
+    print(current_date, "current date")
     if short_url == 'qr-code':
         return redirect(url_for('user_blp.qr_code_info'))
     if short_url == 'url-shortener':
@@ -260,6 +289,17 @@ def redirect_to_url(short_url):
     url = Urlshort.query.filter_by(short_url=short_url).first()
     if not url:
         url = QrCode.query.filter_by(short_url=short_url).first_or_404()
+        record = QrcodeRecord.query.filter_by(qr_code_id=url.id, date=current_date).first()
+        if not record:
+            new_record = QrcodeRecord(
+                qr_code_id=url.id,
+                date=current_date,
+                clicks=1
+            )
+            db.session.add(new_record)
+        else:
+            record.clicks += 1
+
     url.clicks += 1
     db.session.commit()
     print(url.url)
