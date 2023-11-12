@@ -236,9 +236,9 @@ def qr_code_stats(qr_id):
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
     return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
-# ****************************************************************
-# ****************************************************************
-# ****************************************************************
+# *********************** USE THIS VIEW FUNCTION TO VIEW THE PLOT *****************************************
+# *********************** USE THIS VIEW FUNCTION TO VIEW THE PLOT *****************************************
+# *********************** USE THIS VIEW FUNCTION TO VIEW THE PLOT *****************************************
 
 
 # SHORTEN URL SECTION
