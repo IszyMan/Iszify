@@ -214,7 +214,7 @@ def delete_product(linkname):
 @user_blp.route('/qr_code/stats/<int:qr_id>', methods=['GET'])
 @login_required
 def qr_code_stats(qr_id):
-    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()  # check if this should be .all or .first
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
     if not qr_codes:
         flash('No stats for this QR Code', 'info')
