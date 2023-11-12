@@ -208,9 +208,9 @@ def delete_product(linkname):
     return redirect(referer or url_for('user_blp.dashboard'))
 
 
-# ****************************************************************
-# ****************************************************************
-# ****************************************************************
+# ************************* USE THIS VIEW FUNCTION TO VIEW THE PLOT ***************************************
+# ************************* USE THIS VIEW FUNCTION TO VIEW THE PLOT ***************************************
+# ************************* USE THIS VIEW FUNCTION TO VIEW THE PLOT ***************************************
 @user_blp.route('/qr_code/stats/<int:qr_id>', methods=['GET'])
 @login_required
 def qr_code_stats(qr_id):
@@ -236,6 +236,9 @@ def qr_code_stats(qr_id):
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
     return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
+# ****************************************************************
+# ****************************************************************
+# ****************************************************************
 
 
 # SHORTEN URL SECTION
