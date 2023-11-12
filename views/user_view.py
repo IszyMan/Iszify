@@ -231,7 +231,7 @@ def qr_code_stats(qr_id):
     plt.savefig(img, format='png')
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
-    return render_template("qr_code_stats.html", plot_url=plot_url)
+    return render_template("qr_codes_details.html", plot_url=plot_url)
 
 
 # SHORTEN URL SECTION
