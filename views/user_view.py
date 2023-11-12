@@ -211,6 +211,7 @@ def delete_product(linkname):
 @user_blp.route('/qr_code/stats/<int:qr_id>', methods=['GET'])
 @login_required
 def qr_code_stats(qr_id):
+    
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
     if not qr_codes:
         flash('No stats for this QR Code', 'info')
@@ -231,7 +232,7 @@ def qr_code_stats(qr_id):
     plt.savefig(img, format='png')
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
-    return render_template("qr_codes_details.html", plot_url=plot_url)
+    return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
 
 
 # SHORTEN URL SECTION
