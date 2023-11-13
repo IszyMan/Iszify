@@ -409,6 +409,7 @@ def qr_codes_details(qr_id):
                                      author_id=current_user.id).all()  # check if this should be .all or .first
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
     if not qr_codes:
+        print("No stats for this QR Code")
         flash('No stats for this QR Code', 'info')
         return redirect(url_for('user_blp.display_qr_codes'))
     # Extract dates and click counts
