@@ -8,7 +8,6 @@ class CreateBioPage(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # bio_page_id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    author = relationship("User", back_populates="bio_name")
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     bio_name = db.Column(db.String(250), default="")
     clicks = db.Column(db.Integer, default=0)
