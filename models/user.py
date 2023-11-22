@@ -22,5 +22,6 @@ class User(UserMixin, db.Model):
     qr_code = relationship("QrCode", back_populates="author")
     link_entries = relationship("CreateBioLinkEntries", back_populates="author")
 
+
 def get_profile_link(brand_name):
     return f"{request.host_url}{brand_name}"
