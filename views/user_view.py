@@ -466,6 +466,7 @@ def display_qr_codes():
 @user_blp.route('/stats/qr_codes/details/<int:qr_id>', methods=['GET'])
 @login_required
 def qr_codes_details(qr_id):
+<<<<<<< HEAD
     qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
     # if not qr_codes:
@@ -474,6 +475,37 @@ def qr_codes_details(qr_id):
     # Extract dates and click counts
     dates = [entry['date'] for entry in qr_codes]
     clicks = [entry['clicks'] for entry in qr_codes]
+=======
+    # qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    # # Extract dates and click counts
+    # dates = [entry['date'] for entry in click_data]
+    # clicks = [entry['clicks'] for entry in click_data]
+    #
+    # # Create a simple bar chart using Matplotlib
+    # plt.figure(figsize=(10, 6))
+    # plt.bar(dates, clicks)
+    # plt.xlabel('Date')
+    # plt.ylabel('Number of Clicks')
+    # plt.title('Clicks Over Time')
+    #
+    # # Convert the plot to a PNG image
+    # img = io.BytesIO()
+    # plt.savefig(img, format='png')
+    # img.seek(0)
+    # plot_url = base64.b64encode(img.getvalue()).decode()
+    # return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
+
+    qrcodes = QrCode.query.filter_by(id=qr_id,
+                                     author_id=current_user.id).all()  # check if this should be .all or .first
+    qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
+    if not qr_codes:
+        print("No stats for this QR Code")
+        flash('No stats for this QR Code', 'info')
+        return redirect(url_for('user_blp.display_qr_codes'))
+    # Extract dates and click counts
+    dates = [entry.date for entry in qr_codes]
+    clicks = [entry.clicks for entry in qr_codes]
+>>>>>>> 28801397d10d20fdfa8f9f9fb0138b6548f8f5fc
 
     # Create a simple bar chart using Matplotlib
     plt.figure(figsize=(10, 6))
@@ -487,7 +519,9 @@ def qr_codes_details(qr_id):
     plt.savefig(img, format='png')
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
+    # return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
     return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
+
 
 
 # delete a qr code
