@@ -13,13 +13,14 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
     username = db.Column(db.String(100), unique=True, nullable=False)
-    brand_name = db.Column(db.String(100))
     profile_link = db.Column(db.String(250), unique=True)
     # brand = relationship("ChooseBrandName", back_populates="brand") #THIS IS NOT IN USE
+    brand_name = db.Column(db.String(100))
+    bio_name = relationship("CreateBioPage", back_populates="author")
     posts = relationship("CreateProfile", back_populates="author")
     urlshort = relationship("Urlshort", back_populates="author")
     qr_code = relationship("QrCode", back_populates="author")
-
+    link_entries = relationship("CreateBioLinkEntries", back_populates="author")
 
 def get_profile_link(brand_name):
     return f"{request.host_url}{brand_name}"

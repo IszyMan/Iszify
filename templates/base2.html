@@ -139,7 +139,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <a class="dropdown-item" href="{{url_for('user_blp.shorten_url')}}"><i class="fa fa-link" aria-hidden="true"></i> Create Short URL</a><br>
     <a class="dropdown-item" href="{{url_for('user_blp.qr_codes')}}"><i class="fa fa-qrcode" aria-hidden="true"></i> QR Codes</a><br>
-    <a class="dropdown-item" href="{{url_for('user_blp.admin')}}"><i class="fa fa-hashtag" aria-hidden="true"></i> Link In Bio</a>
+    <a class="dropdown-item" href="{{url_for('user_blp.create_Bio_Page')}}"><i class="fa fa-hashtag" aria-hidden="true"></i> Link In Bio</a>
   </div>
 </div>
 
@@ -150,9 +150,11 @@
    Links</a>
        <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
 
-        <a href="{{url_for('user_blp.display_biolinks')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Link</a>
+        <a href="{{url_for('user_blp.bio_link_pages')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  New Bio-Link </a>
 
-      <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
+        <a href="{{url_for('user_blp.display_biolinks')}}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Link</a>
+
+      <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-user-circle h3 text-muted mr-5"></i>
         <div class="d-flex flex-column align-items-center ">
@@ -213,7 +215,7 @@
 
      {% if not current_user.is_authenticated %}
   <footer>
-    <div class="footer-div row p-3 mb-2 text-white">
+    <div class="footer-div row p-3 mb-2 text-white mt-5">
         <div class="col-md-3 divclass">
             <!-- The navbar brand -->
             <a href="" class="footer-brand text-decoration-none">

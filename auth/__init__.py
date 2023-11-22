@@ -16,15 +16,19 @@ def register():
         return redirect(url_for('user_blp.admin'))
     if request.method == "POST":
         email = request.form.get('email').lower()
-        first_name = request.form.get('first_name').lower()
+        if '@' and '.com' not in email:
+            flash("A valid Email is required", 'danger')
+            return redirect(url_for("auth_blp.register"))
+        # first_name = request.form.get('first_name').lower()
         username = request.form.get('username').lower()
-        last_name = request.form.get('last_name').lower()
+        # last_name = request.form.get('last_name').lower()
         password = request.form.get('password')
-        confirm_password = request.form.get('confirm_password')
+        # confirm_password = request.form.get('confirm_password')
 
         # Check if any of the required fields (email, password, confirm_password, first_name, last_name, username)
         # are empty
-        required_fields = [email, password, confirm_password, first_name, last_name, username]
+        # required_fields = [email, password, confirm_password, first_name, last_name, username]
+        required_fields = [email, password, username]
         if not all(required_fields):
             # Display a flash message to the user indicating that all fields are required
             flash('All fields are required', 'danger')
@@ -33,9 +37,10 @@ def register():
                                    )
 
         # if the password and confirm password are not same
-        if password != confirm_password:
-            flash('Password does\'t match')
-            return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
+        # if password != confirm_password:
+        #     flash('Password does\'t match')
+        #     return render_template("register.html", logged_in=current_user.is_authenticated, form=form)
+
 
         if User.query.filter_by(username=username).first():
             # Username already exists
@@ -46,7 +51,7 @@ def register():
 
         if User.query.filter_by(email=request.form.get('email')).first():
             # User already exists
-            flash("You've already signed up with that email, log in instead!")
+            flash("You've already signed up with that email, log in instead!", 'warning')
             return redirect(url_for('auth_blp.login'))
 
         hash_and_salted_password = generate_password_hash(
@@ -56,8 +61,8 @@ def register():
         )
         new_user = User(
             email=email,
-            first_name=first_name,
-            last_name=last_name,
+            # first_name=first_name,
+            # last_name=last_name,
             username=username,
             password=hash_and_salted_password
         )

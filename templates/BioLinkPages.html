@@ -1,0 +1,58 @@
+{% extends 'base2.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  {% endblock head %}
+
+
+{% block content %}
+
+
+<main style="margin-top: 28px">
+  <div class="container pt-5">
+<!-- This is goto links  div-->
+
+<div class="container-fluid">
+
+
+        {% for post in bio_pages|reverse %}
+               <a href="{{url_for('user_blp.bio_link_pages_details', sub_path=post.bio_name)}}">
+            <div class="card " style="background-color:lavender;">
+                <div class="row">
+
+                    <div class="mt-5 h3 text-decoration-none">
+
+
+                        <div class="float-start mx-5 mt-3"> PAGE NAME: {{ brand_url }}</div>
+                        <div class="float-end mx-5 mt-3" ><i class="bi bi-pencil-square"></i>Edit</div>
+
+                    </div>
+
+                 <div class="col-sm mt-5">
+                     <div >
+
+
+                    <p class="card-text mx-5"><strong>Original</strong> <a href="" target="_blank"> {{ post.bio_name }}</a></p>
+                         <div><p>
+                        <i class="bi bi-bar-chart-fill"></i>Click Data ({{ post.clicks }})
+                        <i class="fa fa-calendar px-2 "></i> {{ post.created_at.strftime('%Y-%m-%d') }}
+
+                         </p></div>
+
+                     </div>
+                     </div>
+
+
+                    </div>
+                </div>
+            </a>
+          <br>
+     {% endfor %}
+  </div>
+
+
+
+
+</div>
+</main>
+
+{% endblock content %}

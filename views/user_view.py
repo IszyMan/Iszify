@@ -3,11 +3,9 @@ from forms import *
 from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
+from models.bio_link_entries import CreateBioLinkEntries
 from utils import get_platform
-from PIL import Image
-# import qrcode
-from io import BytesIO
-import pandas as pd
+from models.create_bio_page import CreateBioPage
 from datetime import datetime
 import matplotlib.pyplot as plt
 import io
@@ -63,8 +61,7 @@ def dashboard():
 
     host_url = request.host_url
     brandie = current_user.brand_name
-    return render_template("dashboard.html",
-                           all_posts=posts, brand_url=brand_url,
+    return render_template("dashboard.html", brand_url=brand_url,
                            brandie=brandie, host_url=host_url,
                            url_short=url_short, qr_codes_=qr_codes_)
 
@@ -89,6 +86,91 @@ def join():
     return render_template("join.html", form=form, current_user=current_user)
 
 
+@user_blp.route('/createBioPage', methods=["GET", "POST"])
+@login_required
+def create_Bio_Page():
+    # Create Bio Pages.
+    form = GenerateBrandName()
+    if request.method == "POST":
+        bio_name = request.form.get('brandname')
+        user_ = CreateBioPage.query.filter_by(bio_name=bio_name).first()
+        if user_:
+            # User already exists
+            flash("Name already exists! Choose a unique name", "danger")
+            return render_template("createBioPage.html", form=form, current_user=current_user)
+
+        new_user = CreateBioPage(bio_name=bio_name, author=current_user,
+                                 author_id=current_user.id)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for("user_blp.bio_link_pages"))
+    return render_template("createBioPage.html", form=form, current_user=current_user)
+
+
+# list all bio pages
+@user_blp.route('/BioLinkPages', methods=["GET"])
+@login_required
+def bio_link_pages():
+    user_id = current_user.id
+    bio_page = User.query.filter_by(username=user_id).first()
+    bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
+    brand_url = f"{request.host_url}b/{bio_page}"
+    host_url = request.host_url
+    return render_template("BioLinkPages.html", brand_url=brand_url, host_url=host_url, bio_pages=bio_pages)
+
+
+@user_blp.route('/biolinkpages/<path:sub_path>/', methods=["GET", "POST"])
+@login_required
+def bio_link_pages_details(sub_path):
+    form = CreatePostForm()
+    bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
+    bios = CreateBioPage.query.filter_by(id=sub_path, author_id=current_user.id).all()
+    bio_entries = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
+    # all_bio = CreateBioPage.query.filter_by(bio_name=sub_path).all()
+    # bio_page_id = [entry.id for entry in all_bio]
+    user_id = current_user.id
+    if request.method == "POST":
+        linkname = form.linkname.data.lower()
+        link = form.link.data.lower()
+
+        # if not linkname:
+        #     flash("Link Name Required", "danger")
+        #     return redirect(url_for("user_blp.admin"))
+
+        check_if_linkname_exists = CreateBioLinkEntries.query.filter_by(link_name=linkname).first()
+        if check_if_linkname_exists:
+            flash("Link Name already exists!", "danger")
+            # return redirect(url_for("user_blp.bio_link_pages_details"))
+
+        new_post = CreateBioLinkEntries(
+            link_name=linkname,
+            link_url=link,
+            author=current_user,
+            author_id=user_id,
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        flash("Link Added", "success")
+    return render_template("bio_link_pages_details.html", bios=bios, links_added=bio_links, form=form, current_user=current_user)
+
+
+
+@user_blp.route('/b/<brandname>/', methods=["GET", "POST"])
+@login_required
+def bio_link_routes(brandname):
+    check_brand = CreateBioPage.query.filter_by(author_id=brandname.lower()).first()
+    return render_template("bio_link_routes.html", brandie=brandname.upper(), all_posts=check_brand)
+
+
+# @user_blp.route('/brand/<brandname>/', methods=["GET", "POST"])
+# def brand(brandname):
+#     check_brand = User.query.filter_by(brand_name=brandname.lower()).first()
+#     if not check_brand:
+#         return render_template("404.html")
+#     check_brand_posts = CreateProfile.query.filter_by(author_id=check_brand.id).all()
+#     return render_template("brand.html", brandie=brandname.upper(), all_posts=check_brand_posts[::-1])
+
+
 @user_blp.route('/redirect')
 @login_required
 def redirect_me():
@@ -99,10 +181,15 @@ def redirect_me():
 @login_required
 def admin():
     form = CreatePostForm()
+    join_form = GenerateBrandName()
     user_id = current_user.id
     brand_url = f"{request.host_url}brand/{current_user.brand_name}"
     posts = CreateProfile.query.filter_by(author_id=user_id).all()
     brandname = current_user.brand_name
+    # if brandname is None:
+    #     flash("Please Create A Brand name")
+    #     return render_template("join.html", form=join_form, current_user=current_user)
+
     if request.method == "POST":
         linkname = form.linkname.data.lower()
         link = form.link.data.lower()
@@ -126,9 +213,9 @@ def admin():
         db.session.add(new_post)
         db.session.commit()
         flash("Link Added", "success")
-        return redirect(url_for("user_blp.admin"))
-    return render_template("admin.html", all_posts=posts,
-                           name=current_user.first_name.title(),
+        return redirect(url_for("user_blp.display_biolinks"))
+    return render_template("admin.html",
+                           name=current_user.username.title(),
                            logged_in=True,
                            form=form,
                            brand_url=brand_url,
@@ -208,13 +295,9 @@ def delete_product(linkname):
     return redirect(referer or url_for('user_blp.dashboard'))
 
 
-# ************************* USE THIS VIEW FUNCTION TO VIEW THE PLOT ***************************************
-# ************************* USE THIS VIEW FUNCTION TO VIEW THE PLOT ***************************************
-# ************************* USE THIS VIEW FUNCTION TO VIEW THE PLOT ***************************************
 @user_blp.route('/qr_code/stats/<int:qr_id>', methods=['GET'])
 @login_required
 def qr_code_stats(qr_id):
-    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()  # check if this should be .all or .first
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
     if not qr_codes:
         flash('No stats for this QR Code', 'info')
@@ -235,10 +318,7 @@ def qr_code_stats(qr_id):
     plt.savefig(img, format='png')
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
-    return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
-# *********************** USE THIS VIEW FUNCTION TO VIEW THE PLOT *****************************************
-# *********************** USE THIS VIEW FUNCTION TO VIEW THE PLOT *****************************************
-# *********************** USE THIS VIEW FUNCTION TO VIEW THE PLOT *****************************************
+    return render_template("qr_code_stats.html", plot_url=plot_url)
 
 
 # SHORTEN URL SECTION
@@ -374,12 +454,12 @@ def display_qr_codes():
 
 
 # Sample data (you should replace this with your actual data source)
-click_data = [
-    {"date": "2023-11-01", "clicks": 10},
-    {"date": "2023-11-02", "clicks": 15},
-    {"date": "2023-11-03", "clicks": 8},
-    # Add more data here
-]
+# click_data = [
+#     {"date": "2023-11-01", "clicks": 10},
+#     {"date": "2023-11-02", "clicks": 15},
+#     {"date": "2023-11-03", "clicks": 8},
+#     # Add more data here
+# ]
 
 
 # View all qr codes details for the current user
@@ -387,9 +467,13 @@ click_data = [
 @login_required
 def qr_codes_details(qr_id):
     qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
+    # if not qr_codes:
+    #     flash('No stats for this QR Code', 'info')
+    #     return redirect(url_for('user_blp.display_qr_codes'))
     # Extract dates and click counts
-    dates = [entry['date'] for entry in click_data]
-    clicks = [entry['clicks'] for entry in click_data]
+    dates = [entry['date'] for entry in qr_codes]
+    clicks = [entry['clicks'] for entry in qr_codes]
 
     # Create a simple bar chart using Matplotlib
     plt.figure(figsize=(10, 6))
@@ -410,7 +494,7 @@ def qr_codes_details(qr_id):
 @user_blp.route('/qr_codes/delete/<int:qr_id>')
 @login_required
 def delete_qr_code(qr_id):
-    # check if the qr code exists and if its for the current user
+    # check if the qr code exists and if it's for the current user
     qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first_or_404()
     referer = request.headers.get('Referer')
     qrcode.delete()
@@ -445,13 +529,13 @@ def profile_info(username):
 @login_required
 def display_biolinks():
     biolinks = CreateProfile.query.filter_by(author_id=current_user.id).all()
-    return render_template("biolinks.html", biolinks=biolinks)
+    brand_url = f"{request.host_url}{current_user.brand_name}"
+    return render_template("biolinks.html", biolinks=biolinks, brand_url=brand_url)
 
 
 @user_blp.route('/see', methods=['GET'])
 def see():
     return render_template('base2.html')
-
 
 # @user_blp.route('/qrqr', methods=['GET'])
 # def qrqr():

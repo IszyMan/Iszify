@@ -7,7 +7,7 @@
 <section class="row">
     <div class="px-3 py-4 h-50 col-lg-8 col-md-6 my-auto" style="background: rgb(242, 245, 210); border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
         <!-- current user info -->
-        <p class="h6"><span class="text-muted">NAME:</span> {{ current_user.last_name.title() }} {{ current_user.first_name.title() }}</p>
+<!--        <p class="h6"><span class="text-muted">NAME:</span> {{ current_user.last_name }} {{ current_user.first_name }}</p>-->
         <p class="h6"><span class="text-muted">EMAIL:</span> {{ current_user.email }}</p>
         {% if current_user.brand_name %}
         <p class="h6"><span class="text-muted">BRAND:</span> {{ current_user.brand_name }}</p>

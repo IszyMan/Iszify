@@ -1,20 +1,93 @@
 {% extends 'base2.html' %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/biophone.css') }}">
+
 {% endblock head %}
 {% block content %}
 
 <main style="margin-top: 78px">
   <div class="container pt-4">
-<div class="">
-    {% if biolinks %}
-    <div class="rows">
-        {% for post in biolinks|reverse %}
-          <div class="cols">
-            <div class=" mb-4 stylethis">
-              <div class="card card_this">
-                <a class=' text-muted h4 py-3 fw-bold text-decoration-none text-center'>{{ post.linkname.upper() }} </a>
-                <!-- Add more content here as needed -->
+
+  <div class="container bg-secondary">
+    <div class="d-flex justify-content-start py-3 container align-item-center">
+        <div>
+        <a href="" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Links</a>
+        <a href="" class="btn py-1 px-2" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
+        <a href="" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Analytics</a>
+    </div>
+    </div>
+</div>
+
+<div class="dashdiv">
+     <div class="d-flex flex-row">
+        <div class="p-2">
+   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
+       <li class="nav-item mx-3">
+    <span><i class="fa fa-link" aria-hidden="true"></i>
+    <a class="text-decoration-none text-primary fw-bold" href="/{{current_user.brand_name}}" >{{ brand_url }}</a></span>
+       </li>
+       <li class="nav-item mx-5"><span class="text-center text-primary"><b><i class="bi bi-pencil-square"></i> Edit</b></span></li>
+       <li><span class="text-primary"><b><i class="fas fa-copy"></i> Copy</b></span></li>
+    </ul>
+    </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="mx-5">
+       <a href="{{url_for('user_blp.admin')}}"> <button type="button" class="btn btn-primary">Add a Link <i class="fa-solid fa-plus"></i></button></a>
+        </div>
+<div class="row">
+
+
+     <div class="clearfix"  >
+       <div class="float-end">
+      <div class="smartphone ">
+     <div class="content mx-5" >
+      <div class="phone_container mt-5 mx-5" >
+          <i class="text-center fa fa-user h1 text-primary stylethis2 rounded-circle p-4 mx-4"></i>
+      {% for post in biolinks|reverse%}
+          <div class='border border-primary rounded-pill p-3 mt-2 text-center'>
+        <a class='h6 mb-4 mt-3 text-muted fw-bold text-decoration-none '>{{ post.linkname.upper() }} </a><br>
+              </div>
+      {% endfor %}
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="float-start  w-50 p-3">
+
+        {% if biolinks %}
+       {% for post in biolinks|reverse %}
+
+            <div class=" mb-4">
+<!--                <div><i class="fa fa-picture-o" aria-hidden="true"></i></div>-->
+              <div class="card text-secondary">
+                  <div>
+                      <div>
+                <a class='float-start text-muted h4 py-3 fw-bold text-decoration-none text-center mx-5'>{{ post.linkname.upper() }} </a>
+                      </div>
+                      <div class="float-end mx-5 mt-3" ><b><i class="bi bi-pencil-square"></i>Edit</b></div>
+                  </div>
+
+                      <div class="mx-5">
+
+                         <img id="frame" src="" class="img-fluid" />
+                        <a class='text-muted h6 py-3 fw-bold text-decoration-none justify-content-between'>
+
+                            {{ post.link }} </a>
+
+
+                      </div>
+
+
+
+<!--                Add more content here as needed-->
                 <div style='display: flex; justify-content: space-evenly; align-items: center;' class="mt-3 w-75 m-auto">
                     {%if post.link_name=="Twitter" %}
                     <a href='{{post.link}}' target='_blank'>
@@ -28,12 +101,9 @@
                     {%endif%}
                   </div>
                   <hr>
-                  <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
-                    style="width: fit-content;">
-                    <span class="ms-4">Clicks</span>
-                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
-                      margin-left: -25px;
-                      ">
+                  <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center" style="width: fit-content;">
+                    <span ><i class="bi bi-bar-chart-fill h5 text-decoration-none"></i>Clicks</span>
+                      <span class="badge rounded-pill badge-notification bg-danger fw-bold mx-2">
                       {{post.clicks}}
                       <span class="visually-hidden">Clicks</span>
                     </span>
@@ -44,97 +114,106 @@
                   </p>
               </div>
             </div>
-          </div>
+
         {% endfor %}
+
         </div>
-        {% else %}
+
+</div>
+
+</div>
+
+</div>
 
 
-        <div class="card " style="background-color:lavender;">
-                <div class="row">
-                 <div class="col-sm mt-5">
-                  <h2 class="text-center"><b>Create Bio Link</b></h2>
-                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
-                    </div>
-                </div>
-         </div>
+<!--        {% else %}-->
 
 
-      {% endif %}
+<!--        <div class="card " style="background-color:lavender;">
+               <div class="row">-->
+<!--                 <div class="col-sm mt-5">-->
+<!--                  <h2 class="text-center"><b>Create Bio Link</b></h2>-->
+<!--                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--         </div>-->
+
+
+<!--      {% endif %}-->
 <!-- url short -->
-      {% if url_short %}
-      <h5 class="mt-4 text-center">SHORTENED URLS</h5>
-      <div class="rows">
-        {% for url in url_short|reverse %}
-        
-          <div class="cols">
-            <div class=" mb-4 stylethis">
-              <div class="card">
-                <!-- Add more content here as needed -->
-                <div class="mt-3 w-75 m-auto">
-                    <!-- original and short url -->
-                    <p>{{url.url}}</p> <br>
-                    <a href='{{url.short_url}}' target='_blank'>
-                      {{host_url}}{{url.short_url}}
-                    </a>
-                  </div>
-                  <hr>
-                  <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"
-                    style="width: fit-content;">
-                    <span class="ms-4">Clicks</span>
-                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;
-                      margin-left: -25px;
-                      ">
-                      {{url.clicks}}
-                      <span class="visually-hidden">Clicks</span>
-                    </span>
-                    <a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()">
-                      <i class="fa fa-trash-alt text-danger ms-5"></i>
-                    </a>
-                    <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
-                  </p>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-        </div>
-        {% else %}
-        <!-- <div class="stylethis2 m-auto" style="width: fit-content;">
-            <h1 class="text-center m-auto p-3">No Products Yet</h1>
-        </div> -->
-      {% endif %}
+<!--      {% if url_short %}-->
+<!--      <h5 class="mt-4 text-center">SHORTENED URLS</h5>-->
+<!--      <div class="rows">-->
+<!--        {% for url in url_short|reverse %}-->
+<!--        -->
+<!--          <div class="cols">-->
+<!--            <div class=" mb-4 stylethis">-->
+<!--              <div class="card">-->
+<!--                &lt;!&ndash; Add more content here as needed &ndash;&gt;-->
+<!--                <div class="mt-3 w-75 m-auto">-->
+<!--                    &lt;!&ndash; original and short url &ndash;&gt;-->
+<!--                    <p>{{url.url}}</p> <br>-->
+<!--                    <a href='{{url.short_url}}' target='_blank'>-->
+<!--                      {{host_url}}{{url.short_url}}-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                  <hr>-->
+<!--                  <p class="position-relative text-muted rounded p-1 mb-2 fw-bold mt-2 m-auto d-flex justify-content-around align-item-center"-->
+<!--                    style="width: fit-content;">-->
+<!--                    <span class="ms-4">Clicks</span>-->
+<!--                    <span class="position-absolute top-0 start-10 translate-middle badge rounded-pill bg-danger" style="font-size: .7rem;-->
+<!--                      margin-left: -25px;-->
+<!--                      ">-->
+<!--                      {{url.clicks}}-->
+<!--                      <span class="visually-hidden">Clicks</span>-->
+<!--                    </span>-->
+<!--                    <a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()">-->
+<!--                      <i class="fa fa-trash-alt text-danger ms-5"></i>-->
+<!--                    </a>-->
+<!--                    &lt;!&ndash; <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> &ndash;&gt;-->
+<!--                  </p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        {% endfor %}-->
+<!--        </div>-->
+<!--        {% else %}-->
+<!--        &lt;!&ndash; <div class="stylethis2 m-auto" style="width: fit-content;">-->
+<!--            <h1 class="text-center m-auto p-3">No Products Yet</h1>-->
+<!--        </div> &ndash;&gt;-->
+<!--      {% endif %}-->
 
-      <!-- qr code -->
-      {% if qr_codes_ %}
-      <h5 class="mt-4 text-center">QR CODES</h5>
+<!--      &lt;!&ndash; qr code &ndash;&gt;-->
+<!--      {% if qr_codes_ %}-->
+<!--      <h5 class="mt-4 text-center">QR CODES</h5>-->
 
-      <div class="rw_this">
-        {% for url in qr_codes_|reverse %}
-    
-        <div class="col_this card p-3">
-            <a href="{{ url.url }}" class="text-center mx-auto w-100">
-                {{ url.url }}
-            </a>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.url }}"
-                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />
-    
-            <!-- Add a Font Awesome download icon and trash icon side by side -->
-            <div class="d-flex justify-content-around align-items-center mt-5 mb-4 w-100 position-absolute bottom-0">
-                <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
-                    <i class="fas fa-download h4"></i>
-                </a>
-                <a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
-                    <i class="fas fa-trash-alt text-danger h4"></i>
-                </a>
-            </div>
-    
-            <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
-        </div>
-    
-        {% endfor %}
-    </div>
-    {% endif %}
-    </div>
+<!--      <div class="rw_this">-->
+<!--        {% for url in qr_codes_|reverse %}-->
+<!--    -->
+<!--        <div class="col_this card p-3">-->
+<!--            <a href="{{ url.url }}" class="text-center mx-auto w-100">-->
+<!--                {{ url.url }}-->
+<!--            </a>-->
+<!--            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.url }}"-->
+<!--                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />-->
+<!--    -->
+<!--            &lt;!&ndash; Add a Font Awesome download icon and trash icon side by side &ndash;&gt;-->
+<!--            <div class="d-flex justify-content-around align-items-center mt-5 mb-4 w-100 position-absolute bottom-0">-->
+<!--                <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">-->
+<!--                    <i class="fas fa-download h4"></i>-->
+<!--                </a>-->
+<!--                <a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">-->
+<!--                    <i class="fas fa-trash-alt text-danger h4"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--    -->
+<!--            &lt;!&ndash; <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> &ndash;&gt;-->
+<!--        </div>-->
+<!--    -->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--    {% endif %}-->
+
   </div>
 </main>
 {% endblock content %}

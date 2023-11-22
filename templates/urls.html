@@ -32,11 +32,11 @@
 
                  <div class="col-sm mt-5">
                      <div >
-                    <p class="card-text"><strong><a href="{{ request.host_url }}{{ url.short_url }}" target="_blank">{{ request.host_url }}{{ url.short_url }}</a></strong></p>
+                    <p class="card-text"><strong>Short <a href="{{ request.host_url }}{{ url.short_url }}" target="_blank"> {{ request.host_url }}{{ url.short_url }}</a></strong></p>
 
-                    <p class="card-text"><a href="{{ url.url }}" target="_blank">{{ url.url }}</a></p>
+                    <p class="card-text"><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url }}</a></p>
                          <div><p>
-                        <i class="fa fa-bar-chart"></i>Click Data ({{ url.clicks }})
+                        <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})
                         <i class="fa fa-calendar px-2 "></i> {{ url.created.strftime('%Y-%m-%d') }}
                          <i class="fa fa-copy px-2" id="" style="cursor: pointer;"></i> Copy
                          </p></div>
