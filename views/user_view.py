@@ -114,7 +114,7 @@ def bio_link_pages():
     user_id = current_user.id
     bio_page = User.query.filter_by(username=user_id).first()
     bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
-    brand_url = f"{request.host_url}b/{bio_page}"
+    brand_url = f"{request.host_url}brand/{bio_page}"
     host_url = request.host_url
     return render_template("BioLinkPages.html", brand_url=brand_url, host_url=host_url, bio_pages=bio_pages)
 
@@ -466,7 +466,7 @@ def display_qr_codes():
 @user_blp.route('/stats/qr_codes/details/<int:qr_id>', methods=['GET'])
 @login_required
 def qr_codes_details(qr_id):
-<<<<<<< HEAD
+
     qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
     # if not qr_codes:
@@ -475,7 +475,7 @@ def qr_codes_details(qr_id):
     # Extract dates and click counts
     dates = [entry['date'] for entry in qr_codes]
     clicks = [entry['clicks'] for entry in qr_codes]
-=======
+
     # qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
     # # Extract dates and click counts
     # dates = [entry['date'] for entry in click_data]
@@ -505,7 +505,6 @@ def qr_codes_details(qr_id):
     # Extract dates and click counts
     dates = [entry.date for entry in qr_codes]
     clicks = [entry.clicks for entry in qr_codes]
->>>>>>> 28801397d10d20fdfa8f9f9fb0138b6548f8f5fc
 
     # Create a simple bar chart using Matplotlib
     plt.figure(figsize=(10, 6))
