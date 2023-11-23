@@ -11,4 +11,4 @@ class CreateBioPage(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     bio_name = db.Column(db.String(250), default="")
     clicks = db.Column(db.Integer, default=0)
-    links = relationship("CreateBioLinkEntries", back_populates="entries")
+    links = relationship("CreateBioLinkEntries", backref="entries")
