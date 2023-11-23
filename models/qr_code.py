@@ -19,8 +19,7 @@ class QrCode(UserMixin, db.Model):
     url = db.Column(db.Text)
     # title = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
-    author = relationship("User", back_populates="qr_code")
-    qrcode_record = relationship("QrcodeRecord", back_populates="qr_code")
+    qrcode_record = relationship("QrcodeRecord", backref="qr_code")
     short_url = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
 
