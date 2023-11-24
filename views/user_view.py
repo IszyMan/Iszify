@@ -467,14 +467,14 @@ def display_qr_codes():
 @login_required
 def qr_codes_details(qr_id):
 
-    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
-    qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
+    # qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    # qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
     # if not qr_codes:
     #     flash('No stats for this QR Code', 'info')
     #     return redirect(url_for('user_blp.display_qr_codes'))
     # Extract dates and click counts
-    dates = [entry['date'] for entry in qr_codes]
-    clicks = [entry['clicks'] for entry in qr_codes]
+    # dates = [entry['date'] for entry in qr_codes]
+    # clicks = [entry['clicks'] for entry in qr_codes]
 
     # qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
     # # Extract dates and click counts
@@ -522,9 +522,8 @@ def qr_codes_details(qr_id):
     return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
 
 
-
 # delete a qr code
-@user_blp.route('/qr_codes/delete/<int:qr_id>')
+@user_blp.route('/qr_codes/delete/<int:qr_id>', methods=['GET'])
 @login_required
 def delete_qr_code(qr_id):
     # check if the qr code exists and if it's for the current user
