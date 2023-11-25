@@ -123,7 +123,7 @@ def bio_link_pages():
 def bio_link_pages_details(sub_path):
     form = CreatePostForm()
     bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
-    bios = CreateBioPage.query.filter_by(id=sub_path, author_id=current_user.id).all()
+    bios = CreateBioPage.query.filter_by(bio_name=sub_path, author_id=current_user.id).all()
     bio_entries = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
     # all_bio = CreateBioPage.query.filter_by(bio_name=sub_path).all()
     # bio_page_id = [entry.id for entry in all_bio]
@@ -144,7 +144,6 @@ def bio_link_pages_details(sub_path):
         new_post = CreateBioLinkEntries(
             link_name=linkname,
             link_url=link,
-            author=current_user,
             author_id=user_id,
         )
         db.session.add(new_post)
