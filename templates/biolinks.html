@@ -66,7 +66,6 @@
        {% for post in biolinks|reverse %}
 
             <div class=" mb-4">
-<!--                <div><i class="fa fa-picture-o" aria-hidden="true"></i></div>-->
               <div class="card text-secondary">
                   <div>
                       <div>
@@ -145,7 +144,7 @@
 <!--      <h5 class="mt-4 text-center">SHORTENED URLS</h5>-->
 <!--      <div class="rows">-->
 <!--        {% for url in url_short|reverse %}-->
-<!--        -->
+
 <!--          <div class="cols">-->
 <!--            <div class=" mb-4 stylethis">-->
 <!--              <div class="card">-->
@@ -189,14 +188,14 @@
 
 <!--      <div class="rw_this">-->
 <!--        {% for url in qr_codes_|reverse %}-->
-<!--    -->
+
 <!--        <div class="col_this card p-3">-->
 <!--            <a href="{{ url.url }}" class="text-center mx-auto w-100">-->
 <!--                {{ url.url }}-->
 <!--            </a>-->
 <!--            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.url }}"-->
 <!--                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />-->
-<!--    -->
+
 <!--            &lt;!&ndash; Add a Font Awesome download icon and trash icon side by side &ndash;&gt;-->
 <!--            <div class="d-flex justify-content-around align-items-center mt-5 mb-4 w-100 position-absolute bottom-0">-->
 <!--                <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">-->
@@ -206,10 +205,10 @@
 <!--                    <i class="fas fa-trash-alt text-danger h4"></i>-->
 <!--                </a>-->
 <!--            </div>-->
-<!--    -->
+
 <!--            &lt;!&ndash; <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> &ndash;&gt;-->
 <!--        </div>-->
-<!--    -->
+
 <!--        {% endfor %}-->
 <!--    </div>-->
 <!--    {% endif %}-->
