@@ -145,11 +145,15 @@ def bio_link_pages_details(sub_path):
             link_name=linkname,
             link_url=link,
             author_id=user_id,
+            bio_page_name=sub_path
         )
         db.session.add(new_post)
         db.session.commit()
         flash("Link Added", "success")
-    return render_template("bio_link_pages_details.html", bios=bios, links_added=bio_links, form=form, current_user=current_user)
+        return render_template("bio_link_pages_details.html", bios=bios, links_added=bio_links, form=form,
+                               current_user=current_user)
+    return render_template("bio_link_pages_details.html", bios=bios, links_added=bio_links, form=form,
+                           current_user=current_user)
 
 
 
