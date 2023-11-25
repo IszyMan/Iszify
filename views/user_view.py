@@ -99,8 +99,7 @@ def create_Bio_Page():
             flash("Name already exists! Choose a unique name", "danger")
             return render_template("createBioPage.html", form=form, current_user=current_user)
 
-        new_user = CreateBioPage(bio_name=bio_name, author=current_user,
-                                 author_id=current_user.id)
+        new_user = CreateBioPage(bio_name=bio_name, author_id=current_user.id)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for("user_blp.bio_link_pages"))
@@ -193,6 +192,16 @@ def admin():
     if request.method == "POST":
         linkname = form.linkname.data.lower()
         link = form.link.data.lower()
+
+        if not linkname:
+            flash("Link Name Required", "danger")
+            return redirect(url_for("user_blp.admin"))
+        if not link:
+            flash("Link Required", "danger")
+            return redirect(url_for("user_blp.admin"))
+
+        if not link.startswith('http://') and not link.startswith('https://'):
+            link = 'http://' + link
 
         # if not linkname:
         #     flash("Link Name Required", "danger")
