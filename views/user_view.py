@@ -93,6 +93,12 @@ def create_Bio_Page():
     form = GenerateBrandName()
     if request.method == "POST":
         bio_name = request.form.get('brandname')
+        if not bio_name:
+            flash("Input Required", "danger")
+            return redirect(url_for("user_blp.create_Bio_Page"))
+        if " " in bio_name:
+            flash("Bio Name cannot contain spaces", "danger")
+            return redirect(url_for("user_blp.create_Bio_Page"))
         user_ = CreateBioPage.query.filter_by(bio_name=bio_name).first()
         if user_:
             # User already exists
@@ -122,7 +128,7 @@ def bio_link_pages():
 @login_required
 def bio_link_pages_details(sub_path):
     form = CreatePostForm()
-    bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
+    bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id, bio_page_name=sub_path).all()
     bios = CreateBioPage.query.filter_by(bio_name=sub_path, author_id=current_user.id).all()
     bio_entries = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
     # all_bio = CreateBioPage.query.filter_by(bio_name=sub_path).all()
@@ -131,6 +137,20 @@ def bio_link_pages_details(sub_path):
     if request.method == "POST":
         linkname = form.linkname.data.lower()
         link = form.link.data.lower()
+
+        if not linkname:
+            flash("Link Name Required", "danger")
+            return redirect(url_for("user_blp.bio_link_pages_details"))
+        if not link:
+            flash("Link Required", "danger")
+            return redirect(url_for("user_blp.bio_link_pages_details"))
+
+        if " " in linkname:
+            flash("Link Name cannot contain spaces", "danger")
+            return redirect(url_for("user_blp.bio_link_pages_details"))
+
+        if not link.startswith('http://') and not link.startswith('https://'):
+            link = 'http://' + link
 
         # if not linkname:
         #     flash("Link Name Required", "danger")
