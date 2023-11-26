@@ -116,10 +116,10 @@ def create_Bio_Page():
 @user_blp.route('/BioLinkPages', methods=["GET"])
 @login_required
 def bio_link_pages():
-    user_id = current_user.username
-    bio_page = User.query.filter_by(username=user_id).first()
+    user_name = current_user.username
+    # bio_page = User.query.filter_by(username=user_name).first()
     bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
-    brand_url = f"{request.host_url}brand/{bio_page}"
+    brand_url = f"{request.host_url}brand/{user_name}"
     host_url = request.host_url
     return render_template("BioLinkPages.html", brand_url=brand_url, host_url=host_url, bio_pages=bio_pages)
 
