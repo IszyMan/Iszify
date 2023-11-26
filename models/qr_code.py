@@ -6,7 +6,7 @@ from urllib import request
 from urllib.error import HTTPError, URLError
 
 
-secret = 'any-secret-key-you-choose'
+secret = "any-secret-key-you-choose"
 
 hashids = Hashids(min_length=6, salt=secret)
 
@@ -59,8 +59,8 @@ def generate_short_url2():
 
 # validate url
 def validate_url(url):
-    if not url.startswith('http://') and not url.startswith('https://'):
-        url = 'http://' + url
+    if not url.startswith("http://") and not url.startswith("https://"):
+        url = "http://" + url
     try:
         request.urlopen(url)
         return True
