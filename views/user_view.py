@@ -420,6 +420,12 @@ def shorten_url():
         original_url = request.form.get("originalUrl")
         custom_url = request.form.get("customUrl", None)
         title = request.form.get("title") or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+        generate_qr_code = request.form.get("check_box", "")
+
+        print(
+            f"original_url: {original_url}, custom_url: {custom_url}, title: {title}, generate_qr_code: {generate_qr_code}"
+        )
+
         if Urlshort.query.filter_by(
                 author_id=current_user.id, url=original_url
         ).first():
