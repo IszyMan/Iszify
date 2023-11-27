@@ -24,6 +24,7 @@ class Urlshort(UserMixin, db.Model):
     short_url = db.Column(db.String(250))
     title = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
+    want_qr_code = db.Column(db.Boolean, default=False)
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
     def __repr__(self):
