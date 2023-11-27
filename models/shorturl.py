@@ -14,6 +14,7 @@ hashids = Hashids(min_length=6, salt=secret)
 
 default_title = f'untitled {datetime}'
 
+
 # url shortener table
 class Urlshort(UserMixin, db.Model):
     __tablename__ = "url_shortener"
