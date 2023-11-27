@@ -417,6 +417,7 @@ def qr_code_stats(qr_id):
 @login_required
 def shorten_url():
     if request.method == "POST":
+        print("got hereeeee")
         original_url = request.form.get("originalUrl")
         custom_url = request.form.get("customUrl", None)
         title = request.form.get("title") or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
