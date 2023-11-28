@@ -423,6 +423,8 @@ def shorten_url():
         title = request.form.get("title") or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         generate_qr_code = request.form.get("check_box", "")
 
+        generate_qr_code = True if generate_qr_code == "on" else False
+
         print(
             f"original_url: {original_url}, custom_url: {custom_url}, title: {title}, generate_qr_code: {generate_qr_code}"
         )
@@ -450,14 +452,15 @@ def shorten_url():
             author_id=current_user.id,
             url=original_url,
             short_url=short_url,
-            title=title
+            title=title,
+            want_qr_code=generate_qr_code
         )
         url.save()
         flash("URL has been shortened successfully!", "success")
         return render_template(
             "shorten.html",
             shortened_url=f"{request.host_url}{short_url}",
-            original_url=original_url,
+            original_url=original_url, generate_qr_code=generate_qr_code
         )
 
     return render_template("shorten.html")
