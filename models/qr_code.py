@@ -6,7 +6,7 @@ from urllib import request
 from urllib.error import HTTPError, URLError
 
 
-secret = 'any-secret-key-you-choose'
+secret = "any-secret-key-you-choose"
 
 hashids = Hashids(min_length=6, salt=secret)
 
@@ -19,8 +19,7 @@ class QrCode(UserMixin, db.Model):
     url = db.Column(db.Text)
     # title = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
-    author = relationship("User", back_populates="qr_code")
-    qrcode_record = relationship("QrcodeRecord", back_populates="qr_code")
+    qrcode_record = relationship("QrcodeRecord", backref="qr_code")
     short_url = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
 
@@ -60,8 +59,8 @@ def generate_short_url2():
 
 # validate url
 def validate_url(url):
-    if not url.startswith('http://') and not url.startswith('https://'):
-        url = 'http://' + url
+    if not url.startswith("http://") and not url.startswith("https://"):
+        url = "http://" + url
     try:
         request.urlopen(url)
         return True

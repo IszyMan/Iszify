@@ -3,5 +3,5 @@ from .profile import CreateProfile
 from .user import User
 from .qrlib import QrcodeRecord
 from .shorturl import Urlshort, generate_short_url, validate_url
-
-
+from .bio_link_entries import CreateBioLinkEntries
+from .create_bio_page import CreateBioPage

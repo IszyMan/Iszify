@@ -16,11 +16,12 @@ class User(UserMixin, db.Model):
     profile_link = db.Column(db.String(250), unique=True)
     # brand = relationship("ChooseBrandName", back_populates="brand") #THIS IS NOT IN USE
     brand_name = db.Column(db.String(100))
-    bio_name = relationship("CreateBioPage", back_populates="author")
-    posts = relationship("CreateProfile", back_populates="author")
-    urlshort = relationship("Urlshort", back_populates="author")
-    qr_code = relationship("QrCode", back_populates="author")
-    link_entries = relationship("CreateBioLinkEntries", back_populates="author")
+    bio_name = relationship("CreateBioPage", backref="author")
+    posts = relationship("CreateProfile", backref="author")
+    urlshort = relationship("Urlshort", backref="author")
+    qr_code = relationship("QrCode", backref="author")
+    link_entries = relationship("CreateBioLinkEntries", backref="author")
+
 
 def get_profile_link(brand_name):
     return f"{request.host_url}{brand_name}"
