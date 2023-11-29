@@ -59,6 +59,37 @@
           </div>
         </a>
           <br>
+
+      
+          
+<div class="modal fade" id="exampleModal11" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel11">Update Bio Name</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="mb-3">
+            <form action="{{url_for('user_blp.update_brandname')}}" method="post" class="form-group">
+              <input type="text" class="form-control" name="bio_update" value={{post.bio_name}}>
+              <button type="submit" class="btn btn-secondary">Update</button>
+            </form>
+            <div id="emailHelp" class="form-text">Your bio is your identity</div>
+          </div>
+        </div>
+        <style>
+          .btn-secondary {
+               margin-top: 10px;
+               font-size: 1rem;
+               padding: 5px;
+           }
+       </style>
+      </div>
+    </div>
+  </div>
+ </div>
      {% endfor %}
 
 
@@ -83,36 +114,6 @@
    </div>
 
 </div>
-
-
-<div class="modal fade" id="exampleModal11" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel11">Choose Your Bio Name</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div>
-          <div class="mb-3">
-            <form action="{{url_for('user_blp.update_brandname')}}" method="post" class="form-group">
-              <input type="text" class="form-control" name="brandname">
-              <button type="submit" class="btn btn-secondary" name="bt2">Submit</button>
-            </form>
-            <div id="emailHelp" class="form-text">Your bio is your identity</div>
-          </div>
-        </div>
-        <style>
-          .btn-secondary {
-               margin-top: 10px;
-               font-size: 1rem;
-               padding: 5px;
-           }
-       </style>
-      </div>
-    </div>
-  </div>
- </div>
 
 </main>
 
