@@ -53,7 +53,7 @@
         </div>
 
         <div class="col-sm-2 mt-4 text-muted">
-            <p class="" ><button><i class="bi bi-pencil-square"></i>Edit</button> <button> <i class="bi bi-three-dots"></i></button></p>
+            <p class="" ><button  type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal11"><i class="bi bi-pencil-square"></i>Edit</button> <button> <i class="bi bi-three-dots"></i></button></p>
          </div>
      </div>
           </div>
@@ -83,6 +83,37 @@
    </div>
 
 </div>
+
+
+<div class="modal fade" id="exampleModal11" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel11">Choose Your Bio Name</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="mb-3">
+            <form action="{{url_for('user_blp.update_brandname')}}" method="post" class="form-group">
+              <input type="text" class="form-control" name="brandname">
+              <button type="submit" class="btn btn-secondary" name="bt2">Submit</button>
+            </form>
+            <div id="emailHelp" class="form-text">Your bio is your identity</div>
+          </div>
+        </div>
+        <style>
+          .btn-secondary {
+               margin-top: 10px;
+               font-size: 1rem;
+               padding: 5px;
+           }
+       </style>
+      </div>
+    </div>
+  </div>
+ </div>
+
 </main>
 
 {% endblock content %}
