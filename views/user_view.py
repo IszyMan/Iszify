@@ -144,7 +144,6 @@ def edit_bio(sub_path):
     return redirect(url_for("user_blp.bio_link_pages_details", form=form, links_added=bio_links, sub_path=sub_path))
 
 
-
 # list all bio pages
 @user_blp.route("/BioLinkPages", methods=["GET"])
 @login_required
