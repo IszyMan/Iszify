@@ -122,7 +122,7 @@ def create_Bio_Page():
 
 
 # Edit Bio Name
-@user_blp.route("/biolinkpages/<path:sub_path>/edit_name", methods=["POST"])
+@user_blp.route("/biolinkpages/<path:sub_path>/edit_name", methods=["GET", "POST"])
 @login_required
 def edit_bio(sub_path):
     form = GenerateBrandName()
@@ -141,7 +141,7 @@ def edit_bio(sub_path):
     # current_user.brand_name = brandname.lower()
     # db.session.commit()
     # flash("Brand Name updated successfully!", "success")
-    return redirect(url_for("user_blp.bio_link_pages_details", form=form, links_added=bio_links))
+    return redirect(url_for("user_blp.bio_link_pages_details", form=form, links_added=bio_links, sub_path=sub_path))
 
 
 
@@ -156,8 +156,6 @@ def bio_link_pages():
     return render_template(
         "BioLinkPages.html", host_url=host_url, bio_pages=bio_pages, links_added=bio_links
     )
-
-
 
 
 @user_blp.route("/biolinkpages/<path:sub_path>/build", methods=["GET", "POST"])
