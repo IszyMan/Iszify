@@ -145,13 +145,14 @@ def edit_bio(sub_path):
 
 
 # list all bio pages
-@user_blp.route("/BioLinkPages", methods=["GET"])
+@user_blp.route("/BioLinkPages", methods=["GET", "POST"])
 @login_required
 def bio_link_pages():
     user_name = current_user.username
     bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
     bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
     host_url = request.host_url
+    if request.meth
     return render_template(
         "BioLinkPages.html", host_url=host_url, bio_pages=bio_pages, links_added=bio_links
     )
