@@ -360,7 +360,7 @@ def update_brandname():
         flash("Input Required", "danger")
         return redirect(url_for("user_blp.dashboard"))
     user_ = User.query.filter_by(brand_name=brandname.lower()).first()
-    if user_:
+    if user_ and current_user.brand_name.lower() != brandname.lower():
         # User with that brand already exists
         flash("Brand Name already exists!", "danger")
         return redirect(url_for("user_blp.dashboard"))
