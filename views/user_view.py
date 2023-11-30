@@ -152,10 +152,33 @@ def bio_link_pages():
     bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
     bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
     host_url = request.host_url
+    # update the bio name
     return render_template(
         "BioLinkPages.html", host_url=host_url, bio_pages=bio_pages, links_added=bio_links
     )
 
+
+@user_blp.route("/BioLinkPages/<bio_id>", methods=["POST"])
+@login_required
+def update_bio_link_pages(bio_id):
+    brandname = request.form.get("brandname")
+    if not brandname:
+        flash("Input Required", "danger")
+        return redirect(url_for("user_blp.bio_link_pages"))
+    brand_n = CreateBioPage.query.filter_by(
+        bio_name=brandname.lower()
+    ).first()
+    if brand_n:
+        # User with that brand already exists
+        flash("Bio Name already exists!", "danger")
+        return redirect(url_for("user_blp.bio_link_pages"))
+    brand_name = CreateBioPage.query.filter_by(
+        id=bio_id, author_id=current_user.id
+    ).first()
+    brand_name.bio_name = brandname.lower()
+    db.session.commit()
+    flash("Bio Name updated successfully!", "success")
+    return redirect(url_for("user_blp.bio_link_pages"))
 
 @user_blp.route("/biolinkpages/<path:sub_path>/build", methods=["GET", "POST"])
 @login_required
@@ -356,6 +379,7 @@ def product(brandname, linkname):
 @login_required
 def update_brandname():
     brandname = request.form.get("brandname")
+    referer = request.headers.get("Referer")
     if not brandname:
         flash("Input Required", "danger")
         return redirect(url_for("user_blp.dashboard"))
@@ -363,11 +387,11 @@ def update_brandname():
     if user_ and current_user.brand_name.lower() != brandname.lower():
         # User with that brand already exists
         flash("Brand Name already exists!", "danger")
-        return redirect(url_for("user_blp.dashboard"))
+        return redirect(referer or url_for("user_blp.dashboard"))
     current_user.brand_name = brandname.lower()
     db.session.commit()
     flash("Brand Name updated successfully!", "success")
-    return redirect(url_for("user_blp.admin"))
+    return redirect(referer or url_for("user_blp.admin"))
 
 
 @user_blp.route("/delete/<linkname>")
