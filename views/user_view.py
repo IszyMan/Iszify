@@ -152,7 +152,6 @@ def bio_link_pages():
     bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
     bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
     host_url = request.host_url
-    if request.meth
     return render_template(
         "BioLinkPages.html", host_url=host_url, bio_pages=bio_pages, links_added=bio_links
     )
