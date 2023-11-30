@@ -72,8 +72,8 @@
       <div class="modal-body">
         <div>
           <div class="mb-3">
-            <form action="{{url_for('user_blp.bio_link_pages')}}" method="post" class="form-group">
-              <input type="text" class="form-control" name="bio_update" value={{post.bio_name}}>
+            <form action="{{url_for('user_blp.update_brandname')}}" method="post" class="form-group">
+              <input type="text" class="form-control" name="brandname" value={{post.bio_name}}>
               <button type="submit" class="btn btn-secondary">Update</button>
             </form>
             <div id="emailHelp" class="form-text">Your bio is your identity</div>
