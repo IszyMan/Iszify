@@ -168,13 +168,13 @@ def update_bio_link_pages(bio_id):
     brand_n = CreateBioPage.query.filter_by(
         bio_name=brandname.lower()
     ).first()
-    if brand_n:
-        # User with that brand already exists
-        flash("Bio Name already exists!", "danger")
-        return redirect(url_for("user_blp.bio_link_pages"))
     brand_name = CreateBioPage.query.filter_by(
         id=bio_id, author_id=current_user.id
     ).first()
+    if brand_n and brand_name.bio_name.lower() != brandname.lower():
+        # User with that brand already exists
+        flash("Bio Name already exists!", "danger")
+        return redirect(url_for("user_blp.bio_link_pages"))
     brand_name.bio_name = brandname.lower()
     db.session.commit()
     flash("Bio Name updated successfully!", "success")
