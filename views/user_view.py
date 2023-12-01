@@ -180,6 +180,7 @@ def update_bio_link_pages(bio_id):
     flash("Bio Name updated successfully!", "success")
     return redirect(url_for("user_blp.bio_link_pages"))
 
+
 @user_blp.route("/biolinkpages/<path:sub_path>/build", methods=["GET", "POST"])
 @login_required
 def bio_link_pages_details(sub_path):
