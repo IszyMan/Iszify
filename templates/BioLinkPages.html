@@ -72,7 +72,7 @@
       <div class="modal-body">
         <div>
           <div class="mb-3">
-            <form action="{{url_for('user_blp.update_brandname')}}" method="post" class="form-group">
+            <form action="{{url_for('user_blp.update_bio_link_pages', bio_id=post.id)}}" method="post" class="form-group">
               <input type="text" class="form-control" name="brandname" value={{post.bio_name}}>
               <button type="submit" class="btn btn-secondary">Update</button>
             </form>
