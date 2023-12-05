@@ -116,7 +116,7 @@
                       <div>
                 <a class='float-start text-muted h4 py-3 fw-bold text-decoration-none text-center mx-5'>{{ post.link_name.upper() }} </a>
                       </div>
-                      <div class="float-end mx-5 mt-3" ><b><i class="bi bi-pencil-square"></i>Edit</b></div>
+                      <div class="float-end mx-5 mt-3" ><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal10"><b><i class="bi bi-pencil-square"></i>Edit</b></button></div>
                   </div>
 
                       <div class="mx-5">
@@ -157,6 +157,38 @@
                     <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i>
                   </p>
               </div>
+
+              <div class="modal fade" id="exampleModal10" tabindex="-1" aria-labelledby="exampleModalLabel10" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel10">Update</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                        <div class="mb-3">
+                          <form action="{{url_for('user_blp.update_bio_link_pages', bio_id=post.id)}}" method="post" class="form-group">
+                            <label for="link_name">Link Name</label>
+                            <input type="text" class="form-control" name="link_name" value={{post.link_name}}> <br>
+                            <label for="link_url">Link Url</label>
+                            <input type="text" class="form-control" name="link_url" value={{post.link_url}}>
+                            <button type="submit" class="btn btn-secondary">Update</button>
+                          </form>
+                        </div>
+                      </div>
+                      <style>
+                        .btn-secondary {
+                             margin-top: 10px;
+                             font-size: 1rem;
+                             padding: 5px;
+                         }
+                     </style>
+                    </div>
+                  </div>
+                </div>
+               </div>
+
             </div>
 
         {% endfor %}
