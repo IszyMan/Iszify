@@ -10,6 +10,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import io
 import base64
+from sqlalchemy import func
 
 user_blp = Blueprint("user_blp", __name__)
 
@@ -247,6 +248,32 @@ def bio_link_pages_details(sub_path):
         host_url=host_url,
         bio_pages=bios
     )
+
+
+@user_blp.route("/biolinkpages/update", methods=["POST"])
+@login_required
+def update_bio_link_pages_details():
+    link_name = request.form.get("link_name")
+    link_url = request.form.get("link_url")
+    if not link_name:
+        flash("Input Required", "danger")
+        return redirect(url_for("user_blp.bio_link_pages_details"))
+    if not link_url:
+        flash("Input Required", "danger")
+        return redirect(url_for("user_blp.bio_link_pages_details"))
+    if not link_url.startswith("http://") and not link_url.startswith("https://"):
+        link_url = "http://" + link_url
+    link_n = CreateBioLinkEntries.query.filter(
+        func.lower(CreateBioLinkEntries.link_name) == link_name.lower(), func.lower(CreateBioLinkEntries.link_url) == link_url.lower()
+    ).first()
+    if link_n:
+        link_n.link_name = link_name.lower()
+        link_n.link_url = link_url.lower()
+        db.session.commit()
+        flash("Link updated successfully!", "success")
+        return redirect(url_for("user_blp.bio_link_pages_details"))
+    flash("Link does not exist!", "danger")
+    return redirect(url_for("user_blp.bio_link_pages_details"))
 
 
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
