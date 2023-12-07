@@ -168,7 +168,7 @@
                     <div class="modal-body">
                       <div>
                         <div class="mb-3">
-                          <form action="{{url_for('user_blp.update_bio_link_pages_details')}}" method="post" class="form-group">
+                          <form action="{{url_for('user_blp.update_bio_link_pages_details', bio_id=post.id)}}" method="post" class="form-group">
                             <label for="link_name">Link Name</label>
                             <input type="text" class="form-control" name="link_name" value={{post.link_name}}> <br>
                             <label for="link_url">Link Url</label>
