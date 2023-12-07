@@ -268,7 +268,7 @@ def update_bio_link_pages_details(bio_id, sub_path):
     ).first()
     if link_n:
         link_n.link_name = link_name.lower()
-        link_n.link_url = link_url.lower()
+        link_n.link_url = link_url
         db.session.commit()
         flash("Link updated successfully!", "success")
         return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
