@@ -250,9 +250,9 @@ def bio_link_pages_details(sub_path):
     )
 
 
-@user_blp.route("/biolinkpages/update", methods=["POST"])
+@user_blp.route("/biolinkpages/<bio_id>/update", methods=["POST"])
 @login_required
-def update_bio_link_pages_details():
+def update_bio_link_pages_details(bio_id):
     link_name = request.form.get("link_name")
     link_url = request.form.get("link_url")
     if not link_name:
@@ -263,8 +263,8 @@ def update_bio_link_pages_details():
         return redirect(url_for("user_blp.bio_link_pages_details"))
     if not link_url.startswith("http://") and not link_url.startswith("https://"):
         link_url = "http://" + link_url
-    link_n = CreateBioLinkEntries.query.filter(
-        func.lower(CreateBioLinkEntries.link_name) == link_name.lower(), func.lower(CreateBioLinkEntries.link_url) == link_url.lower()
+    link_n = CreateBioLinkEntries.query.filter_by(
+        id=bio_id
     ).first()
     if link_n:
         link_n.link_name = link_name.lower()
