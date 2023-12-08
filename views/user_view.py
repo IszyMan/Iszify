@@ -246,7 +246,8 @@ def bio_link_pages_details(sub_path):
         form=form,
         current_user=current_user,
         host_url=host_url,
-        bio_pages=bios
+        bio_pages=bios,
+        sub_path=sub_path,
     )
 
 
