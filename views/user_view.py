@@ -182,6 +182,29 @@ def update_bio_link_pages(bio_id):
     return redirect(url_for("user_blp.bio_link_pages"))
 
 
+@user_blp.route("/bio/update/<bio_id>", methods=["POST"])
+@login_required
+def update_details(bio_id):
+    brandname = request.form.get("brandname")
+    if not brandname:
+        flash("Input Required", "danger")
+        return redirect(url_for("user_blp.bio_link_pages"))
+    brand_n = CreateBioPage.query.filter_by(
+        bio_name=brandname.lower()
+    ).first()
+    brand_name = CreateBioPage.query.filter_by(
+        id=bio_id, author_id=current_user.id
+    ).first()
+    if brand_n and brand_name.bio_name.lower() != brandname.lower():
+        # User with that brand already exists
+        flash("Bio Name already exists!", "danger")
+        return redirect(url_for("user_blp.bio_link_pages"))
+    brand_name.bio_name = brandname.lower()
+    db.session.commit()
+    flash("Bio Name updated successfully!", "success")
+    return redirect(url_for("user_blp.bio_link_pages"))
+
+
 @user_blp.route("/biolinkpages/<path:sub_path>/build", methods=["GET", "POST"])
 @login_required
 def bio_link_pages_details(sub_path):
