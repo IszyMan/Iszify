@@ -127,8 +127,11 @@ def create_Bio_Page():
 @login_required
 def edit_bio(sub_path):
     # form = GenerateBrandName()
+    b = CreateBioPage.query.filter_by(
+        bio_name=sub_path, author_id=current_user.id
+    ).first()
     bio_links = CreateBioLinkEntries.query.filter_by(
-        author_id=current_user.id, bio_page_name=sub_path
+        author_id=current_user.id, bio_page_id=b.id
     ).all()
     # brandname = request.form.get("brandname")
     # if not brandname:
@@ -142,7 +145,7 @@ def edit_bio(sub_path):
     # current_user.brand_name = brandname.lower()
     # db.session.commit()
     # flash("Brand Name updated successfully!", "success")
-    return redirect(url_for("user_blp.bio_link_pages_details", links_added=bio_links, sub_path=sub_path))
+    return redirect(url_for("user_blp.bio_link_pages_details", links_added=bio_links))
 
 
 # list all bio pages
