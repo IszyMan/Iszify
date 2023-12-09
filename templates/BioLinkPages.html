@@ -25,14 +25,13 @@
       </div>
 
       {% for post in bio_pages|reverse %}
-      <!-- <a href="{{url_for('user_blp.bio_link_pages_details', sub_path=post.bio_name)}}"> -->
         <a>
           <div class="card " style="background-color:lavender;">
        <div class="row">
         <div class="col-sm-2">
             <div class="smartphone mt-4 mb-4 ">
                <i class="text-center fa fa-user text-primary rounded-circle p-4 mx-3"></i>
-                  <div class='mx-2 text-center'><small><a href="{{url_for('user_blp.bio_link_pages_details', sub_path=post.bio_name)}}">Link</a></small></div>
+                  <div class='mx-2 text-center'><small><a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">Link</a></small></div>
                   <!-- <div class='mx-2 text-center'><small>Twitter</small></div> -->
             
 <!--              {% for post in links_added|reverse%}-->
