@@ -202,7 +202,7 @@ def update_details(bio_id):
     brand_name.bio_name = brandname.lower()
     db.session.commit()
     flash("Bio Name updated successfully!", "success")
-    return redirect(url_for("user_blp.bio_link_pages"))
+    return redirect(url_for("user_blp.bio_link_pages_details", sub_path=brandname.lower()))
 
 
 @user_blp.route("/biolinkpages/<path:sub_path>/build", methods=["GET", "POST"])
