@@ -35,7 +35,7 @@
      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
      Edit </i>
      </button>
-      <div class="dropdown-menu p-5 mx-5">
+      <div class="dropdown-menu p-5" style="width: 20rem;">
 
       <h3>Edit Bio Name</h3>
 
@@ -48,15 +48,6 @@
       </div>
      </div>
 
-
-
-       <!-- <li class="nav-item mx-5"><span class="text-center text-primary"><b><i class="bi bi-pencil-square"></i> -->
-          <!-- <a class="text-decoration-none text-primary fw-bold" href="{{url_for('user_blp.edit_bio', sub_path=post.bio_name)}}" > Edit -->
-          <!-- </a> -->
-
-
-       <!-- </b></span> -->
-       <!-- </li> -->
        <li class="nav-item mx-5"><span class="text-primary"><b><i class="fas fa-copy"></i> Copy</b></span></li>
 
        {% endfor %}
@@ -172,7 +163,7 @@
                     <div class="modal-body">
                       <div>
                         <div class="mb-3">
-                          <form action="{{url_for('user_blp.update_bio_link_pages_details', bio_id=post.id, sub_path=sub_path)}}" method="post" class="form-group">
+                          <form action="{{url_for('user_blp.update_bio_link_pages_details', bio_id=post.id)}}" method="post" class="form-group">
                             <label for="link_name">Link Name</label>
                             <input type="text" class="form-control" name="link_name" value={{post.link_name}}> <br>
                             <label for="link_url">Link Url</label>
