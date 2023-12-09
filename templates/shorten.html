@@ -9,20 +9,45 @@
 <section class="body2">
 <div class="container containered mt-5">
     <h1 class="text-center">Short URL Generator</h1>
+
     <form action="" method="POST">
         <div class="mb-3">
-            <label for="originalUrl" class="form-label">Enter the URL to shorten:</label>
+            <label for="originalUrl" class="form-label"><b>Enter the URL to shorten:</b></label>
             <input type="url" class="form-control" id="originalUrl" name="originalUrl" placeholder="https://example.com" required>
             <div class="invalid-feedback">
                 Please enter a valid URL.
             </div>
         </div>
+
         <div class="mb-3">
-            <label for="customUrl" class="form-label">Custom short URL (optional):</label>
-            <input type="text" class="form-control" id="customUrl" name="customUrl" placeholder="Custom short URL">
+            <label for="title" class="form-label"><b>Title</b> (Optional)</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="">
+
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Shorten URL</button>
+
+        <label for="customUrl" class="form-label"><b>Customise short URL (optional):</b></label>
+        <div class="mb-3">
+        <span style="float:left" ><label for="" class="form-label">Domain <i class="fa-solid fa-lock"></i></label></span>
+        <span style="float:right"><label for="customUrl" class="form-label">Enter back-halve (optional):</label></span>
+         </div>
+
+        <div class="mb-3">
+          <span style="float:left"> <input disabled type="text" class="form-control w-100" id="" name="" placeholder="shortlink.ng/">
+          </span>
+
+           <span style="float:right"> <input type="text" class="form-control w-100" id="customUrl" name="customUrl" placeholder="">
+           </span>
+
+        </div>
+        <br><br> <div class="mt-5"><b>QR Code</b>(Optional)</div>
+               <!-- Rounded switch -->
+             <div class="form-check form-switch">
+             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+             <label class="form-check-label" for="flexSwitchCheckChecked">Generate a QR Code for this Link</label>
+             </div><br>
+        <button type="submit" class="btn btn-primary btn-block ">Shorten URL</button>
     </form>
+
 </div>
 <div>
     {% if shortened_url %}

@@ -1,13 +1,62 @@
-{% extends 'base.html' %} 
+{% extends 'base3.html' %}
 {% block title %}Login Page{% endblock title %}
 {% block content %}
 
-<main style="margin-top: 28px">
-  <div class="container pt-5">
+<style>
+    .containerr {
+        max-width: 600px;
+        max-height: 10px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 8px;
+        font-family: proxima nova;
+
+
+    }
+
+    h1 {
+        font-size: 36px;
+        color: #333;
+        margin-top: 0;
+    }
+</style>
+           <div class="text-center ml-5 mb-5 rounded-circle"><i class="bi bi-share-fill"></i></div>
+<div class="containerr mt-5">
+
+    <div class='h3 mb-4 mt-3'><strong>Welcome!</strong></div>
+    {%if all_posts%}
+    {% for post in all_posts|reverse  %}
+    <div class='p-3 mt-2 rounded-pill border-bottom ' style="color: rgb(35, 35, 35); background-color: rgb(199, 204, 208); border-radius: 2.3rem;">
+        <a class='h3 mb-4 mt-3 fw-bold text-decoration-none' href='{{post.link_url}}' target='_blank'>{{ post.link_name.upper() }}</a>
+        <div style='display: flex; justify-content: space-evenly;'>
+            {%if post.link_name=="Twitter" %}
+            <a href='{{post.link}}' target='_blank'>
+                <i class="fa-brands fa-twitter h1 text-info"></i>
+            </a>
+            {%endif%}
+            {%if post.link_name=="Amazon" %}
+            <a href='{{post.link}}' target='_blank'>
+                <i class="fa-brands fa-amazon h1 text-warning"></i>
+            </a>
+            {%endif%}
+            {%if post.link_name=="Facebook" %}
+            <a href='{{post.link}}' target='_blank'>
+                <i class="fa-brands fa-facebook h1"></i>
+            </a>
+            {%endif%}
+            {%if post.link_name=="Youtube" %}
+            <a href='{{post.link}}' target='_blank'>
+                <i class="fa-brands fa-youtube h1 text-danger"></i>
+            </a>
+            {%endif%}
+        </div>
+    </div>
+    {% endfor %}
+    {%else%}
     <h1>
         THIS IS {{brandie}}'S SPECIAL PAGE
     </h1>
-
-  </div>
-</main>
+    {%endif%}
+</div>
 {% endblock content %}

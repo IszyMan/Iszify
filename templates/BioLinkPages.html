@@ -1,6 +1,7 @@
 {% extends 'base2.html' %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bio_phone_small.css') }}">
   {% endblock head %}
 
 
@@ -11,46 +12,74 @@
   <div class="container pt-5">
 <!-- This is goto links  div-->
 
-<div class="container-fluid">
+      <div class="row mb-4 ">
 
+          <div class="container-fluid align-self-end mt-5">
+               <h2><b>Bio Pages</b></h2>
+              {% if bio_pages %}
+        <button type="button" class="btn">
+      <i class="fa fa-calendar px-2 "></i>Filter by Date
+        </button>
 
-        {% for post in bio_pages|reverse %}
-               <a href="{{url_for('user_blp.bio_link_pages_details', sub_path=post.bio_name)}}">
-            <div class="card " style="background-color:lavender;">
-                <div class="row">
+      </div>
+      </div>
 
-                    <div class="mt-5 h3 text-decoration-none">
-
-
-                        <div class="float-start mx-5 mt-3"> PAGE NAME: {{ brand_url }}</div>
-                        <div class="float-end mx-5 mt-3" ><i class="bi bi-pencil-square"></i>Edit</div>
-
-                    </div>
-
-                 <div class="col-sm mt-5">
-                     <div >
-
-
-                    <p class="card-text mx-5"><strong>Original</strong> <a href="" target="_blank"> {{ post.bio_name }}</a></p>
-                         <div><p>
-                        <i class="bi bi-bar-chart-fill"></i>Click Data ({{ post.clicks }})
-                        <i class="fa fa-calendar px-2 "></i> {{ post.created_at.strftime('%Y-%m-%d') }}
-
-                         </p></div>
-
-                     </div>
-                     </div>
-
-
-                    </div>
+      {% for post in bio_pages|reverse %}
+      <a href="{{url_for('user_blp.bio_link_pages_details', sub_path=post.bio_name)}}">
+          <div class="card " style="background-color:lavender;">
+       <div class="row">
+        <div class="col-sm-2" style="">
+            <div class="smartphone mt-4 mb-4 ">
+               <i class="text-center fa fa-user text-primary rounded-circle p-4 mx-3"></i>
+                  <div class='mx-2 text-center'><small>Facebook</small></div>
+                  <div class='mx-2 text-center'><small>Twitter</small></div>
+                <div class="" >
+<!--              {% for post in links_added|reverse%}-->
+<!--                  <div class='border border-primary rounded-pill p-3 mt-2 text-center'>{{ post.link_name}}-->
+<!--                      </div>-->
+<!--              {% endfor %}-->
+                  </div>
                 </div>
-            </a>
+
+        </div>
+        <div class="col-sm-6 mt-4" style="">
+            <div class="row">
+           <div><h4> {{ host_url }}bio/{{post.bio_name}}</h4></div>
+          <div> <i class="bi bi-bar-chart-fill text-muted"></i>Click Data ({{ post.clicks }}) </div>
+          <div> <i class="bi bi-calendar text-muted"></i> {{ post.created_at.strftime('%B %d, %Y ') }}</div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-2 mt-4 text-muted" style="">
+            <p class="" ><button><i class="bi bi-pencil-square"></i>Edit</button> <button> <i class="bi bi-three-dots"></i></button></p>
+         </div>
+     </div>
+          </div>
+        </a>
           <br>
      {% endfor %}
-  </div>
 
 
 
+
+    <div class="container-fluid">
+
+      {% else %}
+        <div class="card " style="background-color:lavender;">
+                <div class="row">
+                 <div class="col-sm mt-5">
+                  <h2 class="text-center"><b>No Bio Page Yet</b></h2>
+                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
+                    </div>
+                </div>
+
+         </div>
+        {% endif %}
+
+
+
+   </div>
 
 </div>
 </main>

@@ -7,31 +7,54 @@
 
 <main style="margin-top: 58px">
   <div class="container pt-4">
-      <div class="text-center mt-5 ">
+      
+      
+     <div class="text-center mt-5 ">
      <h4>Select QR code type:
       <a href="{{url_for('user_blp.qr_codes')}}"> URL</a> |
-      <a href="{{url_for('user_blp.qr_codes_email')}}">E-mail</a>  |
-       <a href="{{url_for('user_blp.qr_codes_vcard')}}">Business card (VCARD)</a>
-
+      <a href="{{url_for('user_blp.qr_codes_email')}}">E-mail</a>  | 
+       <a href="{{url_for('user_blp.qr_codes_vcard')}}">Business card (VCARD)</a>  
+     
      </h4>
      </div>
 
-
 <div class="container containered mt-5" style="max-width: 600px;">
   {% if not n %}
-  <h1 class="text-center">QR CODE Generator</h1>
+  <h1 class="text-center">BUSINESS VCARD</h1>
   <form action="" method="POST">
       <div class="mb-3">
-          <label for="originalUrl" class="form-label"><h4><b>Enter the QR Code destination:</b></h4></label>
-          <input type="url" class="form-control" id="originalUrl" name="url" placeholder="https://example.com/qr-code-url" required>
-          <br><br><h5><b>Code Details</b></h5>
           <label for="title" class="form-label"><b>Enter Title</b> (Optional)</label>
           <input type="text" class="form-control" id="title" name="title" placeholder="optional" >
+
+          <label for="name" class="form-label"><b>Name</b> </label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" >
+
+           <label for="org" class="form-label"><b>Organisation</b> </label>
+          <input type="text" class="form-control" id="org" name="org" placeholder="" >
+
+          <label for="phone" class="form-label"><b>Phone</b> </label>
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="" >
+
+          <label for="website" class="form-label"><b>Website</b> </label>
+          <input type="text" class="form-control" id="website" name="website" placeholder="" >
+
+          <label for="mail" class="form-label"><b>Email Address:</b></label>
+          <input type="email" class="form-control" id="mail" name="mail" placeholder="" required>
+
+          <label for="address" class="form-label"><b>Address</b> </label>
+          <input type="text" class="form-control" id="address" name="address" placeholder="" >
+
+          <label for="note" class="form-label"><b>Note</b> </label>
+          <input type="text" class="form-control" id="note" name="note" placeholder="" >
+
+          <br><br>
           <div class="invalid-feedback">
               Please enter a valid URL.
           </div>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Create QR</button>
+      <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-block h3">Create VCARD</button>
+      </div>
   </form>
   {% endif %}
   {% if n %}
@@ -64,11 +87,11 @@
 {% endif %}
 
   <!-- button to view all qr codes created -->
-  <div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">
-      <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-center text-decoration-none text-white">
-          View QR Codes
-      </a>
-</div>
+<!--  <div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">-->
+<!--      <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-center text-decoration-none text-white">-->
+<!--          View QR Codes-->
+<!--      </a>-->
+<!--</div>-->
 </div>
   </div>
 </main>

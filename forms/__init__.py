@@ -49,7 +49,7 @@ class CreatePostForm(FlaskForm):
     link = StringField(
         "Twitter Url",
         validators=[DataRequired(), URL()],
-        render_kw={"placeholder": "Enter your link"},
+        render_kw={"placeholder": "Enter your link URL"},
     )
 
     # categories = SelectField(u'Category', choices=[("Fashion", 'Fashion'), ("Travel", 'Travel')])

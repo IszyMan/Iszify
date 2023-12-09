@@ -27,28 +27,38 @@
         {% for url in urls|reverse %}
 
             <div class="card " style="background-color:lavender;">
-                <div class="row">
-                    <div class="mt-5 h3"><strong> LINK TITLE</strong></div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+                    <div class="col-md-auto ms-5 mt-5 float-end">
+                         <img height="20" width="20" src='http://www.google.com/s2/favicons?domain={{url.url}}' />
+                      </div>
+                 <div class="col-12">
 
-                 <div class="col-sm mt-5">
-                     <div >
-                    <p class="card-text"><strong>Short <a href="{{ request.host_url }}{{ url.short_url }}" target="_blank"> {{ request.host_url }}{{ url.short_url }}</a></strong></p>
+                      <p class="h6 mt-5"><strong> {{url.title}}</strong></p>
+                    <p class=""><strong>Short <a href="{{ request.host_url }}{{ url.short_url }}" target="_blank"> {{ request.host_url }}{{ url.short_url }}</a></strong></p>
 
-                    <p class="card-text"><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url }}</a></p>
-                         <div><p>
+                    <p class=""><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url }}</a></p>
+                         <div class="mb-5">
+                          <small>
                         <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})
-                        <i class="fa fa-calendar px-2 "></i> {{ url.created.strftime('%Y-%m-%d') }}
-                         <i class="fa fa-copy px-2" id="" style="cursor: pointer;"></i> Copy
-                         </p></div>
+                        <i class="bi bi-calendar px-2 "></i> {{ url.created.strftime('%b %d, %Y') }}
+
+                         </small>
+                         </div>
+
 
                      </div>
-                     </div>
-                <div class="col-sm mt-5 mb-5">
+                <div class="col-md-auto mt-5 mb-5">
 
                         <img
                       src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
                       alt="QR Code"/>
 
+                </div>
+
+                    <div class="col-md-auto mt-5 mb-5">
+
+                   <p><i class="fa fa-copy px-2" id="" style="cursor: pointer;"></i> Copy
+                             <i class="bi bi-pencil-square px-2" style="cursor: pointer;"></i> Edit</p>
 
 
                 </div>

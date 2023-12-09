@@ -6,11 +6,13 @@ from hashids import Hashids
 # from main import create_app
 from urllib import request
 from urllib.error import HTTPError, URLError
+import datetime
 
 secret = "any-secret-key-you-choose"
 
 hashids = Hashids(min_length=6, salt=secret)
 
+default_title = f'untitled {datetime}'
 
 # url shortener table
 class Urlshort(UserMixin, db.Model):
@@ -19,6 +21,7 @@ class Urlshort(UserMixin, db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
     url = db.Column(db.String(250))
     short_url = db.Column(db.String(250))
+    title = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 

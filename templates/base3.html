@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- The bootstrap libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+  <!-- fontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- The Jquery local libarary -->
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+
+  <!-- ............Linked Javascript File............. -->
+
+  <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+  <!-- ............................................ -->
+
+  <!-- Block to be inherited from this file by other files if need be -->
+  {% block head %}{% endblock head %}
+  {% block extra_js %}{% endblock extra_js %}
+  <!-- Css link -->
+  <link rel="stylesheet" href="" />
+  <!-- Title , the block to be inherited by other files so as to add a title for each page-->
+  <title>LinkTools {% block title %}{% endblock title %}
+  </title>
+  <link rel="icon" href="">
+</head>
+
+<body>
+  <!-- There is a button at the bottom that redirects to this
+    whenever the button is being clicked, it bring the user back to the top of the page
+    -->
+  <a name="top"></a>
+  <!-- Navbar -->
+
+
+  {% block car %}
+  {% endblock car %}
+
+
+
+
+  <div class=" mt-5 px-4 px-lg-5">
+    {% block any %}
+
+    {% endblock any %}
+  </div>
+
+
+
+  <!-- The body section -->
+  <section class="  my-3 d-flex px-4 px-lg-5 mb-5">
+    <div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style" style="left:0px; top:150px;">
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_mastodon"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+
+<script async src="https://static.addtoany.com/menu/page.js"></script>
+
+    <!-- web content -->
+    <div class="w-100 this" id="thiss">
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert-dismissible fade show mb-4 m-auto small alert alert-{{ category }}" role="alert"
+        style="height: 3.5rem; transition: 0.6s; width: fit-content; padding-right: 6rem; padding-left: 6rem;">
+        {% if category=='success' %}
+        <p class="small text-center"><i class="fa fas fas fa-check"></i>&nbsp;&nbsp;&nbsp;{{ message }}</p>
+        {% else %}
+        <p class="small text-center"><i class="fa fas fa-exclamation-triangle"></i>&nbsp;&nbsp;&nbsp;{{ message }}</p>
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %} {% block content %}
+      {% endblock content %}
+    </div>
+
+    </div>
+  </section>
+
+
+  <footer>
+    <div class="fixed-bottom text-center bg-light text-dark py-3 small" style="z-index: 0;">
+
+       <!-- Javascript code to get the current year and add it to the footer -->
+              <span class='small text-dark'><a href="{{url_for('user_blp.home')}}">ShortLink.ng &copy; 2024</a></span>
+
+    </div>
+</footer>
+
+  <!-- Icon tha redirects back to the top of the page -->
+  <a href="#top" class="up" style="position: fixed; left: 10px; bottom: 60px"><i class="fa fas fa-arrow-alt-circle-up fs-4"></i></a>
+
+  <!-- FOOTer -->
+  <!-- <footer class="fixed-bottom text-center bg-dark text-light py-1 small" style="z-index: 0;">
+  </footer> -->
+
+  <!-- Javascript code to get the current year and add it to the footer -->
+  <!-- <script>
+    const paragraph = `<span class='small'>Copyright &copy; ${new Date().getFullYear()} | Link2ru</span>`;
+    document.querySelector('footer').innerHTML = paragraph;
+  </script> -->
+
+  <!-- @@@@@@@@@@@@@@@@@@@@@@@ -->
+
+
+
+
+  <!-- Bootsrap popper -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+    crossorigin="anonymous"></script>
+  {% block script %}{% endblock script %}
+</body>
+
+</html>

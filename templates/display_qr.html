@@ -25,41 +25,100 @@
 
     {% for url in urls|reverse %}
 
+
+
     <div class="card " style="background-color:lavender;">
         <div class="row mt-3">
-            <div class="h4"><strong> QR CODE TITLE</strong></div>
+
+            {% if url.url %}
         <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
             alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
         </div>
 
+            {% elif url.email %}
+            <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.email }}"
+            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
+        </div>
+
+            {% else %}
+
+               {% for values in qrcodes: %}
+                    name = values["name"]
+                    title = values["title"]
+                    phone = values["phone"]
+                    mail = values["mail"]
+                    website = values["website"]
+                    org = values["org"]
+
+                data = f'''BEGIN:VCARD
+                           N:{name};
+                           TITLE:{title}
+                           TEL;TYPE=work,VOICE:{phone}
+                           EMAIL;WORK;INTERNET:{mail}
+                           URL:{website}
+                           ORG:{org}
+                           VERSION:3.0
+                           END:VCARD'''
+
+                 {% endfor %}
+
+
+
+            <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ data }} "
+            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
+            </div>
+
+
+            {% endif %}
+
         <div class="col-sm mt-3">
-          <a href="{{ url.url }}" class="text-center mx-auto w-100">
-            {{ url.url }}
-        </a>
+            <div class="card-text h4 mt-3"><strong> {{url.title}}</strong></div><br>
+
+            {% if url.url %}
+             <p><b>Link</b><br>
+          <i class="bi bi-arrow-return-right"></i><a href="{{ url.url }}" class="text-center mx-auto w-100">
+             {{ url.url }} </a>
+                 <p>
+                  <i class="fa fa-link" aria-hidden="true"></i>shortlink.ng/{{ url.short_url }}
+              </p>
+              {% elif url.email %}
+                <b>Email</b><br>
+              {{ url.email}}
+
+               {% else %}
+                <b>VCARD</b><br>
+              {{ url.name }}
+
+              {% endif %}
+
+        </p>
+
+        <p class=" px-3 mt-3 "> <i class="bi bi-bar-chart-fill"></i> Click Data ({{ url.clicks }})  <i class="bi bi-calendar px-2 "></i>
+             {{ url.created_at.strftime('%B %d, %Y') }}  </p>
         </div>
 
         <!-- Add a Font Awesome download icon and trash icon side by side -->
         <div class="col-sm mt-3 ml-5 text-center">
-            <button> <a href="" onclick="return confirmDelete()" class="">
-                <i class="fa fa-ellipsis-h h4"></i>
+            <button> <a href=""  class="">
+                <i class="bi bi-pencil-fill h4 mx-1"></i>
             </a> </button>
-          <button> <a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
-                <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
-            </a></button>
+            <button> <a href="" onclick="return confirmDelete()" class="">
+                <i class="bi bi-palette h4"></i>
+            </a> </button>
             <button> <a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
-                <i class="fas fa-download h4"></i> Download
+                <i class="bi bi-download h4"></i>
             </a></button>
             <button> <a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
-                <i class="fas fa-trash-alt text-danger h4"></i>
+                <i class="bi bi-three-dots-vertical h4"></i>
             </a> </button>
+            <button> <a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
+                <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
+            </a></button>
             </div>
 
 
         <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
-    </div><hr>
-        <div>
-        <p class=" px-3 "> <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})  | <strong>Date Created</strong> <i class="fa fa-calendar px-2 "></i>
-             {{ url.created_at.strftime('%Y-%m-%d') }} </p></div>
+
 
         </div>
         </div>

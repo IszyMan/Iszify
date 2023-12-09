@@ -45,10 +45,11 @@
     <div class="container">
       <!-- The navbar brand -->
       <!-- The navbar brand -->
+        <strong><a href="{{url_for('user_blp.home')}}" class="navbar-brand text-warning "> LINKTOOLS</a></strong>
       {% if current_user.is_authenticated %}
       <strong><a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand ">LinkTools</a></strong>
       {% else %}
-      <strong><a href="{{url_for('user_blp.home')}}" class="navbar-brand ">LinkTools</a></strong>
+<!--      <strong><a href="{{url_for('user_blp.home')}}" class="navbar-brand ">LinkTools</a></strong>-->
       {% endif %}
       <!-- Bootstrap nav toggler -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
@@ -98,6 +99,7 @@
         </ul>
         <ul class="navbar-nav ms-auto mt-2">
           <li class="nav-item d-flex justify-content-end align-items-start">
+
              <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="text-decoration-none nav-item d-flex justify-content-end align-items-start">
               <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
           </a>
@@ -107,9 +109,7 @@
         {% else %}
         <!-- If the user is not logged in, this nav links appears -->
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start" >
-<!--          <li class="nav-item">-->
-<!--            <a href="{{url_for('user_blp.home')}}" class="nav-link text-white">Home</a>-->
-<!--          </li>-->
+
           <!-- <li class="nav-item">
             <a href="" class="nav-link text-white">About</a>
           </li>
