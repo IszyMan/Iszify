@@ -7,7 +7,7 @@ class CreateBioLinkEntries(UserMixin, db.Model):
     __tablename__ = "bio_links_entries"
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    bio_page_name = db.Column(db.String(250), db.ForeignKey("bio_page.bio_name"))
+    bio_page_id = db.Column(db.String(250), db.ForeignKey("bio_page.id"))
     link_name = db.Column(db.String(250), nullable=False)
     link_url = db.Column(db.String(250), default="")
     clicks = db.Column(db.Integer, default=0)
