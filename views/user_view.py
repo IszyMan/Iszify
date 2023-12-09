@@ -186,6 +186,7 @@ def update_bio_link_pages(bio_id):
 @login_required
 def update_details(bio_id):
     brandname = request.form.get("brandname")
+    print(bio_id, "idddd")
     if not brandname:
         flash("Input Required", "danger")
         return redirect(url_for("user_blp.bio_link_pages"))
@@ -205,17 +206,17 @@ def update_details(bio_id):
     return redirect(url_for("user_blp.bio_link_pages_details", sub_path=brandname.lower()))
 
 
-@user_blp.route("/biolinkpages/<path:sub_path>/build", methods=["GET", "POST"])
+@user_blp.route("/biolinkpages/<bio_id>/build", methods=["GET", "POST"])
 @login_required
-def bio_link_pages_details(sub_path):
+def bio_link_pages_details(bio_id):
     form = CreatePostForm()
-    bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
+    # bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
     host_url = request.host_url
     bio_links = CreateBioLinkEntries.query.filter_by(
-        author_id=current_user.id, bio_page_name=sub_path
+        author_id=current_user.id, bio_page_id=bio_id
     ).all()
     bios = CreateBioPage.query.filter_by(
-        bio_name=sub_path, author_id=current_user.id
+        id=bio_id, author_id=current_user.id
     ).all()
 
     user_id = current_user.id
@@ -249,12 +250,12 @@ def bio_link_pages_details(sub_path):
             # return redirect(url_for("user_blp.bio_link_pages_details"))
 
         new_post = CreateBioLinkEntries(
-            link_name=linkname, link_url=link, author_id=user_id, bio_page_name=sub_path
+            link_name=linkname, link_url=link, author_id=user_id, bio_page_id=bio_id
         )
         db.session.add(new_post)
         db.session.commit()
         flash("Link Added", "success")
-        return redirect(url_for('user_blp.bio_link_pages_details', sub_path=sub_path))
+        return redirect(url_for('user_blp.bio_link_pages_details', bio_id=bio_id))
         # return render_template(
         #     "bio_link_pages_details.html",
         #     bios=bios,
@@ -270,21 +271,21 @@ def bio_link_pages_details(sub_path):
         current_user=current_user,
         host_url=host_url,
         bio_pages=bios,
-        sub_path=sub_path,
+        bio_id=bio_id,
     )
 
 
-@user_blp.route("/biolinkpages/<bio_id>/<sub_path>/update", methods=["POST"])
+@user_blp.route("/biolinkpages/<bio_id>/update", methods=["POST"])
 @login_required
-def update_bio_link_pages_details(bio_id, sub_path):
+def update_bio_link_pages_details(bio_id):
     link_name = request.form.get("link_name")
     link_url = request.form.get("link_url")
     if not link_name:
         flash("Input Required", "danger")
-        return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+        return redirect(url_for("user_blp.bio_link_pages_details"))
     if not link_url:
         flash("Input Required", "danger")
-        return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+        return redirect(url_for("user_blp.bio_link_pages_details"))
     if not link_url.startswith("http://") and not link_url.startswith("https://"):
         link_url = "http://" + link_url
     link_n = CreateBioLinkEntries.query.filter_by(
@@ -295,9 +296,9 @@ def update_bio_link_pages_details(bio_id, sub_path):
         link_n.link_url = link_url
         db.session.commit()
         flash("Link updated successfully!", "success")
-        return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+        return redirect(url_for("user_blp.bio_link_pages_details"))
     flash("Link does not exist!", "danger")
-    return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+    return redirect(url_for("user_blp.bio_link_pages_details"))
 
 
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
