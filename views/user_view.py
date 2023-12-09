@@ -118,7 +118,7 @@ def create_Bio_Page():
         new_user = CreateBioPage(bio_name=bio_name, author_id=current_user.id)
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for("user_blp.bio_link_pages"))
+        return redirect(url_for("user_blp.bio_link_pages", bio_id=new_user.id))
     return render_template("createBioPage.html", form=form, current_user=current_user)
 
 
@@ -206,7 +206,7 @@ def update_details(bio_id):
     brand_name.bio_name = brandname.lower()
     db.session.commit()
     flash("Bio Name updated successfully!", "success")
-    return redirect(url_for("user_blp.bio_link_pages_details", sub_path=brandname.lower()))
+    return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
 
 
 @user_blp.route("/biolinkpages/<bio_id>/build", methods=["GET", "POST"])
