@@ -699,7 +699,34 @@ def qr_codes_vcard():
 @login_required
 def display_qr_codes():
     qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
-    return render_template("display_qr.html", urls=qrcodes)
+
+    datas = []
+    """
+    name = db.Column(db.Text)
+    org = db.Column(db.Text)
+    phone = db.Column(db.Text)
+    mail = db.Column(db.Text)
+    website = db.Column(db.Text)
+    address = db.Column(db.Text)
+    note = db.Column(db.Text)
+    """
+    for qr in qrcodes:
+        if qr.url or qr.email:
+            pass
+        else:
+            datas.append(
+                {
+                    "name": qr.name,
+                    "org": qr.org,
+                    "phone": qr.phone,
+                    "mail": qr.mail,
+                    "website": qr.website,
+                    "address": qr.address,
+                    "note": qr.note,
+                }
+            )
+    print("DATASSS", datas)
+    return render_template("display_qr.html", urls=qrcodes, datas=datas)
 
 
 # Sample data (you should replace this with your actual data source)
