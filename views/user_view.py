@@ -285,10 +285,10 @@ def update_bio_link_pages_details(bio_id):
     link_url = request.form.get("link_url")
     if not link_name:
         flash("Input Required", "danger")
-        return redirect(url_for("user_blp.bio_link_pages_details"))
+        return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
     if not link_url:
         flash("Input Required", "danger")
-        return redirect(url_for("user_blp.bio_link_pages_details"))
+        return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
     if not link_url.startswith("http://") and not link_url.startswith("https://"):
         link_url = "http://" + link_url
     link_n = CreateBioLinkEntries.query.filter_by(
@@ -299,9 +299,9 @@ def update_bio_link_pages_details(bio_id):
         link_n.link_url = link_url
         db.session.commit()
         flash("Link updated successfully!", "success")
-        return redirect(url_for("user_blp.bio_link_pages_details"))
+        return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
     flash("Link does not exist!", "danger")
-    return redirect(url_for("user_blp.bio_link_pages_details"))
+    return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
 
 
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
