@@ -118,7 +118,7 @@ def create_Bio_Page():
         new_user = CreateBioPage(bio_name=bio_name, author_id=current_user.id)
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for("user_blp.bio_link_pages"))
+        return redirect(url_for("user_blp.bio_link_pages", bio_id=new_user.id))
     return render_template("createBioPage.html", form=form, current_user=current_user)
 
 
@@ -126,9 +126,12 @@ def create_Bio_Page():
 @user_blp.route("/biolinkpages/<path:sub_path>/edit_name", methods=["GET", "POST"])
 @login_required
 def edit_bio(sub_path):
-    form = GenerateBrandName()
+    # form = GenerateBrandName()
+    b = CreateBioPage.query.filter_by(
+        bio_name=sub_path, author_id=current_user.id
+    ).first()
     bio_links = CreateBioLinkEntries.query.filter_by(
-        author_id=current_user.id, bio_page_name=sub_path
+        author_id=current_user.id, bio_page_id=b.id
     ).all()
     # brandname = request.form.get("brandname")
     # if not brandname:
@@ -142,7 +145,7 @@ def edit_bio(sub_path):
     # current_user.brand_name = brandname.lower()
     # db.session.commit()
     # flash("Brand Name updated successfully!", "success")
-    return redirect(url_for("user_blp.bio_link_pages_details", form=form, links_added=bio_links, sub_path=sub_path))
+    return redirect(url_for("user_blp.bio_link_pages_details", links_added=bio_links))
 
 
 # list all bio pages
@@ -182,17 +185,41 @@ def update_bio_link_pages(bio_id):
     return redirect(url_for("user_blp.bio_link_pages"))
 
 
-@user_blp.route("/biolinkpages/<path:sub_path>/build", methods=["GET", "POST"])
+@user_blp.route("/bio/update/<bio_id>", methods=["POST"])
 @login_required
-def bio_link_pages_details(sub_path):
+def update_details(bio_id):
+    brandname = request.form.get("brandname")
+    print(bio_id, "idddd")
+    if not brandname:
+        flash("Input Required", "danger")
+        return redirect(url_for("user_blp.bio_link_pages"))
+    brand_n = CreateBioPage.query.filter_by(
+        bio_name=brandname.lower()
+    ).first()
+    brand_name = CreateBioPage.query.filter_by(
+        id=bio_id, author_id=current_user.id
+    ).first()
+    if brand_n and brand_name.bio_name.lower() != brandname.lower():
+        # User with that brand already exists
+        flash("Bio Name already exists!", "danger")
+        return redirect(url_for("user_blp.bio_link_pages"))
+    brand_name.bio_name = brandname.lower()
+    db.session.commit()
+    flash("Bio Name updated successfully!", "success")
+    return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
+
+
+@user_blp.route("/biolinkpages/<bio_id>/build", methods=["GET", "POST"])
+@login_required
+def bio_link_pages_details(bio_id):
     form = CreatePostForm()
-    bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
+    # bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
     host_url = request.host_url
     bio_links = CreateBioLinkEntries.query.filter_by(
-        author_id=current_user.id, bio_page_name=sub_path
+        author_id=current_user.id, bio_page_id=bio_id
     ).all()
     bios = CreateBioPage.query.filter_by(
-        bio_name=sub_path, author_id=current_user.id
+        id=bio_id, author_id=current_user.id
     ).all()
 
     user_id = current_user.id
@@ -226,12 +253,12 @@ def bio_link_pages_details(sub_path):
             # return redirect(url_for("user_blp.bio_link_pages_details"))
 
         new_post = CreateBioLinkEntries(
-            link_name=linkname, link_url=link, author_id=user_id, bio_page_name=sub_path
+            link_name=linkname, link_url=link, author_id=user_id, bio_page_id=bio_id
         )
         db.session.add(new_post)
         db.session.commit()
         flash("Link Added", "success")
-        return redirect(url_for('user_blp.bio_link_pages_details', sub_path=sub_path))
+        return redirect(url_for('user_blp.bio_link_pages_details', bio_id=bio_id))
         # return render_template(
         #     "bio_link_pages_details.html",
         #     bios=bios,
@@ -247,21 +274,21 @@ def bio_link_pages_details(sub_path):
         current_user=current_user,
         host_url=host_url,
         bio_pages=bios,
-        sub_path=sub_path,
+        bio_id=bio_id,
     )
 
 
-@user_blp.route("/biolinkpages/<bio_id>/<sub_path>/update", methods=["POST"])
+@user_blp.route("/biolinkpages/<bio_id>/<parent_id>/update", methods=["POST"])
 @login_required
-def update_bio_link_pages_details(bio_id, sub_path):
+def update_bio_link_pages_details(bio_id, parent_id):
     link_name = request.form.get("link_name")
     link_url = request.form.get("link_url")
     if not link_name:
         flash("Input Required", "danger")
-        return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+        return redirect(url_for("user_blp.bio_link_pages_details", bio_id=parent_id))
     if not link_url:
         flash("Input Required", "danger")
-        return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+        return redirect(url_for("user_blp.bio_link_pages_details", bio_id=parent_id))
     if not link_url.startswith("http://") and not link_url.startswith("https://"):
         link_url = "http://" + link_url
     link_n = CreateBioLinkEntries.query.filter_by(
@@ -272,9 +299,9 @@ def update_bio_link_pages_details(bio_id, sub_path):
         link_n.link_url = link_url
         db.session.commit()
         flash("Link updated successfully!", "success")
-        return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+        return redirect(url_for("user_blp.bio_link_pages_details", bio_id=parent_id))
     flash("Link does not exist!", "danger")
-    return redirect(url_for("user_blp.bio_link_pages_details", sub_path=sub_path))
+    return redirect(url_for("user_blp.bio_link_pages_details", bio_id=parent_id))
 
 
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
@@ -672,7 +699,34 @@ def qr_codes_vcard():
 @login_required
 def display_qr_codes():
     qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
-    return render_template("display_qr.html", urls=qrcodes)
+
+    datas = []
+    """
+    name = db.Column(db.Text)
+    org = db.Column(db.Text)
+    phone = db.Column(db.Text)
+    mail = db.Column(db.Text)
+    website = db.Column(db.Text)
+    address = db.Column(db.Text)
+    note = db.Column(db.Text)
+    """
+    for qr in qrcodes:
+        if qr.url or qr.email:
+            pass
+        else:
+            datas.append(
+                {
+                    "name": qr.name,
+                    "org": qr.org,
+                    "phone": qr.phone,
+                    "mail": qr.mail,
+                    "website": qr.website,
+                    "address": qr.address,
+                    "note": qr.note,
+                }
+            )
+    print("DATASSS", datas)
+    return render_template("display_qr.html", urls=qrcodes, datas=datas)
 
 
 # Sample data (you should replace this with your actual data source)

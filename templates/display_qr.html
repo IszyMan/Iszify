@@ -42,8 +42,8 @@
 
             {% else %}
 
-               {% for values in qrcodes: %}
-                    name = values["name"]
+               {% for data in datas %}
+                    <!-- name = values["name"]
                     title = values["title"]
                     phone = values["phone"]
                     mail = values["mail"]
@@ -58,16 +58,16 @@
                            URL:{website}
                            ORG:{org}
                            VERSION:3.0
-                           END:VCARD'''
+                           END:VCARD''' -->
 
-                 {% endfor %}
+                           
 
 
-
-            <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.website }} "
+            <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ data }} "
             alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
             </div>
 
+            {% endfor %}
 
             {% endif %}
 
