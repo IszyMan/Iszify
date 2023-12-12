@@ -280,8 +280,8 @@ def update_bio_link_pages_details(bio_id, sub_path):
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
 def bio_link_routes(brand_name):
     check_brand = CreateBioPage.query.filter_by(bio_name=brand_name.lower()).first()
-    if not check_brand:
-        return render_template("404.html")
+    # if not check_brand:
+    #     return render_template("404.html")
     bio_links = CreateBioLinkEntries.query.filter_by(bio_page_name=brand_name).all()
     return render_template(
         "bio_link_routes.html", brandie=brand_name.upper(), all_posts=bio_links
