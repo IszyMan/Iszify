@@ -1,0 +1,122 @@
+{% extends 'base2.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/display_codes.css') }}">
+
+<style>
+    .flex-container {
+        height: 300px;
+        display: flex;
+        padding: 10px;
+    }
+    .item {
+        flex: auto;
+        background: white;
+        margin: 10px;
+    }
+    .item2 {
+        flex: auto;
+        background: LightGray;
+        margin: 10px;
+        height: 800px
+        
+    }
+
+
+</style>
+{% endblock head %}
+{% block content %}
+<!-- display in grids -->
+
+<main style="margin-top: 100px">
+
+
+
+    <div class="flex-container">
+        <div style="padding:2rem" class="item">
+
+            <div class="rounded-pill h2">
+                {% for url in urls|reverse %}
+                <h2><strong>Edit QR Code</strong></h2><br>
+                <h4><strong>Details</strong></h4>
+
+
+                <form action="{{url_for('user_blp.qr_codes_content_edit', qr_id=url.id)}}" method="post" class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" name="title" value={{url.title}}> <br>
+
+              <h5>Short Link</h5>
+                <h6>{{ request.host_url }}{{ url.short_url }}</h6><br>
+
+                    {% if url.url %}
+               <h4><strong>Destination URL</strong></h4>
+                <input type="text" class="form-control" name="title" value={{url.url}}> <br>
+
+                     {% elif url.email %}
+                 <h4><strong>Destination Email</strong></h4>
+                <input type="text" class="form-control" name="email" value={{url.email}}> <br>
+
+                    {% else %}
+                 <h4><strong>Destination VCARD</strong></h4>
+                <input type="text" class="form-control" name="name" value={{url.name}}><br>
+                <input type="text" class="form-control" name="org" value={{url.org}}><br>
+                <input type="text" class="form-control" name="phone" value={{url.phone}}><br>
+                <input type="text" class="form-control" name="mail" value={{url.mail}}><br>
+                <input type="text" class="form-control" name="website" value={{url.website}}><br>
+                <input type="text" class="form-control" name="address" value={{url.address}}><br>
+                <input type="text" class="form-control" name="note" value={{url.note}}><br>
+
+                    {% endif %}
+
+              <button type="submit" class="btn btn-primary btn-block">Save Changes</button><button type="submit" class="btn btn-outline-light">Cancel</button>
+              </form>
+
+
+
+
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+        <div style="padding:2rem" class="item2">
+
+            {% for url in urls|reverse %}
+
+              <p class="text-center h6 ms-1 me-1">Preview</p>
+        <div class="row mt-3">
+
+            {% if url.url %}
+
+        <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
+            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
+        </div>
+
+            {% elif url.email %}
+            <div class="col-sm">
+                <p><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.email }}"
+            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" /></p>
+
+            </div>
+
+            {% else %}
+
+               {% for data in datas %}
+
+            <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ data }} "
+            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
+            </div>
+
+            {% endfor %}
+
+            {% endif %}
+        </div>
+
+
+    {% endfor %}
+
+        </div>
+
+  </div>
+</main>
+{% endblock content %}

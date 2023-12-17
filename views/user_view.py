@@ -10,6 +10,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import io
 import base64
+from PIL import Image
 from sqlalchemy import func
 
 user_blp = Blueprint("user_blp", __name__)
@@ -259,13 +260,7 @@ def bio_link_pages_details(bio_id):
         db.session.commit()
         flash("Link Added", "success")
         return redirect(url_for('user_blp.bio_link_pages_details', bio_id=bio_id))
-        # return render_template(
-        #     "bio_link_pages_details.html",
-        #     bios=bios,
-        #     links_added=bio_links,
-        #     form=form,
-        #     current_user=current_user,
-        # )
+
     return render_template(
         "bio_link_pages_details.html",
         bios=bios,
@@ -309,10 +304,33 @@ def bio_link_routes(brand_name):
     check_brand = CreateBioPage.query.filter_by(bio_name=brand_name.lower()).first()
     # if not check_brand:
     #     return render_template("404.html")
-    bio_links = CreateBioLinkEntries.query.filter_by(bio_page_name=brand_name).all()
+    bio_links = CreateBioLinkEntries.query.filter_by(author_id=check_brand.id, bio_page_id=brand_name).all()
     return render_template(
         "bio_link_routes.html", brandie=brand_name.upper(), all_posts=bio_links
     )
+
+
+@user_blp.route("/biolinkpages/<bio_id>/customize/appearance", methods=["GET", "POST"])
+@login_required
+def bio_link_page_appearance(bio_id):
+    form = CreatePostForm()
+    host_url = request.host_url
+    bio_links = CreateBioLinkEntries.query.filter_by(
+        author_id=current_user.id, bio_page_id=bio_id
+    ).all()
+    bios = CreateBioPage.query.filter_by(
+        id=bio_id, author_id=current_user.id
+    ).all()
+
+    user_id = current_user.id
+    return render_template(
+        "bio_link_page_appearance.html",
+        bio_id=bio_id,
+        bios=bios,
+        links_added=bio_links,
+        form=form,
+        current_user=current_user,
+        host_url=host_url)
 
 
 @user_blp.route("/redirect")
@@ -463,30 +481,30 @@ def delete_product(linkname):
     return redirect(referer or url_for("user_blp.dashboard"))
 
 
-@user_blp.route("/qr_code/stats/<int:qr_id>", methods=["GET"])
-@login_required
-def qr_code_stats(qr_id):
-    qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
-    if not qr_codes:
-        flash("No stats for this QR Code", "info")
-        return redirect(url_for("user_blp.display_qr_codes"))
-    # Extract dates and click counts
-    dates = [entry.date for entry in qr_codes]
-    clicks = [entry.clicks for entry in qr_codes]
-
-    # Create a simple bar chart using Matplotlib
-    plt.figure(figsize=(10, 6))
-    plt.bar(dates, clicks)
-    plt.xlabel("Date")
-    plt.ylabel("Number of Clicks")
-    plt.title("Clicks Over Time")
-
-    # Convert the plot to a PNG image
-    img = io.BytesIO()
-    plt.savefig(img, format="png")
-    img.seek(0)
-    plot_url = base64.b64encode(img.getvalue()).decode()
-    return render_template("qr_code_stats.html", plot_url=plot_url)
+# @user_blp.route("/qr_code/stats/<int:qr_id>", methods=["GET"])
+# @login_required
+# def qr_code_stats(qr_id):
+#     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
+#     if not qr_codes:
+#         flash("No stats for this QR Code", "info")
+#         return redirect(url_for("user_blp.display_qr_codes"))
+#     # Extract dates and click counts
+#     dates = [entry.date for entry in qr_codes]
+#     clicks = [entry.clicks for entry in qr_codes]
+#
+#     # Create a simple bar chart using Matplotlib
+#     plt.figure(figsize=(10, 6))
+#     plt.bar(dates, clicks)
+#     plt.xlabel("Date")
+#     plt.ylabel("Number of Clicks")
+#     plt.title("Clicks Over Time")
+#
+#     # Convert the plot to a PNG image
+#     img = io.BytesIO()
+#     plt.savefig(img, format="png")
+#     img.seek(0)
+#     plot_url = base64.b64encode(img.getvalue()).decode()
+#     return render_template("qr_code_stats.html", plot_url=plot_url)
 
 
 # SHORTEN URL SECTION
@@ -593,6 +611,7 @@ def delete_url(url_id):
     return redirect(referer or url_for("user_blp.display_urls"))
 
 
+#        QR CODE SECTION
 # This is the page to display all the qr codes for the current user
 @user_blp.route("/qr_codes/create", methods=["GET", "POST"])
 @login_required
@@ -729,15 +748,6 @@ def display_qr_codes():
     return render_template("display_qr.html", urls=qrcodes, datas=datas)
 
 
-# Sample data (you should replace this with your actual data source)
-# click_data = [
-#     {"date": "2023-11-01", "clicks": 10},
-#     {"date": "2023-11-02", "clicks": 15},
-#     {"date": "2023-11-03", "clicks": 8},
-#     # Add more data here
-# ]
-
-
 # View all qr codes details for the current user
 @user_blp.route("/stats/qr_codes/details/<int:qr_id>", methods=["GET"])
 @login_required
@@ -796,6 +806,69 @@ def qr_codes_details(qr_id):
     plot_url = base64.b64encode(img.getvalue()).decode()
     # return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
     return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
+
+
+#            Customize QR CODES
+@user_blp.route("/qr_codes/customize/<int:qr_id>", methods=["GET"])
+@login_required
+def qr_codes_customize(qr_id):
+    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    datas = []
+    for qr in qrcodes:
+        if qr.url or qr.email:
+            pass
+        else:
+            datas.append(
+                {
+                    "name": qr.name,
+                    "org": qr.org,
+                    "phone": qr.phone,
+                    "mail": qr.mail,
+                    "website": qr.website,
+                    "address": qr.address,
+                    "note": qr.note,
+                }
+            )
+    qr_code = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
+    # # Open the existing QR code image
+    # img = Image.open(qr_codes)
+    #
+    # # Modify the color based on user input
+    # # Replace 'red' and 'white' with user-selected colors
+    # img = img.convert("RGB")
+    # img.putdata([(255, 0, 0) if pixel == (0, 0, 0) else (255, 255, 255) for pixel in img.getdata()])
+    #
+    # # Save the modified QR code image
+    qr_code.save()
+
+    return render_template("qr_codes_customize.html", urls=qrcodes, datas=datas)
+
+
+#                    Edit QR CODES
+@user_blp.route("/qr_codes/edit/<int:qr_id>/contents", methods=["GET", "POST"])
+@login_required
+def qr_codes_content_edit(qr_id):
+    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    datas = []
+    for qr in qrcodes:
+        if qr.url or qr.email:
+            pass
+        else:
+            datas.append(
+                {
+                    "name": qr.name,
+                    "org": qr.org,
+                    "phone": qr.phone,
+                    "mail": qr.mail,
+                    "website": qr.website,
+                    "address": qr.address,
+                    "note": qr.note,
+                }
+            )
+
+    return render_template("qr_codes_content_edit.html", urls=qrcodes, datas=datas)
+
+
 
 
 # delete a qr code

@@ -42,12 +42,14 @@
 
         </div>
         <div class="col-sm-6 mt-4">
+            <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">
             <div class="row">
+
            <h4> {{ host_url }}bio/{{post.bio_name}}</h4>
           <div> <i class="bi bi-bar-chart-fill text-muted"></i>Click Data ({{ post.clicks }}) </div>
           <div> <i class="bi bi-calendar text-muted"></i> {{ post.created_at.strftime('%B %d, %Y ') }}</div>
             </div>
-
+            </a>
         </div>
 
         <div class="col-sm-2 mt-4 text-muted">

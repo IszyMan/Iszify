@@ -1,0 +1,95 @@
+{% extends 'base2.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/biophone.css') }}">
+
+{% endblock head %}
+{% block content %}
+
+<main style="margin-top: 78px">
+  <div class="container pt-4">
+
+  <div class="container bg-secondary">
+    <div class="d-flex justify-content-start py-3 container align-item-center">
+        <div>
+            {% for post in bios %}
+        <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Links</a>
+        <a href="{{url_for('user_blp.bio_link_page_appearance', bio_id=post.id)}}" class="btn py-1 px-2" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
+        <a href="" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Analytics</a>
+            {% endfor %}
+    </div>
+    </div>
+</div>
+
+   <div class="dashdiv">
+     <div class="d-flex flex-row">
+        <div class="p-2">
+   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
+       <li class="nav-item mx-3">
+    <span><i class="fa fa-link" aria-hidden="true"></i>
+        {% for post in bios %}
+    <a class="text-decoration-none text-primary fw-bold" href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></span>
+
+       </li>
+
+       <div class="dropdown">
+     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
+     Edit
+     </button>
+      <div class="dropdown-menu p-5" style="width: 20rem;">
+
+      <h3>Edit Bio Name</h3>
+
+      <form action="{{url_for('user_blp.update_details', bio_id=post.id)}}" method="post" class="form-group">
+        <label for="link_name">Link Name</label>
+        <input type="text" class="form-control" name="brandname" value={{post.bio_name}}> <br>
+        <button type="submit" class="btn btn-secondary">Update</button>
+      </form>
+
+      </div>
+     </div>
+
+       <li class="nav-item mx-5"><span class="text-primary"><b><i class="fas fa-copy"></i> Copy</b></span></li>
+
+       {% endfor %}
+    </ul>
+    </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+
+<div class="row">
+
+     <!-- Bio details phone-->
+     <div class="clearfix"  >
+       <div class="float-end">
+      <div class="smartphone ">
+     <div class="content mx-5" >
+      <div class="phone_container mt-5 mx-5" >
+          <i class="text-center fa fa-user h1 text-primary stylethis2 rounded-circle p-4 mx-4"></i>
+      {% for post in links_added|reverse%}
+          <div class='border border-primary rounded-pill p-3 mt-2 text-center'>
+        <a class='h6 mb-4 mt-3 text-muted fw-bold text-decoration-none '>{{ post.link_name.upper() }} </a><br>
+              </div>
+      {% endfor %}
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+</div>
+
+</div>
+
+  </div>
+</main>
+{% endblock content %}

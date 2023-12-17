@@ -27,11 +27,14 @@
   <!-- Block to be inherited from this file by other files if need be -->
   {% block head %}{% endblock head %}
   {% block extra_js %}{% endblock extra_js %}
+
+   <!-- Title , the block to be inherited by other files so as to add a title for each page-->
+  <title>{% block title %}LinkTools - Nigeria's first URL Shortener, QR Codes generator and Bio Link Service{% endblock title %} </title>
+  <meta name="description" content="{% block description %}{% endblock %}" />
+  <meta name="keywords" content="{% block keywords %}{% endblock %}" />
+  <meta name="author" content="{% block author %}{% endblock %}" />
   <!-- Css link -->
   <link rel="stylesheet" href="" />
-  <!-- Title , the block to be inherited by other files so as to add a title for each page-->
-  <title>LinkTools {% block title %}{% endblock title %}
-  </title>
   <link rel="icon" href="">
 </head>
 
@@ -186,24 +189,28 @@
             <!-- The navbar brand -->
             <!-- The navbar brand -->
             <a href="" class="footer-brand text-decoration-none">
-                <h3>LINKTOOLS.NG</h3>
+                <h3 class="">LINKTOOLS.NG</h3>
             </a>
-            <p class="text-light mt-2 pclass3">Linktools is Nigeria's first URL Shortener, QR CODES generator and Link-In-Bio service.<br> <br> Proudly <span style="color:green">Naija </span> Copyright &copy 2023 .</p>
+            <p class="text-light ">Linktools is Nigeria's first URL Shortener, QR CODES generator software and Link-In-Bio service. </p>
+        </div>
+
+
+        <div class="text-light  d-flex flex-column col-md-3 mydiv">
+            <h4>SOLUTIONS</h4> <br>
+            <h6><a href="" class="footer-brand text-decoration-none">URL SHORTENER</a></h6><br>
+            <h6><a href="" class="footer-brand text-decoration-none">QR CODES</a></h6><br>
+            <h6><a href="" class="footer-brand text-decoration-none">LINK IN BIO </a></h6>
         </div>
 
         <div class="text-light  d-flex flex-column col-md-3 mydiv">
-            <h4>SOLUTIONS</h4> <br><br>
-            <h6 >URL SHORTENER</h6><br>
-            <h6>QR CODES</h6><br>
-            <h6>Link-In-BIO </h6>
+            <h5>COMPANY</h5> <br>
+            <h6><a href="" class="footer-brand text-decoration-none">ABOUT US</a></h6><br>
+            <h6><a href="" class="footer-brand text-decoration-none">CONTACT US</a></h6><br>
+            <h6><a href="" class="footer-brand text-decoration-none">GET STARTED </a></h6>
         </div>
 
-        <div class="text-light  d-flex flex-column col-md-3 mydiv">
-            <h5>COMPANY</h5> <br><br>
-            <h6 >ABOUT US</h6><br>
-            <h6>CONTACT US</h6><br>
-            <h6>GET STARTED </h6>
-        </div>
+
+
 
         <div class="text-light d-flex flex-column col-md-3 mydiv">
             <h5>Social Media</h5>
@@ -221,8 +228,16 @@
                 <i class="fa-brands fa-whatsapp social p-1 rounded"></i>
             </span>
             </div>
+
+
         </div>
+
+
     </div>
+      <div class="text-center" style="color:white">
+          <p>Proudly <span style="color:green">NIGERIAN </span>&copy Copyright 2023</p>
+      </div><br>
+
 </footer>
    {% endif %}
   <!-- Icon tha redirects back to the top of the page -->

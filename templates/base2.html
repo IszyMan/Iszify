@@ -155,9 +155,9 @@
 
       <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
         <div class="d-flex align-items-center">
-            <i class="fa-solid fa-user-circle h3 text-muted mr-5"></i>
+            <i class="fa-solid fa-user-circle h3 text-muted ms-3"></i>
         <div class="d-flex flex-column align-items-center ">
-         <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="px-4 text-decoration-none my-5">
+         <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="text-decoration-none mx-2 my-5 me-3">
           <span class="fw-bold text-muted ">{{current_user.username.upper()}}</span><br>
           <small class="fw-bold mr-5 text-muted ">{{current_user.email}}</small>
          </a>
