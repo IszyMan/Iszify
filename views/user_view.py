@@ -869,8 +869,6 @@ def qr_codes_content_edit(qr_id):
     return render_template("qr_codes_content_edit.html", urls=qrcodes, datas=datas)
 
 
-
-
 # delete a qr code
 @user_blp.route("/qr_codes/delete/<int:qr_id>", methods=["GET"])
 @login_required
