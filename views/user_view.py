@@ -10,6 +10,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import io
 import base64
+import qrcode
 from PIL import Image
 from sqlalchemy import func
 
