@@ -5,7 +5,6 @@ from hashids import Hashids
 from urllib import request
 from urllib.error import HTTPError, URLError
 
-
 secret = "any-secret-key-you-choose"
 
 hashids = Hashids(min_length=6, salt=secret)
@@ -17,23 +16,21 @@ class QrCode(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     title = db.Column(db.String(250))
-    url = db.Column(db.Text)
-    email = db.Column(db.Text)
+    qr_data = db.Column(db.Text)
+    # url = db.Column(db.Text)
+    # email = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     qrcode_record = relationship("QrcodeRecord", backref="qr_code")
-    short_url = db.Column(db.String(250))
-    clicks = db.Column(db.Integer, default=0)
-    # vcard
-    name = db.Column(db.Text)
-    org = db.Column(db.Text)
-    phone = db.Column(db.Text)
-    mail = db.Column(db.Text)
-    website = db.Column(db.Text)
-    address = db.Column(db.Text)
-    note = db.Column(db.Text)
-
-
-
+    # short_url = db.Column(db.String(250))
+    # clicks = db.Column(db.Integer, default=0)
+    # # vcard
+    # name = db.Column(db.Text)
+    # org = db.Column(db.Text)
+    # phone = db.Column(db.Text)
+    # mail = db.Column(db.Text)
+    # website = db.Column(db.Text)
+    # address = db.Column(db.Text)
+    # note = db.Column(db.Text)
 
     def __repr__(self):
         return f"QrCode('{self.url}', '{self.created_at}')"
