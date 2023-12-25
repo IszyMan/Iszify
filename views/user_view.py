@@ -4,7 +4,7 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from models.bio_link_entries import CreateBioLinkEntries
-from utils import get_platform
+from utils import get_platform, generate_and_save_qr
 from models.create_bio_page import CreateBioPage
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -629,6 +629,8 @@ def qr_codes():
         if not url.startswith("http://") and not url.startswith("https://"):
             url = "http://" + url
 
+        res = generate_and_save_qr(url)
+
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id, url=url
@@ -640,6 +642,7 @@ def qr_codes():
             author=current_user,
             author_id=current_user.id,
             url=url,
+            qr_data=res,
             short_url=generate_short_url2(),
             title=title,
         )
