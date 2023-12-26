@@ -29,28 +29,12 @@
 
     <div class="card " style="background-color:lavender;">
         <div class="row mt-3">
-
-            {% if url.url %}
-        <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
-            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
+        <div class="col-sm"> 
+            <img src="data:image/png;base64,{{ url.qr_data|b64encode_custom }}" 
+            alt="QR Code"
+            class="mx-auto d-flex img-thumbnail mt-2 mb-0" 
+            style="margin-bottom: 4rem;">
         </div>
-
-            {% elif url.email %}
-            <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.email }}"
-            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
-        </div>
-
-            {% else %}
-
-               {% for data in datas %}
-
-            <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ data }} "
-            alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
-            </div>
-
-            {% endfor %}
-
-            {% endif %}
 
         <div class="col-sm mt-3">
             <div class="card-text h4 mt-3"><strong> {{url.title}}</strong></div><br>
@@ -68,7 +52,7 @@
 
                {% else %}
                 <b>VCARD</b><br>
-              {{ url.name }}
+              Card
 
               {% endif %}
 
