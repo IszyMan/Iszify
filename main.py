@@ -1,9 +1,10 @@
+import os
 from flask import Flask
+import base64
 from auth import auth_blp
-from views.user_view import user_blp
 from extensions import login_manager, db, bootstrap, migrate, qr_code
 from models import User
-import os
+from views.user_view import user_blp
 
 
 def create_app():
@@ -27,6 +28,10 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    @app.template_filter('urlsafe')
+    def urlsafe_filter(s):
+        return base64.b64encode(s).decode('utf-8').replace('+', '-').replace('/', '_').replace('=', '')
 
     app.register_blueprint(auth_blp)
     app.register_blueprint(user_blp)
