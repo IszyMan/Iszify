@@ -26,6 +26,7 @@ MarkupSafe
 matplotlib
 numpy
 packaging
+flask-QRcode
 pandas
 Pillow
 pyparsing
@@ -43,7 +44,3 @@ visitor
 Werkzeug
 WTForms
 django
-
-
-
-
