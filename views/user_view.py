@@ -730,6 +730,8 @@ def qr_codes_vcard():
 @login_required
 def display_qr_codes():
     qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
+    for qr in qrcodes:
+        qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8')
     return render_template("display_qr.html", urls=qrcodes)
 
 
