@@ -799,36 +799,8 @@ def qr_codes_details(qr_id):
 @user_blp.route("/qr_codes/customize/<int:qr_id>", methods=["GET"])
 @login_required
 def qr_codes_customize(qr_id):
-    qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
-    datas = []
-    for qr in qrcodes:
-        if qr.url or qr.email:
-            pass
-        else:
-            datas.append(
-                {
-                    "name": qr.name,
-                    "org": qr.org,
-                    "phone": qr.phone,
-                    "mail": qr.mail,
-                    "website": qr.website,
-                    "address": qr.address,
-                    "note": qr.note,
-                }
-            )
-    qr_code = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
-    # # Open the existing QR code image
-    # img = Image.open(qr_codes)
-    #
-    # # Modify the color based on user input
-    # # Replace 'red' and 'white' with user-selected colors
-    # img = img.convert("RGB")
-    # img.putdata([(255, 0, 0) if pixel == (0, 0, 0) else (255, 255, 255) for pixel in img.getdata()])
-    #
-    # # Save the modified QR code image
-    qr_code.save()
-
-    return render_template("qr_codes_customize.html", urls=qrcodes, datas=datas)
+    qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    return render_template("qr_codes_customize.html", qrcode=qrcode)
 
 
 #                    Edit QR CODES
