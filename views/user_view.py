@@ -799,7 +799,8 @@ def qr_codes_details(qr_id):
 @user_blp.route("/qr_codes/customize/<int:qr_id>", methods=["GET"])
 @login_required
 def qr_codes_customize(qr_id):
-    qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
+    qrcode.qr_data = base64.b64encode(qrcode.qr_data).decode('utf-8')
     return render_template("qr_codes_customize.html", qrcode=qrcode)
 
 
