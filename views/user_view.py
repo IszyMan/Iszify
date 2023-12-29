@@ -4,7 +4,7 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from models.bio_link_entries import CreateBioLinkEntries
-from utils import get_platform, generate_and_save_qr
+from utils import get_platform, generate_and_save_qr, update_qr_code
 from models.create_bio_page import CreateBioPage
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -796,11 +796,17 @@ def qr_codes_details(qr_id):
 
 
 #            Customize QR CODES
-@user_blp.route("/qr_codes/customize/<int:qr_id>", methods=["GET"])
+@user_blp.route("/qr_codes/customize/<int:qr_id>", methods=["GET", "POST"])
 @login_required
 def qr_codes_customize(qr_id):
     qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
     qrcode.qr_data = base64.b64encode(qrcode.qr_data).decode('utf-8')
+    if request.method == "POST":
+        qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
+        color = request.form.get("color")
+        res = update_qr_code(qrcode.qr_data, color)
+        qrcode.qr_data = res
+        db.session.commit()
     return render_template("qr_codes_customize.html", qrcode=qrcode)
 
 
