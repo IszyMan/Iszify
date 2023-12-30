@@ -804,9 +804,11 @@ def qr_codes_customize(qr_id):
     if request.method == "POST":
         qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
         color = request.form.get("color")
-        res = update_qr_code(qrcode.qr_data, color)
+        data = qrcode.url if qrcode.url else qrcode.email
+        res = update_qr_code(data, color)
         qrcode.qr_data = res
         db.session.commit()
+        return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
     return render_template("qr_codes_customize.html", qrcode=qrcode)
 
 
