@@ -2,6 +2,7 @@ import re
 # Importing library
 import qrcode
 from io import BytesIO
+from PIL import Image, ImageDraw
 
 
 def get_platform(link):
@@ -53,5 +54,28 @@ def update_qr_code(data, fill_color):
     # Save the QR code to BytesIO
     img_bytes_io = BytesIO()
     img.save(img_bytes_io, format='PNG')
+
+    return img_bytes_io.getvalue()
+
+
+def customize_qr_code_logo(data, logo_path):
+    # Generate QR code
+    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr.add_data(data)
+    qr.make(fit=True)
+    qr_img = qr.make_image(fill_color='black', back_color='white')
+
+    # Open the logo image
+    logo = Image.open(logo_path)
+
+    # Calculate the position to place the logo in the center
+    pos = ((qr_img.size[0] - logo.size[0]) // 2, (qr_img.size[1] - logo.size[1]) // 2)
+
+    # Paste the logo onto the QR code
+    qr_img.paste(logo, pos, logo)
+
+    # Save the final image to BytesIO
+    img_bytes_io = BytesIO()
+    qr_img.save(img_bytes_io, format='PNG')
 
     return img_bytes_io.getvalue()
