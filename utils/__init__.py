@@ -58,12 +58,12 @@ def update_qr_code(data, fill_color):
     return img_bytes_io.getvalue()
 
 
-def customize_qr_code_logo(data, logo_path):
+def customize_qr_code_logo(data, logo_path, fill_color):
     # Generate QR code
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(data)
     qr.make(fit=True)
-    qr_img = qr.make_image(fill_color='black', back_color='white')
+    qr_img = qr.make_image(fill_color=fill_color, back_color='white')
 
     # Open the logo image
     logo = Image.open(logo_path)
