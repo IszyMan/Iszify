@@ -54,7 +54,7 @@
              <div class="rounded-pill h2">
                 <h3>Add a logo or center text</h3>
 
-            <i class="bi bi-images"></i> <span id="logo"></span>
+            <i class="bi bi-images" id="image-icon" style="cursor: pointer;"></i> <span id="logo"></span>
             <input type="file" name="image" id="image_file" style="display: none;">
 
             </div>
@@ -116,6 +116,28 @@
 </main>
 
 <script>
+    // get the span
+    var span = document.getElementById("logo");
+
+    // get the input
+    var input = document.getElementById("image_file");
+
+    // get the button
+    var button = document.getElementById("preset-6");
+
+    // get the image icon
+    var imageIcon = document.getElementById("image-icon");
+
+    // when the image icon is been cliicked, click the input
+    imageIcon.addEventListener("click", function() {
+        input.click();
+    });
+
+    // when the input is been changed, span text is changed to the file name
+    input.addEventListener("change", function() {
+        span.innerHTML = input.files[0].name;
+    });
+
 
 </script>
 
