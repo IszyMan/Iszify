@@ -65,17 +65,72 @@ def customize_qr_code_logo(data, logo_path, fill_color):
     qr.make(fit=True)
     qr_img = qr.make_image(fill_color=fill_color, back_color='white')
 
-    # Open the logo image
+    # Open the logo image and resize it
     logo = Image.open(logo_path)
+
+    # Set the maximum size you want for the logo
+    basewidth = 100
+    wpercent = (basewidth / float(logo.size[0]))
+    hsize = int((float(logo.size[1]) * float(wpercent)))
+    logo = logo.resize((basewidth, hsize))
 
     # Calculate the position to place the logo in the center
     pos = ((qr_img.size[0] - logo.size[0]) // 2, (qr_img.size[1] - logo.size[1]) // 2)
 
-    # Paste the logo onto the QR code
-    qr_img.paste(logo, pos, logo)
+    # Paste the resized logo onto the QR code
+    qr_img.paste(logo, pos)
 
     # Save the final image to BytesIO
     img_bytes_io = BytesIO()
     qr_img.save(img_bytes_io, format='PNG')
+
+    return img_bytes_io.getvalue()
+
+
+def customize(data, logo_path, fill_color):
+    logo = Image.open(logo_path)
+
+    # taking base width
+
+    basewidth = 150
+
+    # adjust image size
+    wpercent = (basewidth / float(logo.size[0]))
+
+    hsize = int((float(logo.size[1]) * float(wpercent)))
+
+    logo = logo.resize((basewidth, hsize))
+
+    QRcode = qrcode.QRCode(
+
+        error_correction=qrcode.constants.ERROR_CORRECT_H
+    )
+
+    # adding URL or text to QRcode
+    QRcode.add_data(data)
+
+    # generating QR code
+    QRcode.make()
+
+    # taking color name from user
+
+    # adding color to QR code
+
+    QRimg = QRcode.make_image(
+
+        fill_color=fill_color, back_color="white").convert('RGB')
+
+    # set size of QR code
+
+    pos = ((QRimg.size[0] - logo.size[0]) // 2,
+
+           (QRimg.size[1] - logo.size[1]) // 2)
+    QRimg.paste(logo, pos)
+
+    # save the QR code generated as BytesIO
+
+    img_bytes_io = BytesIO()
+
+    QRimg.save(img_bytes_io, format='PNG')
 
     return img_bytes_io.getvalue()
