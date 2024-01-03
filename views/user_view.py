@@ -4,7 +4,7 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from models.bio_link_entries import CreateBioLinkEntries
-from utils import get_platform, generate_and_save_qr, update_qr_code, customize_qr_code_logo
+from utils import get_platform, generate_and_save_qr, update_qr_code, customize_qr_code_logo, customize
 from models.create_bio_page import CreateBioPage
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -802,16 +802,21 @@ def qr_codes_customize(qr_id):
     qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
     qrcode.qr_data = base64.b64encode(qrcode.qr_data).decode('utf-8')
     if request.method == "POST":
-        qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
-        color = request.form.get("color")
-        # get the image data
-        logo = request.files["image"]
-        print(logo, "LOGO")
-        data = qrcode.url if qrcode.url else qrcode.email
-        res = update_qr_code(data, color) if color and not logo else customize_qr_code_logo(data, logo, color)
-        qrcode.qr_data = res
-        db.session.commit()
-        return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
+        try:
+            qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
+            color = request.form.get("color")
+            # get the image data
+            logo = request.files["image"]
+            print(logo, "LOGO")
+            data = qrcode.url if qrcode.url else qrcode.email
+            res = update_qr_code(data, color) if color and not logo else customize(data, logo, color)
+            qrcode.qr_data = res
+            db.session.commit()
+            return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
+        except Exception as e:
+            print(e, 'this is the error')
+            db.session.rollback()
+            return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
     return render_template("qr_codes_customize.html", qrcode=qrcode)
 
 
