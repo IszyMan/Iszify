@@ -513,8 +513,8 @@ def shorten_url():
         original_url = request.form.get("originalUrl")
         custom_url = request.form.get("customUrl", None)
         title = (
-            request.form.get("title")
-            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+                request.form.get("title")
+                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
         generate_qr_code = request.form.get("check_box", "")
 
@@ -525,7 +525,7 @@ def shorten_url():
         )
 
         if Urlshort.query.filter_by(
-            author_id=current_user.id, url=original_url
+                author_id=current_user.id, url=original_url
         ).first():
             flash("URL already exists", "danger")
             return render_template("shorten.html")
@@ -620,8 +620,8 @@ def qr_codes():
     if request.method == "POST":
         url = request.form.get("url")
         title = (
-            request.form.get("title")
-            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+                request.form.get("title")
+                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
         if not url:
             flash("Please enter a URL", "danger")
@@ -659,9 +659,10 @@ def qr_codes_email():
     if request.method == "POST":
         email = request.form.get("email")
         title = (
-            request.form.get("title")
-            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+                request.form.get("title")
+                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
+        res = generate_and_save_qr(email)
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id, email=email
@@ -673,6 +674,7 @@ def qr_codes_email():
             author=current_user,
             author_id=current_user.id,
             email=email,
+            qr_data=res,
             short_url=generate_short_url2(),
             title=title,
         )
@@ -688,8 +690,8 @@ def qr_codes_email():
 def qr_codes_vcard():
     if request.method == "POST":
         title = (
-            request.form.get("title")
-            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+                request.form.get("title")
+                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
         name = request.form.get("name")
         org = request.form.get("org")
@@ -808,7 +810,21 @@ def qr_codes_customize(qr_id):
             # get the image data
             logo = request.files["image"]
             print(logo, "LOGO")
-            data = qrcode.url if qrcode.url else qrcode.email
+            if qrcode.url:
+                data = qrcode.url
+            elif qrcode.email:
+                data = qrcode.email
+            else:
+                data = dict(
+                    name=qrcode.name,
+                    org=qrcode.org,
+                    phone=qrcode.phone,
+                    website=qrcode.website,
+                    mail=qrcode.email,
+                    address=qrcode.address,
+                    note=qrcode.note
+                )
+            # data = qrcode.url if qrcode.url else qrcode.email
             res = update_qr_code(data, color) if color and not logo else customize(data, logo, color)
             qrcode.qr_data = res
             db.session.commit()
@@ -891,7 +907,6 @@ def display_biolinks():
 @user_blp.route("/see", methods=["GET"])
 def see():
     return render_template("base2.html")
-
 
 # @user_blp.route('/qrqr', methods=['GET'])
 # def qrqr():
