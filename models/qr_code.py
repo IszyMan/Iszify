@@ -24,13 +24,13 @@ class QrCode(UserMixin, db.Model):
     short_url = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
     # # vcard
-    # name = db.Column(db.Text)
-    # org = db.Column(db.Text)
-    # phone = db.Column(db.Text)
-    # mail = db.Column(db.Text)
-    # website = db.Column(db.Text)
-    # address = db.Column(db.Text)
-    # note = db.Column(db.Text)
+    name = db.Column(db.String(250))
+    org = db.Column(db.String(250))
+    phone = db.Column(db.String(250))
+    website = db.Column(db.Text)
+    mail = db.Column(db.String(250))
+    address = db.Column(db.Text)
+    note = db.Column(db.Text)
 
     def __repr__(self):
         return f"QrCode('{self.url}', '{self.created_at}')"
