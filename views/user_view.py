@@ -701,6 +701,18 @@ def qr_codes_vcard():
         address = request.form.get("address")
         note = request.form.get("note")
 
+        data = dict(
+            name=name,
+            org=org,
+            phone=phone,
+            website=website,
+            mail=mail,
+            address=address,
+            note=note,
+        )
+
+        res = generate_and_save_qr(data)
+
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
             author_id=current_user.id, mail=mail
@@ -712,6 +724,7 @@ def qr_codes_vcard():
             author=current_user,
             author_id=current_user.id,
             short_url=generate_short_url2(),
+            qr_data=res,
             title=title,
             name=name,
             org=org,
