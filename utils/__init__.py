@@ -92,7 +92,7 @@ def customize(data, logo_path, fill_color):
 
     # taking base width
 
-    basewidth = 150
+    basewidth = 100
 
     # adjust image size
     wpercent = (basewidth / float(logo.size[0]))
