@@ -822,7 +822,24 @@ def qr_codes_customize(qr_id):
             color = request.form.get("color")
             # get the image data
             logo = request.files["image"]
+            social_media_logo = request.form.get("placeholder_images")
             print(logo, "LOGO")
+            print(social_media_logo, "social_media_logo")
+            if logo and social_media_logo:
+                flash("Please select either logo or social media logo", "danger")
+                return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
+            if social_media_logo and social_media_logo == 'youtube':
+                # use the png in the static folder as logo
+                logo = "../static/yt.png"
+            elif social_media_logo and social_media_logo == 'twitter':
+                # use the png in the static folder as logo
+                logo = "../static/tw.png"
+            elif social_media_logo and social_media_logo == 'facebook':
+                # use the png in the static folder as logo
+                logo = "../static/fb.png"
+            elif social_media_logo and social_media_logo == 'instagram':
+                # use the png in the static folder as logo
+                logo = "../static/insta.png"
             if qrcode.url:
                 data = qrcode.url
             elif qrcode.email:
