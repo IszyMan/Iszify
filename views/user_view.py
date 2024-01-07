@@ -839,7 +839,7 @@ def qr_codes_customize(qr_id):
                 logo = "static/fb.png"
             elif social_media_logo and social_media_logo == 'instagram':
                 # use the png in the static folder as logo
-                logo = "static/insta.png"
+                logo = "static/ig.png"
             if qrcode.url:
                 data = qrcode.url
             elif qrcode.email:
