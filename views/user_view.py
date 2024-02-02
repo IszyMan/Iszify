@@ -542,12 +542,15 @@ def shorten_url():
             short_url = generate_short_url()
             print(generate_short_url())
 
+        res = generate_and_save_qr(original_url) if generate_qr_code else ""
+
         url = Urlshort(
             author=current_user,
             author_id=current_user.id,
             url=original_url,
             short_url=short_url,
             title=title,
+            qr_data=res,
             want_qr_code=generate_qr_code,
         )
         url.save()
@@ -557,9 +560,11 @@ def shorten_url():
             shortened_url=f"{request.host_url}{short_url}",
             original_url=original_url,
             generate_qr_code=generate_qr_code,
+            done_creating=True,
+            qr_data=res,
         )
 
-    return render_template("shorten.html")
+    return render_template("shorten.html", done_creating=False)
 
 
 # redirect short url to the original url
