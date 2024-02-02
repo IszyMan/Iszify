@@ -524,25 +524,28 @@ def shorten_url():
             f"original_url: {original_url}, custom_url: {custom_url}, title: {title}, generate_qr_code: {generate_qr_code}"
         )
 
-        if Urlshort.query.filter_by(
-                author_id=current_user.id, url=original_url
-        ).first():
-            flash("URL already exists", "danger")
-            return render_template("shorten.html")
+        # if Urlshort.query.filter_by(
+        #         author_id=current_user.id, url=original_url
+        # ).first():
+        #     flash("URL already exists", "danger")
+        #     return render_template("shorten.html")
         # if not validate_url(original_url):
         # flash('Please enter a valid URL', 'danger')
         # return render_template("shorten.html")
 
         if custom_url:
+            print(custom_url, "custom_url")
             short_url = custom_url
             if Urlshort.query.filter_by(short_url=short_url).first():
                 flash("Custom URL already exists", "danger")
+                print("Custom URL already exists")
                 return render_template("shorten.html")
         else:
             short_url = generate_short_url()
             print(generate_short_url())
 
         res = generate_and_save_qr(original_url) if generate_qr_code else ""
+        # print(res, 'res')
 
         url = Urlshort(
             author=current_user,
@@ -561,7 +564,7 @@ def shorten_url():
             original_url=original_url,
             generate_qr_code=generate_qr_code,
             done_creating=True,
-            qr_data=res,
+            qr_data=base64.b64encode(res).decode('utf-8') if res else res,
         )
 
     return render_template("shorten.html", done_creating=False)
