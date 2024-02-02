@@ -604,6 +604,8 @@ def redirect_to_url(short_url):
 @login_required
 def display_urls():
     urls = Urlshort.query.filter_by(author_id=current_user.id).all()
+    for qr in urls:
+        qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8') if qr.qr_data else qr.qr_data
     return render_template("urls.html", urls=urls)
 
 
