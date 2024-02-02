@@ -47,11 +47,11 @@
 
 
                      </div>
-                {% if url.want_qr_code %}
+                {% if url.qr_data %}
                 <div class="col-md-auto mt-5 mb-5">
 
                         <img
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.host_url }}{{ url.short_url }}"
+                      src="data:image/png;base64,{{ url.qr_data }}"
                       alt="QR Code"/>
 
                 </div>
