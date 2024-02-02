@@ -7,6 +7,7 @@
 <main style="margin-top: 58px">
   <div class="container pt-4">
 <section class="body2">
+    {% if not shortened_url %}
 <div class="container containered mt-5">
     <h1 class="text-center">Short URL Generator</h1>
 
@@ -50,7 +51,7 @@
 
 </div>
 <div>
-    {% if shortened_url %}
+    {% else %}
     <div class="container containered mt-5">
         <div class="mb-3">
             <label for="shortUrl" class="form-label">Original URL:</label>
@@ -67,7 +68,7 @@
             {% if generate_qr_code %}
             <div class="d-flex mx-auto mt-4">
                 <img
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ shortened_url }}"
+                      src="data:image/png;base64,{{ qr_data }}"
                       alt="QR Code" class="mx-auto"
                     />
             </div>
