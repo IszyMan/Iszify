@@ -2,6 +2,10 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/urls.css') }}">
 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
   {% endblock head %}
 
 
@@ -15,9 +19,12 @@
           <div class="container-fluid align-self-end mt-5">
                <h3><b>SHORTENED LINKS</b></h3>
                {% if urls %}
-        <button type="button" class="btn">
-      <i class="fa fa-calendar px-2 "></i>Filter by Date
-        </button>
+               <form action="" method="post" id="filter_form" class="d-none">
+                <input type="text" id="datepicker_input" disabled>
+               </form>
+               <button type="button" class="btn" id="datepicker-btn">
+                <i class="fa fa-calendar px-2"></i>Filter by Date
+            </button>
 
       </div>
       </div>
@@ -83,4 +90,20 @@
       </div>
 </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Initialize Bootstrap datepicker
+      $('#datepicker-btn').datepicker({
+          autoclose: true,
+          format: 'yyyy-mm-dd'
+      }).on('changeDate', function (e) {
+          // Get the selected date value
+          var selectedDate = e.format('yyyy-mm-dd');
+          console.log('Selected Date:', selectedDate);
+          document.querySelector('#datepicker_input').value = selectedDate;
+          document.querySelector('#filter_form').submit();
+      });
+  });
+</script>
 {% endblock content %}
