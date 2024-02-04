@@ -18,17 +18,21 @@
 
           <div class="container-fluid align-self-end mt-5">
                <h3><b>SHORTENED LINKS</b></h3>
-               {% if urls %}
+               {% if display %}
                <form action="" method="post" id="filter_form" class="d-none">
-                <input type="text" id="datepicker_input" disabled>
+                <input type="text" id="datepicker_input" name="date">
                </form>
-               <button type="button" class="btn" id="datepicker-btn">
+               <button class="btn" id="datepicker-btn">
                 <i class="fa fa-calendar px-2"></i>Filter by Date
-            </button>
+                
+            </button> <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
+                
+              {% endif %}
 
       </div>
       </div>
 </main>
+{% if urls %}
     <div class="container-fluid">
 
         {% for url in urls|reverse %}
@@ -92,6 +96,11 @@
 </div>
 
 <script>
+  close_btn = document.getElementById('close_btn');
+  close_btn.addEventListener('click', function () {
+    window.location.href = '/stats/urls';
+  })
+
   document.addEventListener('DOMContentLoaded', function () {
       // Initialize Bootstrap datepicker
       $('#datepicker-btn').datepicker({
