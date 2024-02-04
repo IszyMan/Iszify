@@ -4,7 +4,7 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from models.bio_link_entries import CreateBioLinkEntries
-from utils import get_platform, generate_and_save_qr, update_qr_code, customize_qr_code_logo, customize
+from utils import get_platform, generate_and_save_qr, update_qr_code, customize_qr_code_logo, customize, get_urls_by_date
 from models.create_bio_page import CreateBioPage
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -600,13 +600,25 @@ def redirect_to_url(short_url):
 
 
 # display all shortened urls with their original urls and clicks
-@user_blp.route("/stats/urls", methods=["GET"])
+@user_blp.route("/stats/urls", methods=["GET", "POST"])
 @login_required
 def display_urls():
     urls = Urlshort.query.filter_by(author_id=current_user.id).all()
+    display = True if urls else False
+    refresh = False
     for qr in urls:
         qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8') if qr.qr_data else qr.qr_data
-    return render_template("urls.html", urls=urls)
+        print(qr.created, "date created")
+
+    if request.method == "POST":
+        date_filter = request.form.get("date")
+        print(date_filter, "date")
+
+        urls = get_urls_by_date(date_filter)
+        display = True
+        refresh = True
+
+    return render_template("urls.html", urls=urls, display=display, refresh=refresh)
 
 
 # delete a shortened url
