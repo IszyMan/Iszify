@@ -3,6 +3,8 @@ import re
 import qrcode
 from io import BytesIO
 from PIL import Image, ImageDraw
+from models import Urlshort
+from datetime import datetime, timedelta
 
 
 def get_platform(link):
@@ -134,3 +136,14 @@ def customize(data, logo_path, fill_color):
     QRimg.save(img_bytes_io, format='PNG')
 
     return img_bytes_io.getvalue()
+
+
+def get_urls_by_date(selected_date):
+    try:
+        selected_datetime = datetime.strptime(selected_date, '%Y-%m-%d')
+        print(selected_datetime, "selected datetime")
+        urls = Urlshort.query.filter(Urlshort.created >= selected_datetime, Urlshort.created < selected_datetime + timedelta(days=1)).all()
+        return urls
+    except ValueError:
+        # Handle invalid date format
+        return []
