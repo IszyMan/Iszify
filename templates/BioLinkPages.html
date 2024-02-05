@@ -2,6 +2,10 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bio_phone_small.css') }}">
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   {% endblock head %}
 
 
@@ -16,14 +20,20 @@
 
           <div class="container-fluid align-self-end mt-5">
                <h2><b>Bio Pages</b></h2>
-              {% if bio_pages %}
-        <button type="button" class="btn">
-      <i class="fa fa-calendar px-2 "></i>Filter by Date
-        </button>
+               {% if display %}
+               <form action="" method="post" id="filter_form" class="d-none">
+                <input type="text" id="datepicker_input" name="date">
+               </form>
+               <button class="btn" id="datepicker-btn">
+                <i class="fa fa-calendar px-2"></i>Filter by Date
+                
+            </button> <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
+                
+              {% endif %}
 
       </div>
       </div>
-
+{% if bio_pages %}
       {% for post in bio_pages|reverse %}
         <a>
           <div class="card " style="background-color:lavender;">
@@ -103,7 +113,7 @@
         <div class="card " style="background-color:lavender;">
                 <div class="row">
                  <div class="col-sm mt-5">
-                  <h2 class="text-center"><b>No Bio Page Yet</b></h2>
+                  <h2 class="text-center"><b>No Bio Page</b></h2>
                      <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
                     </div>
                 </div>
@@ -118,5 +128,26 @@
 </div>
 
 </main>
+
+<script>
+  close_btn = document.getElementById('close_btn');
+  close_btn.addEventListener('click', function () {
+    window.location.href = '/BioLinkPages';
+  })
+
+  document.addEventListener('DOMContentLoaded', function () {
+      // Initialize Bootstrap datepicker
+      $('#datepicker-btn').datepicker({
+          autoclose: true,
+          format: 'yyyy-mm-dd'
+      }).on('changeDate', function (e) {
+          // Get the selected date value
+          var selectedDate = e.format('yyyy-mm-dd');
+          console.log('Selected Date:', selectedDate);
+          document.querySelector('#datepicker_input').value = selectedDate;
+          document.querySelector('#filter_form').submit();
+      });
+  });
+</script>
 
 {% endblock content %}
