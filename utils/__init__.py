@@ -3,7 +3,7 @@ import re
 import qrcode
 from io import BytesIO
 from PIL import Image, ImageDraw
-from models import Urlshort
+from models import Urlshort, QrCode
 from datetime import datetime, timedelta
 
 
@@ -145,5 +145,18 @@ def get_urls_by_date(selected_date):
         urls = Urlshort.query.filter(Urlshort.created >= selected_datetime, Urlshort.created < selected_datetime + timedelta(days=1)).all()
         return urls
     except ValueError:
+        print("Invalid date format")
+        # Handle invalid date format
+        return []
+
+
+def get_qr_codes_by_date(selected_date):
+    try:
+        selected_datetime = datetime.strptime(selected_date, '%Y-%m-%d')
+        print(selected_datetime, "selected datetime")
+        qr_codes = QrCode.query.filter(QrCode.created_at >= selected_datetime, QrCode.created_at < selected_datetime + timedelta(days=1)).all()
+        return qr_codes
+    except ValueError:
+        print("Invalid date format")
         # Handle invalid date format
         return []
