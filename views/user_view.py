@@ -4,7 +4,7 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from models.bio_link_entries import CreateBioLinkEntries
-from utils import get_platform, generate_and_save_qr, update_qr_code, customize_qr_code_logo, customize, get_urls_by_date
+from utils import get_platform, generate_and_save_qr, update_qr_code, customize_qr_code_logo, customize, get_urls_by_date, get_qr_codes_by_date
 from models.create_bio_page import CreateBioPage
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -763,7 +763,7 @@ def qr_codes_vcard():
 
 
 # display all qr codes for the current user
-@user_blp.route("/stats/qr_codes", methods=["GET"])
+@user_blp.route("/stats/qr_codes", methods=["GET", "POST"])
 @login_required
 def display_qr_codes():
     qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
@@ -771,6 +771,14 @@ def display_qr_codes():
     refresh = False
     for qr in qrcodes:
         qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8')
+
+    if request.method == "POST":
+        date_filter = request.form.get("date")
+        print(date_filter, "date")
+
+        qrcodes = get_qr_codes_by_date(date_filter)
+        display = True
+        refresh = True
     return render_template("display_qr.html", urls=qrcodes, display=display, refresh=refresh)
 
 
