@@ -102,7 +102,7 @@
         <div class="card " style="background-color:lavender;">
                 <div class="row">
                  <div class="col-sm mt-5">
-                  <h2 class="text-center"><b>No QR Code Yet</b></h2>
+                  <h2 class="text-center"><b>No QR Code</b></h2>
                      <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
 
     close_btn = document.getElementById('close_btn');
   close_btn.addEventListener('click', function () {
-    window.location.href = '/stats/urls';
+    window.location.href = '/stats/qr_codes';
   })
 
   document.addEventListener('DOMContentLoaded', function () {
