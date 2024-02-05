@@ -4,7 +4,9 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from models.bio_link_entries import CreateBioLinkEntries
-from utils import get_platform, generate_and_save_qr, update_qr_code, customize_qr_code_logo, customize, get_urls_by_date, get_qr_codes_by_date
+from utils import (get_platform, generate_and_save_qr, update_qr_code,
+                   customize_qr_code_logo, customize,
+                   get_urls_by_date, get_qr_codes_by_date, get_bio_page_by_date)
 from models.create_bio_page import CreateBioPage
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -158,12 +160,26 @@ def bio_link_pages():
     bio_pages = CreateBioPage.query.filter_by(author_id=current_user.id).all()
     bio_links = CreateBioLinkEntries.query.filter_by(author_id=current_user.id).all()
     host_url = request.host_url
+
+    display = True if bio_pages else False
+    refresh = False
+
+    if request.method == "POST":
+        date_filter = request.form.get("date")
+        print(date_filter, "date")
+
+        bio_pages = get_bio_page_by_date(date_filter)
+        display = True
+        refresh = True
+
     # update the bio name
     return render_template(
         "BioLinkPages.html",
         host_url=host_url,
         bio_pages=bio_pages,
         links_added=bio_links,
+        display=display,
+        refresh=refresh,
     )
 
 
