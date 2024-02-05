@@ -3,7 +3,7 @@ import re
 import qrcode
 from io import BytesIO
 from PIL import Image, ImageDraw
-from models import Urlshort, QrCode
+from models import Urlshort, QrCode, CreateBioPage
 from datetime import datetime, timedelta
 
 
@@ -156,6 +156,18 @@ def get_qr_codes_by_date(selected_date):
         print(selected_datetime, "selected datetime")
         qr_codes = QrCode.query.filter(QrCode.created_at >= selected_datetime, QrCode.created_at < selected_datetime + timedelta(days=1)).all()
         return qr_codes
+    except ValueError:
+        print("Invalid date format")
+        # Handle invalid date format
+        return []
+
+
+def get_bio_page_by_date(selected_date):
+    try:
+        selected_datetime = datetime.strptime(selected_date, '%Y-%m-%d')
+        print(selected_datetime, "selected datetime")
+        bio_pages = CreateBioPage.query.filter(CreateBioPage.created_at >= selected_datetime, CreateBioPage.created_at < selected_datetime + timedelta(days=1)).all()
+        return bio_pages
     except ValueError:
         print("Invalid date format")
         # Handle invalid date format
