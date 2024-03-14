@@ -49,16 +49,12 @@
     -->
   <a name="top"></a>
   <!-- Navbar -->
-  <nav class="navbar sticky navbar-expand-lg navbar-dark bg-dark py-3">
+  <nav class="navbar sticky navbar-expand-lg navbar-dark bg-white py-3" style="border-bottom: 2px solid whitesmoke;">
     <div class="container">
       <!-- The navbar brand -->
       <!-- The navbar brand -->
-        <strong><a href="{{url_for('user_blp.home')}}" class="navbar-brand text-warning "> LINKTOOLS</a></strong>
-      {% if current_user.is_authenticated %}
-      <strong><a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand ">LinkTools</a></strong>
-      {% else %}
-<!--      <strong><a href="{{url_for('user_blp.home')}}" class="navbar-brand ">LinkTools</a></strong>-->
-      {% endif %}
+        <a href="{% if current_user.is_authenticated %}{{url_for('user_blp.dashboard')}}{% else %}{{url_for('user_blp.home')}}{% endif %}" class="navbar-brand text-primary " style="font-weight: 600;"> Link<i class="bi bi-link h5"></i>Tools</a>
+      
       <!-- Bootstrap nav toggler -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
         aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +66,7 @@
         <!-- If the user is logged in, this nav links appears -->
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a href="{{url_for('user_blp.dashboard')}}" class="nav-link text-light">Dashboard</a>
+            <a href="{{url_for('user_blp.dashboard')}}" class="nav-link text-dark">Dashboard</a>
           </li>
           <!-- <li class="nav-item">
             <a href="" class="nav-link ">Profile</a>
@@ -87,19 +83,19 @@
 <!--          </li>-->
 
           <li class="nav-item">
-            <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-light ">Logout</a>
+            <a href="{{ url_for('auth_blp.logout') }}" class="nav-link text-dark ">Logout</a>
           </li>
 
            <li class="nav-item">
-            <a href="{{ url_for('user_blp.qr_code_info') }}" class="nav-link text-white">QR Code</a>
+            <a href="{{ url_for('user_blp.qr_code_info') }}" class="nav-link text-dark">QR Code</a>
           </li>
 
           <li class="nav-item">
-            <a href="{{ url_for('user_blp.biolink') }}" class="nav-link text-white">Bio Link</a>
+            <a href="{{ url_for('user_blp.biolink') }}" class="nav-link text-dark">Bio Link</a>
           </li>
 
           <li class="nav-item">
-            <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-white">Url Shortener</a>
+            <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-dark">Url Shortener</a>
 
           {% block link %}
 
@@ -119,29 +115,29 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start" >
 
           <!-- <li class="nav-item">
-            <a href="" class="nav-link text-white">About</a>
+            <a href="" class="nav-link text-dark">About</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link text-white">Contact</a> -->
+            <a href="" class="nav-link text-dark">Contact</a> -->
 <!--          </li>-->
 
           <li class="nav-item ">
-            <strong><a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-white">URL Shortener</a></strong>
+            <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-dark" style="font-weight: 500; font-size: 16px !important;">URL Shortener</a>
           </li>
           <li class="nav-item">
-            <strong><a href="{{ url_for('user_blp.qr_code_info') }}" class="nav-link text-white">QR Code</a></strong>
+            <a href="{{ url_for('user_blp.qr_code_info') }}" class="nav-link text-dark" style="font-weight: 500; font-size: 16px !important;">QR Code</a>
           </li>
 
           <li class="nav-item">
-            <strong>  <a href="{{ url_for('user_blp.biolink') }}" class="nav-link text-white">Bio Link</a></strong>
+              <a href="{{ url_for('user_blp.biolink') }}" class="nav-link text-dark" style="font-weight: 500; font-size: 16px !important;">Bio Link</a>
           </li>
            </ul>
 
 
         <div class="col-md-3 text-end flex-fill" id="login-menu">
 
-            <a href="{{ url_for('auth_blp.login') }}" class="btn btn-outline-primary me-3 fw-bold align-items-center">Login</a>
-            <a href="{{ url_for('auth_blp.register') }}" class="btn btn-outline-primary me-3 fw-bold align-items-center">Register</a>
+            <a href="{{ url_for('auth_blp.login') }}" id="auth_btn1" class="btn me-2 align-items-center" style="background: none; border: 1px solid #1e248c;">Login</a>
+            <a href="{{ url_for('auth_blp.register') }}" id="auth_btn2" class="btn me-3 align-items-center">Register</a>
 
         </div>
 
@@ -187,12 +183,10 @@
   </section>
 
      {% if not current_user.is_authenticated %}
-  <footer>
+  <!-- <footer>
     <div class="footer-div row p-3 mb-2 text-white">
 
         <div class="col-md-3 divclass">
-            <!-- The navbar brand -->
-            <!-- The navbar brand -->
             <a href="" class="footer-brand text-decoration-none">
                 <h3 class="">LINKTOOLS.NG</h3>
             </a>
@@ -243,7 +237,8 @@
           <p>Proudly <span style="color:green">NIGERIAN </span>&copy Copyright 2023</p>
       </div><br>
 
-</footer>
+</footer> -->
+  {% include 'footer.html' %}
    {% endif %}
   <!-- Icon tha redirects back to the top of the page -->
   <a href="#top" class="up" style="position: fixed; left: 10px; bottom: 60px"><i class="fa fas fa-arrow-alt-circle-up fs-4"></i></a>
