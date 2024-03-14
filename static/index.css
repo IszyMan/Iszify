@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+
+
+* {
+    font-family: "Poppins", sans-serif;
+    /* font-family: "Montserrat", sans-serif; */
+}
+
 body {
   /* background: url('nat2.jpg');
   background-size: cover;
@@ -8,12 +17,19 @@ body {
   /* min-height: 1050px; */
   background-color: white !important;
   min-height: 100vh;
+  font-family: "Poppins", sans-serif;
   /* padding-bottom: 20px; */
 }
 
 nav{
   background: black !important;
 }
+
+nav ul li a:hover{
+  color: rgb(84, 178, 209) !important;
+  transition: 0.5s ease;
+}
+
 
 
 .col-md-4.p-3.card{
@@ -66,9 +82,12 @@ nav{
   }
 
   .cta-section {
-    background-color: #f7f7f75f;
-    text-align: center;
-    padding: 100px 0;
+    /* text-align: right; */
+    padding: 20px 0;
+  }
+
+  .cta-section h1 {
+    text-transform: uppercase;
   }
 
   .features {
@@ -103,10 +122,30 @@ nav{
     margin: 0 auto;
   } */
   .btn {
-    background-color: #000000;
+    background-color: #1e248c;
     color: #ffffff !important;
-    font-size: 20px;
-    padding: 10px 20px;
+    font-size: 16px;
+    /* padding: 10px 20px; */
+  }
+
+  #auth_btn1 {
+    border-radius: 8px !important;
+    color: #1e248c !important;
+  }
+
+  #auth_btn1:hover {
+    background-color: #575ba0 !important;
+    color: #ffffff !important;
+  }
+
+#auth_btn2 {
+  border-radius: 8px !important;
+}
+
+  #auth_btn2:hover {
+    background-color: #575ba0;
+    color: #ffffff !important;
+    border: 1px solid #575ba0;
   }
 
   /* .nav-border {
@@ -158,4 +197,34 @@ footer{
 .mydiv{
   /* border: 1px solid red; */
   width: 14rem;
+}
+
+
+
+/* section 8 */
+
+.review{
+  margin-top: 6rem;
+}
+
+.firstreview img{
+  width: 25%;
+}
+
+.firstreview{
+  display: flex;
+  align-items: center;
+}
+
+.firstreview div{
+  padding: 1rem 0 0 .8rem;
+}
+
+.reviewstars{
+  font-size: .8rem;
+}
+
+
+.pad_this{
+  padding: 0 1.5rem;
 }
