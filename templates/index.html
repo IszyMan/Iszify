@@ -9,7 +9,7 @@
 
 
     <!-- CTA Section -->
-  <section class="cta-section row">
+  <section class="cta-section row my-3 d-flex px-4 px-lg-5 mb-5">
     <div class="container col-lg-4">
       <h1 class="display-6" style="font-size: 3rem; font-weight: 700;">Automatic, Secure<br> <span class="text-primary">&</span> Dynamic<br>  
         <span class="gradient-primary clip-text" data-toggle="typed" data-list="Links.,QR Codes.,Bio Pages."></span></h1>
@@ -68,8 +68,22 @@
 
     <hr>
 
+    <section class="bg-dark" style="padding-top: 10rem;">
+      <div class="container text-white">
+        <div class="row justify-content-start container ms-5">
+          <div class="col-md-6 col-lg-6">
+            <p class="" style="font-size: 12px; font-weight: 400; font-style: italic;"><i class="fa-solid fa-fire text-danger"></i> Growth hack your way to the top!</p>
+            <h4 class="my-4" style="text-transform: uppercase; font-size: 30px;">All that defines you, in a single, straightforward bio link.</h4>
+            <button type="button" class="btn btn-primary border-0 d-flex align-items-center mb-5" style="font-size: 14px; width: fit-content;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Create Free Bio Page
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   
-  <div class="jumbotron">
+  <!-- <div class="jumbotron">
     <h2 class="display-6 fw-bolder my-4"><strong>All that defines you, in a single, straightforward bio link.</strong></h2>
     <p class="fs-5 mb-5 text-center">A single link to simplify the sharing of all your profiles accounts from your Facebook, Instagram, TikTok, Twitter,<br> YouTube, and various other social media profiles..
            </p>
@@ -77,13 +91,30 @@
       Create Free Bio Page
     </button>
 
-  </div>
+  </div> -->
+  <section class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-6">
+        <h2 class="fw-bold my-5">Why Choose LinkTools?</h2>
+        <!-- grid -->
+        <div class="row justify-content-start">
+          <div class="col-md-6 col-lg-4 border-0 fw-bold py-3 ps-3 text-primary" style="background: whitesmoke; border-radius: 10px;">100k <br><span class="fw-normal text-muted" style="font-size: 11px;">Active Users</span></div>
+          <div class="col-md-6 col-lg-4 border-0 fw-bold py-3 ps-3 text-primary" style="background: whitesmoke; border-radius: 10px;">50k <br><span  class="fw-normal text-muted"style="font-size: 11px;">Links Created</span></div>
+          <div class="col-md-6 col-lg-4 border-0 fw-bold py-3 ps-3 text-primary" style="background: whitesmoke; border-radius: 10px;">500+ <br><span class="fw-normal text-muted" style="font-size: 11px;">Integration</span></div>
+          <div class="col-md-6 col-lg-4 border-0 fw-bold py-3 ps-3 text-primary" style="background: whitesmoke; border-radius: 10px;">99% <br><span  class="fw-normal text-muted"style="font-size: 11px;">Success Rate</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <img src="{{ url_for('static', filename='ai.jpg') }}" alt="Image" class="img-fluid">
+      </div>
+    </div>
+  </section>
 <hr>
 
     <!-- Features Section -->
-  <section class="features">
+  <!-- <section class="features">
     <div class="contaner">
-       <h2 class="display-6 fw-bolder my-4"><strong>WHAT YOU CAN DO WITH LINKTOOLS</strong></h2> <br>
+       <h2 class="display-6 fw-bolder my-4">WHAT YOU CAN DO WITH LINKTOOLS</h2>
       <div class="row">
 
         <div class="col-md-4 p-3 card">
@@ -104,9 +135,7 @@
         </div>
       </div>
     </div>
-  </section>
-
-<hr>
+  </section> -->
 
 
 
@@ -144,11 +173,11 @@
     <div class="w-100">
         <h1 class="text-center mb-5 review text-muted fw-bold">Reviews</h1>
         <div class="row">
-            <div class="col-md-3 pad_this">
+            <div class="col-md-3 pad_this card">
                 <div class="firstreview">
                     <img src="{{ url_for('static', filename='woman.jpg') }}" alt="" class="rounded-circle">
                     <div class="d-flex flex-column mx-2">
-                        <p> <span class="h4 text-muted">Sarah Lance</span> <br>
+                        <p style="font-size: 15px;"> <span class="text-muted">Sarah Lance</span> <br>
                             <span>Teacher</span> <br>
                             <span class="text-warning reviewstars">
                                 <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
@@ -157,16 +186,16 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-muted">Miles Auto gave me my baby, super cool and i have not even have a reason to visit
+                <p class="text-muted" style="font-size: 13px;">Miles Auto gave me my baby, super cool and i have not even have a reason to visit
                     the mechanic.
                 </p>
             </div>
 
-            <div class="col-md-3 pad_this">
+            <div class="col-md-3 pad_this card">
                 <div class="firstreview">
                     <img src="{{ url_for('static', filename='man2.jpg') }}" alt="" class="rounded-circle">
                     <div class="d-flex flex-column mx-2">
-                        <p> <span class="h4 text-muted">Andrew Ike</span> <br>
+                        <p style="font-size: 15px;"> <span class="text-muted">Andrew Ike</span> <br>
                             <span>Banker</span> <br>
                             <span class="text-warning reviewstars">
                                 <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
@@ -175,15 +204,15 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-muted">My last maintainance was awesome... such a great customer service. I came cynical
+                <p class="text-muted" style="font-size: 13px;">My last maintainance was awesome... such a great customer service. I came cynical
                     but i left optimist. Thanks Miles!</p>
             </div>
 
-            <div class="col-md-3 pad_this">
+            <div class="col-md-3 pad_this card">
                 <div class="firstreview">
                     <img src="{{ url_for('static', filename='man3.jpg') }}" alt="" class="rounded-circle">
                     <div class="d-flex flex-column mx-2">
-                        <p> <span class="h4 text-muted">Mark Johnson</span> <br>
+                        <p style="font-size: 15px;"> <span class="text-muted">Mark Johnson</span> <br>
                             <span>Engineer</span> <br>
                             <span class="text-warning reviewstars">
                                 <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
@@ -192,16 +221,65 @@
                         </p>
                     </div>
                 </div>
-                <p class="text-muted">Affordable that is what I will say. Thank you Kenny for referring me.</p>
+                <p class="text-muted" style="font-size: 13px;">Affordable that is what I will say. Thank you Kenny for referring me.</p>
             </div>
+
+            <div class="col-md-3 pad_this card">
+              <div class="firstreview">
+                  <img src="{{ url_for('static', filename='man2.jpg') }}" alt="" class="rounded-circle">
+                  <div class="d-flex flex-column mx-2">
+                      <p style="font-size: 15px;"> <span class="text-muted">Andrew Ike</span> <br>
+                          <span>Banker</span> <br>
+                          <span class="text-warning reviewstars">
+                              <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                  class="fas fa-star"></i> <i class="fas fa-star"></i>
+                          </span>
+                      </p>
+                  </div>
+              </div>
+              <p class="text-muted" style="font-size: 13px;">My last maintainance was awesome... such a great customer service. I came cynical
+                  but i left optimist. Thanks Miles!</p>
+          </div>
+
+          <div class="col-md-3 pad_this card">
+            <div class="firstreview">
+                <img src="{{ url_for('static', filename='man2.jpg') }}" alt="" class="rounded-circle">
+                <div class="d-flex flex-column mx-2">
+                    <p style="font-size: 15px;"> <span class="text-muted">Andrew Ike</span> <br>
+                        <span>Banker</span> <br>
+                        <span class="text-warning reviewstars">
+                            <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                class="fas fa-star"></i> <i class="fas fa-star"></i>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <p class="text-muted" style="font-size: 13px;">My last maintainance was awesome... such a great customer service. I came cynical
+                but i left optimist. Thanks Miles!</p>
+        </div>
+
+        <div class="col-md-3 pad_this card">
+          <div class="firstreview">
+              <img src="{{ url_for('static', filename='man2.jpg') }}" alt="" class="rounded-circle">
+              <div class="d-flex flex-column mx-2">
+                  <p style="font-size: 15px;"> <span class="text-muted">Andrew Ike</span> <br>
+                      <span>Banker</span> <br>
+                      <span class="text-warning reviewstars">
+                          <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                              class="fas fa-star"></i> <i class="fas fa-star"></i>
+                      </span>
+                  </p>
+              </div>
+          </div>
+          <p class="text-muted" style="font-size: 13px;">My last maintainance was awesome... such a great customer service. I came cynical
+              but i left optimist. Thanks Miles!</p>
+      </div>
         </div>
     </div>
 </section>
 
-
- <hr>
   <!-- Features Section -->
-  <section class="features-section">
+  <!-- <section class="features-section">
     <div class="contaner">
      <h2 class="display-4 fw-bolder my-4"><strong>Let the numbers do the talking.</strong></h2><br>
       <div class="row">
@@ -231,17 +309,11 @@
 		</div>
       </div>
     </div>
-  </section>
-<hr>
+  </section> -->
 
 <button type="button" class="btn btn-primary my-btn px-4 py-3 fw-bold mb-1 d-none" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="myButton">
   Show
 </button>
-
-
-
-
-<hr>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
