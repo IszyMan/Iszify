@@ -9,50 +9,60 @@
 
 
     <!-- CTA Section -->
-  <section class="cta-section">
-    <div class="container">
-      <h1 class="display-4 fw-bolder my-4"><strong>Automatic, Secure<br>& Dynamic<br>  <span class="gradient-primary clip-text" data-toggle="typed" data-list="Links.,QR Codes.,Bio Pages."></span></strong></h1>
+  <section class="cta-section row">
+    <div class="container col-lg-4">
+      <h1 class="display-6" style="font-size: 3rem; font-weight: 700;">Automatic, Secure<br> <span class="text-primary">&</span> Dynamic<br>  
+        <span class="gradient-primary clip-text" data-toggle="typed" data-list="Links.,QR Codes.,Bio Pages."></span></h1>
 
-      <strong><p class="fs-5 mb-5 text-center">Create short or customise URLs for free </p></strong>
-      <form method="POST" action="" class="mt-3 mb-5 border rounded p-3">
+      <p class="fs-6 mb-3">Create short or customise URLs for free </p>
+      <form method="POST" action="" class="mb-3 border rounded">
 		<div class="input-group input-group-lg align-items-center">
       {% if show %}
-      <input type="text" class="form-control border-0" placeholder="" value="{{ shortened_url }} " disabled name="url" id="url">
-      <div class="input-group-append border">
-        <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" onclick="copyText()" style="cursor: pointer;"></i> -->
-        <span class="btn btn-primary" onclick="copyText()" name="bt1">Copy</span>
+        <input type="text" class="form-control border-0 shadow-none" autocomplete="off" placeholder="" name="url" id="url" style="font-size: 14px;" value="{{ shortened_url }}">
+      <div class="input-group-append">
+        <span class="btn btn-primary border-0"  onclick="copyText()" name="bt1">Copy</span>
         </div>
       {% else %}
-      <input type="text" class="form-control border-0" placeholder="Paste a long url" name="url" id="url">
+      <input type="text" class="form-control border-0 shadow-none" autocomplete="off" placeholder="Paste a long url" name="url" id="url" style="font-size: 14px;">
       <div class="input-group-append">
-        <button class="btn btn-primary" type="submit" name="bt1">Shorten</button>
+        <button class="btn btn-primary border-0" type="submit" name="bt1">Shorten</button>
         </div>
       {% endif %}
 		</div>
 		</form>
     {% if show %}
-    <div class="row">
-      <div class="col md-4">
-        <!-- qr code link -->
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ shortened_url }}"
-                alt="QR Code" class="mx-auto d-flex img-thumbnail mt-3" style="margin-bottom: 4rem;" />
-      </div>
-      <div class="col md-8 ">
-        <h1 class="text-center">Register to get QR code and get more of your link</h1>
-      </div>
+    <div class="">
+        <p class="text-success" style="font-size: 13px;">Register to get QR code and get more of your link</p>
     </div>
     {% endif %}
       <div >
       	<p>
 		<ul class="list-unstyled mb-2 text-muted small">
-		<li class="mb-1"><i class="fa fa-check me-2"></i> Start free, upgrade later</li>
-		<li class="mb-1"><i class="fa fa-check me-2"></i> No credit card required</li>
-		<li class="mb-1"><i class="fa fa-check me-2"></i> Easy to use</li>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Start free, upgrade later</li>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> No credit card required</li>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Easy to use</li>
 		</ul>
 		</p>
-        <a href="" class="btn btn-primary px-4 py-3 fw-bold mb-1">Get Started for Free</a>
+        <a href="" class="btn btn-primary border-0 d-flex align-items-center" style="font-size: 14px; width: fit-content;">
+          Get Started for Free &nbsp;<i class="bi bi-arrow-right-circle-fill h5"></i></a>
 		</div>
 
+    </div>
+    <div class="col-lg-5">
+      <div class="p-3" style="border: 1px solid rgb(218, 212, 212); border-radius: 12px;">
+      <div class="d-flex align-items-center justify-content-between">
+        <p class="d-flex justify-content-start container fw-bold">QR CODE</p>
+        <p style="background: blue; color: white; font-size: 13px; width: fit-content; border-radius: 13px;" class="px-2 py-1">Download</p>
+      </div>
+      <div class="d-flex align-items-center justify-content-start">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.linktools.io" alt="QR Code" class="img-thumbnail" />
+        <div class="d-flex flex-column justify-content-start align-items-start ms-3">
+          <div class="d-flex justify-content-start align-items-center"><i class="bi bi-box-arrow-up-right h5 text-primary me-1"></i> <span class="" style="font-size: 14px;">https://www.linktools.io</span> </div>
+          <!-- date -->
+          <div class="d-flex justify-content-start align-items-center"><i class="bi bi-clock h5 text-primary me-1"></i><span style="font-size: 14px;">22 May 2022</span> </div>
+        </div>
+      </div>
+    </div>
     </div>
   </section>
 
@@ -101,10 +111,10 @@
 
 
   <!-- Features Section -->
-  <section class="jumbotron">
-    <div class="contaner">
+  <!-- <section class="jumbotron">
+    <div class="contaner"> -->
       <!--<h2>Features</h2>-->
-      <h2 class="display-6 fw-bolder my-4"><strong>FEEDBACKS FROM OUR SATISFIED USERS</strong></h2> <br>
+      <!-- <h2 class="display-6 fw-bolder my-4"><strong>FEEDBACKS FROM OUR SATISFIED USERS</strong></h2> <br>
       <div class="row">
         <div class="col-md-4 p-3 card">
           <i class="fa fa-user fa-3x"></i>
@@ -127,7 +137,68 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
+
+
+  <section class="">
+    <div class="w-100">
+        <h1 class="text-center mb-5 review text-muted fw-bold">Reviews</h1>
+        <div class="row">
+            <div class="col-md-3 pad_this">
+                <div class="firstreview">
+                    <img src="{{ url_for('static', filename='woman.jpg') }}" alt="" class="rounded-circle">
+                    <div class="d-flex flex-column mx-2">
+                        <p> <span class="h4 text-muted">Sarah Lance</span> <br>
+                            <span>Teacher</span> <br>
+                            <span class="text-warning reviewstars">
+                                <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                    class="fas fa-star"></i> <i class="fas fa-star"></i>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <p class="text-muted">Miles Auto gave me my baby, super cool and i have not even have a reason to visit
+                    the mechanic.
+                </p>
+            </div>
+
+            <div class="col-md-3 pad_this">
+                <div class="firstreview">
+                    <img src="{{ url_for('static', filename='man2.jpg') }}" alt="" class="rounded-circle">
+                    <div class="d-flex flex-column mx-2">
+                        <p> <span class="h4 text-muted">Andrew Ike</span> <br>
+                            <span>Banker</span> <br>
+                            <span class="text-warning reviewstars">
+                                <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                    class="fas fa-star"></i> <i class="fas fa-star"></i>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <p class="text-muted">My last maintainance was awesome... such a great customer service. I came cynical
+                    but i left optimist. Thanks Miles!</p>
+            </div>
+
+            <div class="col-md-3 pad_this">
+                <div class="firstreview">
+                    <img src="{{ url_for('static', filename='man3.jpg') }}" alt="" class="rounded-circle">
+                    <div class="d-flex flex-column mx-2">
+                        <p> <span class="h4 text-muted">Mark Johnson</span> <br>
+                            <span>Engineer</span> <br>
+                            <span class="text-warning reviewstars">
+                                <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i
+                                    class="fas fa-star"></i> <i class="fas fa-star"></i>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <p class="text-muted">Affordable that is what I will say. Thank you Kenny for referring me.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
  <hr>
   <!-- Features Section -->
   <section class="features-section">
