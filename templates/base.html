@@ -175,12 +175,14 @@
         {% endif %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      {% endfor %} {% endif %} {% endwith %} {% block content %}
-      {% endblock content %}
+      {% endfor %} {% endif %} {% endwith %} 
     </div>
 
     </div>
   </section>
+
+  {% block content %}
+      {% endblock content %}
 
      {% if not current_user.is_authenticated %}
   <!-- <footer>
