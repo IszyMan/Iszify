@@ -6,20 +6,28 @@
 {% block content %}
 
 <div class="box">
-	<h1>Register</h1>
+    <h3>Register</h3>
     {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
-    
+
     <style>
-        .btn-primary {
-            margin-top: 10px;
+        #btn-block {
+            margin-top: 10px !important;
+        }
+
+        .box {
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            padding: 2rem;
+            max-width: 500px;
+            margin: auto;
+            margin-top: 2rem;
+        }
+
+        label{
+            font-size: 14px;
+            margin-top: 1rem;
         }
     </style>
 </div>
-
-
-
-
-
 
 
 {% endblock content %}
