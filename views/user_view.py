@@ -27,6 +27,9 @@ def home():
         return redirect(url_for("user_blp.admin"))
     if request.method == "POST" and "bt1" in request.form:
         original_url = request.form.get("url")
+        if not original_url:
+            flash("Input Required", "danger")
+            return redirect(url_for("user_blp.home"))
         short_url = generate_short_url()
 
         url = Urlshort(
