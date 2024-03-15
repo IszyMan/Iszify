@@ -228,3 +228,8 @@ footer{
 .pad_this{
   padding: 0 1.5rem;
 }
+
+
+.fa-star{
+  font-size: 8px !important;
+}
