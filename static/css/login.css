@@ -1,5 +1,6 @@
 body {
-    background: url('../boy.jpg');
+    /* background: url('../boy.jpg'); */
+    background: #ffffff !important;
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
@@ -23,7 +24,7 @@ body::before {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed; */
-    background: rgba(0, 0, 0, 0.778);
+    /* background: rgba(0, 0, 0, 0.778); */
     /* Apply the filter to the background image */
     z-index: -1;
     /* Send the pseudo-element to the background */
@@ -33,8 +34,8 @@ body::before {
 .form-control.p-3.mt-4 {
     background: rgba(255, 255, 255, 0.2) !important;
     /* semi-transparent white */
-    border: none !important;
-    color: white !important;
+    /* border: none !important; */
+    color: rgb(0, 0, 0) !important;
 }
 
 .form-control.p-3.mt-4:focus {
@@ -42,16 +43,24 @@ body::before {
 }
 
 .form-control.p-3.mt-4::placeholder {
-    color: rgba(255, 255, 255, 0.676) !important;
+    color: rgba(7, 7, 7, 0.676) !important;
+}
+
+.form-control {
+    font-size: 13px !important;
 }
 
 
 .mybtn {
-    background: palevioletred !important;
+    background: #1e248c !important;
     border: none !important;
     color: white !important;
-    font-size: 18px !important;
+    font-size: 14px !important;
     border-radius: 10px !important;
+}
+
+.mybtn:hover {
+    background: #1f225e !important;
 }
 
 
