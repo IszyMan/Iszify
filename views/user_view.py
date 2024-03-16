@@ -30,6 +30,20 @@ def home():
         if not original_url:
             flash("Input Required", "danger")
             return redirect(url_for("user_blp.home"))
+        if not original_url.startswith("http://") and not original_url.startswith(
+            "https://"
+        ):
+            original_url = "http://" + original_url
+        check_if_exist = Urlshort.query.filter_by(url=original_url).first()
+        if check_if_exist:
+            print("url already exist")
+            return render_template(
+                "index.html",
+                shortened_url=f"{request.host_url}{check_if_exist.short_url}",
+                original_url=original_url,
+                show=1,
+                created=check_if_exist.created.strftime("%d, %b %Y %H:%M:%S"),
+            )
         short_url = generate_short_url()
 
         url = Urlshort(
@@ -43,6 +57,7 @@ def home():
             shortened_url=f"{request.host_url}{short_url}",
             original_url=original_url,
             show=1,
+            created=url.created.strftime("%d, %b %Y %H:%M:%S"),
         )
     elif request.method == "POST" and "bt2" in request.form:
         brand_name = request.form.get("brandname").lower()
