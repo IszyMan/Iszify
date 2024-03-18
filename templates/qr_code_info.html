@@ -10,25 +10,38 @@
   {% endblock head %}
 {% block content %}
 <div class="container-fluid text-dark text-center py-5">
-    <h1>Generate QR Codes</h1>
+    <h1 class="" style="text-transform: uppercase;">Generate QR Codes</h1>
     <p class="" style="font-size: .9rem;">Create QR codes for your links, contacts, and more.</p>
     <a href="{{ url_for('user_blp.home') }}" class="btn btn-primary btn-lg border-0">Get Started</a>
 </div>
 
 <div class="mt-5 bg-dark py-5">
     <div class="row container text-white">
-        <div class="col-md-4 col-lg-3">
-            <h3 class="text-center">Easy to Use</h3>
-            <p class="text-center" style="font-size: .9rem;">Our QR code generator is user-friendly and requires no technical expertise.</p>
+        <div class="col-md-4 col-lg-3 bg_this">
+            <h5 class="text-center">Easy to Use</h5>
+            <p class="text-center" style="font-size: .8rem;">Our QR code generator is user-friendly and requires no technical expertise.</p>
         </div>
-        <div class="col-md-4 col-lg-3">
-            <h3 class="text-center">Customizable</h3>
-            <p class="text-center" style="font-size: .9rem;">Tailor your QR codes with colors and styles to match your brand.</p>
+        <div class="col-md-4 col-lg-3 bg_this">
+            <h5 class="text-center">Customizable</h5>
+            <p class="text-center" style="font-size: .8rem;">Tailor your QR codes with colors and styles to match your brand.</p>
         </div>
-        <div class="col-md-4 col-lg-3">
-            <h3 class="text-center">Multiple Types</h3>
-            <p class="text-center" style="font-size: .9rem;">Generate QR codes for websites, contacts, WiFi access, and more.</p>
+        <div class="col-md-4 col-lg-3 bg_this">
+            <h5 class="text-center">Multiple Types</h5>
+            <p class="text-center" style="font-size: .8rem;">Generate QR codes for websites, contacts, WiFi access, and more.</p>
         </div>
     </div>
 </div>
+
+<style>
+    .bg_this{
+        /* From https://css.glass */
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(3.2px);
+        -webkit-backdrop-filter: blur(3.2px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 2rem;
+    }
+</style>
 {% endblock content %}
