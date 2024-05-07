@@ -145,15 +145,15 @@
 
      <br>
         <hr>
-      <a href="{{url_for('user_blp.dashboard')}}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-th" aria-hidden="true"></i>  Dashboard</a>
-      <a href="{{url_for('user_blp.display_urls')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-link" aria-hidden="true"></i>
+      <a href="{{url_for('user_blp.dashboard')}}" class="side_link text-decoration-none {% if dashboard %} text-dark bg-white {% else %}text-white {% endif %} fw-bold p-4" style="width: 100%;"><i class="fa fa-th" aria-hidden="true"></i>  Dashboard</a>
+      <a href="{{url_for('user_blp.display_urls')}}" class="side_link text-decoration-none {% if link %} text-dark bg-white {% else %}text-white {% endif %} fw-bold p-4" style="width: 100%;"><i class="fa fa-link" aria-hidden="true"></i>
    Links</a>
-       <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
+       <a href="{{url_for('user_blp.display_qr_codes')}}" class="side_link text-decoration-none {% if qr %} text-dark bg-white {% else %}text-white {% endif %} fw-bold p-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
 
-        <a href="{{url_for('user_blp.bio_link_pages')}}" class="text-decoration-none text-white fw-bold px-4 my-5" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Pages </a>
+        <a href="{{url_for('user_blp.bio_link_pages')}}" class="side_link text-decoration-none {% if bio %} text-dark bg-white {% else %}text-white {% endif %} fw-bold p-4" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Pages </a>
 
 
-      <a href="{{ url_for('auth_blp.logout') }}" class="text-decoration-none text-white fw-bold px-4 " style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
+      <a href="{{ url_for('auth_blp.logout') }}" class="side_link text-decoration-none text-white fw-bold p-4 " style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-user-circle h3 text-muted ms-3"></i>
         <div class="d-flex flex-column align-items-center ">
@@ -167,7 +167,7 @@
 
 
 
-  <div class="container mt-2 main" style="margin-left: 12rem;">
+  <div class="container mt-2 main" style="margin-left: 22rem;">
 
 
 {% block car %}
