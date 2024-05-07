@@ -3,13 +3,17 @@
 }
 
 .side_fold{
-    width: 12rem; 
+    width: 22rem; 
     position: fixed; 
     top: 0; 
     bottom: 0;
     left: 0;
     z-index: 1;
     transition: left 0.5s ease; /* You can adjust the duration and easing function */
+}
+
+.side_link {
+  font-size: 1.7rem;
 }
 
 /* media query for small screens */
@@ -21,7 +25,7 @@
     }
 
     .side_fold{
-        left: -12rem;
+        left: -22rem;
     }
 
     .active {
