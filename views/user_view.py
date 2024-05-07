@@ -93,6 +93,7 @@ def dashboard():
         host_url=host_url,
         url_short=url_short,
         qr_codes_=qr_codes_,
+        dashboard=True
     )
 
 
@@ -198,6 +199,7 @@ def bio_link_pages():
         links_added=bio_links,
         display=display,
         refresh=refresh,
+        bio=True
     )
 
 
@@ -652,7 +654,7 @@ def display_urls():
         display = True
         refresh = True
 
-    return render_template("urls.html", urls=urls, display=display, refresh=refresh)
+    return render_template("urls.html", urls=urls, display=display, refresh=refresh, link=True)
 
 
 # delete a shortened url
@@ -813,7 +815,7 @@ def display_qr_codes():
         qrcodes = get_qr_codes_by_date(date_filter)
         display = True
         refresh = True
-    return render_template("display_qr.html", urls=qrcodes, display=display, refresh=refresh)
+    return render_template("display_qr.html", urls=qrcodes, display=display, refresh=refresh, qr=True)
 
 
 # View all qr codes details for the current user
