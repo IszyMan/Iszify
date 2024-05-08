@@ -152,7 +152,9 @@
         <a href="{{url_for('user_blp.bio_link_pages')}}" class="side_link text-decoration-none {% if bio %} text-dark bg-white {% else %}text-white {% endif %} fw-bold p-4" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Pages </a>
 
 
-      <a href="{{ url_for('auth_blp.logout') }}" class="side_link text-decoration-none text-white fw-bold p-4 position-absolute bottom-0 mb-4 bg-danger badge" style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logouttt</a>
+      <a data-bs-toggle="modal" 
+      data-bs-target="#exampleModall" class="text-decoration-none text-white px-4 py-2 fw-normal position-absolute bottom-0 mb-4 bg-danger badge" 
+      style="width: fit-content; font-size: .8rem; cursor: pointer;"><i class="fas fa-sign-out-alt"></i>  Logout</a>
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-user-circle h3 text-muted ms-3"></i>
         <div class="d-flex flex-column align-items-center ">
@@ -270,6 +272,21 @@
   </script> -->
 
   <!-- @@@@@@@@@@@@@@@@@@@@@@@ -->
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModall" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabell" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h5 class="modal-title text-center mb-2" id="exampleModalLabell" style="font-size: .9rem;">You want to logout?</h5>
+        <div class="d-flex justify-content-center">
+        <a href="{{url_for('auth_blp.logout')}}" class="btn bg-danger text-decoration-none shadow-none" style="background-color: brown !important;"><i class="fas fa-check text-white"></i></a>
+        <a class="btn btn-info mx-1 text-decoration-none shadow-none" data-bs-dismiss="modal"><i class="fas fa-times text-white"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
