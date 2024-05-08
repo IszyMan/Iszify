@@ -110,7 +110,6 @@
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="{{url_for('user_blp.profile_info', username=current_user.username)}}">My profile</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('auth_blp.logout') }}">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -153,7 +152,7 @@
         <a href="{{url_for('user_blp.bio_link_pages')}}" class="side_link text-decoration-none {% if bio %} text-dark bg-white {% else %}text-white {% endif %} fw-bold p-4" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Pages </a>
 
 
-      <a href="{{ url_for('auth_blp.logout') }}" class="side_link text-decoration-none text-white fw-bold p-4 " style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logout</a>
+      <a href="{{ url_for('auth_blp.logout') }}" class="side_link text-decoration-none text-white fw-bold p-4 position-absolute bottom-0 mb-4 bg-danger badge" style="width: 100%;"><i class="fa fa-cog" aria-hidden="true"></i>  Logouttt</a>
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-user-circle h3 text-muted ms-3"></i>
         <div class="d-flex flex-column align-items-center ">
