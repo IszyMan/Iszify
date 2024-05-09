@@ -131,14 +131,14 @@
 
 
    <div class="btn-group dropend mt-5">
-  <a class="btn btn-secondary dropdown-toggle ml-3" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <a class="btn-secondary dropdown-toggle ml-3 text-center p-3 bg-primary shadow-none text-white text-decoration-none w-100" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     CREATE NEW
   </a>
 
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="{{url_for('user_blp.shorten_url')}}"><i class="fa fa-link" aria-hidden="true"></i> Create Short URL</a><br>
-    <a class="dropdown-item" href="{{url_for('user_blp.qr_codes')}}"><i class="fa fa-qrcode" aria-hidden="true"></i> QR Codes</a><br>
-    <a class="dropdown-item" href="{{url_for('user_blp.create_Bio_Page')}}"><i class="fa fa-hashtag" aria-hidden="true"></i> Link In Bio</a>
+  <div class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item hoth text-white p-3" href="{{url_for('user_blp.shorten_url')}}"><i class="fa fa-link text-white" aria-hidden="true"></i> Create Short URL</a>
+    <a class="dropdown-item hoth text-white p-3" href="{{url_for('user_blp.qr_codes')}}"><i class="fa fa-qrcode text-white" aria-hidden="true"></i> QR Codes</a>
+    <a class="dropdown-item hoth text-white p-3" href="{{url_for('user_blp.create_Bio_Page')}}"><i class="fa fa-hashtag text-white" aria-hidden="true"></i> Link In Bio</a>
   </div>
 </div>
 
