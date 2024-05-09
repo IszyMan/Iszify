@@ -33,64 +33,52 @@
       </div>
 </main>
 {% if urls %}
-    <div class="container-fluid">
-
+<div class="container-fluid">
+    <div class="row w-100 g-4">
         {% for url in urls|reverse %}
-
-            <div class="card " style="background-color:lavender;">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
-                    <div class="col-md-auto ms-5 mt-5 float-end">
-                         <img height="20" width="20" src='http://www.google.com/s2/favicons?domain={{url.url}}' />
-                      </div>
-                 <div class="col-12">
-
-                      <p class="h6 mt-5"><strong> {{url.title}}</strong></p>
-                    <p class=""><strong>Short <a href="{{ request.host_url }}{{ url.short_url }}" target="_blank"> {{ request.host_url }}{{ url.short_url }}</a></strong></p>
-
-                    <p class=""><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url }}</a></p>
-                         <div class="mb-5">
-                          <small>
-                        <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})
-                        <i class="bi bi-calendar px-2 "></i> {{ url.created.strftime('%b %d, %Y') }}
-
-                         </small>
-                         </div>
-
-
-                     </div>
-                {% if url.qr_data %}
-                <div class="col-md-auto mt-5 mb-5">
-
-                        <img
-                      src="data:image/png;base64,{{ url.qr_data }}"
-                      alt="QR Code"/>
-
-                </div>
-                {% endif %}
-
-                    <div class="col-md-auto mt-5 mb-5">
-
-                   <p><i class="fa fa-copy px-2" id="" style="cursor: pointer;"></i> Copy
-                             <i class="bi bi-pencil-square px-2" style="cursor: pointer;"></i> Edit</p>
-
-
-                </div>
-
+        <div class="mb-4 col-lg-4 col-md-3">
+            <div class="card p-3 position-relative" style="background-color: lavender;">
+                <div class="">
+                    <div class="mt-5">
+                        <img height="20" width="20" src='http://www.google.com/s2/favicons?domain={{url.url}}' />
+                    </div>
+                    <div class="">
+                        <p class="h6 mt-5"><strong> {{url.title}}</strong></p>
+                        <p class=""><strong>Short <a href="{{ request.host_url }}{{ url.short_url }}" target="_blank"> {{ request.host_url }}{{ url.short_url }}</a></strong></p>
+                        <p class=""><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url }}</a></p>
+                        <div class="mb-5">
+                            <small>
+                                <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})
+                                <i class="bi bi-calendar px-2 "></i> {{ url.created.strftime('%b %d, %Y') }}
+                            </small>
+                        </div>
+                    </div>
+                    {% if url.qr_data %}
+                    <div class=" mt-5 mb-5 position-relative w-100">
+                        <img height="200" width="200" src="data:image/png;base64,{{ url.qr_data }}" alt="QR Code" class="m-auto d-flex justify-content-center"/>
+                    </div>
+                    {% endif %}
+                    <div class=" mt-5 mb-5">
+                        <p><i class="fa fa-copy px-2" id="" style="cursor: pointer;"></i> Copy
+                            <i class="bi bi-pencil-square px-2" style="cursor: pointer;"></i> Edit</p>
                     </div>
                 </div>
-        <hr>
-
+            </div>
+        </div>
         {% endfor %}
-        {% else %}
-        <div class="card " style="background-color:lavender;">
-                <div class="row">
-                 <div class="col-sm mt-5">
-                  <h2 class="text-center"><b>No shortened link</b></h2>
-                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
-                    </div>
-                </div>
+    </div>
+</div>
+{% else %}
+<div class="card" style="background-color: lavender;">
+    <div class="row">
+        <div class="col-sm mt-5">
+            <h2 class="text-center"><b>No shortened link</b></h2>
+            <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
+        </div>
+    </div>
+</div>
+{% endif %}
 
-        {% endif %}
       </div>
 </div>
 </div>
