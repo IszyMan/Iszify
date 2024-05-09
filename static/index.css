@@ -37,11 +37,11 @@ nav ul li a:hover{
 }
 
 .row{
-  gap: 10px;
-  width: 100%;
+  /* gap: 10px; */
+  width: 100% !important;
   /* border: 1px solid red; */
-  margin: 0 auto;
-  justify-content: center;
+  /* margin: 0 auto; */
+  /* justify-content: center; */
 }
 
 /* body::before {
