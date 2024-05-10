@@ -45,7 +45,7 @@
   <!-- Navbar -->
   <nav
        id="main-navbar"
-       class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+       class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
     <!-- Container wrapper -->
     <div class="container-fluid">
 
@@ -57,21 +57,22 @@
 
       <!-- Brand -->
 
-        <strong><a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand text-warning "> LINKTOOLS</a></strong>
+        <strong><a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand text-warning "> &nbsp; &nbsp; LINKTOOLS</a></strong>
 
        <!--Search form -->
-        <div class="mx-5">
+        <div class="mx-auto">
       <form class="d-none d-md-flex input-group w-auto my-auto text-center">
         <input
                autocomplete="off"
                type="search"
-               class="form-control rounded"
+               class="form-control rounded shadow-none border-0"
                placeholder='Search.. '
                style="min-width: 225px "
                />
-        <span class="input-group-text border-0"
-              ><i class="fas fa-search text-center"></i
-          ></span>
+        <span class="input-group-text border-0 bg-dark text-white"
+              > <button class="border-0 bg-dark badge py-1" type="submit">
+              <i class="fas fa-search text-center"></i
+          > </button></span>
       </form>
          </div>
       <!-- Right links -->
@@ -155,20 +156,20 @@
       <a data-bs-toggle="modal" 
       data-bs-target="#exampleModall" class="text-decoration-none text-white px-4 py-2 fw-normal position-absolute bottom-0 mb-4 bg-danger badge" 
       style="width: fit-content; font-size: .8rem; cursor: pointer;"><i class="fas fa-sign-out-alt"></i>  Logout</a>
-        <div class="d-flex align-items-center">
-            <i class="fa-solid fa-user-circle h3 text-muted ms-3"></i>
-        <div class="d-flex flex-column align-items-center ">
+        <!-- <div class="d-flex align-items-center">
+            <i class="fa-solid fa-user-circle h3 text-muted ms-3"></i> -->
+        <!-- <div class="d-flex flex-column align-items-center ">
          <a href="{{url_for('user_blp.profile_info', username=current_user.username)}}" class="text-decoration-none mx-2 my-5 me-3">
           <span class="fw-bold text-muted ">{{current_user.username.upper()}}</span><br>
           <small class="fw-bold mr-5 text-muted ">{{current_user.email}}</small>
          </a>
-            </div>
-       </div>
+            </div> -->
+       <!-- </div> -->
     </div>
 
 
 
-  <div class="container mt-2 main" style="margin-left: 22rem;">
+  <div class="container mt-2 main" style="margin-left: 17rem;">
 
 
 {% block car %}
