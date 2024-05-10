@@ -14,7 +14,7 @@ body{
 }
 
 .side_fold{
-    width: 22rem; 
+    width: 17rem; 
     position: fixed; 
     top: 0; 
     bottom: 0;
@@ -24,7 +24,8 @@ body{
 }
 
 .side_link {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
 }
 
 .hoth:hover{
