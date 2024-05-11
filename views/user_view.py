@@ -76,29 +76,33 @@ def home():
 @user_blp.route("/user/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
-    user_id = current_user.id
-    brand_url = f"{request.host_url}{current_user.brand_name}"
-    posts = CreateProfile.query.filter_by(author_id=user_id).all()
+    try:
+        user_id = current_user.id
+        brand_url = f"{request.host_url}{current_user.brand_name}"
+        posts = CreateProfile.query.filter_by(author_id=user_id).all()
 
-    url_short = Urlshort.query.filter_by(author_id=user_id).all()
+        url_short = Urlshort.query.filter_by(author_id=user_id).all()
 
-    qr_codes_ = QrCode.query.filter_by(author_id=user_id).all()
+        qr_codes_ = QrCode.query.filter_by(author_id=user_id).all()
 
-    host_url = request.host_url
-    brandie = current_user.brand_name
+        host_url = request.host_url
+        brandie = current_user.brand_name
 
-    for qr in current_user.qr_code:
-        qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8')
+        for qr in current_user.qr_code:
+            qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8')
 
-    return render_template(
-        "dashboard.html",
-        brand_url=brand_url,
-        brandie=brandie,
-        host_url=host_url,
-        url_short=url_short,
-        qr_codes_=qr_codes_,
-        dashboard=True
-    )
+        return render_template(
+            "dashboard.html",
+            brand_url=brand_url,
+            brandie=brandie,
+            host_url=host_url,
+            url_short=url_short,
+            qr_codes_=qr_codes_,
+            dashboard=True
+        )
+    except Exception as e:
+        print(e, "error@dashboard")
+        db.session.rollback()
 
 
 @user_blp.route("/join", methods=["GET", "POST"])
