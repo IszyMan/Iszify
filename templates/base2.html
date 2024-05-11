@@ -60,7 +60,7 @@
 
       <!-- Brand -->
 
-        <strong><a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand text-warning "> &nbsp; &nbsp; LINKTOOLS</a></strong>
+        <a href="{{url_for('user_blp.dashboard')}}" class="navbar-brand text-white fs-4"> &nbsp; &nbsp; LINKTOOLS</a>
 
        <!--Search form -->
         <div class="mx-auto">
@@ -107,13 +107,13 @@
              role="button"
              data-bs-toggle="dropdown"
              aria-expanded="false">
-            <i class="fas fa-bell h3 "></i>
-           <span class="badge rounded-pill badge-notification bg-danger fw-bold mx-2">1</span>
-            <i class="fa-solid fa-user-circle h3 text-muted"></i> <span class="fw-bold mx-1 text-muted">{{current_user.username.upper()}}</span>
+            <!-- <i class="fas fa-bell h3 "></i>
+           <span class="badge rounded-pill badge-notification bg-danger fw-bold mx-2">1</span> -->
+            <i class="fa-solid fa-user-circle h3 text-white"></i> <span class="fw-bold mx-1 text-white">{{current_user.username.upper()}}</span>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="{{url_for('user_blp.profile_info', username=current_user.username)}}">My profile</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
+          <ul class="dropdown-menu dropdown-menu-end p-3 bg-primary" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item text-white p-3" href="{{url_for('user_blp.profile_info', username=current_user.username)}}">My profile</a></li>
+            <li><a class="dropdown-item text-white p-3" href="#">Settings</a></li>
           </ul>
         </li>
       </ul>
