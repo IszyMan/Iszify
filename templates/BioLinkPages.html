@@ -13,121 +13,63 @@
 
 
 <main style="margin-top: 28px">
-  <div class="container pt-5 ">
-<!-- This is goto links  div-->
-
-      <div class="row mb-4 ">
-
+  <div class="container pt-5">
+      <!-- This is goto links div-->
+      <div class="row mb-4">
           <div class="container-fluid align-self-end mt-5">
-               <h2><b>Bio Pages</b></h2>
-               {% if display %}
-               <form action="" method="post" id="filter_form" class="d-none">
-                <input type="text" id="datepicker_input" name="date">
-               </form>
-               <button class="btn" id="datepicker-btn">
-                <i class="fa fa-calendar px-2"></i>Filter by Date
-                
-            </button> <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
-                
+              <h2><b>Bio Pages</b></h2>
+              {% if display %}
+                  <form action="" method="post" id="filter_form" class="d-none">
+                      <input type="text" id="datepicker_input" name="date">
+                  </form>
+                  <button class="btn" id="datepicker-btn">
+                      <i class="fa fa-calendar px-2"></i>Filter by Date
+                  </button>
+                  <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
               {% endif %}
-
-      </div>
-      </div>
-{% if bio_pages %}
-      {% for post in bio_pages|reverse %}
-        <a>
-          <div class="card " style="background-color:lavender;">
-       <div class="row">
-        <div class="col-sm-2">
-            <div class="smartphone mt-4 mb-4 ">
-               <i class="text-center fa fa-user text-primary rounded-circle p-4 mx-3"></i>
-                  <div class='mx-2 text-center'><small><a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">Link</a></small></div>
-                  <!-- <div class='mx-2 text-center'><small>Twitter</small></div> -->
-            
-<!--              {% for post in links_added|reverse%}-->
-<!--                  <div class='border border-primary rounded-pill p-3 mt-2 text-center'>{{ post.link_name}}-->
-<!--                      </div>-->
-<!--              {% endfor %}-->
-                </div>
-
-        </div>
-        <div class="col-sm-6 mt-4">
-            <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">
-            <div class="row">
-
-           <h4> {{ host_url }}bio/{{post.bio_name}}</h4>
-          <div> <i class="bi bi-bar-chart-fill text-muted"></i>Click Data ({{ post.clicks }}) </div>
-          <div> <i class="bi bi-calendar text-muted"></i> {{ post.created_at.strftime('%B %d, %Y ') }}</div>
-            </div>
-            </a>
-        </div>
-
-        <div class="col-sm-2 mt-4 text-muted">
-            <p class="" ><button  type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal11{{post.id}}"><i class="bi bi-pencil-square"></i>Edit</button> 
-                 <button><i class="bi bi-three-dots"></i></button>
-            </p>
-         </div>
-     </div>
-    </div>
-        </a>
-          <br>
-
-      
-          
-<div class="modal fade" id="exampleModal11{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel11">Update Bio Name</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div>
-          <div class="mb-3">
-            <form action="{{url_for('user_blp.update_bio_link_pages', bio_id=post.id)}}" method="post" class="form-group">
-              <input type="text" class="form-control" name="brandname" value={{post.bio_name}}>
-              <button type="submit" class="btn btn-secondary">Update</button>
-            </form>
-            <div id="emailHelp" class="form-text">Your bio is your identity</div>
           </div>
-        </div>
-        <style>
-          .btn-secondary {
-               margin-top: 10px;
-               font-size: 1rem;
-               padding: 5px;
-           }
-       </style>
       </div>
-    </div>
-  </div>
- </div>
-     {% endfor %}
-
-
-
-
-    <div class="container-fluid">
-
-      {% else %}
-        <div class="card " style="background-color:lavender;">
-                <div class="row">
-                 <div class="col-sm mt-5">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          {% if bio_pages %}
+              {% for post in bio_pages|reverse %}
+                  <div class="col mb-4">
+                      <div class="card" style="background-color:lavender;">
+                          <div class="card-body d-flex flex-column">
+                              <div class="mb-4">
+                                  <div class="smartphone">
+                                      <i class="text-center fa fa-user text-primary rounded-circle p-4 mx-3"></i>
+                                      <div class='mx-2 text-center'><small><a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">Link</a></small></div>
+                                  </div>
+                              </div>
+                              <div class="mb-4">
+                                  <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">
+                                      <h4>{{ host_url }}bio/{{post.bio_name}}</h4>
+                                  </a>
+                                  <div><i class="bi bi-bar-chart-fill text-muted"></i>Click Data ({{ post.clicks }})</div>
+                                  <div><i class="bi bi-calendar text-muted"></i> {{ post.created_at.strftime('%B %d, %Y ') }}</div>
+                              </div>
+                              <div class="text-muted mt-auto">
+                                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal11{{post.id}}"><i class="bi bi-pencil-square"></i>Edit</button>
+                                  <button><i class="bi bi-three-dots"></i></button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="modal fade" id="exampleModal11{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
+                      <!-- Modal content -->
+                  </div>
+              {% endfor %}
+          {% else %}
+              <div class="col-sm mt-5">
                   <h2 class="text-center"><b>No Bio Page</b></h2>
-                     <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
-                    </div>
-                </div>
-
-         </div>
-        {% endif %}
-
-
-
-   </div>
-
-</div>
-
+                  <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
+              </div>
+          {% endif %}
+      </div>
+  </div>
 </main>
+
 
 <script>
   close_btn = document.getElementById('close_btn');
