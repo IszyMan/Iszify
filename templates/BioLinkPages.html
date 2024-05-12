@@ -33,7 +33,7 @@
           {% if bio_pages %}
               {% for post in bio_pages|reverse %}
                   <div class="col mb-4">
-                      <div class="card" style="background-color:lavender;">
+                      <div class="card" style="background-color:rgb(255, 255, 255); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
                           <div class="card-body d-flex flex-column">
                               <div class="mb-4">
                                   <div class="smartphone">
@@ -57,22 +57,26 @@
                   </div>
                   <br>
                   <div class="modal fade" id="exampleModal11{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel11">Update Bio Name</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          <div>
-                            <div class="mb-3">
-                              <form action="{{url_for('user_blp.update_bio_link_pages', bio_id=post.id)}}" method="post" class="form-group">
-                                <input type="text" class="form-control shadow-none" name="brandname" value={{post.bio_name}}>
-                                <button type="submit" class="btn btn-secondary mt-2 shadow-none">Update</button>
-                              </form>
-                              <div id="emailHelp" class="form-text">Your bio is your identity</div>
-                            </div>
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel11">Update Bio Name</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div>
+                                      <div class="mb-3">
+                                          <form action="{{url_for('user_blp.update_bio_link_pages', bio_id=post.id)}}" method="post" class="form-group">
+                                              <input type="text" class="form-control shadow-none" name="brandname" value="{{ post.bio_name }}" autofocus>
+                                              <button type="submit" class="btn btn-secondary mt-2 shadow-none">Update</button>
+                                          </form>
+                                          <div id="emailHelp" class="form-text">Your bio is your identity</div>
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
+                      </div>
+                  </div>
               {% endfor %}
           {% else %}
               <div class="col-sm mt-5">
@@ -83,6 +87,7 @@
       </div>
   </div>
 </main>
+
 
 
 <script>
