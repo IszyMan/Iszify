@@ -198,7 +198,7 @@ def bio_link_pages():
         bio_pages = get_bio_page_by_date(date_filter)
         display = True
         refresh = True
-
+    print(bio_pages, "Pages bio")
     # update the bio name
     return render_template(
         "BioLinkPages.html",
