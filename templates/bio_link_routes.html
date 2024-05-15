@@ -21,12 +21,16 @@
         margin-top: 0;
     }
 </style>
-           <div class="text-center ml-5 mb-5 rounded-circle"><i class="bi bi-share-fill"></i></div>
+           <div class="text-end mx-5 ml-5 mb-5 rounded-circle "><button class="rounded-circle border border-light mx-5 px-2"><i class="bi bi-share-fill" ></i></button></div>
 <div class="containerr mt-5">
 
+
+    <button class="rounded-pill"><i class="text-center fa fa-user h1 text-primary stylethis2 mx-3 mt-3 mb-3"></i></button>
+    <br><br>
     <div class='h3 mb-4 mt-3'><strong>Welcome!</strong></div>
+
     {%if all_posts%}
-    {% for post in all_posts|reverse  %}
+    {% for post in all_posts  %}
     <div class='p-3 mt-2 rounded-pill border-bottom ' style="color: rgb(35, 35, 35); background-color: rgb(199, 204, 208); border-radius: 2.3rem;">
         <a class='h3 mb-4 mt-3 fw-bold text-decoration-none' href='{{post.link_url}}' target='_blank'>{{ post.link_name.upper() }}</a>
         <div style='display: flex; justify-content: space-evenly;'>

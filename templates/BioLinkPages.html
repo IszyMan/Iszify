@@ -41,17 +41,35 @@
                                       <div class='mx-2 text-center'><small><a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">Link</a></small></div>
                                   </div>
                               </div>
-                              <div class="mb-4">
+                              <div class="mb-4 text-center">
                                   <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">
-                                      <h4>{{ host_url }}bio/{{post.bio_name}}</h4>
-                                  </a>
-                                  <div><i class="bi bi-bar-chart-fill text-muted"></i>Click Data ({{ post.clicks }})</div>
+                                      <p><b>{{ host_url }}bio/{{post.bio_name}}</b></p>
+                                  </a><br>
+                                  <div><i class="bi bi-bar-chart-fill text-muted text-sm-start"></i> Views ({{ post.clicks }})</div>
                                   <div><i class="bi bi-calendar text-muted"></i> {{ post.created_at.strftime('%B %d, %Y ') }}</div>
                               </div>
-                              <div class="text-muted mt-auto">
-                                  <button type="button" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#exampleModal11{{post.id}}"><i class="bi bi-pencil-square"></i>Edit</button>
-                                  <button><i class="bi bi-three-dots"></i></button>
+
+                               <div class="text-muted mt-auto">
+<!--                                  <button type="button" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#exampleModal11{{post.id}}"><i class="bi bi-pencil-square"></i>Edit Bio Name</button>-->
+<!--                                  <button><i class="bi bi-three-dots"></i></button>-->
+                                  <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}"><button type="button" class="btn shadow-none"><i class="bi bi-pencil-square"></i> Add or Edit links in Bio Page</button></a>
+
+
+
+                                  <div class="btn-group dropend mt-0">
+                              <button class="btn-light  ml-3 text-center p-1 bg-light shadow-none text-dark text-decoration-none rounded-3 border border-dark" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                              </button>
+
+                              <div class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item hoth text-white p-3" href=""><i class="fa fa-copy text-white" aria-hidden="true"></i> Copy Link</a>
+                                <a class="dropdown-item hoth text-white p-3" href=""><p class="text-danger"><i class="fa fa-trash-alt text-danger" aria-hidden="true"></i> Delete</p></a>
+
                               </div>
+                            </div>
+
+                            </div>
+
                           </div>
                       </div>
                   </div>
@@ -79,9 +97,13 @@
                   </div>
               {% endfor %}
           {% else %}
+          <div class="card" style="background-color:lavender;">
+          <div class="row">
               <div class="col-sm mt-5">
                   <h2 class="text-center"><b>No Bio Page</b></h2>
-                  <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
+                  <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail text-center"/>
+              </div>
+              </div>
               </div>
           {% endif %}
       </div>

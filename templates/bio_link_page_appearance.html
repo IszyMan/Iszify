@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/biophone.css') }}">
 
+
 {% endblock head %}
 {% block content %}
 
@@ -27,15 +28,17 @@
         <div class="p-2">
    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
        <li class="nav-item mx-3">
-    <span><i class="fa fa-link" aria-hidden="true"></i>
+    <p><i class="fa fa-link" aria-hidden="true"></i>
         {% for post in bios %}
-    <a class="text-decoration-none text-primary fw-bold" href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></span>
+    <a class="text-decoration-none text-dark fw-bold" href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
 
        </li>
 
-       <div class="dropdown">
+       <li class="nav-item mt-1"><span class="text-primary text-center "><b><i class="fas fa-copy"></i> Copy</b></span></li>
+
+       <div class="dropdown mx-3">
      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
-     Edit
+     Edit URL
      </button>
       <div class="dropdown-menu p-5" style="width: 20rem;">
 
@@ -50,7 +53,13 @@
       </div>
      </div>
 
-       <li class="nav-item mx-5"><span class="text-primary"><b><i class="fas fa-copy"></i> Copy</b></span></li>
+        <a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
+          <button class="btn-light text-center p-1 bg-light shadow-none mx-3 text-dark text-decoration-none rounded-3 border border-dark">
+           <i class="fa fa-external-link mx-1" aria-hidden="true"></i> View </button></a>
+
+       <button class="btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#">
+           <i class="fas fa-share"></i> Share</i>
+       </button>
 
        {% endfor %}
     </ul>
@@ -59,17 +68,114 @@
 </div>
 <br>
 
-<div class="container">
 
-<div class="row">
 
-     <!-- Bio details phone-->
-     <div class="clearfix"  >
+<div class="container mt-3">
+
+    <div class="row">
+     <div class=""  >
+         <div class="float-start  w-50" >
+
+         <div class="card border border-light bg-light ">
+
+             <h4 class="mx-5 mt-4"><b>Profile</b></h4>
+             <h6 class="mx-5 mt-2"><b>Image</b></h6>
+           <br>
+
+             <div class="row">
+
+             <div class="d-flex justify-content-left mb-4 mx-5 float-start">
+            <img src="{{ url_for('static', filename='Image-place-holder.png') }}"
+            class="rounded-circle "  style="width: 100px; height: 100px; object-fit: cover;" alt="example placeholder" />
+
+                 <div class=" text-center mt-4 ms-4">
+                   <button class="rounded-3">Add Image</button>
+               </div>
+
+            </div>
+
+               <h5 class="mx-5 mt-4"><b>About</b></h5>
+               <p class="mx-5 mt-2"><b> About</b>(Optional)</p>
+               <p class="mx-5 mt-0"> <input type="text" id="fname" name="fname" size="40" value="Welcome!"></p>
+
+               <p class="mx-5 mt-2"><b> Description</b>(Optional)</p>
+               <p class="mx-5 mt-0"> <input type="text" id="des" name="desc" size="40" value=""></p>
+                 <br>
+            </div>
+         </div> <br>
+
+             <div class="float-start  w-100" >
+            <div class="card border border-light bg-light ">
+             <h5 class="mx-5 mt-4"><b>Style & layout</b></h5>
+             <h6 class="mx-5 mt-2"><b>Bio Layout</b></h6>
+
+             <div class="d-flex justify-content-left mb-4 mx-5 float-start ">
+            <img src="{{ url_for('static', filename='Layout-1.png') }}" style="width: 100px; height: 200px; object-fit: cover;" alt="example placeholder" />
+
+            <img src="{{ url_for('static', filename='Layout-2.png') }}" class="ms-5" style="width: 100px; height: 200px; object-fit: cover;" alt="example placeholder" />
+
+            <img src="{{ url_for('static', filename='Layout-3.png') }}" class="ms-5" style="width: 100px; height: 200px; object-fit: cover;" alt="example placeholder" />
+
+             </div>
+             </div>
+             </div>
+
+              <h5 class="mx-5 mt-4">.</h5>
+             <div class="float-start  w-200" >
+            <div class="card border border-light bg-light ">
+              <h5 class="mx-5 mt-4"><b>Block</b></h5>
+                <h6 class="mx-5 mt-2"><b>Shape</b></h6>
+
+                <div>
+                    <img src="{{ url_for('static', filename='Rectangle-11.png') }}" class="ms-5 float-start" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                    <img src="{{ url_for('static', filename='Rectangle-12.png') }}" class="ms-3 me-4 float-end" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                </div>
+
+                <div class="mt-3">
+                    <img src="{{ url_for('static', filename='Rectangle-16.png') }}" class="ms-5 float-start" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                    <img src="{{ url_for('static', filename='Rectangle-14.png') }}" class="ms-3 me-4 float-end" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                </div>
+
+                <div class="mt-3 mb-5">
+                    <img src="{{ url_for('static', filename='Rectangle-13.png') }}" class="ms-5 float-start" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                    <img src="{{ url_for('static', filename='Rectangle-15.png') }}" class="ms-3 me-4 float-end" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                </div>
+                  <h6 class="mx-5 mt-2"><b>Shadow</b></h6>
+                 <div class="mt-3 mb-5">
+                    <img src="{{ url_for('static', filename='shadow-1.png') }}" class="ms-2 float-start" style="width: 100px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                    <img src="{{ url_for('static', filename='shadow-2.png') }}" class="ms-2  float-center" style="width: 150px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                     <img src="{{ url_for('static', filename='shadow-3.png') }}" class="ms-2 float-end" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
+                </div>
+
+                </div>
+                 </div>
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+         <!-- Bio details phone-->
        <div class="float-end">
+           <p class="text-center rounded-pill "><button class="rounded-3 bg-success">Live Preview </button></p>
       <div class="smartphone ">
      <div class="content mx-5" >
       <div class="phone_container mt-5 mx-5" >
-          <i class="text-center fa fa-user h1 text-primary stylethis2 rounded-circle p-4 mx-4"></i>
+
+          <div class="d-flex justify-content-center mb-4 mx-5 ">
+            <img src="{{ url_for('static', filename='Image-placeholder-2.png') }}"
+        class="rounded-circle "  style="width: 100px; height: 100px; object-fit: cover;" alt="example placeholder" />
+            </div>
+
+          <p class="text-center"><b>Welcome!</b></p>
+
       {% for post in links_added|reverse%}
           <div class='border border-primary rounded-pill p-3 mt-2 text-center'>
         <a class='h6 mb-4 mt-3 text-muted fw-bold text-decoration-none '>{{ post.link_name.upper() }} </a><br>
@@ -80,13 +186,13 @@
       </div>
     </div>
   </div>
-
-
-
-
 </div>
 
 </div>
+
+
+
+
 
 </div>
 

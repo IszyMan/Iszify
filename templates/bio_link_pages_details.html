@@ -27,20 +27,22 @@
         <div class="p-2">
    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
        <li class="nav-item mx-3">
-    <span><i class="fa fa-link" aria-hidden="true"></i>
+    <p class="mt-1"><i class="fa fa-link" aria-hidden="true"></i>
         {% for post in bio_pages %}
-    <a class="text-decoration-none text-primary fw-bold" href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></span>
+    <a class="text-decoration-none text-dark fw-bold " href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
 
        </li>
 
-       <div class="dropdown">
-     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
-     Edit </i>
+       <li class="nav-item mt-1"><span class="text-primary text-center "><b><i class="fas fa-copy"></i> Copy</b></span></li>
+
+       <div class="dropdown mx-3">
+     <button class="btn btn-secondary dropdown-toggle mt-0" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
+     <i class="bi bi-pencil-square"></i> Edit URL </i>
      </button>
+
+           <!-- Edit Bio page dropdown -->
       <div class="dropdown-menu p-5" style="width: 20rem;">
-
       <h3>Edit Bio Name</h3>
-
       <form action="{{url_for('user_blp.update_details', bio_id=post.id)}}" method="post" class="form-group">
         <label for="link_name">Link Name</label>
         <input type="text" class="form-control" name="brandname" value={{post.bio_name}}> <br>
@@ -50,7 +52,15 @@
       </div>
      </div>
 
-       <li class="nav-item mx-5"><span class="text-primary"><b><i class="fas fa-copy"></i> Copy</b></span></li>
+          <a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
+          <button class="btn-light text-center p-1 bg-light shadow-none mx-3 text-dark text-decoration-none rounded-3 border border-dark">
+           <i class="fa fa-external-link mx-1" aria-hidden="true"></i> View </button></a>
+
+       <button class="btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#">
+           <i class="fas fa-share"></i> Share</i>
+       </button>
+
+
 
        {% endfor %}
     </ul>
@@ -64,7 +74,7 @@
 <!--       <a href="{{url_for('user_blp.admin')}}"> <button type="button" class="btn btn-primary">Add a Link <i class="fa-solid fa-plus"></i></button></a>-->
        <div class="dropdown">
      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-     Add a Link <i class="fa-solid fa-plus"></i>
+     Add Social Media Links to Bio Page <i class="fa-solid fa-plus"></i>
      </button>
 
      <form method="POST" class="dropdown-menu p-5 mx-5">
@@ -83,8 +93,10 @@
 <div class="row">
 
      <!-- Bio details phone-->
+
      <div class="clearfix"  >
-       <div class="float-end">
+       <div class="float-end pt-0">
+            <p class="text-center rounded-pill "><button class="rounded-3 bg-success">Live Preview </button></p>
       <div class="smartphone ">
      <div class="content mx-5" >
       <div class="phone_container mt-5 mx-5" >
