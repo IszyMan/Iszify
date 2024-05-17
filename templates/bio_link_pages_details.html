@@ -26,19 +26,20 @@
      <div class="d-flex flex-row">
         <div class="p-2">
    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
-       <li class="nav-item mx-3">
-    <p class="mt-1"><i class="fa fa-link" aria-hidden="true"></i>
-        {% for post in bio_pages %}
-    <a class="text-decoration-none text-dark fw-bold " href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
 
+       {% for post in bio_pages %}
+       <li class="nav-item mx-3">
+        <p class="mt-1"><i class="fa fa-link" aria-hidden="true"></i>
+        <a class="text-decoration-none text-dark fw-bold " href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
        </li>
 
        <li class="nav-item mt-1"><span class="text-primary text-center "><b><i class="fas fa-copy"></i> Copy</b></span></li>
 
+       <li>
        <div class="dropdown mx-3">
-     <button class="btn btn-secondary dropdown-toggle mt-0" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
-     <i class="bi bi-pencil-square"></i> Edit URL </i>
-     </button>
+       <button class="btn btn-secondary dropdown-toggle mt-0" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
+       <i class="bi bi-pencil-square"></i> Edit URL </i>
+       </button>
 
            <!-- Edit Bio page dropdown -->
       <div class="dropdown-menu p-5" style="width: 20rem;">
@@ -48,17 +49,24 @@
         <input type="text" class="form-control" name="brandname" value={{post.bio_name}}> <br>
         <button type="submit" class="btn btn-secondary">Update</button>
       </form>
-
       </div>
-     </div>
+      </div>
+      </li>
 
-          <a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
+      <li><a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
           <button class="btn-light text-center p-1 bg-light shadow-none mx-3 text-dark text-decoration-none rounded-3 border border-dark">
            <i class="fa fa-external-link mx-1" aria-hidden="true"></i> View </button></a>
+      </li>
 
-       <button class="btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#">
+      <li><button class="btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#">
            <i class="fas fa-share"></i> Share</i>
        </button>
+       </li>
+
+       <li class="text-end ms-5"><p class="btn-success text-end p-1 ms-5 bg-success shadow-none text-light text-decoration-none rounded-1 border border-success" >
+            Save Changes
+       </p>
+       </li>
 
 
 
@@ -95,22 +103,7 @@
      <!-- Bio details phone-->
 
      <div class="clearfix"  >
-       <div class="float-end pt-0">
-            <p class="text-center rounded-pill "><button class="rounded-3 bg-success">Live Preview </button></p>
-      <div class="smartphone ">
-     <div class="content mx-5" >
-      <div class="phone_container mt-5 mx-5" >
-          <i class="text-center fa fa-user h1 text-primary stylethis2 rounded-circle p-4 mx-4"></i>
-      {% for post in links_added|reverse%}
-          <div class='border border-primary rounded-pill p-3 mt-2 text-center'>
-        <a class='h6 mb-4 mt-3 text-muted fw-bold text-decoration-none '>{{ post.link_name.upper() }} </a><br>
-              </div>
-      {% endfor %}
 
-          </div>
-      </div>
-    </div>
-  </div>
 
 
     <div class="float-start  w-50 p-3">
@@ -118,24 +111,21 @@
         {% if links_added %}
        {% for post in links_added|reverse %}
 
+
             <div class=" mb-4">
-<!--                <div><i class="fa fa-picture-o" aria-hidden="true"></i></div>-->
-              <div class="card text-secondary">
-                  <div>
-                      <div>
-                <a class='float-start text-muted h4 py-3 fw-bold text-decoration-none text-center mx-5'>{{ post.link_name.upper() }} </a>
+                <div class="card text-secondary">
+
+                  <div >
+                    <div class='float-start text-muted h4 py-3 fw-bold text-decoration-none text-center mx-3'>
+                          <img class="me-5 rounded-circle" height="25" width="25" src='http://www.google.com/s2/favicons?domain={{post.link_url}}' />
+                              {{ post.link_name.upper() }}
                       </div>
+
                       <div class="float-end mx-5 mt-3" ><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal101{{post.id}}"><b><i class="bi bi-pencil-square"></i>Edit</b></button></div>
                   </div>
 
-                      <div class="mx-5">
-
-                         <img id="frame" src="" class="img-fluid" />
-                        <a class='text-muted h6 py-3 fw-bold text-decoration-none justify-content-between'>
-
-                            {{ post.link_url }} </a>
-
-
+                      <div class="text-center">
+                            {{ post.link_url }}
                       </div>
 
 
@@ -163,7 +153,7 @@
                     <a href="/delete/{{post.linkname}}" onclick="return confirmDelete()">
                       <i class="fa fa-trash-alt text-danger ms-5"></i>
                     </a>
-                    <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme{{post.id}}" style="cursor: pointer;"></i>
+
                   </p>
               </div>
 
@@ -174,6 +164,8 @@
                       <h5 class="modal-title" id="exampleModalLabel101">Update</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+
+                      <!-- Edit link entries -->
                     <div class="modal-body">
                       <div>
                         <div class="mb-3">
@@ -203,12 +195,37 @@
         {% endfor %}
           {% endif %}
         </div>
+         <div class="float-end pt-0">
+            <p class="text-center rounded-pill "><button class="rounded-3 bg-warning">Live Preview </button></p>
+      <div class="smartphone ">
+     <div class="content mx-5" >
+      <div class="phone_container mt-5 mx-5" >
+          <div class="d-flex justify-content-center mb-4 mx-5 ">
+            <img src="{{ url_for('static', filename='Image-placeholder-2.png') }}"
+        class="rounded-circle "  style="width: 100px; height: 100px; object-fit: cover;" alt="example placeholder" />
+            </div>
+
+          <p class="text-center"><b>Welcome!</b></p>
+      {% for post in links_added|reverse%}
+          <div class='border border-primary rounded-pill p-3 mt-2 text-center'>
+            <img class="rounded-circle" height="25" width="25" src='http://www.google.com/s2/favicons?domain={{post.link_url}}' />
+            {{ post.link_name.upper() }} <br>
+              </div>
+      {% endfor %}
+
+          </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
-</div>
 
 </div>
+
+
+</div>
+
 
   </div>
 </main>

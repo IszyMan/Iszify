@@ -27,19 +27,18 @@
      <div class="d-flex flex-row">
         <div class="p-2">
    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
-       <li class="nav-item mx-3">
-    <p><i class="fa fa-link" aria-hidden="true"></i>
         {% for post in bios %}
-    <a class="text-decoration-none text-dark fw-bold" href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
-
+       <li class="nav-item mx-3">
+      <p><i class="fa fa-link" aria-hidden="true"></i>
+       <a class="text-decoration-none text-dark fw-bold" href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
        </li>
 
        <li class="nav-item mt-1"><span class="text-primary text-center "><b><i class="fas fa-copy"></i> Copy</b></span></li>
 
-       <div class="dropdown mx-3">
-     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
-     Edit URL
-     </button>
+       <li><div class="dropdown mx-3">
+       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
+       Edit URL
+       </button>
       <div class="dropdown-menu p-5" style="width: 20rem;">
 
       <h3>Edit Bio Name</h3>
@@ -48,18 +47,25 @@
         <label for="link_name">Link Name</label>
         <input type="text" class="form-control" name="brandname" value={{post.bio_name}}> <br>
         <button type="submit" class="btn btn-secondary">Update</button>
-      </form>
+       </form>
 
-      </div>
-     </div>
+        </div>
+        </div>
+       </li>
 
-        <a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
+       <li> <a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
           <button class="btn-light text-center p-1 bg-light shadow-none mx-3 text-dark text-decoration-none rounded-3 border border-dark">
            <i class="fa fa-external-link mx-1" aria-hidden="true"></i> View </button></a>
-
-       <button class="btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#">
+       </li>
+       <li><button class="btn-light text-center p-1 bg-light shadow-none text-dark text-decoration-none rounded-3 border border-dark" href="#">
            <i class="fas fa-share"></i> Share</i>
        </button>
+       </li>
+
+       <li class="text-end ms-5"><p class="btn-success text-end p-1 ms-5 bg-success shadow-none text-light text-decoration-none rounded-1 border border-success" >
+            Save Changes
+       </p>
+       </li>
 
        {% endfor %}
     </ul>
@@ -140,12 +146,12 @@
                     <img src="{{ url_for('static', filename='Rectangle-13.png') }}" class="ms-5 float-start" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
                     <img src="{{ url_for('static', filename='Rectangle-15.png') }}" class="ms-3 me-4 float-end" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
                 </div>
-                  <h6 class="mx-5 mt-2"><b>Shadow</b></h6>
-                 <div class="mt-3 mb-5">
-                    <img src="{{ url_for('static', filename='shadow-1.png') }}" class="ms-2 float-start" style="width: 100px; height: 50px; object-fit: cover;" alt="example placeholder" />
-                    <img src="{{ url_for('static', filename='shadow-2.png') }}" class="ms-2  float-center" style="width: 150px; height: 50px; object-fit: cover;" alt="example placeholder" />
-                     <img src="{{ url_for('static', filename='shadow-3.png') }}" class="ms-2 float-end" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />
-                </div>
+<!--                  <h6 class="mx-5 mt-2"><b>Shadow</b></h6>-->
+<!--                 <div class="mt-3 mb-5">-->
+<!--                    <img src="{{ url_for('static', filename='shadow-1.png') }}" class="ms-2 float-start" style="width: 100px; height: 50px; object-fit: cover;" alt="example placeholder" />-->
+<!--                    <img src="{{ url_for('static', filename='shadow-2.png') }}" class="ms-2  float-center" style="width: 150px; height: 50px; object-fit: cover;" alt="example placeholder" />-->
+<!--                     <img src="{{ url_for('static', filename='shadow-3.png') }}" class="ms-2 float-end" style="width: 200px; height: 50px; object-fit: cover;" alt="example placeholder" />-->
+<!--                </div>-->
 
                 </div>
                  </div>
@@ -164,7 +170,7 @@
 
          <!-- Bio details phone-->
        <div class="float-end">
-           <p class="text-center rounded-pill "><button class="rounded-3 bg-success">Live Preview </button></p>
+           <p class="text-center rounded-pill "><button class="rounded-3 bg-warning ">Live Preview </button></p>
       <div class="smartphone ">
      <div class="content mx-5" >
       <div class="phone_container mt-5 mx-5" >
@@ -178,7 +184,8 @@
 
       {% for post in links_added|reverse%}
           <div class='border border-primary rounded-pill p-3 mt-2 text-center'>
-        <a class='h6 mb-4 mt-3 text-muted fw-bold text-decoration-none '>{{ post.link_name.upper() }} </a><br>
+              <img class="rounded-circle" height="25" width="25" src='http://www.google.com/s2/favicons?domain={{post.link_url}}' />
+        {{ post.link_name.upper() }} <br>
               </div>
       {% endfor %}
 
