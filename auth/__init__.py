@@ -77,8 +77,6 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        # login_user(new_user)
-        flash("Registration successful", "success")
         otp = new_user.otp
 
         msg = Message(
@@ -88,6 +86,7 @@ def register():
         )
         msg.html = render_template("email_verification.html", otp=otp)
         mail.send(msg)
+        flash("Registration successful, check your email", "success")
         return redirect(url_for("auth_blp.email_verify", email=email))
 
     return render_template(
@@ -162,9 +161,17 @@ def email_verify(email):
         fifth = request.form.get("fifth")
         sixth = request.form.get("sixth")
 
-        print(first_input, second_input, third_input, fourth, fifth, sixth)
+        otp = f"{first_input}{second_input}{third_input}{fourth}{fifth}{sixth}"
+
+        if otp != user.otp:
+            flash("Invalid OTP", "danger")
+            return redirect(url_for("auth_blp.email_verify", email=email))
+        user.email_verified = True
+        db.session.commit()
+        login_user(user)
         flash("Email verified successfully", "success")
-    return render_template("email_verify.html")
+        return redirect(url_for("user_blp.dashboard"))
+    return render_template("email_verify.html", email=email)
 
 
 @auth_blp.route("/auth/logout")
