@@ -7,7 +7,6 @@ from models import User
 from views.user_view import user_blp
 
 
-
 def create_app():
     app = Flask(__name__)
 
