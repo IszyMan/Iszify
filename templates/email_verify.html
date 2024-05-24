@@ -19,7 +19,7 @@
         </div>
         <div class="card-2">
             <div class="content d-flex justify-content-center align-items-center"> <span>Didn't get the code</span> <a
-                    href="#" class="text-decoration-none ms-3">Resend</a> </div>
+                    href="{{ url_for('auth_blp.resend_otp', email=email) }}" class="text-decoration-none ms-3">Resend</a> </div>
         </div>
     </div>
 </div>
