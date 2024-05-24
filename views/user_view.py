@@ -8,6 +8,7 @@ from utils import (get_platform, generate_and_save_qr, update_qr_code,
                    customize_qr_code_logo, customize,
                    get_urls_by_date, get_qr_codes_by_date, get_bio_page_by_date)
 from models.create_bio_page import CreateBioPage
+from models.user import update_otp
 from datetime import datetime
 import matplotlib.pyplot as plt
 import io
