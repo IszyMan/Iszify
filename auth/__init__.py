@@ -133,7 +133,7 @@ def login():
             return redirect(url_for("auth_blp.email_verify", email=email))
 
         login_user(user_)
-        # return redirect(url_for('user_blp.admin'))
+        flash("You are now logged in", "success")
         return redirect(url_for("user_blp.dashboard"))
 
     return render_template(
