@@ -79,6 +79,8 @@ def register():
         db.session.commit()
         otp = new_user.otp
 
+        print(otp, f"Registration otp for {email}")
+
         msg = Message(
             subject="Email Verification",
             sender="Iszify <iszify.send@gmail.com>",
@@ -128,6 +130,8 @@ def login():
                 )
                 msg.html = render_template("email_verification.html", otp=otp)
                 mail.send(msg)
+
+            print(otp, f"Login otp for {email}")
 
             flash("Please verify your email", "danger")
             return redirect(url_for("auth_blp.email_verify", email=email))
@@ -194,6 +198,7 @@ def resend_otp(email):
         flash("Email already verified, please login", "success")
         return redirect(url_for("auth_blp.login"))
     otp = update_otp(user)
+    print(otp, f"Resend otp for {email}")
     msg = Message(
         subject="Email Verification",
         sender="Iszify <iszify.send@gmail.com>",
