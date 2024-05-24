@@ -75,9 +75,10 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        login_user(new_user)
+        # login_user(new_user)
         flash("Registration successful", "success")
-        return redirect(url_for("user_blp.dashboard"))
+        otp = new_user.otp
+        return redirect(url_for("auth_blp.email_verify", email=email))
 
     return render_template(
         "register.html", logged_in=current_user.is_authenticated, form=form
@@ -102,17 +103,46 @@ def login():
         if not user_:
             flash("That email does not exist, please try again.", "danger")
             return redirect(url_for("auth_blp.login"))
-        elif not check_password_hash(user_.password, password):
+        if not check_password_hash(user_.password, password):
             flash("Password incorrect, please try again.", "danger")
             return redirect(url_for("auth_blp.login"))
-        else:
-            login_user(user_)
-            # return redirect(url_for('user_blp.admin'))
-            return redirect(url_for("user_blp.dashboard"))
+
+        if not user_.email_verified:
+            flash("Please verify your email", "danger")
+            return redirect(url_for("auth_blp.email_verify", email=email))
+
+        login_user(user_)
+        # return redirect(url_for('user_blp.admin'))
+        return redirect(url_for("user_blp.dashboard"))
 
     return render_template(
         "login.html", logged_in=current_user.is_authenticated, form=form
     )
+
+
+# email verify
+@auth_blp.route("/auth/email_verify/<email>", methods=["GET", "POST"])
+def email_verify(email):
+    if not email:
+        return redirect(url_for("auth_blp.login"))
+    email = email.lower()
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return redirect(url_for("auth_blp.login"))
+    if user.email_verified:
+        flash("Email already verified, please login", "success")
+        return redirect(url_for("auth_blp.login"))
+    if request.method == "POST":
+        first_input = request.form.get("first")
+        second_input = request.form.get("second")
+        third_input = request.form.get("third")
+        fourth = request.form.get("fourth")
+        fifth = request.form.get("fifth")
+        sixth = request.form.get("sixth")
+
+        print(first_input, second_input, third_input, fourth, fifth, sixth)
+        flash("Email verified successfully", "success")
+    return render_template("email_verify.html")
 
 
 @auth_blp.route("/auth/logout")
