@@ -11,7 +11,9 @@ from flask import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, current_user, logout_user
-from extensions import db
+from extensions import db, mail
+from flask_mail import Message
+from models.user import update_otp
 
 
 auth_blp = Blueprint("auth_blp", __name__)
@@ -78,6 +80,14 @@ def register():
         # login_user(new_user)
         flash("Registration successful", "success")
         otp = new_user.otp
+
+        msg = Message(
+            subject="Email Verification",
+            sender="Iszify <iszify.send@gmail.com>",
+            recipients=[email],
+        )
+        msg.html = render_template("email_verification.html", otp=otp)
+        mail.send(msg)
         return redirect(url_for("auth_blp.email_verify", email=email))
 
     return render_template(
@@ -108,6 +118,18 @@ def login():
             return redirect(url_for("auth_blp.login"))
 
         if not user_.email_verified:
+            # Email not verified
+            otp = user_.otp
+            if not otp:
+                otp = update_otp(user_)
+                msg = Message(
+                    subject="Email Verification",
+                    sender="Iszify <iszify.send@gmail.com>",
+                    recipients=[email],
+                )
+                msg.html = render_template("email_verification.html", otp=otp)
+                mail.send(msg)
+
             flash("Please verify your email", "danger")
             return redirect(url_for("auth_blp.email_verify", email=email))
 
@@ -150,3 +172,27 @@ def logout():
     logout_user()
     flash("logged out successfully", "success")
     return redirect(url_for("user_blp.home"))
+
+
+# resend otp
+@auth_blp.route("/auth/resend_otp/<email>")
+def resend_otp(email):
+    if not email:
+        return redirect(url_for("auth_blp.email_verify"))
+    email = email.lower()
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return redirect(url_for("auth_blp.email_verify"))
+    if user.email_verified:
+        flash("Email already verified, please login", "success")
+        return redirect(url_for("auth_blp.login"))
+    otp = update_otp(user)
+    msg = Message(
+        subject="Email Verification",
+        sender="Iszify <iszify.send@gmail.com>",
+        recipients=[email],
+    )
+    msg.html = render_template("email_verification.html", otp=otp)
+    mail.send(msg)
+    flash("OTP sent successfully", "success")
+    return redirect(url_for("auth_blp.email_verify", email=email))
