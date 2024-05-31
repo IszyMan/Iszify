@@ -347,8 +347,8 @@ def bio_link_routes(brand_name):
         func.lower(CreateBioPage.bio_name) == brand_name.lower()).first()
     # if not check_brand:
     #     return render_template("404.html")
-    bio_links = CreateBioLinkEntries.query.filter_by(
-        author_id=check_brand.id, bio_page_id=brand_name
+    bio_links = CreateBioLinkEntries.query.join(CreateBioPage).filter(
+        CreateBioLinkEntries.author_id == check_brand.id, func.lower(CreateBioPage.bio_name) == brand_name.lower()
     ).all()
     return render_template(
         "bio_link_routes.html", brandie=brand_name.upper(), all_posts=bio_links
