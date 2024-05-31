@@ -83,7 +83,7 @@ def register():
 
         msg = Message(
             subject="Email Verification",
-            sender="Iszify <iszify.send@gmail.com>",
+            sender="Linktool <iszify.send@gmail.com>",
             recipients=[email],
         )
         msg.html = render_template("email_verification.html", otp=otp)
@@ -125,7 +125,7 @@ def login():
                 otp = update_otp(user_)
                 msg = Message(
                     subject="Email Verification",
-                    sender="Iszify <iszify.send@gmail.com>",
+                    sender="Linktool <iszify.send@gmail.com>",
                     recipients=[email],
                 )
                 msg.html = render_template("email_verification.html", otp=otp)
@@ -201,7 +201,7 @@ def resend_otp(email):
     print(otp, f"Resend otp for {email}")
     msg = Message(
         subject="Email Verification",
-        sender="Iszify <iszify.send@gmail.com>",
+        sender="Linktool <iszify.send@gmail.com>",
         recipients=[email],
     )
     msg.html = render_template("email_verification.html", otp=otp)
