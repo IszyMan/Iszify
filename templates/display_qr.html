@@ -71,7 +71,7 @@
                               <button><a href="{{ url_for('user_blp.qr_codes_customize', qr_id=url.id) }}"  class="">
                                   <i class="bi bi-palette h4"></i>
                               </a></button>
-                              <button><a href="javascript:void(0);" onclick="downloadQR('{{ url.url }}', '{{ url.id }}')" class="">
+                              <button><a href="javascript:void(0);" onclick="downloadQR('{{ url.qr_data }}', '{{ url.id }}')" class="">
                                   <i class="bi bi-download h4"></i>
                               </a></button>
                               <button><a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
@@ -107,16 +107,27 @@
     }
 
     function downloadQR(qrUrl, id) {
-        fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
-            .then(response => response.blob())
-            .then(blob => {
-                var url = window.URL.createObjectURL(blob);
-                var link = document.createElement('a');
-                link.href = url;
-                link.download = "qr_code_" + id + ".png";
-                link.click();
-                window.URL.revokeObjectURL(url);
-            });
+        // fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
+        //     .then(response => response.blob())
+        //     .then(blob => {
+        //         var url = window.URL.createObjectURL(blob);
+        //         var link = document.createElement('a');
+        //         link.href = url;
+        //         link.download = "qr_code_" + id + ".png";
+        //         link.click();
+        //         window.URL.revokeObjectURL(url);
+        //     });
+
+            fetch(`data:image/png;base64,${qrUrl}`)
+        .then(res => res.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = "qr_code_" + id + ".png";
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
     }
 
 
