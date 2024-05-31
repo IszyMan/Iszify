@@ -32,7 +32,7 @@ def home():
             flash("Input Required", "danger")
             return redirect(url_for("user_blp.home"))
         if not original_url.startswith("http://") and not original_url.startswith(
-            "https://"
+                "https://"
         ):
             original_url = "http://" + original_url
         check_if_exist = Urlshort.query.filter_by(url=original_url).first()
@@ -341,8 +341,10 @@ def update_bio_link_pages_details(bio_id, parent_id):
 
 
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
+@login_required
 def bio_link_routes(brand_name):
-    check_brand = CreateBioPage.query.filter_by(bio_name=brand_name.lower()).first()
+    check_brand = CreateBioPage.query.filter(
+        func.lower(CreateBioPage.bio_name) == brand_name.lower()).first()
     # if not check_brand:
     #     return render_template("404.html")
     bio_links = CreateBioLinkEntries.query.filter_by(
