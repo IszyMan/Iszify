@@ -17,7 +17,11 @@
       <!-- This is goto links div-->
       <div class="row mb-4">
           <div class="container-fluid align-self-end mt-5">
-              <h2><b>Bio Pages</b></h2>
+              <h2><b>All Bio Pages</b></h2>
+
+              <a href="{{url_for('user_blp.create_Bio_Page')}}"><button class="btn badge fw-normal shadow-none bg-success text-right me-3" style="font-size: 1.1rem;">
+                Create New Bio Page<i class="fa fa-plus px-2"></i> </button></a>
+
               {% if display %}
                   <form action="" method="post" id="filter_form" class="d-none">
                       <input type="text" id="datepicker_input" name="date">
