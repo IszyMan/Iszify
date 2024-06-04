@@ -14,6 +14,7 @@ from wtforms.widgets import TextInput
 class GenerateBrandName(FlaskForm):
     domainname = StringField("Domain Name", render_kw={"placeholder": "Linktools.com/"})
     brandname = StringField("Bio Name", validators=[DataRequired()])
+
     submit = SubmitField("Create your Bio!")
 
 
