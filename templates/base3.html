@@ -30,7 +30,7 @@
   <!-- Css link -->
   <link rel="stylesheet" href="" />
   <!-- Title , the block to be inherited by other files so as to add a title for each page-->
-  <title>LinkTools {% block title %}{% endblock title %}
+  <title>Welcome! {% block title %}{% endblock title %}
   </title>
   <link rel="icon" href="">
 </head>
@@ -94,7 +94,7 @@
     <div class="fixed-bottom text-center bg-light text-dark py-3 small" style="z-index: 0;">
 
        <!-- Javascript code to get the current year and add it to the footer -->
-              <span class='small text-dark'><a href="{{url_for('user_blp.home')}}">LinkTools.ng &copy; 2024</a></span>
+              <a href="{{url_for('user_blp.home')}}"><span class='small text-dark'>LinkTools.ng &copy; 2024</span></a>
 
     </div>
 </footer>

@@ -1,5 +1,5 @@
 {% extends 'base3.html' %}
-{% block title %}Login Page{% endblock title %}
+{% block title %}- {{brandie}} Link-in-bio Page{% endblock title %}
 {% block content %}
 
 <style>
@@ -32,6 +32,7 @@
     {%if all_posts%}
     {% for post in all_posts  %}
     <div class='p-3 mt-2 rounded-pill border-bottom ' style="color: rgb(35, 35, 35); background-color: rgb(199, 204, 208); border-radius: 2.3rem;">
+        <img class="me-5 rounded-circle" height="25" width="25" src='http://www.google.com/s2/favicons?domain={{post.link_url}}' />
         <a class='h3 mb-4 mt-3 fw-bold text-decoration-none' href='{{post.link_url}}' target='_blank'>{{ post.link_name.upper() }}</a>
         <div style='display: flex; justify-content: space-evenly;'>
             {%if post.link_name=="Twitter" %}
