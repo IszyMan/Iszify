@@ -343,12 +343,8 @@ def update_bio_link_pages_details(bio_id, parent_id):
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
 @login_required
 def bio_link_routes(brand_name):
-    check_brand = CreateBioPage.query.filter(
-        func.lower(CreateBioPage.bio_name) == brand_name.lower()).first()
-    # if not check_brand:
-    #     return render_template("404.html")
     bio_links = CreateBioLinkEntries.query.join(CreateBioPage).filter(
-        CreateBioLinkEntries.author_id == check_brand.id, func.lower(CreateBioPage.bio_name) == brand_name.lower()
+        CreateBioLinkEntries.author_id == current_user.id, func.lower(CreateBioPage.bio_name) == brand_name.lower()
     ).all()
     return render_template(
         "bio_link_routes.html", brandie=brand_name.upper(), all_posts=bio_links
