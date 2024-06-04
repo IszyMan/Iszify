@@ -344,7 +344,7 @@ def update_bio_link_pages_details(bio_id, parent_id):
 # @login_required
 def bio_link_routes(brand_name):
     bio_links = CreateBioLinkEntries.query.join(CreateBioPage).filter(
-        CreateBioLinkEntries.author_id == current_user.id, func.lower(CreateBioPage.bio_name) == brand_name.lower()
+        func.lower(CreateBioPage.bio_name) == brand_name.lower()
     ).all()
     return render_template(
         "bio_link_routes.html", brandie=brand_name.upper(), all_posts=bio_links
