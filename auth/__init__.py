@@ -23,7 +23,7 @@ auth_blp = Blueprint("auth_blp", __name__)
 def register():
     form = RegisterForm()
     if current_user.is_authenticated:
-        return redirect(url_for("user_blp.admin"))
+        return redirect(url_for("user_blp.dashboard"))
     if request.method == "POST":
         email = request.form.get("email").lower()
         if "@" and ".com" not in email:
@@ -88,7 +88,7 @@ def register():
         )
         msg.html = render_template("email_verification.html", otp=otp)
         mail.send(msg)
-        flash("Registration successful, check your email", "success")
+        flash("Registration almost complete, check your email or spam folder for OTP", "success")
         return redirect(url_for("auth_blp.email_verify", email=email))
 
     return render_template(

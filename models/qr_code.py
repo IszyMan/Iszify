@@ -31,6 +31,9 @@ class QrCode(UserMixin, db.Model):
     mail = db.Column(db.String(250))
     address = db.Column(db.Text)
     note = db.Column(db.Text)
+    # # WIFI
+    ssid = db.Column(db.String(250))
+    password = db.Column(db.String(250))
 
     def __repr__(self):
         return f"QrCode('{self.url}', '{self.created_at}')"

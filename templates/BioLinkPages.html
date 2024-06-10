@@ -10,10 +10,10 @@
 
 
 {% block content %}
-
+<div class="container mt-5">
 
 <main style="margin-top: 28px">
-  <div class="container pt-5">
+
       <!-- This is goto links div-->
       <div class="row mb-4">
           <div class="container-fluid align-self-end mt-5">
@@ -33,6 +33,8 @@
               {% endif %}
           </div>
       </div>
+
+ </main>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
           {% if bio_pages %}
               {% for post in bio_pages|reverse %}
@@ -77,6 +79,7 @@
                           </div>
                       </div>
                   </div>
+                  </div>
                   <br>
                   <div class="modal fade" id="exampleModal11{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
                       <div class="modal-dialog">
@@ -97,9 +100,11 @@
                                   </div>
                               </div>
                           </div>
-                      </div>
-                  </div>
+
               {% endfor %}
+
+                </div>
+                  </div>
           {% else %}
           <div class="card" style="background-color:lavender;">
           <div class="row">
@@ -110,11 +115,11 @@
               </div>
               </div>
           {% endif %}
-      </div>
+
   </div>
-</main>
 
-
+</div>
+</div>
 
 <script>
   close_btn = document.getElementById('close_btn');

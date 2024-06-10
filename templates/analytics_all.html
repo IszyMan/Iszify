@@ -1,0 +1,142 @@
+{% extends 'base2.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  {% endblock head %}
+
+{% block car %}
+<div class="container background-gray-10 mt-3" >
+<main style="margin-top: 8px">
+  <div class="container pt-4">
+<div class="dashdiv">
+     <div class="d-flex flex-row">
+        <div class="p-2">
+<!--        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal1">-->
+<!--      CREATE NEW-->
+<!--             <i class="fa fa-plus" aria-hidden="true"></i>-->
+<!--    </button>-->
+
+    </div>
+    </div>
+</div>
+      </div>
+</main>
+{% endblock car %}
+
+{% block content %}
+
+
+<main style="margin-top: 28px">
+  <div class="container pt-4">
+
+    <section style="background-color: #eee;">
+      <div class="container py-5">
+          <h3 class="text-center mb-4"><b>Showing data for all links and QR codes</b></h3>
+    
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card mb-4">
+              <div class="card-body  align-items-center ">
+                <p class="mb-4 mt-1"><b>Top Performing dates</b></p>
+                <h5 class="text-center p-3 mb-0"><b><i class="fa-solid fa-arrow-trend-up"></i> May 31, 2024 & May 22, 2024</b></h5>
+                <h6 class="text-center mt-1 mb-4">65 Clicks + scans</h6>
+
+              </div>
+            </div>
+            <div class="card mb-4">
+              <div class="card-body  align-items-center ">
+                <h5 class="mb-4 mt-1"><b>Clicks + scans overtime</b></h5>
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='clicks+scans-overtime.png') }}" class="mx-auto d-block img-thumbnail"/>
+                  </div>
+              </div>
+            </div>
+           <div class="card mb-4">
+              <div class="card-body  align-items-center ">
+                <p class="mb-4 mt-1"><b>Top Performing location</b></p>
+                <h5 class="text-center p-3 mb-0"><b><i class="fa-solid fa-arrow-trend-up"></i> Nigeria & United States</b></h5>
+                <h6 class="text-center mt-1 mb-4">65 Clicks + scans</h6>
+
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-body  align-items-center ">
+                <h5 class="mb-4 mt-1"><b>Clicks + scans by location</b></h5>
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='clicks-by-location.png') }}" class="mx-auto d-block img-thumbnail"/>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                 <h5 class="mb-4 mt-1"><b>Clicks + scans by device</b></h5>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="text-center">
+                    <img src="{{ url_for('static', filename='clicks-by-device-image.png') }}" class="mx-auto d-block img-thumbnail"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                 <h5 class="mb-4 mt-1"><b>Clicks + scans by referrer</b></h5>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="text-center">
+                    <img src="{{ url_for('static', filename='scans-by-referrer.png') }}" class="mx-auto d-block img-thumbnail"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                 <h5 class="mb-4 mt-1"><b>Clicks + scans by location</b></h5>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="text-center">
+                    <img src="{{ url_for('static', filename='clicks+by-country.png') }}" class="mx-auto d-block img-thumbnail"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+
+   </div>
+
+</main>
+</div>
+{% endblock content %}

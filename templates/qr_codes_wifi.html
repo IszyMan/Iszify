@@ -7,33 +7,38 @@
 
 <main style="margin-top: 58px">
   <div class="container pt-4">
-
-
+      
+      
      <div class="text-center mt-5 ">
      <h4>Select QR code type:
       <a href="{{url_for('user_blp.qr_codes')}}"> URL</a> |
       <a href="{{url_for('user_blp.qr_codes_email')}}">E-mail</a>  |
-       <a href="{{url_for('user_blp.qr_codes_wifi')}}">WIFI</a>  |
-       <a href="{{url_for('user_blp.qr_codes_vcard')}}">Business card (VCARD)</a>
-
+        <a href="{{url_for('user_blp.qr_codes_wifi')}}">WIFI</a>  |
+       <a href="{{url_for('user_blp.qr_codes_vcard')}}">Business card (VCARD)</a>  
+     
      </h4>
      </div>
 
 <div class="container containered mt-5" style="max-width: 600px;">
   {% if not n %}
-  <h1 class="text-center">QR CODE EMAIL Generator</h1>
+  <h1 class="text-center">WIFI</h1>
   <form action="" method="POST">
       <div class="mb-3">
-          <label for="email" class="form-label"><h4><b>Enter Email Address:</b></h4></label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
-          <br><br><h5><b>Code Details</b></h5>
-          <label for="title" class="form-label"><b>Enter Title</b> (Optional)</label>
-          <input type="text" class="form-control" id="title" name="title" placeholder="optional" >
+          <label for="ssid" class="form-label"><b>SSID</b> (Optional)</label>
+          <input type="text" class="form-control" id="ssid" name="ssid" placeholder="optional" >
+
+          <label for="password" class="form-label"><b>Password</b> </label>
+          <input type="text" class="form-control" id="password" name="password" placeholder="Enter your Password" >
+
+
+          <br><br>
           <div class="invalid-feedback">
               Please enter a valid URL.
           </div>
       </div>
-      <button type="submit" class="btn btn-primary btn-block">Create QR</button>
+      <div class="text-center">
+          <button type="submit" class="btn btn-primary btn-block h3">Create WIFI</button>
+      </div>
   </form>
   {% endif %}
   {% if n %}
@@ -66,11 +71,11 @@
 {% endif %}
 
   <!-- button to view all qr codes created -->
-  <div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">
-      <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-center text-decoration-none text-white">
-          View QR Codes
-      </a>
-</div>
+<!--  <div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">-->
+<!--      <a href="{{url_for('user_blp.display_qr_codes')}}" class="text-center text-decoration-none text-white">-->
+<!--          View QR Codes-->
+<!--      </a>-->
+<!--</div>-->
 </div>
   </div>
 </main>

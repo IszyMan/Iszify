@@ -13,6 +13,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import io
 import base64
+from werkzeug.security import generate_password_hash, check_password_hash
 import qrcode
 from PIL import Image
 from sqlalchemy import func
@@ -458,6 +459,11 @@ def profile(sub_path):
 #         return render_template("404.html")
 #     return render_template("brand.html", brandie=brandie.upper())
 
+# All Analytics page
+@user_blp.route("/analytics")
+def analytics_all():
+    return render_template("analytics_all.html", analytics=True)
+
 
 @user_blp.route("/brand/<brandname>/", methods=["GET", "POST"])
 def brand(brandname):
@@ -803,6 +809,50 @@ def qr_codes_vcard():
         flash("QR Code has been generated successfully!", "success")
         return redirect(url_for("user_blp.display_qr_codes"))
     return render_template("qr_codes_vcard.html", n=0)
+
+
+# QR Codes for WIFI
+@user_blp.route("/qr_codes/create_wifi", methods=["GET", "POST"])
+@login_required
+def qr_codes_wifi():
+    if request.method == "POST":
+        ssid = request.form.get("ssid")
+        password = request.form.get("password")
+        title = (
+                request.form.get("title")
+                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+        )
+
+        hash_and_salted_password = generate_password_hash(
+            password, method="pbkdf2:sha256", salt_length=3
+        )
+
+        data = dict(
+            ssid=ssid,
+            password=hash_and_salted_password,
+
+        )
+        res = generate_and_save_qr(data)
+        # check if the url exists
+        existing_qr_code = QrCode.query.filter_by(
+            author_id=current_user.id, ssid=ssid
+        ).first()
+        if existing_qr_code:
+            flash("Wifi already exists", "danger")
+            return render_template("qr_codes_wifi.html", n=1, url=existing_qr_code.url)
+        new_qr_code = QrCode(
+            author=current_user,
+            author_id=current_user.id,
+            ssid=ssid,
+            password=password,
+            qr_data=res,
+            short_url=generate_short_url2(),
+            title=title,
+        )
+        new_qr_code.save()
+        flash("QR Code has been generated successfully!", "success")
+        return redirect(url_for("user_blp.display_qr_codes"))
+    return render_template("qr_codes_wifi.html", n=0)
 
 
 # display all qr codes for the current user
