@@ -1,0 +1,207 @@
+html
+Copy code
+{% extends 'base2.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock head %}
+
+{% block car %}
+<div class="container background-gray-10 mt-3">
+<main style="margin-top: 8px">
+  <div class="container pt-4">
+    <div class="dashdiv">
+      <div class="d-flex flex-row">
+        <div class="p-2">
+          <!-- Create New Button -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock car %}
+
+{% block content %}
+<style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .admin-dashboard {
+      padding: 20px;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+</style>
+
+<div class="container admin-dashboard mt-5">
+  <div class="row">
+    <!-- Statistics Cards -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Total QR Code Clicks</h5>
+          <p class="card-text fw-bold">{{ qr_code_clicks }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0">
+        <div class="card-body bg-warning">
+          <h5 class="card-title">Total Bio Page Clicks</h5>
+          <p class="card-text fw-bold">{{ bio_page_clicks }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Total URL Shortener Clicks</h5>
+          <p class="card-text fw-bold">{{ url_short_clicks }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-warning">
+          <h5 class="card-title">QR Codes Generated</h5>
+          <p class="card-text fw-bold">{{ qr_code_generated }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Bio Pages Generated</h5>
+          <p class="card-text fw-bold">{{ bio_pages_generated }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-warning">
+          <h5 class="card-title">URL Shorteners Generated</h5>
+          <p class="card-text fw-bold">{{ url_shorts_generated }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="col-md-6 mt-4">
+      <div class="card border-0">
+        <div class="card-body bg-warning">
+          <h5 class="card-title">QR Code Clicks Chart</h5>
+          <canvas id="qrCodeClicksChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Bio Page Clicks Chart</h5>
+          <canvas id="bioPageClicksChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">URL Shortener Clicks Chart</h5>
+          <canvas id="urlShortClicksChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">QR Code Statistics Breakdown</h5>
+          <canvas id="qrCodeStatsDoughnut"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Your custom scripts or charts libraries (e.g., Chart.js) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // QR Code data for charts
+  const qrCodeClicksData = {
+    labels: ["QR Code Clicks"],
+    datasets: [{
+      label: 'QR Code Clicks',
+      data: [{{ qr_code_clicks }}],
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  const bioPageClicksData = {
+    labels: ["Bio Page Clicks"],
+    datasets: [{
+      label: 'Bio Page Clicks',
+      data: [{{ bio_page_clicks }}],
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  const urlShortClicksData = {
+    labels: ["URL Shortener Clicks"],
+    datasets: [{
+      label: 'URL Shortener Clicks',
+      data: [{{ url_short_clicks }}],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  const qrCodeStatsData = {
+    labels: ["QR Codes Generated", "Bio Pages Generated", "URL Shorteners Generated"],
+    datasets: [{
+      label: 'QR Code Statistics',
+      data: [{{ qr_code_generated }}, {{ bio_pages_generated }}, {{ url_shorts_generated }}],
+      backgroundColor: ['rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+      borderColor: ['rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+      borderWidth: 1
+    }]
+  };
+
+  // Initialize charts
+  const qrCodeClicksCtx = document.getElementById('qrCodeClicksChart').getContext('2d');
+  new Chart(qrCodeClicksCtx, {
+    type: 'bar',
+    data: qrCodeClicksData
+  });
+
+  const bioPageClicksCtx = document.getElementById('bioPageClicksChart').getContext('2d');
+  new Chart(bioPageClicksCtx, {
+    type: 'bar',
+    data: bioPageClicksData
+  });
+
+  const urlShortClicksCtx = document.getElementById('urlShortClicksChart').getContext('2d');
+  new Chart(urlShortClicksCtx, {
+    type: 'bar',
+    data: urlShortClicksData
+  });
+
+  const qrCodeStatsDoughnutCtx = document.getElementById('qrCodeStatsDoughnut').getContext('2d');
+  new Chart(qrCodeStatsDoughnutCtx, {
+    type: 'doughnut',
+    data: qrCodeStatsData
+  });
+</script>
+
+{% endblock content %}
