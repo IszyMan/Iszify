@@ -8,6 +8,7 @@ from utils import (get_platform, generate_and_save_qr, update_qr_code,
                    customize_qr_code_logo, customize,
                    get_urls_by_date, get_qr_codes_by_date, get_bio_page_by_date)
 from models.create_bio_page import CreateBioPage
+from models.qr_code import QrCode
 from models.user import update_otp
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -461,8 +462,33 @@ def profile(sub_path):
 
 # All Analytics page
 @user_blp.route("/analytics")
+@login_required
 def analytics_all():
-    return render_template("analytics_all.html", analytics=True)
+    qr_codes = QrCode.query.filter_by(user_id=current_user.id).all()
+    user_id = current_user.id
+
+    # Prepare data for the charts
+    qr_codes = QrCode.query.filter_by(author_id=user_id).all()
+    bio_pages = CreateBioPage.query.filter_by(author_id=user_id).all()
+    url_shorts = Urlshort.query.filter_by(author_id=user_id).all()
+
+    # Prepare data for the charts
+    qr_code_clicks = sum(qr_code.clicks for qr_code in qr_codes)
+    bio_page_clicks = sum(bio_page.clicks for bio_page in bio_pages)
+    url_short_clicks = sum(url_short.clicks for url_short in url_shorts)
+
+    qr_code_generated = len(qr_codes)
+    bio_pages_generated = len(bio_pages)
+    url_shorts_generated = len(url_shorts)
+    return render_template("analytics.html", analytics=True,
+                           qr_code_clicks=qr_code_clicks,
+                           bio_page_clicks=bio_page_clicks,
+                           url_short_clicks=url_short_clicks,
+                           qr_code_generated=qr_code_generated,
+                           bio_pages_generated=bio_pages_generated,
+                           url_shorts_generated=url_shorts_generated
+                           )
+    # return render_template("analytics_all.html", analytics=True)
 
 
 @user_blp.route("/brand/<brandname>/", methods=["GET", "POST"])
