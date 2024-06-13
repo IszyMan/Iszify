@@ -464,7 +464,6 @@ def profile(sub_path):
 @user_blp.route("/analytics")
 @login_required
 def analytics_all():
-    qr_codes = QrCode.query.filter_by(user_id=current_user.id).all()
     user_id = current_user.id
 
     # Prepare data for the charts
