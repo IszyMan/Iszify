@@ -2,6 +2,23 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/short.css') }}">
   {% endblock head %}
+
+{% block car %}
+<div class="container background-gray-10 " >
+<main style="margin-top: 8px">
+  <div class="container pt-4">
+<div class="dashdiv">
+     <div class="d-flex flex-row">
+        <div class="p-2 text-center">
+
+    </div>
+    </div>
+</div>
+      </div>
+</main>
+    </div>
+{% endblock car %}
+
 {% block content %}
 
 <main style="margin-top: 58px">
@@ -52,28 +69,39 @@
 </div>
 <div>
     {% else %}
+
+
     <div class="container containered mt-5">
+
         <div class="mb-3">
-            <label for="shortUrl" class="form-label">Original URL:</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="originalUrl" value="{{ original_url }}" readonly>
-            </div>
-            <label for="shortUrl" class="form-label">Short URL:</label>
+            <label for="shortUrl" class="form-label text-success">Short URL:</label>
             <div class="input-group">
                 <input type="text" class="form-control" id="shortUrl" value="{{ shortened_url }}" readonly>
                 <button class="btn btn-outline-secondary" type="button" id="copyButton"
                 onclick="copyToClipboard('{{ shortened_url }}')"
                 >Copy</button>
             </div>
+
+            <label for="shortUrl" class="form-label">Original URL:</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="originalUrl" value="{{ original_url }}" readonly>
+            </div>
+
             {% if generate_qr_code %}
             <div class="d-flex mx-auto mt-4">
                 <img src="data:image/png;base64,{{ qr_data }}"
                       alt="QR Code" class="mx-auto"
                     />
             </div>
+            <button>
+                <a href="javascript:void(0);" onclick="downloadQR('{{ qr_data }}', '{{ qr_data.id }}')" class="">
+                    <i class="bi bi-download h4"></i>
+                </a></button>
             {% endif %}
         </div>
     </div>
+
+
     {% endif %}
 </div>
 <div class="m-auto text-center mt-5 bg-success px-3 rounded" style="width: fit-content;">
@@ -94,6 +122,57 @@
         document.body.removeChild(input);
         return result;
     }
+</script>
+
+<script>
+    function confirmDelete() {
+      return confirm('Are you sure you want to delete?');
+    }
+
+    function downloadQR(qrUrl, id) {
+        // fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
+        //     .then(response => response.blob())
+        //     .then(blob => {
+        //         var url = window.URL.createObjectURL(blob);
+        //         var link = document.createElement('a');
+        //         link.href = url;
+        //         link.download = "qr_code_" + id + ".png";
+        //         link.click();
+        //         window.URL.revokeObjectURL(url);
+        //     });
+
+            fetch(`data:image/png;base64,${qrUrl}`)
+        .then(res => res.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = "qr_code_" + id + ".png";
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+    }
+
+
+
+    close_btn = document.getElementById('close_btn');
+  close_btn.addEventListener('click', function () {
+    window.location.href = '/stats/qr_codes';
+  })
+
+  document.addEventListener('DOMContentLoaded', function () {
+      // Initialize Bootstrap datepicker
+      $('#datepicker-btn').datepicker({
+          autoclose: true,
+          format: 'yyyy-mm-dd'
+      }).on('changeDate', function (e) {
+          // Get the selected date value
+          var selectedDate = e.format('yyyy-mm-dd');
+          console.log('Selected Date:', selectedDate);
+          document.querySelector('#datepicker_input').value = selectedDate;
+          document.querySelector('#filter_form').submit();
+      });
+  });
 </script>
 
 {% endblock content %}

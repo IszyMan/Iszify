@@ -8,6 +8,21 @@
 
   {% endblock head %}
 
+{% block car %}
+<div class="container background-gray-10 " >
+<main style="margin-top: 8px">
+  <div class="container pt-4">
+<div class="dashdiv">
+     <div class="d-flex flex-row">
+        <div class="p-2 text-center">
+
+    </div>
+    </div>
+</div>
+      </div>
+</main>
+    </div>
+{% endblock car %}
 
 {% block content %}
 
@@ -67,8 +82,15 @@
                     </div>
                     {% endif %} -->
                     <div class=" mt-5 mb-5">
-                        <p><i class="fa fa-copy px-2" id="" style="cursor: pointer;"></i> Copy
-                            <i class="bi bi-pencil-square px-2" style="cursor: pointer;"></i> Edit</p>
+                       <button><i class="fa fa-copy px-0" id="" style="cursor: pointer;"></i> Copy</button>
+                           <button> <i class="bi bi-pencil-square px-0" style="cursor: pointer;"></i> Share</button>
+                        <button> <i class="bi bi-pencil-square px-0" style="cursor: pointer;"></i></button>
+                        <button class="text-danger"><a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()" class="">
+                                  <i class="bi bi-trash px-0"></i>
+                              </a>
+                        </button>
+
+
                     </div>
                 </div>
             </div>
@@ -92,6 +114,11 @@
 </div>
 
 <script>
+    function confirmDelete() {
+      return confirm('Are you sure you want to delete this Link?');
+    }
+
+
   close_btn = document.getElementById('close_btn');
   close_btn.addEventListener('click', function () {
     window.location.href = '/stats/urls';
