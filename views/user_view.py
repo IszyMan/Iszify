@@ -479,7 +479,7 @@ def analytics_all():
     qr_code_generated = len(qr_codes)
     bio_pages_generated = len(bio_pages)
     url_shorts_generated = len(url_shorts)
-    return render_template("analytics.html", analytics=True,
+    return render_template("analysis.html", analytics=True,
                            qr_code_clicks=qr_code_clicks,
                            bio_page_clicks=bio_page_clicks,
                            url_short_clicks=url_short_clicks,
