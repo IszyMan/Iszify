@@ -616,9 +616,10 @@ def shorten_url():
                 return render_template("shorten.html")
         else:
             short_url = generate_short_url()
-            print(generate_short_url())
 
-        res = generate_and_save_qr(original_url) if generate_qr_code else ""
+        url_and_short_url = f"{request.host_url}{short_url}"
+
+        res = generate_and_save_qr(url_and_short_url) if generate_qr_code else ""
         # print(res, 'res')
 
         url = Urlshort(
