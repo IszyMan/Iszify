@@ -121,7 +121,7 @@
                       </p>
                       {% for qr_code in current_user.qr_code[::-1][:2] %}
                       <div class="card-body d-flex justify-content-start align-items-center">
-                        <span class="fw-bold">{{loop.index}}</span>
+                        <!-- <span class="fw-bold">{{loop.index}}</span> -->
                         <div class="col-sm"> 
                           <img src="data:image/png;base64,{{ qr_code.qr_data }}" 
                           height="50" width="50"
