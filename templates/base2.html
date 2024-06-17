@@ -112,7 +112,7 @@
             <i class="fa-solid fa-user-circle h3 text-white"></i> <span class="fw-bold mx-1 text-white">{{current_user.username.upper()}}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end p-3 bg-primary" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item text-white p-3" href="{{url_for('user_blp.profile_info', username=current_user.username)}}">My profile</a></li>
+            <li><a class="dropdown-item text-white p-3" href="{{url_for('user_blp.dashboard)}}">My profile</a></li>
             <li><a class="dropdown-item text-white p-3" href="#">Settings</a></li>
           </ul>
         </li>
