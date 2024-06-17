@@ -1,5 +1,3 @@
-html
-Copy code
 {% extends 'base2.html' %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
@@ -66,7 +64,7 @@ Copy code
     <div class="col-md-4">
       <div class="card">
         <div class="card-body bg-warning">
-          <h5 class="card-title">QR Codes Generated</h5>
+          <h5 class="card-title">QR Codes</h5>
           <p class="card-text fw-bold">{{ qr_code_generated }}</p>
         </div>
       </div>
@@ -75,7 +73,7 @@ Copy code
     <div class="col-md-4">
       <div class="card">
         <div class="card-body bg-dark text-white">
-          <h5 class="card-title">Bio Pages Generated</h5>
+          <h5 class="card-title">Bio Pages</h5>
           <p class="card-text fw-bold">{{ bio_pages_generated }}</p>
         </div>
       </div>
@@ -84,7 +82,7 @@ Copy code
     <div class="col-md-4">
       <div class="card">
         <div class="card-body bg-warning">
-          <h5 class="card-title">URL Shorteners Generated</h5>
+          <h5 class="card-title">URL Shorteners</h5>
           <p class="card-text fw-bold">{{ url_shorts_generated }}</p>
         </div>
       </div>
@@ -168,7 +166,7 @@ Copy code
   };
 
   const qrCodeStatsData = {
-    labels: ["QR Codes Generated", "Bio Pages Generated", "URL Shorteners Generated"],
+    labels: ["QR Codes", "Bio Pages", "URL Shorteners"],
     datasets: [{
       label: 'QR Code Statistics',
       data: [{{ qr_code_generated }}, {{ bio_pages_generated }}, {{ url_shorts_generated }}],
