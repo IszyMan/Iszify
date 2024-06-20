@@ -1,0 +1,217 @@
+{% extends 'base2.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/biophone.css') }}">
+
+
+{% endblock head %}
+{% block content %}
+<style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .admin-dashboard {
+      padding: 20px;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+</style>
+
+<main style="margin-top: 78px">
+  <div class="container pt-4">
+
+  <div class="container bg-secondary">
+    <div class="d-flex justify-content-start py-3 container align-item-center">
+        <div>
+            {% for post in bios %}
+        <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Links</a>
+        <a href="{{url_for('user_blp.bio_link_page_appearance', bio_id=post.id)}}" class="btn py-1 px-2" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
+        <a href="{{url_for('user_blp.bio_link_page_track_analytics', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Analytics</a>
+            {% endfor %}
+    </div>
+    </div>
+</div>
+
+   <div class="dashdiv">
+     <div class="d-flex flex-row">
+        <div class="p-2">
+   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
+        {% for post in bios %}
+       <li class="nav-item mx-3">
+      <p><i class="fa fa-link" aria-hidden="true"></i>
+       <a class="text-decoration-none text-dark fw-bold" href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
+       </li>
+
+       <li class="nav-item mt-1"><span class="text-primary text-center "><b><i class="fas fa-copy"></i> Copy</b></span></li>
+
+       <li><div class="dropdown mx-3">
+       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
+       Edit URL
+       </button>
+      <div class="dropdown-menu p-5" style="width: 20rem;">
+
+      <h3>Edit Bio Name</h3>
+
+      <form action="{{url_for('user_blp.update_details', bio_id=post.id)}}" method="post" class="form-group">
+        <label for="link_name">Link Name</label>
+        <input type="text" class="form-control" name="brandname" value={{post.bio_name}}> <br>
+        <button type="submit" class="btn btn-secondary">Update</button>
+       </form>
+
+        </div>
+        </div>
+       </li>
+
+       <li> <a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
+          <button class="btn-light text-center p-1 bg-light shadow-none mx-3 text-dark text-decoration-none rounded-3 border border-dark">
+           <i class="fa fa-external-link mx-1" aria-hidden="true"></i> View </button></a>
+       </li>
+       <li><button class="btn-light text-center p-1 bg-light shadow-none text-dark text-decoration-none rounded-3 border border-dark" href="#">
+           <i class="fas fa-share"></i> Share</i>
+       </button>
+       </li>
+
+       <li class="text-end ms-5"><p class="btn-success text-end p-1 ms-5 bg-success shadow-none text-light text-decoration-none rounded-1 border border-success" >
+            Save Changes
+       </p>
+       </li>
+
+       {% endfor %}
+    </ul>
+    </div>
+    </div>
+</div>
+<br>
+
+    <div class="row">
+     <!-- Bio details phone-->
+     <div class="clearfix"  >
+    <div class="float-start  w-50 p-3">
+
+
+            <div class=" mb-4">
+            <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Bio Pages</h5>
+          <p class="card-text fw-bold">{{ bio_pages_generated }}</p>
+           </div>
+            </div>
+
+
+         <div class=" mb-4">
+            <div class="card-body bg-warning">
+          <h5 class="card-title">Bio Page Clicks</h5>
+          <p class="card-text fw-bold">{{ bio_page_clicks }}</p>
+        </div>
+            </div>
+
+         <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Bio Page Clicks Chart</h5>
+          <canvas id="bioPageClicksChart"></canvas>
+        </div>
+      </div>
+      </div>
+
+
+        <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Device Breakdown</h5>
+            <h6 class="card-title">What devices were used by your visitors? </h6>
+          <canvas id="qrCodeStatsDoughnut"></canvas>
+        </div>
+      </div>
+      </div>
+
+
+        </div>
+         <div class="float-end pt-0">
+            <p class="text-center rounded-pill "><button class="rounded-3 bg-warning">Live Preview </button></p>
+      <div class="smartphone ">
+     <div class="content mx-5" >
+      <div class="phone_container mt-5 mx-5" >
+          <div class="d-flex justify-content-center mb-4 mx-5 ">
+            <img src="{{ url_for('static', filename='Image-placeholder-2.png') }}"
+        class="rounded-circle "  style="width: 100px; height: 100px; object-fit: cover;" alt="example placeholder" />
+            </div>
+
+          <p class="text-center"><b>Welcome!</b></p>
+      {% for post in links_added|reverse%}
+          <div class='border border-primary rounded-pill p-3 mt-2 text-center'>
+            <img class="rounded-circle" height="25" width="25" src='http://www.google.com/s2/favicons?domain={{post.link_url}}' />
+            {{ post.link_name.upper() }} <br>
+              </div>
+      {% endfor %}
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+</main>
+
+<!-- Your custom scripts or charts libraries (e.g., Chart.js) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // QR Code data for charts
+
+  const bioPageClicksData = {
+    labels: ["Bio Page Clicks"],
+    datasets: [{
+      label: 'Bio Page Clicks',
+      data: [{{ bio_page_clicks }}],
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1
+    }]
+  };
+
+const qrCodeStatsData = {
+    labels: ["Mobile", "Desktop", "Tablets"],
+    datasets: [{
+      label: 'QR Code Statistics',
+      data: [{{ qr_code_generated }}, {{ bio_pages_generated }}, {{ url_shorts_generated }}],
+      backgroundColor: ['rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+      borderColor: ['rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+      borderWidth: 1
+    }]
+  };
+
+
+  // Initialize charts
+
+  const bioPageClicksCtx = document.getElementById('bioPageClicksChart').getContext('2d');
+  new Chart(bioPageClicksCtx, {
+    type: 'bar',
+    data: bioPageClicksData
+  });
+
+
+  const qrCodeStatsDoughnutCtx = document.getElementById('qrCodeStatsDoughnut').getContext('2d');
+  new Chart(qrCodeStatsDoughnutCtx, {
+    type: 'doughnut',
+    data: qrCodeStatsData
+  });
+
+
+
+</script>
+
+
+
+
+{% endblock content %}

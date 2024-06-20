@@ -307,7 +307,7 @@ def bio_link_pages_details(bio_id):
         return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
 
     return render_template(
-        "bio_link_pages_details.html",
+        "bio_link_pages_details.html", bio=True,
         bios=bios,
         links_added=bio_links,
         form=form,
@@ -365,13 +365,47 @@ def bio_link_page_appearance(bio_id):
 
     user_id = current_user.id
     return render_template(
-        "bio_link_page_appearance.html",
+        "bio_link_page_appearance.html", bio=True,
         bio_id=bio_id,
         bios=bios,
         links_added=bio_links,
         form=form,
         current_user=current_user,
         host_url=host_url,
+    )
+
+
+@user_blp.route("/biolinkpages/<bio_id>/track/analytics", methods=["GET", "POST"])
+@login_required
+def bio_link_page_track_analytics(bio_id):
+    form = CreatePostForm()
+    host_url = request.host_url
+    bio_links = CreateBioLinkEntries.query.filter_by(
+        author_id=current_user.id, bio_page_id=bio_id
+    ).all()
+    bios = CreateBioPage.query.filter_by(id=bio_id, author_id=current_user.id).all()
+
+    user_id = current_user.id
+
+    # Prepare data for the charts
+    bio_pages = CreateBioPage.query.filter_by(author_id=user_id).all()
+
+    # Prepare data for the charts
+    bio_page_clicks = sum(bio_page.clicks for bio_page in bio_pages)
+
+    bio_pages_generated = len(bio_pages)
+
+
+    return render_template(
+        "bio_link_page_track_analytics.html", bio=True,
+        bio_id=bio_id,
+        bios=bios,
+        links_added=bio_links,
+        form=form,
+        current_user=current_user,
+        host_url=host_url,
+        bio_page_clicks=bio_page_clicks,
+        bio_pages_generated=bio_pages_generated,
     )
 
 
@@ -746,7 +780,7 @@ def qr_codes():
         new_qr_code.save()
         flash("QR Code has been generated successfully!", "success")
         return redirect(url_for("user_blp.display_qr_codes"))
-    return render_template("qr_codes.html", n=0)
+    return render_template("qr_codes.html", n=0, qr=True)
 
 
 # QR Codes for Email
@@ -778,7 +812,7 @@ def qr_codes_email():
         new_qr_code.save()
         flash("QR Code has been generated successfully!", "success")
         return redirect(url_for("user_blp.display_qr_codes"))
-    return render_template("qr_codes_email.html", n=0)
+    return render_template("qr_codes_email.html", n=0, qr=True)
 
 
 # QR Codes for Email
@@ -834,7 +868,7 @@ def qr_codes_vcard():
         new_qr_code.save()
         flash("QR Code has been generated successfully!", "success")
         return redirect(url_for("user_blp.display_qr_codes"))
-    return render_template("qr_codes_vcard.html", n=0)
+    return render_template("qr_codes_vcard.html", n=0, qr=True)
 
 
 # QR Codes for WIFI
@@ -878,7 +912,7 @@ def qr_codes_wifi():
         new_qr_code.save()
         flash("QR Code has been generated successfully!", "success")
         return redirect(url_for("user_blp.display_qr_codes"))
-    return render_template("qr_codes_wifi.html", n=0)
+    return render_template("qr_codes_wifi.html", n=0, qr=True)
 
 
 # display all qr codes for the current user
@@ -937,10 +971,10 @@ def qr_codes_details(qr_id):
         id=qr_id, author_id=current_user.id
     ).all()  # check if this should be .all or .first
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
-    if not qr_codes:
-        print("No stats for this QR Code")
-        flash("No stats for this QR Code", "info")
-        return redirect(url_for("user_blp.display_qr_codes"))
+    # if not qr_codes:
+    #     print("No stats for this QR Code")
+    #     flash("No stats for this QR Code", "info")
+    #     return redirect(url_for("user_blp.display_qr_codes"))
     # Extract dates and click counts
     dates = [entry.date for entry in qr_codes]
     clicks = [entry.clicks for entry in qr_codes]
@@ -958,7 +992,7 @@ def qr_codes_details(qr_id):
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
     # return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
-    return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
+    return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url, qr=True)
 
 
 #            Customize QR CODES
@@ -1014,7 +1048,7 @@ def qr_codes_customize(qr_id):
             print(e, 'this is the error')
             db.session.rollback()
             return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
-    return render_template("qr_codes_customize.html", qrcode=qrcode)
+    return render_template("qr_codes_customize.html", qrcode=qrcode, qr=True)
 
 
 #                    Edit QR CODES
@@ -1039,7 +1073,7 @@ def qr_codes_content_edit(qr_id):
                 }
             )
 
-    return render_template("qr_codes_content_edit.html", urls=qrcodes, datas=datas)
+    return render_template("qr_codes_content_edit.html", urls=qrcodes, datas=datas, qr=True)
 
 
 # delete a qr code

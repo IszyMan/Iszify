@@ -10,19 +10,24 @@
 
      <div class="container-fluid">
 
+
+
+         <p><a href="{{url_for('user_blp.display_qr_codes')}}" class="side_link text-decoration-none text-dark"> <b>< Back to list</b></a></p>
+
     {% for url in urls|reverse %}
 
     <div class="card " style="background-color:lavender;">
         <div class="row mt-3">
-            <div class="h4"><strong> QR CODE TITLE</strong></div>
+            <div class="card-text h4 mt-3 ms-3"><strong>{{ url.title }}</strong></div><br>
         <div class="col-sm"> <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url.url }}"
             alt="QR Code" class="mx-auto d-flex img-thumbnail mt-2 mb-0" style="margin-bottom: 4rem;" />
         </div>
 
-        <div class="col-sm mt-3">
-          <a href="{{ url.url }}" class="text-center mx-auto w-100">
+        <div class="col-sm mt-1">
+           <p class="ms-0">website</p>
+         <i class="bi bi-arrow-return-right"></i><p class="ms-3"> <a href="{{ url.url }}" class="text-center mt-0  w-100 ">
             {{ url.url }}
-        </a>
+        </a></p>
         </div>
 
         <!-- Add a Font Awesome download icon and trash icon side by side -->
@@ -42,8 +47,10 @@
         <!-- <i class="fa fa-copy ms-5 h6 text-muted h-100" id="copyme2{{url.id}}" style="cursor: pointer;"></i> -->
     </div><hr>
         <div>
-        <p class=" px-3 "> <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})  | <strong>Date Created</strong> <i class="fa fa-calendar px-2 "></i>
-             {{ url.created_at.strftime('%Y-%m-%d') }} </p></div>
+        <p class=" px-3 "> <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})  |  <i class="fa fa-calendar px-2 "></i>
+             {{ url.created_at.strftime('%Y-%m-%d, %H:%M:%S') }}
+         | <i class="fa fa-link" aria-hidden="true"></i>shortlink.ng/{{ url.short_url }}
+        </p></div>
 
         </div>
         </div>
@@ -51,11 +58,20 @@
     {% endfor %}
       <div class="row">
       <div class="col-sm mt-5">
-
+          <h3><b>Scan data</b></h3>
 
           <img src="data:image/png;base64,{{ plot_url }}" alt="Clicks Chart">
       </div>
   </div>
+
+      <div class="row">
+      <div class="col-sm mt-5">
+          <h3><b>Scan by location</b></h3>
+
+          <img src="data:image/png;base64,{{ plot_url }}" alt="Clicks Chart">
+      </div>
+  </div>
+
   </div>
 </main>
 {% endblock content %}
