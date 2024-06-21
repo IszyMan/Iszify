@@ -56,21 +56,53 @@
         </div>
     <hr>
     {% endfor %}
-      <div class="row">
-      <div class="col-sm mt-5">
-          <h3><b>Scan data</b></h3>
+<!--      <div class="row">-->
+<!--      <div class="col-sm mt-5">-->
+<!--          <h3><b>Scan data</b></h3>-->
 
-          <img src="data:image/png;base64,{{ plot_url }}" alt="Clicks Chart">
+<!--          <img src="data:image/png;base64,{{ plot_url }}" alt="Clicks Chart">-->
+<!--      </div>-->
+<!--  </div>-->
+
+<!--      <div class="row">-->
+<!--      <div class="col-sm mt-5">-->
+<!--          <h3><b>Scan by location</b></h3>-->
+
+<!--          <img src="data:image/png;base64,{{ plot_url }}" alt="Clicks Chart">-->
+<!--      </div>-->
+<!--  </div>-->
+
+       <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">QR Code clicks Chart</h5>
+          <canvas id="qrCodeStatsClicks"></canvas>
+        </div>
       </div>
-  </div>
-
-      <div class="row">
-      <div class="col-sm mt-5">
-          <h3><b>Scan by location</b></h3>
-
-          <img src="data:image/png;base64,{{ plot_url }}" alt="Clicks Chart">
       </div>
-  </div>
+
+      <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-warning text-white">
+          <h5 class="card-title">Scans by Location</h5>
+            <h6 class="card-title">What countries are your visitors from?</h6>
+          <canvas id="bioPageClicksCountry"></canvas>
+        </div>
+      </div>
+      </div>
+
+
+
+      <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Scan by Device</h5>
+            <h6 class="card-title">What devices were used by your visitors? </h6>
+          <canvas id="qrCodeStatsDevices"></canvas>
+        </div>
+      </div>
+      </div>
+
 
   </div>
 </main>

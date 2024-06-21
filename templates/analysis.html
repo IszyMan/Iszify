@@ -31,41 +31,65 @@
     }
 </style>
 
-<div class="container admin-dashboard mt-5">
+
+   <!-- Date picker -->
+              <h3 class="mt-5 ms-3"><b>Analytics</b></h3>
+    <p class="ms-3"><i><b>Showing data for all links and QR Codes</b></i></p>
+    <hr>
+              <div class="details ms-3 mt-3 mb-0">
+            <div class="filters">
+                <div class="btn-group date-filter"> <a class="btn " data-toggle="dropdown" href="#">
+                    <i class="bi bi-calendar px-2"></i> Date Range : Last 7 days
+                    <span class="caret"></span>
+                </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Last 7 days</a>
+                        </li>
+                        <li><a href="#">Last 14 days</a>
+                        </li>
+                        <li><a href="#">Last 30 days</a>
+                        </li>
+                        <li><a href="#">Last 60 days</a>
+                        </li>
+                        <li><a href="#" class="show-custom-range">Custom Range</a>
+                        </li>
+                        <li class="custom-range-box">
+                            <div class="custom-range">
+                                <div class="start-date">
+                                    <label>From</label>
+                                    <div class="input-append date datepicker" data-date="02-2012" data-date-format="mm-yyyy">
+                                        <input type="text" class="input-small"> <span class="add-on"><i class="icon-calendar"></i></span>
+
+                                    </div>
+                                </div>
+                                <div class="end-date">
+                                    <label>To</label>
+                                    <div class="input-append date datepicker" data-date="02-2012" data-date-format="mm-yyyy">
+                                        <input type="text" class="input-small"> <span class="add-on"><i class="icon-calendar"></i></span>
+
+                                    </div>
+                                </div>
+                                <button class="btn">Go</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      <!-- End of date picker -->
+
+
+<div class="container admin-dashboard mt-2">
   <div class="row">
-    <!-- Statistics Cards -->
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body bg-dark text-white">
-          <h5 class="card-title">Total QR Code Clicks</h5>
-          <p class="card-text fw-bold">{{ qr_code_clicks }}</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-md-4">
-      <div class="card border-0">
-        <div class="card-body bg-warning">
-          <h5 class="card-title">Bio Page Clicks</h5>
-          <p class="card-text fw-bold">{{ bio_page_clicks }}</p>
-        </div>
-      </div>
-    </div>
+      <!-- Statistics Cards -->
 
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-body bg-dark text-white">
-          <h5 class="card-title">URL Shortener Clicks</h5>
-          <p class="card-text fw-bold">{{ url_short_clicks }}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
+      <div class="col-md-4">
       <div class="card">
         <div class="card-body bg-warning">
-          <h5 class="card-title">QR Codes</h5>
-          <p class="card-text fw-bold">{{ qr_code_generated }}</p>
+          <h5 class="card-title">URL Shorteners</h5>
+          <p class="card-text fw-bold">{{ url_shorts_generated }}</p>
         </div>
       </div>
     </div>
@@ -79,11 +103,42 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+      <div class="col-md-4">
       <div class="card">
         <div class="card-body bg-warning">
-          <h5 class="card-title">URL Shorteners</h5>
-          <p class="card-text fw-bold">{{ url_shorts_generated }}</p>
+          <h5 class="card-title">QR Codes</h5>
+          <p class="card-text fw-bold">{{ qr_code_generated }}</p>
+        </div>
+      </div>
+    </div>
+
+
+       <!-- Statistics Cards -->
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">URL Shortener Clicks</h5>
+          <p class="card-text fw-bold">{{ url_short_clicks }}</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="card border-0">
+        <div class="card-body bg-warning">
+          <h5 class="card-title">Bio Page Clicks</h5>
+          <p class="card-text fw-bold">{{ bio_page_clicks }}</p>
+        </div>
+      </div>
+    </div>
+
+      <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Total QR Code Clicks</h5>
+          <p class="card-text fw-bold">{{ qr_code_clicks }}</p>
         </div>
       </div>
     </div>
