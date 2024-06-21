@@ -22,18 +22,6 @@
 <main style="margin-top: 78px">
   <div class="container pt-4">
 
-  <div class="container bg-secondary">
-    <div class="d-flex justify-content-start py-3 container align-item-center">
-        <div>
-            {% for post in bios %}
-        <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Links</a>
-        <a href="{{url_for('user_blp.bio_link_page_appearance', bio_id=post.id)}}" class="btn py-1 px-2" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
-        <a href="{{url_for('user_blp.bio_link_page_track_analytics', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Analytics</a>
-            {% endfor %}
-    </div>
-    </div>
-</div>
-
    <div class="dashdiv">
      <div class="d-flex flex-row">
         <div class="p-2">
@@ -83,20 +71,75 @@
     </div>
     </div>
 </div>
+
+
+  <div class="container bg-secondary">
+    <div class="d-flex justify-content-start py-3 container align-item-center">
+        <div>
+            {% for post in bios %}
+        <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Links</a>
+        <a href="{{url_for('user_blp.bio_link_page_appearance', bio_id=post.id)}}" class="btn py-1 px-2" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
+        <a href="{{url_for('user_blp.bio_link_page_track_analytics', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Analytics</a>
+            {% endfor %}
+    </div>
+    </div>
+</div>
+
 <br>
 
+      <!-- Date picker -->
+
+              <div class="details ms-3">
+            <div class="filters">
+                <div class="btn-group date-filter"> <a class="btn " data-toggle="dropdown" href="#">
+                    <i class="bi bi-calendar px-2"></i> Date Range : Last 7 days
+                    <span class="caret"></span>
+                  </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Last 7 days</a>
+                        </li>
+                        <li><a href="#">Last 14 days</a>
+                        </li>
+                        <li><a href="#">Last 30 days</a>
+                        </li>
+                        <li><a href="#">Last 60 days</a>
+                        </li>
+                        <li><a href="#" class="show-custom-range">Custom Range</a>
+                        </li>
+                        <li class="custom-range-box">
+                            <div class="custom-range">
+                                <div class="start-date">
+                                    <label>From</label>
+                                    <div class="input-append date datepicker" data-date="02-2012" data-date-format="mm-yyyy">
+                                        <input type="text" class="input-small"> <span class="add-on"><i class="icon-calendar"></i></span>
+
+                                    </div>
+                                </div>
+                                <div class="end-date">
+                                    <label>To</label>
+                                    <div class="input-append date datepicker" data-date="02-2012" data-date-format="mm-yyyy">
+                                        <input type="text" class="input-small"> <span class="add-on"><i class="icon-calendar"></i></span>
+
+                                    </div>
+                                </div>
+                                <button class="btn">Go</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+      <!-- End of date picker -->
+
+
+
     <div class="row">
+        <h3 class="mt-3 ms-3"><b>Overview</b></h3>
      <!-- Bio details phone-->
      <div class="clearfix"  >
     <div class="float-start  w-50 p-3">
-
-
-            <div class=" mb-4">
-            <div class="card-body bg-dark text-white">
-          <h5 class="card-title">Bio Pages</h5>
-          <p class="card-text fw-bold">{{ bio_pages_generated }}</p>
-           </div>
-            </div>
 
 
          <div class=" mb-4">
@@ -119,9 +162,39 @@
         <div class=" mb-4">
             <div class="card">
         <div class="card-body bg-dark text-white">
-          <h5 class="card-title">Device Breakdown</h5>
+          <h5 class="card-title">Views by Device</h5>
             <h6 class="card-title">What devices were used by your visitors? </h6>
           <canvas id="qrCodeStatsDoughnut"></canvas>
+        </div>
+      </div>
+      </div>
+
+        <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Views by Referrers</h5>
+            <h6 class="card-title">What apps and websites are driving traffic?</h6>
+          <canvas id="bioPageClicksReferrer"></canvas>
+        </div>
+      </div>
+      </div>
+
+        <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Views by Country</h5>
+            <h6 class="card-title">What countries are your visitors from?</h6>
+          <canvas id="bioPageClicksCountry"></canvas>
+        </div>
+      </div>
+      </div>
+
+        <div class=" mb-4">
+            <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">Views by City</h5>
+            <h6 class="card-title">What cities are your visitors from?</h6>
+          <canvas id="bioPageClicksCity"></canvas>
         </div>
       </div>
       </div>
@@ -209,9 +282,50 @@ const qrCodeStatsData = {
 
 
 
+
 </script>
 
+<script>
 
+    // Date range picker
+
+$(document).ready(function () {
+    (function initializeFilters() {
+        $(".date-filter").on("click", "ul li a", function (e) {
+            e.preventDefault();
+
+            if (!$(this).hasClass("show-custom-range")) {
+                $(this).parents("ul").children().last().hide();
+            } else {
+                $(this).parent().next().show();
+            }
+
+            var thisValue;
+            thisValue = $(this).html();
+            $(this).parents("ul").find("a").removeClass("a-disabled");
+            $(this).addClass("a-disabled");
+            $(".breadcrumb li span").html(thisValue);
+        });
+
+        $('.date-filter').on("click", "ul li *", function (e) {
+            e.stopPropagation();
+        });
+
+        $(".datepicker").datepicker({
+            format: "mm-yyyy",
+            viewMode: "months",
+            minViewMode: "months",
+            autoclose: true
+        });
+
+        $(document).on('click', 'span.month, th.next, th.prev, th.switch, span.year', function (e) {
+            e.stopPropagation();
+        });
+
+    })();
+});
+
+</script>
 
 
 {% endblock content %}
