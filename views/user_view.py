@@ -27,7 +27,7 @@ def home():
     # form = GenerateBrandName()
     # posts = CreateProfile.query.all()
     if current_user.is_authenticated:
-        return redirect(url_for("user_blp.admin"))
+        return redirect(url_for("user_blp.dashboard"))
     if request.method == "POST" and "bt1" in request.form:
         original_url = request.form.get("url")
         if not original_url:
@@ -395,7 +395,6 @@ def bio_link_page_track_analytics(bio_id):
 
     bio_pages_generated = len(bio_pages)
 
-
     return render_template(
         "bio_link_page_track_analytics.html", bio=True,
         bio_id=bio_id,
@@ -415,64 +414,64 @@ def redirect_me():
     return render_template("redirect.html")
 
 
-@user_blp.route("/user/admin", methods=["GET", "POST"])
-@login_required
-def admin():
-    form = CreatePostForm()
-    join_form = GenerateBrandName()
-    user_id = current_user.id
-    brand_url = f"{request.host_url}brand/{current_user.brand_name}"
-    posts = CreateProfile.query.filter_by(author_id=user_id).all()
-    brandname = current_user.brand_name
-    # if brandname is None:
-    #     flash("Please Create A Brand name")
-    #     return render_template("join.html", form=join_form, current_user=current_user)
-
-    if request.method == "POST":
-        linkname = form.linkname.data.lower()
-        link = form.link.data.lower()
-
-        if not linkname:
-            flash("Link Name Required", "danger")
-            return redirect(url_for("user_blp.admin"))
-        if not link:
-            flash("Link Required", "danger")
-            return redirect(url_for("user_blp.admin"))
-
-        if not link.startswith("http://") and not link.startswith("https://"):
-            link = "http://" + link
-
-        # if not linkname:
-        #     flash("Link Name Required", "danger")
-        #     return redirect(url_for("user_blp.admin"))
-
-        check_if_linkname_exists = CreateProfile.query.filter_by(
-            linkname=linkname
-        ).first()
-        if check_if_linkname_exists:
-            flash("Link Name already exists!", "danger")
-            return redirect(url_for("user_blp.admin"))
-
-        new_post = CreateProfile(
-            linkname=linkname,
-            link=link,
-            link_name=get_platform(link),
-            author=current_user,
-            author_id=user_id,
-        )
-        db.session.add(new_post)
-        db.session.commit()
-        flash("Link Added", "success")
-        return redirect(url_for("user_blp.display_biolinks"))
-    return render_template(
-        "admin.html",
-        name=current_user.username.title(),
-        logged_in=True,
-        form=form,
-        brand_url=brand_url,
-        brandie=brandname,
-        host_url=request.host_url,
-    )
+# @user_blp.route("/user/admin", methods=["GET", "POST"])
+# @login_required
+# def admin():
+#     form = CreatePostForm()
+#     join_form = GenerateBrandName()
+#     user_id = current_user.id
+#     brand_url = f"{request.host_url}brand/{current_user.brand_name}"
+#     posts = CreateProfile.query.filter_by(author_id=user_id).all()
+#     brandname = current_user.brand_name
+#     # if brandname is None:
+#     #     flash("Please Create A Brand name")
+#     #     return render_template("join.html", form=join_form, current_user=current_user)
+#
+#     if request.method == "POST":
+#         linkname = form.linkname.data.lower()
+#         link = form.link.data.lower()
+#
+#         if not linkname:
+#             flash("Link Name Required", "danger")
+#             return redirect(url_for("user_blp.admin"))
+#         if not link:
+#             flash("Link Required", "danger")
+#             return redirect(url_for("user_blp.admin"))
+#
+#         if not link.startswith("http://") and not link.startswith("https://"):
+#             link = "http://" + link
+#
+#         # if not linkname:
+#         #     flash("Link Name Required", "danger")
+#         #     return redirect(url_for("user_blp.admin"))
+#
+#         check_if_linkname_exists = CreateProfile.query.filter_by(
+#             linkname=linkname
+#         ).first()
+#         if check_if_linkname_exists:
+#             flash("Link Name already exists!", "danger")
+#             return redirect(url_for("user_blp.admin"))
+#
+#         new_post = CreateProfile(
+#             linkname=linkname,
+#             link=link,
+#             link_name=get_platform(link),
+#             author=current_user,
+#             author_id=user_id,
+#         )
+#         db.session.add(new_post)
+#         db.session.commit()
+#         flash("Link Added", "success")
+#         return redirect(url_for("user_blp.display_biolinks"))
+#     return render_template(
+#         "admin.html",
+#         name=current_user.username.title(),
+#         logged_in=True,
+#         form=form,
+#         brand_url=brand_url,
+#         brandie=brandname,
+#         host_url=request.host_url,
+#     )
 
 
 @user_blp.route("/<path:sub_path>", methods=["GET", "POST"])
@@ -510,6 +509,8 @@ def analytics_all():
     bio_page_clicks = sum(bio_page.clicks for bio_page in bio_pages)
     url_short_clicks = sum(url_short.clicks for url_short in url_shorts)
 
+
+
     qr_code_generated = len(qr_codes)
     bio_pages_generated = len(bio_pages)
     url_shorts_generated = len(url_shorts)
@@ -519,7 +520,7 @@ def analytics_all():
                            url_short_clicks=url_short_clicks,
                            qr_code_generated=qr_code_generated,
                            bio_pages_generated=bio_pages_generated,
-                           url_shorts_generated=url_shorts_generated
+                           url_shorts_generated=url_shorts_generated,
                            )
     # return render_template("analytics_all.html", analytics=True)
 

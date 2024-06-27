@@ -118,8 +118,12 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-body bg-dark text-white">
+
           <h5 class="card-title">URL Shortener Clicks</h5>
-          <p class="card-text fw-bold">{{ url_short_clicks }}</p>
+          <p class="card-text fw-bold">{{ url_short_clicks }} </p>
+
+
+
         </div>
       </div>
     </div>
@@ -255,7 +259,7 @@
     labels: ["URL Shortener Clicks"],
     datasets: [{
       label: 'URL Shortener Clicks',
-      data: [{{ url_short_clicks }}],
+      data: [{{ url_short_clicks }} ],
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       borderColor: 'rgba(75, 192, 192, 1)',
       borderWidth: 1
@@ -290,6 +294,7 @@
   new Chart(urlShortClicksCtx, {
     type: 'bar',
     data: urlShortClicksData
+
   });
 
   const qrCodeStatsDoughnutCtx = document.getElementById('qrCodeStatsDoughnut').getContext('2d');
