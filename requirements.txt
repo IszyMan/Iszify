@@ -49,3 +49,4 @@ urllib3
 visitor
 Werkzeug
 WTForms
+psycopg2-binary
