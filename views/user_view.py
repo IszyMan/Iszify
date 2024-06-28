@@ -527,8 +527,6 @@ def analytics_all():
     bio_page_clicks = sum(bio_page.clicks for bio_page in bio_pages)
     url_short_clicks = sum(url_short.clicks for url_short in url_shorts)
 
-
-
     qr_code_generated = len(qr_codes)
     bio_pages_generated = len(bio_pages)
     url_shorts_generated = len(url_shorts)
