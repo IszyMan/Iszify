@@ -166,11 +166,20 @@
       </div>
     </div>
 
-    <div class="col-md-6 mt-4">
+    <!-- <div class="col-md-6 mt-4">
       <div class="card">
         <div class="card-body bg-dark text-white">
           <h5 class="card-title">URL Shortener Clicks Chart</h5>
           <canvas id="urlShortClicksChart"></canvas>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="col-md-6 mt-4">
+      <div class="card">
+        <div class="card-body bg-dark text-white">
+          <h5 class="card-title">URL Shortener Clicks Chart</h5>
+          <canvas id="clickResData"></canvas>
         </div>
       </div>
     </div>
@@ -255,11 +264,22 @@
     }]
   };
 
-  const urlShortClicksData = {
-    labels: ["URL Shortener Clicks"],
+  // const urlShortClicksData = {
+  //   labels: ["URL Shortener Clicks"],
+  //   datasets: [{
+  //     label: 'URL Shortener Clicks',
+  //     data: [{{ url_short_clicks }} ],
+  //     backgroundColor: 'rgba(75, 192, 192, 0.2)',
+  //     borderColor: 'rgba(75, 192, 192, 1)',
+  //     borderWidth: 1
+  //   }]
+  // };
+
+  const clickResData = {
+    labels: {{ res|map(attribute='date')|list|tojson }},
     datasets: [{
-      label: 'URL Shortener Clicks',
-      data: [{{ url_short_clicks }} ],
+      label: 'Clicks',
+      data: {{ res|map(attribute='clicks')|list|tojson }},
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
       borderColor: 'rgba(75, 192, 192, 1)',
       borderWidth: 1
@@ -290,11 +310,34 @@
     data: bioPageClicksData
   });
 
-  const urlShortClicksCtx = document.getElementById('urlShortClicksChart').getContext('2d');
-  new Chart(urlShortClicksCtx, {
-    type: 'bar',
-    data: urlShortClicksData
+  // const urlShortClicksCtx = document.getElementById('urlShortClicksChart').getContext('2d');
+  // new Chart(urlShortClicksCtx, {
+  //   type: 'bar',
+  //   data: urlShortClicksData
 
+  // });
+
+  const clickResDataCtx = document.getElementById('clickResData').getContext('2d');
+  new Chart(clickResDataCtx, {
+    type: 'bar',
+    data: clickResData,
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Clicks'
+          }
+        }
+      }
+    }
   });
 
   const qrCodeStatsDoughnutCtx = document.getElementById('qrCodeStatsDoughnut').getContext('2d');
