@@ -7,6 +7,7 @@ from hashids import Hashids
 from urllib import request
 from urllib.error import HTTPError, URLError
 import datetime
+from sqlalchemy import extract
 
 secret = "any-secret-key-you-choose"
 
@@ -56,20 +57,29 @@ class UrlShortenerClicks(db.Model):
 
 
 def save_url_clicks(url_id):
-    todays_date = datetime.datetime.now().strftime("%d-%b-%Y")
+    # Get today's date components
+    today = datetime.datetime.today()
+    current_year = today.year
+    current_month = today.month
+    current_day = today.day
 
-    clicks = UrlShortenerClicks.query.filter_by(
-        url_id=url_id, created=todays_date
+    # Query to find today's clicks for the given url_id
+    clicks = UrlShortenerClicks.query.filter(
+        UrlShortenerClicks.url_id == url_id,
+        extract('year', UrlShortenerClicks.created) == current_year,
+        extract('month', UrlShortenerClicks.created) == current_month,
+        extract('day', UrlShortenerClicks.created) == current_day
     ).first()
+
     if not clicks:
         print("save new click record")
         new_clicks = UrlShortenerClicks(count=1, url_id=url_id)
-        new_clicks.save()
+        db.session.add(new_clicks)
     else:
         print("update click record")
         clicks.count += 1
-        clicks.save_commit()
 
+    db.session.commit()
     return True
 
 
