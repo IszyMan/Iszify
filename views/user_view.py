@@ -17,7 +17,7 @@ import base64
 from werkzeug.security import generate_password_hash, check_password_hash
 import qrcode
 from PIL import Image
-from sqlalchemy import func
+from sqlalchemy import func, extract
 
 user_blp = Blueprint("user_blp", __name__)
 
@@ -497,12 +497,30 @@ def profile(sub_path):
 @user_blp.route("/analytics")
 @login_required
 def analytics_all():
+
     user_id = current_user.id
 
     # Prepare data for the charts
     qr_codes = QrCode.query.filter_by(author_id=user_id).all()
     bio_pages = CreateBioPage.query.filter_by(author_id=user_id).all()
     url_shorts = Urlshort.query.filter_by(author_id=user_id).all()
+
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+
+    # Query to get clicks for each day of the current month and year
+    clicks_per_month_s = (
+        UrlShortenerClicks.query
+        .join(Urlshort, Urlshort.id == UrlShortenerClicks.url_id)
+        .filter(
+            Urlshort.author_id == current_user.id,
+            extract('month', UrlShortenerClicks.created) == current_month,
+            extract('year', UrlShortenerClicks.created) == current_year
+        )
+        .all()
+    )
+
+    res = [{"date": clicks_per_month.created.strftime("%d-%b-%Y"), "clicks": clicks_per_month.count} for clicks_per_month in clicks_per_month_s]
 
     # Prepare data for the charts
     qr_code_clicks = sum(qr_code.clicks for qr_code in qr_codes)
@@ -521,6 +539,7 @@ def analytics_all():
                            qr_code_generated=qr_code_generated,
                            bio_pages_generated=bio_pages_generated,
                            url_shorts_generated=url_shorts_generated,
+                           res=res
                            )
     # return render_template("analytics_all.html", analytics=True)
 
