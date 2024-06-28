@@ -36,6 +36,43 @@ class Urlshort(UserMixin, db.Model):
         db.session.commit()
 
 
+# clicks model
+class UrlShortenerClicks(db.Model):
+    __tablename__ = "url_shortener_clicks"
+    id = db.Column(db.Integer, primary_key=True)
+    count = db.Column(db.Integer, default=0)
+    url_id = db.Column(db.Integer, db.ForeignKey("url_shortener.id"))
+    created = db.Column(db.DateTime, nullable=False, default=db.func.now())
+
+    def __repr__(self):
+        return f"Clicks('{self.url_id}', '{self.created}')"
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def save_commit(self):
+        db.session.commit()
+
+
+def save_url_clicks(url_id):
+    todays_date = datetime.datetime.now().strftime("%d-%b-%Y")
+
+    clicks = UrlShortenerClicks.query.filter_by(
+        url_id=url_id, created=todays_date
+    ).first()
+    if not clicks:
+        print("save new click record")
+        new_clicks = UrlShortenerClicks(count=1, url_id=url_id, created=todays_date)
+        new_clicks.save()
+    else:
+        print("update click record")
+        clicks.count += 1
+        clicks.save_commit()
+
+    return True
+
+
 # generate short url
 def generate_short_url():
     last_url = Urlshort.query.order_by(Urlshort.id.desc()).first()
