@@ -63,7 +63,7 @@ def save_url_clicks(url_id):
     ).first()
     if not clicks:
         print("save new click record")
-        new_clicks = UrlShortenerClicks(count=1, url_id=url_id, created=todays_date)
+        new_clicks = UrlShortenerClicks(count=1, url_id=url_id)
         new_clicks.save()
     else:
         print("update click record")
