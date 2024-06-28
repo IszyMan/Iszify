@@ -702,10 +702,12 @@ def redirect_to_url(short_url):
             db.session.add(new_record)
         else:
             record.clicks += 1
+    else:
+        save_url_clicks(url.id)
 
     url.clicks += 1
     db.session.commit()
-    print(url.url)
+    print(url.url, "the real url")
     return redirect(url.url)
 
 
