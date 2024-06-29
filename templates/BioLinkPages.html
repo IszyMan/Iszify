@@ -9,117 +9,110 @@
   {% endblock head %}
 
 
-{% block content %}
-<div class="container mt-5">
-
-<main style="margin-top: 28px">
-
-      <!-- This is goto links div-->
-      <div class="row mb-4">
-          <div class="container-fluid align-self-end mt-5">
-              <h2><b>All Bio Pages</b></h2>
-
-              <a href="{{url_for('user_blp.create_Bio_Page')}}"><button class="btn badge fw-normal shadow-none bg-success text-right me-3" style="font-size: 1.1rem;">
-                Create New Bio Page<i class="fa fa-plus px-2"></i> </button></a>
-
-              {% if display %}
-                  <form action="" method="post" id="filter_form" class="d-none">
-                      <input type="text" id="datepicker_input" name="date">
-                  </form>
-                  <button class="btn" id="datepicker-btn">
-                      <i class="fa fa-calendar px-2"></i>Filter by Date
-                  </button>
-                  <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
-              {% endif %}
-          </div>
-      </div>
-
- </main>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          {% if bio_pages %}
-              {% for post in bio_pages|reverse %}
-                  <div class="col mb-4">
-                      <div class="card" style="background-color:rgb(255, 255, 255); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
-                          <div class="card-body d-flex flex-column">
-                              <div class="mb-4">
-                                  <div class="smartphone">
-                                      <i class="text-center fa fa-user text-primary rounded-circle p-4 mx-3"></i>
-                                      <div class='mx-2 text-center'><small><a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">Link</a></small></div>
+  {% block content %}
+  <div class="container mt-5">
+  
+  <main style="margin-top: 28px">
+  
+        <!-- This is goto links div-->
+        <div class="row mb-4">
+            <div class="container-fluid align-self-end mt-5">
+                <h2><b>All Bio Pages</b></h2>
+  
+                <a href="{{url_for('user_blp.create_Bio_Page')}}"><button class="btn badge fw-normal shadow-none bg-success text-right me-3" style="font-size: 1.1rem;">
+                  Create New Bio Page<i class="fa fa-plus px-2"></i> </button></a>
+  
+                {% if display %}
+                    <form action="" method="post" id="filter_form" class="d-none">
+                        <input type="text" id="datepicker_input" name="date">
+                    </form>
+                    <button class="btn" id="datepicker-btn">
+                        <i class="fa fa-calendar px-2"></i>Filter by Date
+                    </button>
+                    <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
+                {% endif %}
+            </div>
+        </div>
+  
+  </main>
+  
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      {% if bio_pages %}
+          {% for post in bio_pages|reverse %}
+              <div class="col mb-4">
+                  <div class="card" style="background-color:rgb(255, 255, 255); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                      <div class="card-body d-flex flex-column">
+                          <div class="mb-4">
+                              <div class="smartphone">
+                                  <i class="text-center fa fa-user text-primary rounded-circle p-4 mx-3"></i>
+                                  <div class='mx-2 text-center'><small><a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">Link</a></small></div>
+                              </div>
+                          </div>
+                          <div class="mb-4 text-center">
+                              <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">
+                                  <p><b>{{ host_url }}bio/{{post.bio_name}}</b></p>
+                              </a><br>
+                              <div><i class="bi bi-bar-chart-fill text-muted text-sm-start"></i> Views ({{ post.clicks }})</div>
+                              <div><i class="bi bi-calendar text-muted"></i> {{ post.created_at.strftime('%B %d, %Y ') }}</div>
+                          </div>
+  
+                          <div class="text-muted mt-auto">
+                              <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}"><button type="button" class="btn shadow-none"><i class="bi bi-pencil-square"></i> Add or Edit links in Bio Page</button></a>
+  
+                              <div class="btn-group dropend mt-0">
+                                  <button class="btn-light ml-3 text-center p-1 bg-light shadow-none text-dark text-decoration-none rounded-3 border border-dark" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="bi bi-three-dots"></i>
+                                  </button>
+  
+                                  <div class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="dropdownMenuLink">
+                                      <a class="dropdown-item hoth text-white p-3" href=""><i class="fa fa-copy text-white" aria-hidden="true"></i> Copy Link</a>
+                                      <a class="dropdown-item hoth text-white p-3" href=""><p class="text-danger"><i class="fa fa-trash-alt text-danger" aria-hidden="true"></i> Delete</p></a>
                                   </div>
                               </div>
-                              <div class="mb-4 text-center">
-                                  <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}">
-                                      <p><b>{{ host_url }}bio/{{post.bio_name}}</b></p>
-                                  </a><br>
-                                  <div><i class="bi bi-bar-chart-fill text-muted text-sm-start"></i> Views ({{ post.clicks }})</div>
-                                  <div><i class="bi bi-calendar text-muted"></i> {{ post.created_at.strftime('%B %d, %Y ') }}</div>
-                              </div>
-
-                               <div class="text-muted mt-auto">
-<!--                                  <button type="button" class="btn shadow-none" data-bs-toggle="modal" data-bs-target="#exampleModal11{{post.id}}"><i class="bi bi-pencil-square"></i>Edit Bio Name</button>-->
-<!--                                  <button><i class="bi bi-three-dots"></i></button>-->
-                                  <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}"><button type="button" class="btn shadow-none"><i class="bi bi-pencil-square"></i> Add or Edit links in Bio Page</button></a>
-
-
-
-                                  <div class="btn-group dropend mt-0">
-                              <button class="btn-light  ml-3 text-center p-1 bg-light shadow-none text-dark text-decoration-none rounded-3 border border-dark" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
-                              </button>
-
-                              <div class="dropdown-menu dropdown-menu-end bg-dark text-white" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item hoth text-white p-3" href=""><i class="fa fa-copy text-white" aria-hidden="true"></i> Copy Link</a>
-                                <a class="dropdown-item hoth text-white p-3" href=""><p class="text-danger"><i class="fa fa-trash-alt text-danger" aria-hidden="true"></i> Delete</p></a>
-
-                              </div>
-                            </div>
-
-                            </div>
-
+  
                           </div>
                       </div>
                   </div>
-                  </div>
-                  <br>
-                  <div class="modal fade" id="exampleModal11{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
-                      <div class="modal-dialog">
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel11">Update Bio Name</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                  <div>
-                                      <div class="mb-3">
-                                          <form action="{{url_for('user_blp.update_bio_link_pages', bio_id=post.id)}}" method="post" class="form-group">
-                                              <input type="text" class="form-control shadow-none" name="brandname" value="{{ post.bio_name }}" autofocus>
-                                              <button type="submit" class="btn btn-secondary mt-2 shadow-none">Update</button>
-                                          </form>
-                                          <div id="emailHelp" class="form-text">Your bio is your identity</div>
-                                      </div>
+              </div>
+  
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal11{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel11" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel11">Update Bio Name</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <div>
+                                  <div class="mb-3">
+                                      <form action="{{url_for('user_blp.update_bio_link_pages', bio_id=post.id)}}" method="post" class="form-group">
+                                          <input type="text" class="form-control shadow-none" name="brandname" value="{{ post.bio_name }}" autofocus>
+                                          <button type="submit" class="btn btn-secondary mt-2 shadow-none">Update</button>
+                                      </form>
+                                      <div id="emailHelp" class="form-text">Your bio is your identity</div>
                                   </div>
                               </div>
                           </div>
-
-              {% endfor %}
-
-                </div>
+                      </div>
                   </div>
-          {% else %}
+              </div>
+          {% endfor %}
+      {% else %}
           <div class="card" style="background-color:lavender;">
-          <div class="row">
-              <div class="col-sm mt-5">
-                  <h2 class="text-center"><b>No Bio Page</b></h2>
-                  <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail text-center"/>
+              <div class="row">
+                  <div class="col-sm mt-5">
+                      <h2 class="text-center"><b>No Bio Page</b></h2>
+                      <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail text-center"/>
+                  </div>
               </div>
-              </div>
-              </div>
-          {% endif %}
-
+          </div>
+      {% endif %}
+  </div>
+  
+  </div>
   </div>
 
-</div>
-</div>
 
 <script>
   close_btn = document.getElementById('close_btn');
