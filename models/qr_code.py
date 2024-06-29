@@ -66,7 +66,7 @@ def generate_short_url2():
 
     # Generate the short URL using the counter
     hashid = hashids.encode(counter)
-    return hashid
+    return f"Q{hashid}"
 
 
 # validate url
