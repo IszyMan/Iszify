@@ -4,9 +4,16 @@ from models import *
 from extensions import db
 from flask_login import login_user, login_required, current_user
 from models.bio_link_entries import CreateBioLinkEntries
-from utils import (get_platform, generate_and_save_qr, update_qr_code,
-                   customize_qr_code_logo, customize,
-                   get_urls_by_date, get_qr_codes_by_date, get_bio_page_by_date)
+from utils import (
+    get_platform,
+    generate_and_save_qr,
+    update_qr_code,
+    customize_qr_code_logo,
+    customize,
+    get_urls_by_date,
+    get_qr_codes_by_date,
+    get_bio_page_by_date,
+)
 from models.create_bio_page import CreateBioPage
 from models.qr_code import QrCode
 from models.user import update_otp
@@ -34,7 +41,7 @@ def home():
             flash("Input Required", "danger")
             return redirect(url_for("user_blp.home"))
         if not original_url.startswith("http://") and not original_url.startswith(
-                "https://"
+            "https://"
         ):
             original_url = "http://" + original_url
         check_if_exist = Urlshort.query.filter_by(url=original_url).first()
@@ -92,7 +99,7 @@ def dashboard():
         brandie = current_user.brand_name
 
         for qr in current_user.qr_code:
-            qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8')
+            qr.qr_data = base64.b64encode(qr.qr_data).decode("utf-8")
 
         return render_template(
             "dashboard.html",
@@ -101,7 +108,7 @@ def dashboard():
             host_url=host_url,
             url_short=url_short,
             qr_codes_=qr_codes_,
-            dashboard=True
+            dashboard=True,
         )
     except Exception as e:
         print(e, "error@dashboard")
@@ -210,7 +217,7 @@ def bio_link_pages():
         links_added=bio_links,
         display=display,
         refresh=refresh,
-        bio=True
+        bio=True,
     )
 
 
@@ -307,7 +314,8 @@ def bio_link_pages_details(bio_id):
         return redirect(url_for("user_blp.bio_link_pages_details", bio_id=bio_id))
 
     return render_template(
-        "bio_link_pages_details.html", bio=True,
+        "bio_link_pages_details.html",
+        bio=True,
         bios=bios,
         links_added=bio_links,
         form=form,
@@ -345,9 +353,11 @@ def update_bio_link_pages_details(bio_id, parent_id):
 @user_blp.route("/bio/<brand_name>/", methods=["GET", "POST"])
 # @login_required
 def bio_link_routes(brand_name):
-    bio_links = CreateBioLinkEntries.query.join(CreateBioPage).filter(
-        func.lower(CreateBioPage.bio_name) == brand_name.lower()
-    ).all()
+    bio_links = (
+        CreateBioLinkEntries.query.join(CreateBioPage)
+        .filter(func.lower(CreateBioPage.bio_name) == brand_name.lower())
+        .all()
+    )
 
     url_id = get_bio_page_id(brand_name)
 
@@ -370,7 +380,8 @@ def bio_link_page_appearance(bio_id):
 
     user_id = current_user.id
     return render_template(
-        "bio_link_page_appearance.html", bio=True,
+        "bio_link_page_appearance.html",
+        bio=True,
         bio_id=bio_id,
         bios=bios,
         links_added=bio_links,
@@ -401,7 +412,8 @@ def bio_link_page_track_analytics(bio_id):
     bio_pages_generated = len(bio_pages)
 
     return render_template(
-        "bio_link_page_track_analytics.html", bio=True,
+        "bio_link_page_track_analytics.html",
+        bio=True,
         bio_id=bio_id,
         bios=bios,
         links_added=bio_links,
@@ -498,6 +510,7 @@ def profile(sub_path):
 #         return render_template("404.html")
 #     return render_template("brand.html", brandie=brandie.upper())
 
+
 # All Analytics page
 @user_blp.route("/analytics")
 @login_required
@@ -515,40 +528,60 @@ def analytics_all():
 
     # Query to get clicks for each day of the current month and year
     clicks_per_month_s = (
-        UrlShortenerClicks.query
-        .join(Urlshort, Urlshort.id == UrlShortenerClicks.url_id)
+        UrlShortenerClicks.query.join(
+            Urlshort, Urlshort.id == UrlShortenerClicks.url_id
+        )
         .filter(
             Urlshort.author_id == current_user.id,
-            extract('month', UrlShortenerClicks.created) == current_month,
-            extract('year', UrlShortenerClicks.created) == current_year
+            extract("month", UrlShortenerClicks.created) == current_month,
+            extract("year", UrlShortenerClicks.created) == current_year,
         )
         .all()
     )
 
-    click_per_month_qrcode_s = (QrcodeRecord.query
-    .join(
-        QrCode, QrCode.id == QrcodeRecord.qr_code_id
-    )
-    .filter(
-        QrCode.author_id == current_user.id,
-        extract('month', QrcodeRecord.date) == current_month,
-        extract('year', QrcodeRecord.date) == current_year
-    ).all()
-    )
-
-    click_per_month_bio_s = (BioPageClicks.query
-    .join(CreateBioPage, CreateBioPage.id == BioPageClicks.bio_page_id)
-    .filter(
-        CreateBioPage.author_id == current_user.id,
-        extract('month', BioPageClicks.created) == current_month,
-        extract('year', BioPageClicks.created) == current_year
-    ).all()
+    click_per_month_qrcode_s = (
+        QrcodeRecord.query.join(QrCode, QrCode.id == QrcodeRecord.qr_code_id)
+        .filter(
+            QrCode.author_id == current_user.id,
+            extract("month", QrcodeRecord.date) == current_month,
+            extract("year", QrcodeRecord.date) == current_year,
+        )
+        .all()
     )
 
-    res = [{"date": clicks_per_month.created.strftime("%d-%b-%Y"), "clicks": clicks_per_month.count} for clicks_per_month in clicks_per_month_s]
-    res2 = [{"date": clicks_per_month.date.strftime("%d-%b-%Y"), "clicks": clicks_per_month.clicks} for clicks_per_month in click_per_month_qrcode_s]
-    res3 = [{"date": clicks_per_month.created.strftime("%d-%b-%Y"), "clicks": clicks_per_month.count} for clicks_per_month in click_per_month_bio_s]
+    click_per_month_bio_s = (
+        BioPageClicks.query.join(
+            CreateBioPage, CreateBioPage.id == BioPageClicks.bio_page_id
+        )
+        .filter(
+            CreateBioPage.author_id == current_user.id,
+            extract("month", BioPageClicks.created) == current_month,
+            extract("year", BioPageClicks.created) == current_year,
+        )
+        .all()
+    )
 
+    res = [
+        {
+            "date": clicks_per_month.created.strftime("%d-%b-%Y"),
+            "clicks": clicks_per_month.count,
+        }
+        for clicks_per_month in clicks_per_month_s
+    ]
+    res2 = [
+        {
+            "date": clicks_per_month.date.strftime("%d-%b-%Y"),
+            "clicks": clicks_per_month.clicks,
+        }
+        for clicks_per_month in click_per_month_qrcode_s
+    ]
+    res3 = [
+        {
+            "date": clicks_per_month.created.strftime("%d-%b-%Y"),
+            "clicks": clicks_per_month.count,
+        }
+        for clicks_per_month in click_per_month_bio_s
+    ]
 
     # Prepare data for the charts
     qr_code_clicks = sum(qr_code.clicks for qr_code in qr_codes)
@@ -558,17 +591,19 @@ def analytics_all():
     qr_code_generated = len(qr_codes)
     bio_pages_generated = len(bio_pages)
     url_shorts_generated = len(url_shorts)
-    return render_template("analysis.html", analytics=True,
-                           qr_code_clicks=qr_code_clicks,
-                           bio_page_clicks=bio_page_clicks,
-                           url_short_clicks=url_short_clicks,
-                           qr_code_generated=qr_code_generated,
-                           bio_pages_generated=bio_pages_generated,
-                           url_shorts_generated=url_shorts_generated,
-                           res=res,
-                           res2=res2,
-                           res3=res3
-                           )
+    return render_template(
+        "analysis.html",
+        analytics=True,
+        qr_code_clicks=qr_code_clicks,
+        bio_page_clicks=bio_page_clicks,
+        url_short_clicks=url_short_clicks,
+        qr_code_generated=qr_code_generated,
+        bio_pages_generated=bio_pages_generated,
+        url_shorts_generated=url_shorts_generated,
+        res=res,
+        res2=res2,
+        res3=res3,
+    )
     # return render_template("analytics_all.html", analytics=True)
 
 
@@ -669,8 +704,8 @@ def shorten_url():
         original_url = request.form.get("originalUrl")
         custom_url = request.form.get("customUrl", None)
         title = (
-                request.form.get("title")
-                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+            request.form.get("title")
+            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
         generate_qr_code = request.form.get("check_box", "")
 
@@ -721,7 +756,7 @@ def shorten_url():
             original_url=original_url,
             generate_qr_code=generate_qr_code,
             done_creating=True,
-            qr_data=base64.b64encode(res).decode('utf-8') if res else res,
+            qr_data=base64.b64encode(res).decode("utf-8") if res else res,
         )
 
     return render_template("shorten.html", done_creating=False)
@@ -759,7 +794,9 @@ def display_urls():
     display = True if urls else False
     refresh = False
     for qr in urls:
-        qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8') if qr.qr_data else qr.qr_data
+        qr.qr_data = (
+            base64.b64encode(qr.qr_data).decode("utf-8") if qr.qr_data else qr.qr_data
+        )
         print(qr.created, "date created")
 
     if request.method == "POST":
@@ -770,7 +807,9 @@ def display_urls():
         display = True
         refresh = True
 
-    return render_template("urls.html", urls=urls, display=display, refresh=refresh, link=True)
+    return render_template(
+        "urls.html", urls=urls, display=display, refresh=refresh, link=True
+    )
 
 
 # delete a shortened url
@@ -794,8 +833,8 @@ def qr_codes():
     if request.method == "POST":
         url = request.form.get("url")
         title = (
-                request.form.get("title")
-                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+            request.form.get("title")
+            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
         if not url:
             flash("Please enter a URL", "danger")
@@ -838,8 +877,8 @@ def qr_codes_email():
     if request.method == "POST":
         email = request.form.get("email")
         title = (
-                request.form.get("title")
-                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+            request.form.get("title")
+            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
         res = generate_and_save_qr(email)
         # check if the url exists
@@ -869,8 +908,8 @@ def qr_codes_email():
 def qr_codes_vcard():
     if request.method == "POST":
         title = (
-                request.form.get("title")
-                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+            request.form.get("title")
+            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
         name = request.form.get("name")
         org = request.form.get("org")
@@ -927,8 +966,8 @@ def qr_codes_wifi():
         ssid = request.form.get("ssid")
         password = request.form.get("password")
         title = (
-                request.form.get("title")
-                or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
+            request.form.get("title")
+            or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"
         )
 
         hash_and_salted_password = generate_password_hash(
@@ -938,7 +977,6 @@ def qr_codes_wifi():
         data = dict(
             ssid=ssid,
             password=hash_and_salted_password,
-
         )
         res = generate_and_save_qr(data)
         # check if the url exists
@@ -971,7 +1009,7 @@ def display_qr_codes():
     display = True if qrcodes else False
     refresh = False
     for qr in qrcodes:
-        qr.qr_data = base64.b64encode(qr.qr_data).decode('utf-8')
+        qr.qr_data = base64.b64encode(qr.qr_data).decode("utf-8")
 
     if request.method == "POST":
         date_filter = request.form.get("date")
@@ -980,7 +1018,9 @@ def display_qr_codes():
         qrcodes = get_qr_codes_by_date(date_filter)
         display = True
         refresh = True
-    return render_template("display_qr.html", urls=qrcodes, display=display, refresh=refresh, qr=True)
+    return render_template(
+        "display_qr.html", urls=qrcodes, display=display, refresh=refresh, qr=True
+    )
 
 
 # View all qr codes details for the current user
@@ -1040,7 +1080,9 @@ def qr_codes_details(qr_id):
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
     # return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
-    return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url, qr=True)
+    return render_template(
+        "qr_codes_details.html", urls=qrcodes, plot_url=plot_url, qr=True
+    )
 
 
 #            Customize QR CODES
@@ -1048,7 +1090,7 @@ def qr_codes_details(qr_id):
 @login_required
 def qr_codes_customize(qr_id):
     qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
-    qrcode.qr_data = base64.b64encode(qrcode.qr_data).decode('utf-8')
+    qrcode.qr_data = base64.b64encode(qrcode.qr_data).decode("utf-8")
     if request.method == "POST":
         try:
             qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
@@ -1061,16 +1103,16 @@ def qr_codes_customize(qr_id):
             if logo and social_media_logo:
                 flash("Please select either logo or social media logo", "danger")
                 return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
-            if social_media_logo and social_media_logo == 'youtube':
+            if social_media_logo and social_media_logo == "youtube":
                 # use the png in the static folder as logo
                 logo = "static/yt.png"
-            elif social_media_logo and social_media_logo == 'twitter':
+            elif social_media_logo and social_media_logo == "twitter":
                 # use the png in the static folder as logo
                 logo = "static/tw.png"
-            elif social_media_logo and social_media_logo == 'facebook':
+            elif social_media_logo and social_media_logo == "facebook":
                 # use the png in the static folder as logo
                 logo = "static/fb.png"
-            elif social_media_logo and social_media_logo == 'instagram':
+            elif social_media_logo and social_media_logo == "instagram":
                 # use the png in the static folder as logo
                 logo = "static/ig.png"
             if qrcode.url:
@@ -1085,15 +1127,19 @@ def qr_codes_customize(qr_id):
                     website=qrcode.website,
                     mail=qrcode.email,
                     address=qrcode.address,
-                    note=qrcode.note
+                    note=qrcode.note,
                 )
             # data = qrcode.url if qrcode.url else qrcode.email
-            res = update_qr_code(data, color) if color and not logo else customize(data, logo, color)
+            res = (
+                update_qr_code(data, color)
+                if color and not logo
+                else customize(data, logo, color)
+            )
             qrcode.qr_data = res
             db.session.commit()
             return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
         except Exception as e:
-            print(e, 'this is the error')
+            print(e, "this is the error")
             db.session.rollback()
             return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
     return render_template("qr_codes_customize.html", qrcode=qrcode, qr=True)
@@ -1121,7 +1167,9 @@ def qr_codes_content_edit(qr_id):
                 }
             )
 
-    return render_template("qr_codes_content_edit.html", urls=qrcodes, datas=datas, qr=True)
+    return render_template(
+        "qr_codes_content_edit.html", urls=qrcodes, datas=datas, qr=True
+    )
 
 
 # delete a qr code
@@ -1170,6 +1218,7 @@ def display_biolinks():
 @user_blp.route("/see", methods=["GET"])
 def see():
     return render_template("base2.html")
+
 
 # @user_blp.route('/qrqr', methods=['GET'])
 # def qrqr():
