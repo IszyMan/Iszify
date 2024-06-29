@@ -21,7 +21,11 @@ class GenerateBrandName(FlaskForm):
 class RegisterForm(FlaskForm):
     # first_name = StringField("First Name", validators=[DataRequired()])
     # last_name = StringField("Last Name", validators=[DataRequired()])
-    username = StringField("User Name", validators=[DataRequired()], render_kw={"placeholder": "User Name", "class": "form-control"})
+    username = StringField(
+        "User Name",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "User Name", "class": "form-control"},
+    )
     email = StringField(
         "Email",
         validators=[
@@ -30,7 +34,11 @@ class RegisterForm(FlaskForm):
         ],
         render_kw={"placeholder": "Email", "class": "form-control"},
     )
-    password = PasswordField("Password", validators=[DataRequired()], render_kw={"placeholder": "Password", "class": "form-control"})
+    password = PasswordField(
+        "Password",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Password", "class": "form-control"},
+    )
     # confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField("Sign Me Up!", render_kw={"id": "btn-block"})
 
