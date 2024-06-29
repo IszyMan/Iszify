@@ -242,22 +242,22 @@
 
 <script>
   // QR Code data for charts
-  const qrCodeClicksData = {
-    labels: ["QR Code Clicks"],
-    datasets: [{
-      label: 'QR Code Clicks',
-      data: [{{ qr_code_clicks }}],
-      backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 1
-    }]
-  };
+  // const qrCodeClicksData = {
+  //   labels: ["QR Code Clicks"],
+  //   datasets: [{
+  //     label: 'QR Code Clicks',
+  //     data: [{{ qr_code_clicks }}],
+  //     backgroundColor: 'rgba(255, 99, 132, 0.2)',
+  //     borderColor: 'rgba(255, 99, 132, 1)',
+  //     borderWidth: 1
+  //   }]
+  // };
 
   const bioPageClicksData = {
-    labels: ["Bio Page Clicks"],
+    labels: {{ res3|map(attribute='date')|list|tojson }},
     datasets: [{
-      label: 'Bio Page Clicks',
-      data: [{{ bio_page_clicks }}],
+      label: 'URL Shortener Clicks',
+      data: {{ res3|map(attribute='clicks')|list|tojson }},
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
@@ -286,6 +286,17 @@
     }]
   };
 
+  const qrCodeClicksData = {
+    labels: {{ res2|map(attribute='date')|list|tojson }},
+    datasets: [{
+      label: 'QR Code Clicks',
+      data: {{ res2|map(attribute='clicks')|list|tojson }},
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+      borderWidth: 1
+    }]
+  };
+
   const qrCodeStatsData = {
     labels: ["QR Codes", "Bio Pages", "URL Shorteners"],
     datasets: [{
@@ -301,13 +312,47 @@
   const qrCodeClicksCtx = document.getElementById('qrCodeClicksChart').getContext('2d');
   new Chart(qrCodeClicksCtx, {
     type: 'bar',
-    data: qrCodeClicksData
+    data: qrCodeClicksData,
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Clicks'
+          }
+        }
+      }
+    }
   });
 
   const bioPageClicksCtx = document.getElementById('bioPageClicksChart').getContext('2d');
   new Chart(bioPageClicksCtx, {
     type: 'bar',
-    data: bioPageClicksData
+    data: bioPageClicksData,
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Clicks'
+          }
+        }
+      }
+    }
   });
 
   // const urlShortClicksCtx = document.getElementById('urlShortClicksChart').getContext('2d');
