@@ -348,6 +348,11 @@ def bio_link_routes(brand_name):
     bio_links = CreateBioLinkEntries.query.join(CreateBioPage).filter(
         func.lower(CreateBioPage.bio_name) == brand_name.lower()
     ).all()
+
+    url_id = get_bio_page_id(brand_name)
+
+    save_bio_page_clicks(url_id)
+    update_bio_page_clicks(url_id)
     return render_template(
         "bio_link_routes.html", brandie=brand_name.upper(), all_posts=bio_links
     )
@@ -520,7 +525,30 @@ def analytics_all():
         .all()
     )
 
+    click_per_month_qrcode_s = (QrcodeRecord.query
+    .join(
+        QrCode, QrCode.id == QrcodeRecord.qr_code_id
+    )
+    .filter(
+        QrCode.author_id == current_user.id,
+        extract('month', QrcodeRecord.date) == current_month,
+        extract('year', QrcodeRecord.date) == current_year
+    ).all()
+    )
+
+    click_per_month_bio_s = (BioPageClicks.query
+    .join(CreateBioPage, CreateBioPage.id == BioPageClicks.bio_page_id)
+    .filter(
+        CreateBioPage.author_id == current_user.id,
+        extract('month', BioPageClicks.created) == current_month,
+        extract('year', BioPageClicks.created) == current_year
+    ).all()
+    )
+
     res = [{"date": clicks_per_month.created.strftime("%d-%b-%Y"), "clicks": clicks_per_month.count} for clicks_per_month in clicks_per_month_s]
+    res2 = [{"date": clicks_per_month.date.strftime("%d-%b-%Y"), "clicks": clicks_per_month.clicks} for clicks_per_month in click_per_month_qrcode_s]
+    res3 = [{"date": clicks_per_month.created.strftime("%d-%b-%Y"), "clicks": clicks_per_month.count} for clicks_per_month in click_per_month_bio_s]
+
 
     # Prepare data for the charts
     qr_code_clicks = sum(qr_code.clicks for qr_code in qr_codes)
@@ -537,7 +565,9 @@ def analytics_all():
                            qr_code_generated=qr_code_generated,
                            bio_pages_generated=bio_pages_generated,
                            url_shorts_generated=url_shorts_generated,
-                           res=res
+                           res=res,
+                           res2=res2,
+                           res3=res3
                            )
     # return render_template("analytics_all.html", analytics=True)
 
@@ -700,7 +730,7 @@ def shorten_url():
 # redirect short url to the original url
 @user_blp.route("/<short_url>/")
 def redirect_to_url(short_url):
-    current_date = datetime.now().strftime("%d-%b-%Y")
+    current_date = datetime.now().strftime("%d-%m-%Y")
     print(current_date, "current date")
     if short_url == "qr-code":
         return redirect(url_for("user_blp.qr_code_info"))
@@ -710,15 +740,8 @@ def redirect_to_url(short_url):
         return redirect(url_for("user_blp.biolink"))
     url = Urlshort.query.filter_by(short_url=short_url).first()
     if not url:
-        url = QrCode.query.filter_by(short_url=short_url).first_or_404()
-        record = QrcodeRecord.query.filter_by(
-            qr_code_id=url.id, date=current_date
-        ).first()
-        if not record:
-            new_record = QrcodeRecord(qr_code_id=url.id, date=current_date, clicks=1)
-            db.session.add(new_record)
-        else:
-            record.clicks += 1
+        url = QrCode.query.filter_by(short_url=short_url).first()
+        save_qrcode_clicks(url.id)
     else:
         save_url_clicks(url.id)
 
@@ -780,7 +803,12 @@ def qr_codes():
         if not url.startswith("http://") and not url.startswith("https://"):
             url = "http://" + url
 
-        res = generate_and_save_qr(url)
+        # generate short url for the url
+        short_ur = generate_short_url2()
+
+        gr_dat = f"{request.host_url}{short_ur}"
+
+        res = generate_and_save_qr(gr_dat)
 
         # check if the url exists
         existing_qr_code = QrCode.query.filter_by(
