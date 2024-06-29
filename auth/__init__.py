@@ -88,7 +88,10 @@ def register():
         )
         msg.html = render_template("email_verification.html", otp=otp)
         mail.send(msg)
-        flash("Registration almost complete, check your email or spam folder for OTP", "success")
+        flash(
+            "Registration almost complete, check your email or spam folder for OTP",
+            "success",
+        )
         return redirect(url_for("auth_blp.email_verify", email=email))
 
     return render_template(
