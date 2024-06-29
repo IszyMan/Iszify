@@ -1,4 +1,5 @@
 import re
+
 # Importing library
 import qrcode
 from io import BytesIO
@@ -38,11 +39,11 @@ def generate_and_save_qr(data):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(data)
     qr.make(fit=True)
-    img = qr.make_image(fill_color='black', back_color='white')
+    img = qr.make_image(fill_color="black", back_color="white")
 
     # Save the QR code to BytesIO
     img_bytes_io = BytesIO()
-    img.save(img_bytes_io, format='PNG')
+    img.save(img_bytes_io, format="PNG")
 
     return img_bytes_io.getvalue()
 
@@ -51,11 +52,11 @@ def update_qr_code(data, fill_color):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(data)
     qr.make(fit=True)
-    img = qr.make_image(fill_color=fill_color, back_color='white')
+    img = qr.make_image(fill_color=fill_color, back_color="white")
 
     # Save the QR code to BytesIO
     img_bytes_io = BytesIO()
-    img.save(img_bytes_io, format='PNG')
+    img.save(img_bytes_io, format="PNG")
 
     return img_bytes_io.getvalue()
 
@@ -65,14 +66,14 @@ def customize_qr_code_logo(data, logo_path, fill_color):
     qr = qrcode.QRCode(version=1, box_size=10, border=5)
     qr.add_data(data)
     qr.make(fit=True)
-    qr_img = qr.make_image(fill_color=fill_color, back_color='white')
+    qr_img = qr.make_image(fill_color=fill_color, back_color="white")
 
     # Open the logo image and resize it
     logo = Image.open(logo_path)
 
     # Set the maximum size you want for the logo
     basewidth = 100
-    wpercent = (basewidth / float(logo.size[0]))
+    wpercent = basewidth / float(logo.size[0])
     hsize = int((float(logo.size[1]) * float(wpercent)))
     logo = logo.resize((basewidth, hsize))
 
@@ -84,7 +85,7 @@ def customize_qr_code_logo(data, logo_path, fill_color):
 
     # Save the final image to BytesIO
     img_bytes_io = BytesIO()
-    qr_img.save(img_bytes_io, format='PNG')
+    qr_img.save(img_bytes_io, format="PNG")
 
     return img_bytes_io.getvalue()
 
@@ -97,16 +98,13 @@ def customize(data, logo_path, fill_color):
     basewidth = 100
 
     # adjust image size
-    wpercent = (basewidth / float(logo.size[0]))
+    wpercent = basewidth / float(logo.size[0])
 
     hsize = int((float(logo.size[1]) * float(wpercent)))
 
     logo = logo.resize((basewidth, hsize))
 
-    QRcode = qrcode.QRCode(
-
-        error_correction=qrcode.constants.ERROR_CORRECT_H
-    )
+    QRcode = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
 
     # adding URL or text to QRcode
     QRcode.add_data(data)
@@ -118,31 +116,30 @@ def customize(data, logo_path, fill_color):
 
     # adding color to QR code
 
-    QRimg = QRcode.make_image(
-
-        fill_color=fill_color, back_color="white").convert('RGB')
+    QRimg = QRcode.make_image(fill_color=fill_color, back_color="white").convert("RGB")
 
     # set size of QR code
 
-    pos = ((QRimg.size[0] - logo.size[0]) // 2,
-
-           (QRimg.size[1] - logo.size[1]) // 2)
+    pos = ((QRimg.size[0] - logo.size[0]) // 2, (QRimg.size[1] - logo.size[1]) // 2)
     QRimg.paste(logo, pos)
 
     # save the QR code generated as BytesIO
 
     img_bytes_io = BytesIO()
 
-    QRimg.save(img_bytes_io, format='PNG')
+    QRimg.save(img_bytes_io, format="PNG")
 
     return img_bytes_io.getvalue()
 
 
 def get_urls_by_date(selected_date):
     try:
-        selected_datetime = datetime.strptime(selected_date, '%Y-%m-%d')
+        selected_datetime = datetime.strptime(selected_date, "%Y-%m-%d")
         print(selected_datetime, "selected datetime")
-        urls = Urlshort.query.filter(Urlshort.created >= selected_datetime, Urlshort.created < selected_datetime + timedelta(days=1)).all()
+        urls = Urlshort.query.filter(
+            Urlshort.created >= selected_datetime,
+            Urlshort.created < selected_datetime + timedelta(days=1),
+        ).all()
         return urls
     except ValueError:
         print("Invalid date format")
@@ -152,9 +149,12 @@ def get_urls_by_date(selected_date):
 
 def get_qr_codes_by_date(selected_date):
     try:
-        selected_datetime = datetime.strptime(selected_date, '%Y-%m-%d')
+        selected_datetime = datetime.strptime(selected_date, "%Y-%m-%d")
         print(selected_datetime, "selected datetime")
-        qr_codes = QrCode.query.filter(QrCode.created_at >= selected_datetime, QrCode.created_at < selected_datetime + timedelta(days=1)).all()
+        qr_codes = QrCode.query.filter(
+            QrCode.created_at >= selected_datetime,
+            QrCode.created_at < selected_datetime + timedelta(days=1),
+        ).all()
         return qr_codes
     except ValueError:
         print("Invalid date format")
@@ -164,9 +164,12 @@ def get_qr_codes_by_date(selected_date):
 
 def get_bio_page_by_date(selected_date):
     try:
-        selected_datetime = datetime.strptime(selected_date, '%Y-%m-%d')
+        selected_datetime = datetime.strptime(selected_date, "%Y-%m-%d")
         print(selected_datetime, "selected datetime")
-        bio_pages = CreateBioPage.query.filter(CreateBioPage.created_at >= selected_datetime, CreateBioPage.created_at < selected_datetime + timedelta(days=1)).all()
+        bio_pages = CreateBioPage.query.filter(
+            CreateBioPage.created_at >= selected_datetime,
+            CreateBioPage.created_at < selected_datetime + timedelta(days=1),
+        ).all()
         return bio_pages
     except ValueError:
         print("Invalid date format")
