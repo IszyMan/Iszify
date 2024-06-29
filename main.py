@@ -36,9 +36,15 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    @app.template_filter('urlsafe')
+    @app.template_filter("urlsafe")
     def urlsafe_filter(s):
-        return base64.b64encode(s).decode('utf-8').replace('+', '-').replace('/', '_').replace('=', '')
+        return (
+            base64.b64encode(s)
+            .decode("utf-8")
+            .replace("+", "-")
+            .replace("/", "_")
+            .replace("=", "")
+        )
 
     app.register_blueprint(auth_blp)
     app.register_blueprint(user_blp)
