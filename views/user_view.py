@@ -13,6 +13,9 @@ from utils import (
     get_urls_by_date,
     get_qr_codes_by_date,
     get_bio_page_by_date,
+    get_info,
+    get_browser_info,
+    get_computer_name,
 )
 from models.create_bio_page import CreateBioPage
 from models.qr_code import QrCode
@@ -361,7 +364,18 @@ def bio_link_routes(brand_name):
 
     url_id = get_bio_page_id(brand_name)
 
-    save_bio_page_clicks(url_id)
+    ip, city, country = get_info()
+    browser_name = get_browser_info(request)
+    computer_name = get_computer_name()
+    payload = {
+        "ip_address": ip,
+        "city": city,
+        "country": country,
+        "browser_name": browser_name,
+        "device": computer_name,
+    }
+
+    save_bio_page_clicks(url_id, payload)
     update_bio_page_clicks(url_id)
     return render_template(
         "bio_link_routes.html", brandie=brand_name.upper(), all_posts=bio_links
@@ -773,12 +787,23 @@ def redirect_to_url(short_url):
         return redirect(url_for("user_blp.url_shortener_info"))
     if short_url == "biolink":
         return redirect(url_for("user_blp.biolink"))
+
+    ip, city, country = get_info()
+    browser_name = get_browser_info(request)
+    computer_name = get_computer_name()
+    payload = {
+        "ip_address": ip,
+        "city": city,
+        "country": country,
+        "browser_name": browser_name,
+        "device": computer_name,
+    }
     url = Urlshort.query.filter_by(short_url=short_url).first()
     if not url:
         url = QrCode.query.filter_by(short_url=short_url).first()
-        save_qrcode_clicks(url.id)
+        save_qrcode_clicks(url.id, payload)
     else:
-        save_url_clicks(url.id)
+        save_url_clicks(url.id, payload)
 
     url.clicks += 1
     db.session.commit()
