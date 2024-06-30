@@ -35,7 +35,19 @@ class BioPageClicks(db.Model):
         db.session.commit()
 
 
-def save_bio_page_clicks(url_id):
+class BioPageClickLocation(db.Model):
+    __tablename__ = "bio_page_click_location"
+    id = db.Column(db.Integer, primary_key=True)
+    ip_address = db.Column(db.String(250))
+    country = db.Column(db.String(250))
+    city = db.Column(db.String(250))
+    device = db.Column(db.String(250))
+    browser = db.Column(db.String(250))
+    bio_page_id = db.Column(db.Integer, db.ForeignKey("bio_page.id"))
+    created = db.Column(db.DateTime, nullable=False, default=db.func.now())
+
+
+def save_bio_page_clicks(url_id, payload):
     # Get today's date components
     today = datetime.datetime.today()
     current_year = today.year
@@ -45,9 +57,9 @@ def save_bio_page_clicks(url_id):
     # Query to find today's clicks for the given url_id
     clicks = BioPageClicks.query.filter(
         BioPageClicks.bio_page_id == url_id,
-        extract('year', BioPageClicks.created) == current_year,
-        extract('month', BioPageClicks.created) == current_month,
-        extract('day', BioPageClicks.created) == current_day
+        extract("year", BioPageClicks.created) == current_year,
+        extract("month", BioPageClicks.created) == current_month,
+        extract("day", BioPageClicks.created) == current_day,
     ).first()
 
     if not clicks:
@@ -59,13 +71,22 @@ def save_bio_page_clicks(url_id):
         clicks.count += 1
 
     db.session.commit()
+    save_bio_page_click_location(
+        payload["ip_address"],
+        payload["country"],
+        payload["city"],
+        payload["device"],
+        payload["browser_name"],
+        url_id,
+    )
     return True
 
 
 # get bio page id
 def get_bio_page_id(bio_name):
     bio_page = CreateBioPage.query.filter(
-        func.lower(CreateBioPage.bio_name) == bio_name.lower()).first()
+        func.lower(CreateBioPage.bio_name) == bio_name.lower()
+    ).first()
     return bio_page.id
 
 
@@ -74,4 +95,19 @@ def update_bio_page_clicks(url_id):
     bio_page = CreateBioPage.query.get(url_id)
     bio_page.clicks += 1
     db.session.commit()
+    return True
+
+
+def save_bio_page_click_location(ip_address, country, city, device, browser, url_id):
+    new_record = BioPageClickLocation(
+        ip_address=ip_address,
+        country=country,
+        city=city,
+        device=device,
+        browser=browser,
+        bio_page_id=url_id,
+    )
+    db.session.add(new_record)
+    db.session.commit()
+
     return True
