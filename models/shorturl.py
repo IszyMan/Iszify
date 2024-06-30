@@ -13,7 +13,7 @@ secret = "any-secret-key-you-choose"
 
 hashids = Hashids(min_length=6, salt=secret)
 
-default_title = f'untitled {datetime}'
+default_title = f"untitled {datetime}"
 
 
 # url shortener table
@@ -56,7 +56,29 @@ class UrlShortenerClicks(db.Model):
         db.session.commit()
 
 
-def save_url_clicks(url_id):
+class ShortUrlClickLocation(db.Model):
+    __tablename__ = "short_url_click_location"
+    id = db.Column(db.Integer, primary_key=True)
+    ip_address = db.Column(db.String(250))
+    country = db.Column(db.String(250))
+    city = db.Column(db.String(250))
+    device = db.Column(db.String(250))
+    browser = db.Column(db.String(250))
+    url_id = db.Column(db.Integer, db.ForeignKey("url_shortener.id"))
+    created = db.Column(db.DateTime, nullable=False, default=db.func.now())
+
+    def __repr__(self):
+        return f"Clicks('{self.url_id}', '{self.created}')"
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def save_commit(self):
+        db.session.commit()
+
+
+def save_url_clicks(url_id, payload):
     # Get today's date components
     today = datetime.datetime.today()
     current_year = today.year
@@ -66,9 +88,9 @@ def save_url_clicks(url_id):
     # Query to find today's clicks for the given url_id
     clicks = UrlShortenerClicks.query.filter(
         UrlShortenerClicks.url_id == url_id,
-        extract('year', UrlShortenerClicks.created) == current_year,
-        extract('month', UrlShortenerClicks.created) == current_month,
-        extract('day', UrlShortenerClicks.created) == current_day
+        extract("year", UrlShortenerClicks.created) == current_year,
+        extract("month", UrlShortenerClicks.created) == current_month,
+        extract("day", UrlShortenerClicks.created) == current_day,
     ).first()
 
     if not clicks:
@@ -80,6 +102,14 @@ def save_url_clicks(url_id):
         clicks.count += 1
 
     db.session.commit()
+    save_url_click_location(
+        payload["ip_address"],
+        payload["country"],
+        payload["city"],
+        payload["device"],
+        payload["browser_name"],
+        url_id,
+    )
     return True
 
 
@@ -108,3 +138,17 @@ def validate_url(url):
         return True
     except (HTTPError, URLError):
         return False
+
+
+def save_url_click_location(ip_address, country, city, device, browser, url_id):
+    new_record = ShortUrlClickLocation(
+        ip_address=ip_address,
+        country=country,
+        city=city,
+        device=device,
+        browser=browser,
+        url_id=url_id,
+    )
+    db.session.add(new_record)
+    db.session.commit()
+    return True
