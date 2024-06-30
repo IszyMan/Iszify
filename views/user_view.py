@@ -780,7 +780,6 @@ def shorten_url():
 @user_blp.route("/<short_url>/")
 def redirect_to_url(short_url):
     current_date = datetime.now().strftime("%d-%m-%Y")
-    print(current_date, "current date")
     if short_url == "qr-code":
         return redirect(url_for("user_blp.qr_code_info"))
     if short_url == "url-shortener":
@@ -801,6 +800,8 @@ def redirect_to_url(short_url):
     url = Urlshort.query.filter_by(short_url=short_url).first()
     if not url:
         url = QrCode.query.filter_by(short_url=short_url).first()
+        if not url:
+            return ""
         save_qrcode_clicks(url.id, payload)
     else:
         save_url_clicks(url.id, payload)
