@@ -15,7 +15,6 @@ import socket
 def get_browser_info(request):
     user_agent = request.user_agent
     user_agent = str(user_agent)
-    print(type(user_agent), "user agent type")
     browsers = {
         'Chrome': r'Chrome\/([0-9\.]+)',
         'Firefox': r'Firefox\/([0-9\.]+)',
@@ -25,7 +24,7 @@ def get_browser_info(request):
     }
 
     browser_name = 'Unknown'
-    browser_version = 'Unknown'
+    # browser_version = 'Unknown'
 
     for name, pattern in browsers.items():
         match = re.search(pattern, user_agent)
@@ -33,14 +32,11 @@ def get_browser_info(request):
             browser_name = name
             # browser_version = match.group(1)
             break
-
-    print(f"Browser: {browser_name}")
     return browser_name
 
 
 def get_computer_name():
     hostname = socket.gethostname()
-    print(hostname, "computer name")
     return hostname
 
 
@@ -48,8 +44,6 @@ def get_info():
     url = 'http://ipinfo.io/json'
     response = urlopen(url)
     data = json.load(response)
-
-    print(data, "data info")
 
     ip = data['ip']
     city = data['city']
