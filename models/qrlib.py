@@ -13,7 +13,19 @@ class QrcodeRecord(UserMixin, db.Model):
     clicks = db.Column(db.Integer, default=0)
 
 
-def save_qrcode_clicks(url_id):
+class QrCodeClickLocation(UserMixin, db.Model):
+    __tablename__ = "qr_code_click_location"
+    id = db.Column(db.Integer, primary_key=True)
+    ip_address = db.Column(db.String(250))
+    country = db.Column(db.String(250))
+    city = db.Column(db.String(250))
+    device = db.Column(db.String(250))
+    browser = db.Column(db.String(250))
+    qr_code_id = db.Column(db.Integer, db.ForeignKey("qr_code.id"))
+    created = db.Column(db.DateTime, nullable=False, default=db.func.now())
+
+
+def save_qrcode_clicks(url_id, payload):
     # Get today's date components
     today = datetime.datetime.today()
     current_year = today.year
@@ -23,9 +35,9 @@ def save_qrcode_clicks(url_id):
     # Query to find today's clicks for the given url_id
     clicks = QrcodeRecord.query.filter(
         QrcodeRecord.qr_code_id == url_id,
-        extract('year', QrcodeRecord.date) == current_year,
-        extract('month', QrcodeRecord.date) == current_month,
-        extract('day', QrcodeRecord.date) == current_day
+        extract("year", QrcodeRecord.date) == current_year,
+        extract("month", QrcodeRecord.date) == current_month,
+        extract("day", QrcodeRecord.date) == current_day,
     ).first()
 
     if not clicks:
@@ -36,5 +48,27 @@ def save_qrcode_clicks(url_id):
         print("update click record")
         clicks.clicks += 1
 
+    db.session.commit()
+    save_qrcode_click_location(
+        payload["ip_address"],
+        payload["country"],
+        payload["city"],
+        payload["device"],
+        payload["browser_name"],
+        url_id,
+    )
+    return True
+
+
+def save_qrcode_click_location(ip_address, country, city, device, browser, url_id):
+    new_record = QrCodeClickLocation(
+        ip_address=ip_address,
+        country=country,
+        city=city,
+        device=device,
+        browser=browser,
+        qr_code_id=url_id,
+    )
+    db.session.add(new_record)
     db.session.commit()
     return True
