@@ -6,6 +6,56 @@ from io import BytesIO
 from PIL import Image, ImageDraw
 from models import Urlshort, QrCode, CreateBioPage
 from datetime import datetime, timedelta
+import re
+import json
+from urllib.request import urlopen
+import socket
+
+
+def get_browser_info(request):
+    user_agent = request.user_agent
+    user_agent = str(user_agent)
+    print(type(user_agent), "user agent type")
+    browsers = {
+        'Chrome': r'Chrome\/([0-9\.]+)',
+        'Firefox': r'Firefox\/([0-9\.]+)',
+        'Safari': r'Version\/([0-9\.]+).*Safari',
+        'Edge': r'Edge\/([0-9\.]+)',
+        'Opera': r'OPR\/([0-9\.]+)'
+    }
+
+    browser_name = 'Unknown'
+    browser_version = 'Unknown'
+
+    for name, pattern in browsers.items():
+        match = re.search(pattern, user_agent)
+        if match:
+            browser_name = name
+            # browser_version = match.group(1)
+            break
+
+    print(f"Browser: {browser_name}")
+    return browser_name
+
+
+def get_computer_name():
+    hostname = socket.gethostname()
+    print(hostname, "computer name")
+    return hostname
+
+
+def get_info():
+    url = 'http://ipinfo.io/json'
+    response = urlopen(url)
+    data = json.load(response)
+
+    print(data, "data info")
+
+    ip = data['ip']
+    city = data['city']
+    country = data['country']
+
+    return ip, city, country
 
 
 def get_platform(link):
