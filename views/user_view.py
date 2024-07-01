@@ -579,13 +579,28 @@ def analytics_all():
     res2_dict = {}
     res3_dict = {}
     for clicks_per_month in clicks_per_month_s:
-        res_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = clicks_per_month.count if not res_dict.get(clicks_per_month.created.strftime("%d-%b-%Y")) else res_dict[clicks_per_month.created.strftime("%d-%b-%Y")] + clicks_per_month.count
+        res_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = (
+            clicks_per_month.count
+            if not res_dict.get(clicks_per_month.created.strftime("%d-%b-%Y"))
+            else res_dict[clicks_per_month.created.strftime("%d-%b-%Y")]
+            + clicks_per_month.count
+        )
 
     for clicks_per_month in click_per_month_qrcode_s:
-        res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")] = clicks_per_month.clicks if not res2_dict.get(clicks_per_month.date.strftime("%d-%b-%Y")) else res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")] + clicks_per_month.clicks
+        res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")] = (
+            clicks_per_month.clicks
+            if not res2_dict.get(clicks_per_month.date.strftime("%d-%b-%Y"))
+            else res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")]
+            + clicks_per_month.clicks
+        )
 
     for clicks_per_month in click_per_month_bio_s:
-        res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = clicks_per_month.count if not res3_dict.get(clicks_per_month.created.strftime("%d-%b-%Y")) else res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")] + clicks_per_month.count
+        res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = (
+            clicks_per_month.count
+            if not res3_dict.get(clicks_per_month.created.strftime("%d-%b-%Y"))
+            else res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")]
+            + clicks_per_month.count
+        )
     res = [
         {
             "date": key,
