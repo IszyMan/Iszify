@@ -575,26 +575,37 @@ def analytics_all():
         .all()
     )
 
+    res_dict = {}
+    res2_dict = {}
+    res3_dict = {}
+    for clicks_per_month in clicks_per_month_s:
+        res_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = clicks_per_month.count if not res_dict.get(clicks_per_month.created.strftime("%d-%b-%Y")) else res_dict[clicks_per_month.created.strftime("%d-%b-%Y")] + clicks_per_month.count
+
+    for clicks_per_month in click_per_month_qrcode_s:
+        res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")] = clicks_per_month.clicks if not res2_dict.get(clicks_per_month.date.strftime("%d-%b-%Y")) else res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")] + clicks_per_month.clicks
+
+    for clicks_per_month in click_per_month_bio_s:
+        res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = clicks_per_month.count if not res3_dict.get(clicks_per_month.created.strftime("%d-%b-%Y")) else res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")] + clicks_per_month.count
     res = [
         {
-            "date": clicks_per_month.created.strftime("%d-%b-%Y"),
-            "clicks": clicks_per_month.count,
+            "date": key,
+            "clicks": val,
         }
-        for clicks_per_month in clicks_per_month_s
+        for key, val in res_dict.items()
     ]
     res2 = [
         {
-            "date": clicks_per_month.date.strftime("%d-%b-%Y"),
-            "clicks": clicks_per_month.clicks,
+            "date": key,
+            "clicks": val,
         }
-        for clicks_per_month in click_per_month_qrcode_s
+        for key, val in res2_dict.items()
     ]
     res3 = [
         {
-            "date": clicks_per_month.created.strftime("%d-%b-%Y"),
-            "clicks": clicks_per_month.count,
+            "date": key,
+            "clicks": val,
         }
-        for clicks_per_month in click_per_month_bio_s
+        for key, val in res3_dict.items()
     ]
 
     # Prepare data for the charts
