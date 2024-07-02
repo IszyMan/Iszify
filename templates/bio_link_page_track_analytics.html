@@ -158,7 +158,7 @@
       </div>
 
 
-        <div class=" mb-4">
+        <!-- <div class=" mb-4">
             <div class="card">
         <div class="card-body bg-dark text-white">
           <h5 class="card-title">Views by Device</h5>
@@ -166,9 +166,9 @@
           <canvas id="qrCodeStatsDoughnut"></canvas>
         </div>
       </div>
-      </div>
+      </div> -->
 
-        <div class=" mb-4">
+        <!-- <div class=" mb-4">
             <div class="card">
         <div class="card-body bg-dark text-white">
           <h5 class="card-title">Views by Referrers</h5>
@@ -176,9 +176,9 @@
           <canvas id="bioPageClicksReferrer"></canvas>
         </div>
       </div>
-      </div>
+      </div> -->
 
-        <div class=" mb-4">
+        <!-- <div class=" mb-4">
             <div class="card">
         <div class="card-body bg-dark text-white">
           <h5 class="card-title">Views by Country</h5>
@@ -186,9 +186,54 @@
           <canvas id="bioPageClicksCountry"></canvas>
         </div>
       </div>
-      </div>
+      </div> -->
 
-        <div class=" mb-4">
+      <div class="card bg-dark">
+        <h4 class="text-white p-3">Vies by countries</h4>
+      <table class="table table-sm text-white">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Country</th>
+            <th scope="col">Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for country in countries %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>{{ country["country"]}}</td>
+            <td>{{ country["count"]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card bg-warning">
+      <h4 class="text-dark p-3">Vies by cities</h4>
+    <table class="table table-sm text-dark">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">City</th>
+          <th scope="col">Count</th>
+        </tr>
+      </thead>
+      <!-- remove the border of tbody -->
+      <tbody class="border-0">
+        {% for city in cities %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ city["city"]}}</td>
+          <td>{{ city["count"]}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+        <!-- <div class=" mb-4">
             <div class="card">
         <div class="card-body bg-dark text-white">
           <h5 class="card-title">Views by City</h5>
@@ -196,7 +241,7 @@
           <canvas id="bioPageClicksCity"></canvas>
         </div>
       </div>
-      </div>
+      </div> -->
 
 
         </div>
@@ -241,42 +286,76 @@
 <script>
   // QR Code data for charts
 
+  // const bioPageClicksData = {
+  //   labels: ["Bio Page Clicks"],
+  //   datasets: [{
+  //     label: 'Bio Page Clicks',
+  //     data: [{{ bio_page_clicks }}],
+  //     backgroundColor: 'rgba(54, 162, 235, 0.2)',
+  //     borderColor: 'rgba(54, 162, 235, 1)',
+  //     borderWidth: 1
+  //   }]
+  // };
+
   const bioPageClicksData = {
-    labels: ["Bio Page Clicks"],
+    labels: {{ res|map(attribute='date')|list|tojson }},
     datasets: [{
-      label: 'Bio Page Clicks',
-      data: [{{ bio_page_clicks }}],
+      label: 'URL Shortener Clicks',
+      data: {{ res|map(attribute='clicks')|list|tojson }},
       backgroundColor: 'rgba(54, 162, 235, 0.2)',
       borderColor: 'rgba(54, 162, 235, 1)',
       borderWidth: 1
     }]
   };
 
-const qrCodeStatsData = {
-    labels: ["Mobile", "Desktop", "Tablets"],
-    datasets: [{
-      label: 'QR Code Statistics',
-      data: [{{ qr_code_generated }}, {{ bio_pages_generated }}, {{ url_shorts_generated }}],
-      backgroundColor: ['rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-      borderColor: ['rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
-      borderWidth: 1
-    }]
-  };
+// const qrCodeStatsData = {
+//     labels: ["Mobile", "Desktop", "Tablets"],
+//     datasets: [{
+//       label: 'QR Code Statistics',
+//       data: [{{ qr_code_generated }}, {{ bio_pages_generated }}, {{ url_shorts_generated }}],
+//       backgroundColor: ['rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+//       borderColor: ['rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+//       borderWidth: 1
+//     }]
+//   };
 
 
   // Initialize charts
 
+  // const bioPageClicksCtx = document.getElementById('bioPageClicksChart').getContext('2d');
+  // new Chart(bioPageClicksCtx, {
+  //   type: 'bar',
+  //   data: bioPageClicksData
+  // });
+
+
+  // const qrCodeStatsDoughnutCtx = document.getElementById('qrCodeStatsDoughnut').getContext('2d');
+  // new Chart(qrCodeStatsDoughnutCtx, {
+  //   type: 'doughnut',
+  //   data: qrCodeStatsData
+  // });
+
   const bioPageClicksCtx = document.getElementById('bioPageClicksChart').getContext('2d');
   new Chart(bioPageClicksCtx, {
     type: 'bar',
-    data: bioPageClicksData
-  });
-
-
-  const qrCodeStatsDoughnutCtx = document.getElementById('qrCodeStatsDoughnut').getContext('2d');
-  new Chart(qrCodeStatsDoughnutCtx, {
-    type: 'doughnut',
-    data: qrCodeStatsData
+    data: bioPageClicksData,
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Date'
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Clicks'
+          }
+        }
+      }
+    }
   });
 
 
