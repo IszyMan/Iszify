@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 import base64
 from auth import auth_blp
 from extensions import login_manager, db, bootstrap, migrate, qr_code, mail
@@ -35,6 +35,11 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    # 500 error handler
+    @app.errorhandler(500)
+    def internal_error(error):
+        return render_template("500.html"), 500
 
     @app.template_filter("urlsafe")
     def urlsafe_filter(s):

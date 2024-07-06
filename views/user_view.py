@@ -416,6 +416,55 @@ def bio_link_page_track_analytics(bio_id):
     bios = CreateBioPage.query.filter_by(id=bio_id, author_id=current_user.id).all()
 
     user_id = current_user.id
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+
+    click_per_month_bio_s = (
+        BioPageClicks.query.join(
+            CreateBioPage, CreateBioPage.id == BioPageClicks.bio_page_id
+        )
+        .filter(
+            CreateBioPage.author_id == current_user.id,
+            BioPageClicks.bio_page_id == bio_id,
+            extract("month", BioPageClicks.created) == current_month,
+            extract("year", BioPageClicks.created) == current_year,
+        )
+        .all()
+    )
+
+    location_click = BioPageClickLocation.query.filter(
+        BioPageClickLocation.bio_page_id == bio_id
+    ).all()
+
+    country_counts = {}
+    city_counts = {}
+
+    # Iterate over the location_click query results
+    for location in location_click:
+        # Update country count
+        country = location.country
+        if country in country_counts:
+            country_counts[country] += 1
+        else:
+            country_counts[country] = 1
+
+        # Update city count
+        city = location.city
+        if city in city_counts:
+            city_counts[city] += 1
+        else:
+            city_counts[city] = 1
+
+    # Convert the dictionaries to lists of dictionaries if needed
+    countries = [{"country": country, "count": count} for country, count in country_counts.items()]
+    cities = [{"city": city, "count": count} for city, count in city_counts.items()]
+
+    print(countries, "countries")
+    print(cities, "cities")
+
+    res = [{"date": i.created.strftime("%Y-%m-%d"), "clicks": i.count} for i in click_per_month_bio_s]
+
+    print(res, "res for bio _link analytics")
 
     # Prepare data for the charts
     bio_pages = CreateBioPage.query.filter_by(author_id=user_id).all()
@@ -436,6 +485,9 @@ def bio_link_page_track_analytics(bio_id):
         host_url=host_url,
         bio_page_clicks=bio_page_clicks,
         bio_pages_generated=bio_pages_generated,
+        res=res,
+        countries=countries,
+        cities=cities
     )
 
 
@@ -575,26 +627,52 @@ def analytics_all():
         .all()
     )
 
+    res_dict = {}
+    res2_dict = {}
+    res3_dict = {}
+    for clicks_per_month in clicks_per_month_s:
+        res_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = (
+            clicks_per_month.count
+            if not res_dict.get(clicks_per_month.created.strftime("%d-%b-%Y"))
+            else res_dict[clicks_per_month.created.strftime("%d-%b-%Y")]
+            + clicks_per_month.count
+        )
+
+    for clicks_per_month in click_per_month_qrcode_s:
+        res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")] = (
+            clicks_per_month.clicks
+            if not res2_dict.get(clicks_per_month.date.strftime("%d-%b-%Y"))
+            else res2_dict[clicks_per_month.date.strftime("%d-%b-%Y")]
+            + clicks_per_month.clicks
+        )
+
+    for clicks_per_month in click_per_month_bio_s:
+        res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")] = (
+            clicks_per_month.count
+            if not res3_dict.get(clicks_per_month.created.strftime("%d-%b-%Y"))
+            else res3_dict[clicks_per_month.created.strftime("%d-%b-%Y")]
+            + clicks_per_month.count
+        )
     res = [
         {
-            "date": clicks_per_month.created.strftime("%d-%b-%Y"),
-            "clicks": clicks_per_month.count,
+            "date": key,
+            "clicks": val,
         }
-        for clicks_per_month in clicks_per_month_s
+        for key, val in res_dict.items()
     ]
     res2 = [
         {
-            "date": clicks_per_month.date.strftime("%d-%b-%Y"),
-            "clicks": clicks_per_month.clicks,
+            "date": key,
+            "clicks": val,
         }
-        for clicks_per_month in click_per_month_qrcode_s
+        for key, val in res2_dict.items()
     ]
     res3 = [
         {
-            "date": clicks_per_month.created.strftime("%d-%b-%Y"),
-            "clicks": clicks_per_month.count,
+            "date": key,
+            "clicks": val,
         }
-        for clicks_per_month in click_per_month_bio_s
+        for key, val in res3_dict.items()
     ]
 
     # Prepare data for the charts
