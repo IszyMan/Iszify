@@ -1324,6 +1324,7 @@ def see():
     return render_template("base2.html")
 
 
+
 # @user_blp.route('/qrqr', methods=['GET'])
 # def qrqr():
 #     data_to_encode = "https://www.youtube.com/watch?v=QH2-TGUlwu4"

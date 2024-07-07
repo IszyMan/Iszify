@@ -1,0 +1,69 @@
+<!--start of bio link nav bar -->
+
+<div class="dashdiv">
+     <div class="d-flex flex-row">
+        <div class="p-2">
+   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start">
+
+       {% for post in bios %}
+       <li class="nav-item mx-3">
+        <p class="mt-1"><i class="fa fa-link" aria-hidden="true"></i>
+        <a class="text-decoration-none text-dark fw-bold " href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" >{{ host_url }}bio/{{post.bio_name}}</a></p>
+       </li>
+
+       <li class="nav-item mt-1"><span class="text-primary text-center "><b><i class="fas fa-copy"></i> Copy</b></span></li>
+
+       <li>
+       <div class="dropdown mx-3">
+       <button class="btn btn-secondary dropdown-toggle mt-0" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false">
+       <i class="bi bi-pencil-square"></i> Edit URL </i>
+       </button>
+
+           <!-- Edit Bio page dropdown -->
+      <div class="dropdown-menu p-5" style="width: 20rem;">
+      <h3>Edit Bio Name</h3>
+      <form action="{{url_for('user_blp.update_details', bio_id=post.id)}}" method="post" class="form-group">
+        <label for="link_name">Link Name</label>
+        <input type="text" class="form-control" name="brandname" value={{post.bio_name}}> <br>
+        <button type="submit" class="btn btn-secondary">Update</button>
+      </form>
+      </div>
+      </div>
+      </li>
+
+      <li><a href="{{url_for('user_blp.bio_link_routes', brand_name=post.bio_name)}}" target="blank">
+          <button class="btn-light text-center p-1 bg-light shadow-none mx-3 text-dark text-decoration-none rounded-3 border border-dark">
+           <i class="fa fa-external-link mx-1" aria-hidden="true"></i> View </button></a>
+      </li>
+
+      <li><button class="btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#">
+           <i class="fas fa-share"></i> Share</i>
+       </button>
+       </li>
+
+       <li class="text-end ms-5"><p class="btn-success text-end p-1 ms-5 bg-success shadow-none text-light text-decoration-none rounded-1 border border-success" >
+            Publish Changes
+       </p>
+       </li>
+
+
+
+       {% endfor %}
+    </ul>
+    </div>
+    </div>
+</div>
+
+      <div class="container bg-secondary">
+    <div class="d-flex justify-content-start py-3 container align-item-center">
+        <div>
+            {% for post in bios %}
+        <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Links</a>
+        <a href="{{url_for('user_blp.bio_link_page_appearance', bio_id=post.id)}}" class="btn py-1 px-2" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
+        <a href="{{url_for('user_blp.bio_link_page_track_analytics', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Analytics</a>
+            {% endfor %}
+    </div>
+    </div>
+</div>
+
+<!--End of bio link nav bar -->
