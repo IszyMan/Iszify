@@ -438,6 +438,8 @@ def bio_link_page_track_analytics(bio_id):
 
     country_counts = {}
     city_counts = {}
+    device_counts = {}
+    browser_counts = {}
 
     # Iterate over the location_click query results
     for location in location_click:
@@ -455,12 +457,30 @@ def bio_link_page_track_analytics(bio_id):
         else:
             city_counts[city] = 1
 
+        # Update device count
+        device = location.device
+        if device in device_counts:
+            device_counts[device] += 1
+        else:
+            device_counts[device] = 1
+
+        # Update browser count
+        browser = location.browser
+        if browser in browser_counts:
+            browser_counts[browser] += 1
+        else:
+            browser_counts[browser] = 1
+
     # Convert the dictionaries to lists of dictionaries if needed
     countries = [{"country": country, "count": count} for country, count in country_counts.items()]
     cities = [{"city": city, "count": count} for city, count in city_counts.items()]
+    devices = [{"device": device, "count": count} for device, count in device_counts.items()]
+    browsers = [{"browser": browser, "count": count} for browser, count in browser_counts.items()]
 
     print(countries, "countries")
     print(cities, "cities")
+    print(devices, "devices")
+    print(browsers, "browsers")
 
     res = [{"date": i.created.strftime("%Y-%m-%d"), "clicks": i.count} for i in click_per_month_bio_s]
 
@@ -487,7 +507,9 @@ def bio_link_page_track_analytics(bio_id):
         bio_pages_generated=bio_pages_generated,
         res=res,
         countries=countries,
-        cities=cities
+        cities=cities,
+        devices=devices,
+        browsers=browsers,
     )
 
 
@@ -1131,61 +1153,85 @@ def display_qr_codes():
 @user_blp.route("/stats/qr_codes/details/<int:qr_id>", methods=["GET"])
 @login_required
 def qr_codes_details(qr_id):
-    # qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
-    # qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
-    # if not qr_codes:
-    #     flash('No stats for this QR Code', 'info')
-    #     return redirect(url_for('user_blp.display_qr_codes'))
-    # Extract dates and click counts
-    # dates = [entry['date'] for entry in qr_codes]
-    # clicks = [entry['clicks'] for entry in qr_codes]
-
-    # qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
-    # # Extract dates and click counts
-    # dates = [entry['date'] for entry in click_data]
-    # clicks = [entry['clicks'] for entry in click_data]
-    #
-    # # Create a simple bar chart using Matplotlib
-    # plt.figure(figsize=(10, 6))
-    # plt.bar(dates, clicks)
-    # plt.xlabel('Date')
-    # plt.ylabel('Number of Clicks')
-    # plt.title('Clicks Over Time')
-    #
-    # # Convert the plot to a PNG image
-    # img = io.BytesIO()
-    # plt.savefig(img, format='png')
-    # img.seek(0)
-    # plot_url = base64.b64encode(img.getvalue()).decode()
-    # return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
-
     qrcodes = QrCode.query.filter_by(
         id=qr_id, author_id=current_user.id
     ).all()  # check if this should be .all or .first
     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
-    # if not qr_codes:
-    #     print("No stats for this QR Code")
-    #     flash("No stats for this QR Code", "info")
-    #     return redirect(url_for("user_blp.display_qr_codes"))
-    # Extract dates and click counts
     dates = [entry.date for entry in qr_codes]
     clicks = [entry.clicks for entry in qr_codes]
 
-    # Create a simple bar chart using Matplotlib
-    plt.figure(figsize=(10, 6))
-    plt.bar(dates, clicks)
-    plt.xlabel("Date")
-    plt.ylabel("Number of Clicks")
-    plt.title("Clicks Over Time")
+    current_month = datetime.now().month
+    current_year = datetime.now().year
 
-    # Convert the plot to a PNG image
-    img = io.BytesIO()
-    plt.savefig(img, format="png")
-    img.seek(0)
-    plot_url = base64.b64encode(img.getvalue()).decode()
-    # return render_template("qr_codes_details.html", urls=qrcodes, plot_url=plot_url)
+    click_per_month_qr_s = (
+        QrcodeRecord.query.join(
+            QrCode, QrCode.id == QrcodeRecord.qr_code_id
+        )
+        .filter(
+            QrCode.author_id == current_user.id,
+            BioPageClicks.bio_page_id == qr_id,
+            extract("month", QrcodeRecord.date) == current_month,
+            extract("year", QrcodeRecord.date) == current_year,
+        )
+        .all()
+    )
+
+    location_click = QrCodeClickLocation.query.filter(
+        QrCodeClickLocation.qr_code_id == qr_id
+    ).all()
+
+    country_counts = {}
+    city_counts = {}
+    device_counts = {}
+    browser_counts = {}
+
+    # Iterate over the location_click query results
+    for location in location_click:
+        # Update country count
+        country = location.country
+        if country in country_counts:
+            country_counts[country] += 1
+        else:
+            country_counts[country] = 1
+
+        # Update city count
+        city = location.city
+        if city in city_counts:
+            city_counts[city] += 1
+        else:
+            city_counts[city] = 1
+
+        # Update device count
+        device = location.device
+        if device in device_counts:
+            device_counts[device] += 1
+        else:
+            device_counts[device] = 1
+
+        # Update browser count
+        browser = location.browser
+        if browser in browser_counts:
+            browser_counts[browser] += 1
+        else:
+            browser_counts[browser] = 1
+
+    # Convert the dictionaries to lists of dictionaries if needed
+    countries = [{"country": country, "count": count} for country, count in country_counts.items()]
+    cities = [{"city": city, "count": count} for city, count in city_counts.items()]
+    devices = [{"device": device, "count": count} for device, count in device_counts.items()]
+    browsers = [{"browser": browser, "count": count} for browser, count in browser_counts.items()]
+
+    print(countries, "countries")
+    print(cities, "cities")
+    print(devices, "devices")
+    print(browsers, "browsers")
+
+    res = [{"date": i.date.strftime("%Y-%m-%d"), "clicks": i.clicks} for i in click_per_month_qr_s]
+
     return render_template(
-        "qr_codes_details.html", urls=qrcodes, plot_url=plot_url, qr=True
+        "qr_codes_details.html", urls=qrcodes, qr=True,
+        dates=dates, clicks=clicks, countries=countries, cities=cities, devices=devices, browsers=browsers,
+        res=res
     )
 
 
@@ -1367,3 +1413,81 @@ def see():
 #         return render_template('grgr.html', qr_code_image=base64_image)
 #
 #     return "No QR code data found."
+
+
+@user_blp.route("/stats/short_url_details/details/<int:url_id>", methods=["GET"])
+@login_required
+def short_url_details(url_id):
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+
+    click_per_month_short_s = (
+        UrlShortenerClicks.query.join(
+            Urlshort, Urlshort.id == UrlShortenerClicks.url_id
+        )
+        .filter(
+            Urlshort.author_id == current_user.id,
+            UrlShortenerClicks.url_id == url_id,
+            extract("month", UrlShortenerClicks.created) == current_month,
+            extract("year", UrlShortenerClicks.created) == current_year,
+        )
+        .all()
+    )
+
+    location_click = ShortUrlClickLocation.query.filter(
+        ShortUrlClickLocation.url_id == url_id
+    ).all()
+
+    country_counts = {}
+    city_counts = {}
+    device_counts = {}
+    browser_counts = {}
+
+    # Iterate over the location_click query results
+    for location in location_click:
+        # Update country count
+        country = location.country
+        if country in country_counts:
+            country_counts[country] += 1
+        else:
+            country_counts[country] = 1
+
+        # Update city count
+        city = location.city
+        if city in city_counts:
+            city_counts[city] += 1
+        else:
+            city_counts[city] = 1
+
+        # Update device count
+        device = location.device
+        if device in device_counts:
+            device_counts[device] += 1
+        else:
+            device_counts[device] = 1
+
+        # Update browser count
+        browser = location.browser
+        if browser in browser_counts:
+            browser_counts[browser] += 1
+        else:
+            browser_counts[browser] = 1
+
+    # Convert the dictionaries to lists of dictionaries if needed
+    countries = [{"country": country, "count": count} for country, count in country_counts.items()]
+    cities = [{"city": city, "count": count} for city, count in city_counts.items()]
+    devices = [{"device": device, "count": count} for device, count in device_counts.items()]
+    browsers = [{"browser": browser, "count": count} for browser, count in browser_counts.items()]
+
+    print(countries, "countries")
+    print(cities, "cities")
+    print(devices, "devices")
+    print(browsers, "browsers")
+
+    res = [{"date": i.created.strftime("%Y-%m-%d"), "clicks": i.count} for i in click_per_month_short_s]
+
+    return render_template(
+        "short_url_details.html", link=True,
+        countries=countries, cities=cities, devices=devices, browsers=browsers,
+        res=res
+    )
