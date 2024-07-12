@@ -81,7 +81,7 @@
                         <img height="200" width="200" src="data:image/png;base64,{{ url.qr_data }}" alt="QR Code" class="m-auto d-flex justify-content-center"/>
                     </div>
                     {% endif %} -->
-                    <div class=" mt-5 mb-5">
+                    <div class=" mt-5 mb-2">
                        <button><i class="fa fa-copy px-0" id="" style="cursor: pointer;"></i> Copy</button>
                            <button> <i class="fas fa-share px-0" style="cursor: pointer;"></i> Share</button>
                         <button> <i class="bi bi-pencil-square px-0" style="cursor: pointer;"></i></button>
@@ -91,6 +91,9 @@
                         </button>
 
 
+                    </div>
+                    <div class="mb-5">
+                        <a href="{{url_for('user_blp.short_url_details', url_id=url.id)}}" class="text-decoration-none"><i class="fa-solid fa-chart-pie"></i> Analytics</button>
                     </div>
                 </div>
             </div>
