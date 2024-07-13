@@ -472,17 +472,28 @@ def bio_link_page_track_analytics(bio_id):
             browser_counts[browser] = 1
 
     # Convert the dictionaries to lists of dictionaries if needed
-    countries = [{"country": country, "count": count} for country, count in country_counts.items()]
+    countries = [
+        {"country": country, "count": count}
+        for country, count in country_counts.items()
+    ]
     cities = [{"city": city, "count": count} for city, count in city_counts.items()]
-    devices = [{"device": device, "count": count} for device, count in device_counts.items()]
-    browsers = [{"browser": browser, "count": count} for browser, count in browser_counts.items()]
+    devices = [
+        {"device": device, "count": count} for device, count in device_counts.items()
+    ]
+    browsers = [
+        {"browser": browser, "count": count}
+        for browser, count in browser_counts.items()
+    ]
 
     print(countries, "countries")
     print(cities, "cities")
     print(devices, "devices")
     print(browsers, "browsers")
 
-    res = [{"date": i.created.strftime("%Y-%m-%d"), "clicks": i.count} for i in click_per_month_bio_s]
+    res = [
+        {"date": i.created.strftime("%Y-%m-%d"), "clicks": i.count}
+        for i in click_per_month_bio_s
+    ]
 
     print(res, "res for bio _link analytics")
 
@@ -1164,9 +1175,7 @@ def qr_codes_details(qr_id):
     current_year = datetime.now().year
 
     click_per_month_qr_s = (
-        QrcodeRecord.query.join(
-            QrCode, QrCode.id == QrcodeRecord.qr_code_id
-        )
+        QrcodeRecord.query.join(QrCode, QrCode.id == QrcodeRecord.qr_code_id)
         .filter(
             QrCode.author_id == current_user.id,
             BioPageClicks.bio_page_id == qr_id,
@@ -1216,22 +1225,40 @@ def qr_codes_details(qr_id):
             browser_counts[browser] = 1
 
     # Convert the dictionaries to lists of dictionaries if needed
-    countries = [{"country": country, "count": count} for country, count in country_counts.items()]
+    countries = [
+        {"country": country, "count": count}
+        for country, count in country_counts.items()
+    ]
     cities = [{"city": city, "count": count} for city, count in city_counts.items()]
-    devices = [{"device": device, "count": count} for device, count in device_counts.items()]
-    browsers = [{"browser": browser, "count": count} for browser, count in browser_counts.items()]
+    devices = [
+        {"device": device, "count": count} for device, count in device_counts.items()
+    ]
+    browsers = [
+        {"browser": browser, "count": count}
+        for browser, count in browser_counts.items()
+    ]
 
     print(countries, "countries")
     print(cities, "cities")
     print(devices, "devices")
     print(browsers, "browsers")
 
-    res = [{"date": i.date.strftime("%Y-%m-%d"), "clicks": i.clicks} for i in click_per_month_qr_s]
+    res = [
+        {"date": i.date.strftime("%Y-%m-%d"), "clicks": i.clicks}
+        for i in click_per_month_qr_s
+    ]
 
     return render_template(
-        "qr_codes_details.html", urls=qrcodes, qr=True,
-        dates=dates, clicks=clicks, countries=countries, cities=cities, devices=devices, browsers=browsers,
-        res=res
+        "qr_codes_details.html",
+        urls=qrcodes,
+        qr=True,
+        dates=dates,
+        clicks=clicks,
+        countries=countries,
+        cities=cities,
+        devices=devices,
+        browsers=browsers,
+        res=res,
     )
 
 
@@ -1370,7 +1397,6 @@ def see():
     return render_template("base2.html")
 
 
-
 # @user_blp.route('/qrqr', methods=['GET'])
 # def qrqr():
 #     data_to_encode = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
@@ -1474,20 +1500,30 @@ def short_url_details(url_id):
             browser_counts[browser] = 1
 
     # Convert the dictionaries to lists of dictionaries if needed
-    countries = [{"country": country, "count": count} for country, count in country_counts.items()]
+    countries = [
+        {"country": country, "count": count}
+        for country, count in country_counts.items()
+    ]
     cities = [{"city": city, "count": count} for city, count in city_counts.items()]
-    devices = [{"device": device, "count": count} for device, count in device_counts.items()]
-    browsers = [{"browser": browser, "count": count} for browser, count in browser_counts.items()]
+    devices = [
+        {"device": device, "count": count} for device, count in device_counts.items()
+    ]
+    browsers = [
+        {"browser": browser, "count": count}
+        for browser, count in browser_counts.items()
+    ]
 
-    print(countries, "countries")
-    print(cities, "cities")
-    print(devices, "devices")
-    print(browsers, "browsers")
-
-    res = [{"date": i.created.strftime("%Y-%m-%d"), "clicks": i.count} for i in click_per_month_short_s]
+    res = [
+        {"date": i.created.strftime("%Y-%m-%d"), "clicks": i.count}
+        for i in click_per_month_short_s
+    ]
 
     return render_template(
-        "short_url_details.html", link=True,
-        countries=countries, cities=cities, devices=devices, browsers=browsers,
-        res=res
+        "short_url_details.html",
+        link=True,
+        countries=countries,
+        cities=cities,
+        devices=devices,
+        browsers=browsers,
+        res=res,
     )
