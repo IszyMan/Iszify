@@ -28,6 +28,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import qrcode
 from PIL import Image
 from sqlalchemy import func, extract
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
 
 user_blp = Blueprint("user_blp", __name__)
 
@@ -969,6 +972,7 @@ def delete_url(url_id):
 def qr_codes():
     if request.method == "POST":
         url = request.form.get("url")
+        # soup = BeautifulSoup(urlopen(url), "html.parser")
         title = (
             request.form.get("title")
             or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"

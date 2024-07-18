@@ -10,9 +10,14 @@
 
      <div class="container-fluid">
 
+         <ul class="breadcrumb">
+              <li><a href="#">Dashboard</a></li>
+              <li><a href="#">QR code</a></li>
+              <li>Analytics</li>
+              </ul>
+         <h3 class="mt-4"><b>QR CODE ANALYTICS</b></h3>
 
-
-         <p><a href="{{url_for('user_blp.display_qr_codes')}}" class="side_link text-decoration-none text-dark"> <b>< Back to list</b></a></p>
+<!--         <p><a href="{{url_for('user_blp.display_qr_codes')}}" class="side_link text-decoration-none text-dark"> <b>< Back to list</b></a></p>-->
 {% if urls %}
     {% for url in urls|reverse %}
 

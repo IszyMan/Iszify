@@ -38,6 +38,33 @@
   <title>LinkTools {% block title %}{% endblock title %}
   </title>
   <link rel="icon" href="">
+
+    <!--Breadcrumb css-->
+        <style>
+    ul.breadcrumb {
+      padding: 5px 5px;
+      list-style: none;
+      background-color: ;
+    }
+    ul.breadcrumb li {
+      display: inline;
+      font-size: 18px;
+    }
+    ul.breadcrumb li+li:before {
+      padding: 4px;
+      color: black;
+      content: "/\00a0";
+    }
+    ul.breadcrumb li a {
+      color: #0275d8;
+      text-decoration: none;
+    }
+    ul.breadcrumb li a:hover {
+      color: #01447e;
+      text-decoration: underline;
+    }
+    </style>
+
 </head>
 
 <body>

@@ -30,8 +30,13 @@
 
 <main style="margin-top: 88px">
        <div class="row mb-4 ">
+          <div class="container-fluid align-self-end mt-2">
 
-          <div class="container-fluid align-self-end mt-5">
+              <ul class="breadcrumb">
+              <li><a href="#">Dashboard</a></li>
+              <li>All links</li>
+              </ul>
+
                <h3><b>ALL SHORTENED LINKS</b></h3>
               <a href="{{url_for('user_blp.shorten_url')}}"><button class="btn badge fw-normal shadow-none bg-success text-right me-3" style="font-size: 1.1rem;">
                 Create New Link<i class="fa fa-plus px-2"></i> </button></a>
@@ -93,7 +98,7 @@
 
                     </div>
                     <div class="mb-5">
-                        <a href="{{url_for('user_blp.short_url_details', url_id=url.id)}}" class="text-decoration-none"><i class="fa-solid fa-chart-pie"></i> Analytics</button>
+                       <button> <a href="{{url_for('user_blp.short_url_details', url_id=url.id)}}" class="text-decoration-none"><i class="fa-solid fa-chart-pie"></i> Analytics</a></button>
                     </div>
                 </div>
             </div>
