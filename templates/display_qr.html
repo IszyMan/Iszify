@@ -7,176 +7,255 @@
 {% endblock head %}
 
 {% block car %}
-<div class="container background-gray-10 " >
-<main style="margin-top: 8px">
-  <div class="container pt-4">
-<div class="dashdiv">
-     <div class="d-flex flex-row">
-        <div class="p-2 text-center">
-
-    </div>
-    </div>
+<div class="container background-gray-10">
+    <main style="margin-top: 8px">
+        <div class="container pt-4">
+            <div class="dashdiv">
+                <div class="d-flex flex-row">
+                    <div class="p-2 text-center"></div>
+                </div>
+            </div>
+        </div>
+    </main>
 </div>
-      </div>
-</main>
-    </div>
 {% endblock car %}
-
 
 {% block content %}
 <!-- display in grids -->
-
 <main style="margin-top: 58px">
-  <div class="container pt-4">
+    <div class="container pt-4">
+        <div class="row mb-4">
+            <div class="container-fluid align-self-end mt-5">
+                <h3><b>All QR CODES</b></h3>
+                <a href="{{url_for('user_blp.qr_codes')}}">
+                    <button class="btn badge fw-normal shadow-none bg-success text-right me-3" style="font-size: 1.1rem;">
+                        Create New QR Code<i class="fa fa-plus px-2"></i>
+                    </button>
+                </a>
 
+                {% if display %}
+                <form action="" method="post" id="filter_form" class="d-none">
+                    <input type="text" id="datepicker_input" name="date">
+                </form>
+                <button class="btn badge fw-normal bg-primary shadow-none" id="datepicker-btn" style="font-size: 1.1rem;">
+                    <i class="fa fa-calendar px-2"></i>Filter by Date
+                </button>
+                <button class="{% if not refresh %} d-none {% endif %}">
+                    <i class="fas fa-times" id="close_btn"></i>
+                </button>
+                {% endif %}
+            </div>
+        </div>
 
-    <div class="row mb-4 ">
-
-          <div class="container-fluid align-self-end mt-5">
-               <h3><b>All QR CODES</b></h3>
-              <a href="{{url_for('user_blp.qr_codes')}}"><button class="btn badge fw-normal shadow-none bg-success text-right me-3" style="font-size: 1.1rem;">
-                Create New QR Code<i class="fa fa-plus px-2"></i> </button></a>
-
-              {% if display %}
-              <form action="" method="post" id="filter_form" class="d-none">
-               <input type="text" id="datepicker_input" name="date">
-              </form>
-              <button class="btn badge fw-normal bg-primary shadow-none" id="datepicker-btn" style="font-size: 1.1rem;">
-               <i class="fa fa-calendar px-2"></i>Filter by Date
-               
-           </button> <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
-               
-             {% endif %}
-
-      </div>
-      </div>
-      {% if urls %}
-      <div class="container-fluid">
-          <div class="row g-4">
-              {% for url in urls|reverse %}
-                  <div class="col-lg-4 col-md-6 mb-4">
-                      <div class="card pb-5 rounded" style="background-color:rgb(253, 253, 253); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
-                          <div class="mt-3">
-                              <img src="data:image/png;base64,{{ url.qr_data }}" 
-                                   alt="QR Code"
-                                   class="mx-auto d-flex img-thumbnail mt-2 mb-0" 
-                                   style="margin-bottom: 4rem;">
-                          </div>
-  
-                          <div class="mt-3 px-4">
-                              <div class="card-text h4 mt-3"><strong>{{ url.title }}</strong></div><br>
-  
-                              {% if url.url %}
-                                  <p><b>Link</b><br>
-                                  <i class="bi bi-arrow-return-right"></i><a href="{{ url.url }}" class="text-center mx-auto w-100">
-                                      {{ url.url }} </a></p>
-                                  <p><i class="fa fa-link" aria-hidden="true"></i>shortlink.ng/{{ url.short_url }}</p>
-                              {% elif url.email %}
-                                  <b>Email</b><br>
-                                  {{ url.email }}
-
-                              {% elif url.ssid %}
-                                  <b>Wifi Name</b><br>
-                                  {{ url.ssid }}
-
-                              {% else %}
-                                  <b>VCARD</b><br>
-                                  Card
-                              {% endif %}
-  
-                              <p class="mt-3">
-                                  <i class="bi bi-bar-chart-fill"></i> Click Data ({{ url.clicks }})
-                                  <i class="bi bi-calendar px-2"></i>{{ url.created_at.strftime('%B %d, %Y') }}
-                              </p>
-                          </div>
-  
-                          <div class="mt-3 ml-5 text-center">
-                              <button><a href="{{ url_for('user_blp.qr_codes_content_edit', qr_id=url.id) }}"  class="">
-                                  <i class="bi bi-pencil-fill h4 mx-1"></i>
-                              </a></button>
-                              <button><a href="{{ url_for('user_blp.qr_codes_customize', qr_id=url.id) }}"  class="">
-                                  <i class="bi bi-palette h4"></i>
-                              </a></button>
-                              <button><a href="javascript:void(0);" onclick="downloadQR('{{ url.qr_data }}', '{{ url.id }}')" class="">
-                                  <i class="bi bi-download h4"></i>
-                              </a></button>
-                              <button><a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
-                                  <i class="bi bi-trash h4"></i>
-                              </a></button>
-                              <button><a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
-                                  <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
-                              </a></button>
-                          </div>
-                      </div>
-                  </div>
-              {% endfor %}
-          </div>
-      </div>
-  {% else %}
-      <div class="card" style="background-color:lavender;">
-          <div class="row">
-              <div class="col-sm mt-5">
-                  <h2 class="text-center"><b>No QR Code</b></h2>
-                  <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
-              </div>
-          </div>
-      </div>
-  {% endif %}
-  
-
-<!-- </div> -->
-</div>
+        {% if urls %}
+        <div class="container-fluid">
+            <div class="row g-4">
+                {% for url in urls|reverse %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card pb-5 rounded" style="background-color:rgb(253, 253, 253); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
+                        <div class="mt-3 position-relative" id="qrContainer{{ url.id }}">
+                            <img src="data:image/png;base64,{{ url.qr_data }}" 
+                                 alt="QR Code" id="qrContainer{{ url.id }}" data-qr-id="{{ url.id }}"
+                                 class="mx-auto d-flex img-thumbnail mt-2 mb-0 qr-code qr-code-container">
+                        </div>
+                        <div class="mt-3 px-4">
+                            <div class="card-text h4 mt-3"><strong>{{ url.title }}</strong></div><br>
+                            {% if url.url %}
+                            <p><b>Link</b><br>
+                                <i class="bi bi-arrow-return-right"></i>
+                                <a href="{{ url.url }}" class="text-center mx-auto w-100">{{ url.url }}</a>
+                            </p>
+                            <p><i class="fa fa-link" aria-hidden="true"></i>shortlink.ng/{{ url.short_url }}</p>
+                            {% elif url.email %}
+                            <b>Email</b><br>
+                            {{ url.email }}
+                            {% elif url.ssid %}
+                            <b>Wifi Name</b><br>
+                            {{ url.ssid }}
+                            {% else %}
+                            <b>VCARD</b><br>
+                            Card
+                            {% endif %}
+                            <p class="mt-3">
+                                <i class="bi bi-bar-chart-fill"></i> Click Data ({{ url.clicks }})
+                                <i class="bi bi-calendar px-2"></i>{{ url.created_at.strftime('%B %d, %Y') }}
+                            </p>
+                        </div>
+                        <div class="mt-3 ml-5 text-center">
+                            <button><a href="{{ url_for('user_blp.qr_codes_content_edit', qr_id=url.id) }}" class="">
+                                <i class="bi bi-pencil-fill h4 mx-1"></i>
+                            </a></button>
+                            <button><a href="{{ url_for('user_blp.qr_codes_customize', qr_id=url.id) }}" class="">
+                                <i class="bi bi-palette h4"></i>
+                            </a></button>
+                            <button><a href="javascript:void(0);" onclick="downloadQR('{{ url.qr_data }}', '{{ url.id }}')" class="">
+                                <i class="bi bi-download h4"></i>
+                            </a></button>
+                            <button><a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
+                                <i class="bi bi-trash h4"></i>
+                            </a></button>
+                            <button><a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
+                                <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
+                            </a></button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#frameModal{{ url.id }}">
+                                Customize Frame
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="frameModal{{ url.id }}" tabindex="-1" aria-labelledby="frameModalLabel{{ url.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="frameModalLabel{{ url.id }}">Select Frame</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Frame selection options (replace with your actual frames) -->
+                                <div class="d-flex justify-content-between">
+                                    <img src="{{ url_for('static', filename='fr1.png') }}" alt="Frame 1" class="frame-option" data-frame-url="{{ url_for('static', filename='fr1.png') }}" width="50px" height="50px" />
+                                    <img src="{{ url_for('static', filename='fr2.png') }}" alt="Frame 2" class="frame-option" data-frame-url="{{ url_for('static', filename='fr2.png') }}" width="50px" height="50px" />
+                                    <img src="{{ url_for('static', filename='fr3.png') }}" alt="Frame 3" class="frame-option" data-frame-url="{{ url_for('static', filename='fr3.png') }}" width="50px" height="50px" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="applyFrame('{{ url.id }}')">Apply Frame</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div class="card" style="background-color:lavender;">
+            <div class="row">
+                <div class="col-sm mt-5">
+                    <h2 class="text-center"><b>No QR Code</b></h2>
+                    <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail" />
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</main>
 
 <script>
     function confirmDelete() {
-      return confirm('Are you sure you want to delete?');
+        return confirm('Are you sure you want to delete?');
     }
 
     function downloadQR(qrUrl, id) {
-        // fetch("https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrUrl)
-        //     .then(response => response.blob())
-        //     .then(blob => {
-        //         var url = window.URL.createObjectURL(blob);
-        //         var link = document.createElement('a');
-        //         link.href = url;
-        //         link.download = "qr_code_" + id + ".png";
-        //         link.click();
-        //         window.URL.revokeObjectURL(url);
-        //     });
-
-            fetch(`data:image/png;base64,${qrUrl}`)
-        .then(res => res.blob())
-        .then(blob => {
-            var url = window.URL.createObjectURL(blob);
-            var link = document.createElement('a');
-            link.href = url;
-            link.download = "qr_code_" + id + ".png";
-            link.click();
-            window.URL.revokeObjectURL(url);
-        });
+        fetch(`data:image/png;base64,${qrUrl}`)
+            .then(res => res.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = "qr_code_" + id + ".png";
+                link.click();
+                window.URL.revokeObjectURL(url);
+            });
     }
 
+    let selectedFrameUrl = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Frame selection event
+    document.querySelectorAll('.frame-option').forEach(function(frameOption) {
+        frameOption.addEventListener('click', function() {
+            selectedFrameUrl = this.dataset.frameUrl;
+            document.querySelectorAll('.frame-option').forEach(function(option) {
+                option.classList.remove('selected-frame');
+            });
+            this.classList.add('selected-frame');
+        });
+    });
+
+    // Apply stored frames from local storage
+    document.querySelectorAll('.qr-code-container').forEach(function(container) {
+        let qrId = container.dataset.qrId;
+        let storedFrameUrl = localStorage.getItem('frame_' + qrId);
+        if (storedFrameUrl) {
+            applyStoredFrame(qrId, storedFrameUrl);
+        }
+    });
+});
+
+function applyFrame(qrId) {
+    if (selectedFrameUrl) {
+        applyStoredFrame(qrId, selectedFrameUrl);
+        localStorage.setItem('frame_' + qrId, selectedFrameUrl);
+
+        // Hide the modal
+        let modal = bootstrap.Modal.getInstance(document.getElementById(`frameModal${qrId}`));
+        modal.hide();
+    }
+}
+
+function applyStoredFrame(qrId, frameUrl) {
+    // Find the QR code container for the specific QR code
+    let qrContainer = document.querySelector(`#qrContainer${qrId}`);
+    if (qrContainer) {
+        // Remove any existing frame
+        let existingFrame = qrContainer.querySelector('.qr-frame');
+        if (existingFrame) {
+            existingFrame.remove();
+        }
+
+        // Create a new frame image element
+        let frameImg = document.createElement('img');
+        frameImg.src = frameUrl;
+        frameImg.classList.add('qr-frame');
+
+        // Style the frame image to overlay on the QR code
+        frameImg.style.position = 'absolute';
+        frameImg.style.top = '0';
+        frameImg.style.left = '0';
+        frameImg.style.width = '100%';
+        frameImg.style.height = '100%';
+        frameImg.style.pointerEvents = 'none';
+
+        // Append the frame image to the QR code container
+        qrContainer.appendChild(frameImg);
+    }
+}
 
 
-    close_btn = document.getElementById('close_btn');
-  close_btn.addEventListener('click', function () {
-    window.location.href = '/stats/qr_codes';
-  })
-
-  document.addEventListener('DOMContentLoaded', function () {
-      // Initialize Bootstrap datepicker
-      $('#datepicker-btn').datepicker({
-          autoclose: true,
-          format: 'yyyy-mm-dd'
-      }).on('changeDate', function (e) {
-          // Get the selected date value
-          var selectedDate = e.format('yyyy-mm-dd');
-          console.log('Selected Date:', selectedDate);
-          document.querySelector('#datepicker_input').value = selectedDate;
-          document.querySelector('#filter_form').submit();
-      });
-  });
+    $(document).ready(function() {
+        $('#datepicker-btn').click(function() {
+            $('#datepicker_input').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            }).datepicker('show').on('changeDate', function(e) {
+                $('#filter_form').submit();
+            });
+        });
+        
+        $('#close_btn').click(function() {
+            $('#filter_form')[0].reset();
+            $('#filter_form').submit();
+        });
+    });
 </script>
-  </div>
-</main>
+
+<style>
+    .qr-frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+    .frame-option {
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+    .frame-option.selected-frame {
+        border: 2px solid blue;
+    }
+</style>
 {% endblock content %}
