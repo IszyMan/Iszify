@@ -58,9 +58,9 @@
     <div class="d-flex justify-content-start py-3 container align-item-center">
         <div>
             {% for post in bios %}
-        <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Links</a>
-        <a href="{{url_for('user_blp.bio_link_page_appearance', bio_id=post.id)}}" class="btn py-1 px-2" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
-        <a href="{{url_for('user_blp.bio_link_page_track_analytics', bio_id=post.id)}}" class="btn py-1 px-2" style="background: rgb(93, 87, 80) !important;">Analytics</a>
+        <a href="{{url_for('user_blp.bio_link_pages_details', bio_id=post.id)}}" class="py-1 px-2 text-decoration-none {% if bio_details %} text-primary bg-white h5 {% else %}text-white {% endif %}" style="background: rgb(93, 87, 80) !important;">Create</a>
+        <a href="{{url_for('user_blp.bio_link_page_appearance', bio_id=post.id)}}" class="py-1 px-2 text-decoration-none {% if bio_appearance %} text-primary bg-white h5 {% else %}text-white {% endif %}" style="margin-right: .6rem; background: rgb(93, 87, 80) !important;">Appearance</a>
+        <a href="{{url_for('user_blp.bio_link_page_track_analytics', bio_id=post.id)}}" class="py-1 px-2 text-decoration-none {% if bio_analytics %} text-primary bg-white h5 {% else %}text-white {% endif %}" style="background: rgb(93, 87, 80) !important;">Analytics</a>
             {% endfor %}
     </div>
     </div>

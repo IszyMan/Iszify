@@ -141,6 +141,9 @@
           <ul class="dropdown-menu dropdown-menu-end p-3 bg-primary" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item text-white p-3" href="{{url_for('user_blp.dashboard')}}">My profile</a></li>
             <li><a class="dropdown-item text-white p-3" href="#">Settings</a></li>
+            <li><a data-bs-toggle="modal" data-bs-target="#exampleModall" class="dropdown-item text-danger p-3"
+                style="width: 100%; font-size: .8rem; cursor: pointer; ">
+                <i class="fas fa-sign-out-alt"></i> <b> Logout</b></a></li>
           </ul>
         </li>
       </ul>
@@ -257,7 +260,7 @@
         </div>
 
         <div class="text-light  d-flex flex-column col-md-3 mydiv">
-            <h4>SOLUTIONS</h4> <br><br>
+            <h4>OUR SOLUTIONS</h4> <br><br>
             <h6 >URL SHORTENER</h6><br>
             <h6>QR CODES</h6><br>
             <h6>Link-In-BIO </h6>

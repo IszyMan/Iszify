@@ -322,6 +322,7 @@ def bio_link_pages_details(bio_id):
     return render_template(
         "bio_link_pages_details.html",
         bio=True,
+        bio_details=True,
         bios=bios,
         links_added=bio_links,
         form=form,
@@ -399,6 +400,7 @@ def bio_link_page_appearance(bio_id):
     return render_template(
         "bio_link_page_appearance.html",
         bio=True,
+        bio_appearance=True,
         bio_id=bio_id,
         bios=bios,
         links_added=bio_links,
@@ -511,6 +513,7 @@ def bio_link_page_track_analytics(bio_id):
     return render_template(
         "bio_link_page_track_analytics.html",
         bio=True,
+        bio_analytics=True,
         bio_id=bio_id,
         bios=bios,
         links_added=bio_links,

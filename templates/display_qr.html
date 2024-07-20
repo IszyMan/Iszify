@@ -63,15 +63,15 @@
 
               {% for url in urls|reverse %}
                       <div class="card  rounded mb-4 ms-3" style="background-color:rgb(253, 253, 253); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 0px;">
-                      <div class="row mt-3">
-                          <div class="col-sm-3 ms-5">
+                      <div class="row mt-3 ms-5 mb-3">
+                          <div class="col-sm-4 ">
                               <img src="data:image/png;base64,{{ url.qr_data }}" 
                                    alt="QR Code"
                                    class="ms-3 d-flex img-thumbnail mt-2 mb-0"
                                    style="margin-bottom: 4rem;" width="200" height="200">
                           </div>
   
-                          <div class="col-sm-6 mt-2 ms-3">
+                          <div class="col-sm-4 mt-2 ">
                               <div class="card-text h5 mt-2 "><strong>{{ url.title }}</strong></div><br>
   
                               {% if url.url %}
@@ -98,7 +98,7 @@
                               </p>
                           </div>
   
-                          <div class="col-sm mt-3">
+                          <div class="col-sm-4 mt-3">
                               <button><a href="{{ url_for('user_blp.qr_codes_content_edit', qr_id=url.id) }}"  class="">
                                   <i class="bi bi-pencil-fill h4 mx-1"></i>
                               </a></button>
