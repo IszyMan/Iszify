@@ -74,7 +74,7 @@
                     <div class="col-sm-4 ">
                         <p class="h6 mt-2"><strong> {{url.title}} </strong></p>
                         <p class=""><strong>Short <a href="{{ request.host_url }}{{ url.short_url }}" target="_blank"> {{ request.host_url }}{{ url.short_url }}</a></strong></p>
-                        <p class=""><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url }}</a></p>
+                        <p class=""><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url|truncate(30) }}</a></p>
                         <div class="mb-5">
                             <small>
                                 <i class="bi bi-bar-chart-fill"></i>Click Data ({{ url.clicks }})
