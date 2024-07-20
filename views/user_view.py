@@ -29,6 +29,7 @@ import qrcode
 from PIL import Image
 from sqlalchemy import func, extract
 
+
 user_blp = Blueprint("user_blp", __name__)
 
 
@@ -319,6 +320,7 @@ def bio_link_pages_details(bio_id):
     return render_template(
         "bio_link_pages_details.html",
         bio=True,
+        bio_details=True,
         bios=bios,
         links_added=bio_links,
         form=form,
@@ -396,6 +398,7 @@ def bio_link_page_appearance(bio_id):
     return render_template(
         "bio_link_page_appearance.html",
         bio=True,
+        bio_appearance=True,
         bio_id=bio_id,
         bios=bios,
         links_added=bio_links,
@@ -508,6 +511,7 @@ def bio_link_page_track_analytics(bio_id):
     return render_template(
         "bio_link_page_track_analytics.html",
         bio=True,
+        bio_analytics=True,
         bio_id=bio_id,
         bios=bios,
         links_added=bio_links,
@@ -969,6 +973,7 @@ def delete_url(url_id):
 def qr_codes():
     if request.method == "POST":
         url = request.form.get("url")
+        # soup = BeautifulSoup(urlopen(url), "html.parser")
         title = (
             request.form.get("title")
             or f"Untitled {datetime.now().strftime('%Y-%m-%d %I:%M:%S %Z ')}"

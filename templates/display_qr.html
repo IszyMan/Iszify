@@ -141,6 +141,110 @@
         {% endif %}
     </div>
 </main>
+    <div class="row mb-4 ">
+
+          <div class="container-fluid align-self-end mt-0">
+              <ul class="breadcrumb">
+              <li><a href="#">Dashboard</a></li>
+              <li>All QR codes</li>
+              </ul>
+               <h3><b>All QR CODES</b></h3>
+              <div>
+              <a href="{{url_for('user_blp.qr_codes')}}"><button class="btn badge fw-normal shadow-none bg-success " >
+                Create New QR Code<i class="fa fa-plus px-2"></i> </button></a>
+
+
+              {% if display %}
+
+              <form action="" method="post" id="filter_form" class="d-none">
+               <input type="text" id="datepicker_input" name="date">
+              </form>
+              <button class="btn badge fw-normal bg-primary shadow-none" id="datepicker-btn" >
+               <i class="fa fa-calendar px-2"></i>Filter by Date
+               
+             </button> <button class="{% if not refresh %} d-none {% endif %}"><i class="fas fa-times" id="close_btn"></i></button>
+               
+             {% endif %}
+              </p>
+
+      </div>
+      </div>
+      {% if urls %}
+      <div class="container-fluid">
+
+              {% for url in urls|reverse %}
+                      <div class="card  rounded mb-4 ms-3" style="background-color:rgb(253, 253, 253); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 0px;">
+                      <div class="row mt-3 ms-5 mb-3">
+                          <div class="col-sm-4 ">
+                              <img src="data:image/png;base64,{{ url.qr_data }}" 
+                                   alt="QR Code"
+                                   class="ms-3 d-flex img-thumbnail mt-2 mb-0"
+                                   style="margin-bottom: 4rem;" width="200" height="200">
+                          </div>
+  
+                          <div class="col-sm-4 mt-2 ">
+                              <div class="card-text h5 mt-2 "><strong>{{ url.title }}</strong></div><br>
+  
+                              {% if url.url %}
+                                  <p><b>Link</b><br>
+                                  <i class="bi bi-arrow-return-right"></i><a href="{{ url.url }}" class="text-center mx-auto w-100">
+                                      {{ url.url }} </a></p>
+                                  <p><i class="fa fa-link" aria-hidden="true"></i>shortlink.ng/{{ url.short_url }}</p>
+                              {% elif url.email %}
+                                  <b>Email</b><br>
+                                  {{ url.email }}
+
+                              {% elif url.ssid %}
+                                  <b>Wifi Name</b><br>
+                                  {{ url.ssid }}
+
+                              {% else %}
+                                  <b>VCARD</b><br>
+                                  Card
+                              {% endif %}
+  
+                              <p class="mt-3">
+                                  <i class="bi bi-bar-chart-fill"></i> Click Data ({{ url.clicks }})
+                                  <i class="bi bi-calendar px-2"></i>{{ url.created_at.strftime('%B %d, %Y') }}
+                              </p>
+                          </div>
+  
+                          <div class="col-sm-4 mt-3">
+                              <button><a href="{{ url_for('user_blp.qr_codes_content_edit', qr_id=url.id) }}"  class="">
+                                  <i class="bi bi-pencil-fill h4 mx-1"></i>
+                              </a></button>
+                              <button><a href="{{ url_for('user_blp.qr_codes_customize', qr_id=url.id) }}"  class="">
+                                  <i class="bi bi-palette h4"></i>
+                              </a></button>
+                              <button><a href="javascript:void(0);" onclick="downloadQR('{{ url.qr_data }}', '{{ url.id }}')" class="">
+                                  <i class="bi bi-download h4"></i>
+                              </a></button>
+                              <button><a href="/qr_codes/delete/{{url.id}}" onclick="return confirmDelete()" class="">
+                                  <i class="bi bi-trash h4"></i>
+                              </a></button>
+                              <button><a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
+                                  <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
+                              </a></button>
+                          </div>
+                      </div>
+                  </div>
+              {% endfor %}
+
+      </div>
+  {% else %}
+      <div class="card" style="background-color:lavender;">
+          <div class="row">
+              <div class="col-sm mt-5">
+                  <h2 class="text-center"><b>No QR Code</b></h2>
+                  <img src="{{ url_for('static', filename='spanner-man.jpg') }}" class="mx-auto d-block img-thumbnail"/>
+              </div>
+          </div>
+      </div>
+  {% endif %}
+  
+
+<!-- </div> -->
+</div>
 
 <script>
     function confirmDelete() {

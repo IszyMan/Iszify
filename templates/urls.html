@@ -30,8 +30,13 @@
 
 <main style="margin-top: 88px">
        <div class="row mb-4 ">
+          <div class="container-fluid align-self-end mt-2">
 
-          <div class="container-fluid align-self-end mt-5">
+              <ul class="breadcrumb">
+              <li><a href="#">Dashboard</a></li>
+              <li>All links</li>
+              </ul>
+
                <h3><b>ALL SHORTENED LINKS</b></h3>
               <a href="{{url_for('user_blp.shorten_url')}}"><button class="btn badge fw-normal shadow-none bg-success text-right me-3" style="font-size: 1.1rem;">
                 Create New Link<i class="fa fa-plus px-2"></i> </button></a>
@@ -52,21 +57,22 @@
 </main>
 {% if urls %}
 <div class="container-fluid">
-    <div class="row w-100 g-4">
+
         {% for url in urls|reverse %}
-        <div class="mb-4 col-lg-4 col-md-3">
-            <div class="card p-3 position-relative rounded" style="background-color: white; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;">
-                <div class="">
+        <div class="card  rounded mb-4 ms-3" style="background-color:rgb(253, 253, 253); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 0px;">
+            <div class="row mt-3 ms-3 mb-3">
+
                   {% if url.qr_data %}
-                    <div class=" mt-5 mb-5 position-relative w-100">
-                        <img src="data:image/png;base64,{{ url.qr_data }}" alt="QR Code" class="w-100 m-auto d-flex justify-content-center img-thumbnail"/>
+                    <div class="col-sm-4 ">
+                        <img src="data:image/png;base64,{{ url.qr_data }}" alt="QR Code"
+                        class="ms-5 d-flex img-thumbnail mt-2 mb-0" width="200" height="200">
                     </div>
                     {% endif %}
                     <div class="mt-2 position-absolute top-0 end-0 px-3">
                         <img height="20" width="20" src='http://www.google.com/s2/favicons?domain={{url.url}}' />
                     </div>
-                    <div class="">
-                        <p class="h6 mt-5"><strong> {{url.title}} </strong></p>
+                    <div class="col-sm-4 ">
+                        <p class="h6 mt-2"><strong> {{url.title}} </strong></p>
                         <p class=""><strong>Short <a href="{{ request.host_url }}{{ url.short_url }}" target="_blank"> {{ request.host_url }}{{ url.short_url }}</a></strong></p>
                         <p class=""><strong>Original</strong> <a href="{{ url.url }}" target="_blank"> {{ url.url }}</a></p>
                         <div class="mb-5">
@@ -81,25 +87,25 @@
                         <img height="200" width="200" src="data:image/png;base64,{{ url.qr_data }}" alt="QR Code" class="m-auto d-flex justify-content-center"/>
                     </div>
                     {% endif %} -->
-                    <div class=" mt-5 mb-2">
+                    <div class="col-sm-4 mt-1 ">
                        <button><i class="fa fa-copy px-0" id="" style="cursor: pointer;"></i> Copy</button>
-                           <button> <i class="fas fa-share px-0" style="cursor: pointer;"></i> Share</button>
+                        <button> <i class="fas fa-share px-0" style="cursor: pointer;"></i> Share</button>
                         <button> <i class="bi bi-pencil-square px-0" style="cursor: pointer;"></i></button>
                         <button class="text-danger"><a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()" class="">
-                                  <i class="bi bi-trash px-0"></i>
-                              </a>
+                                  <i class="bi bi-trash px-0"></i>  </a>
                         </button>
 
+                       <button> <a href="{{url_for('user_blp.short_url_details', url_id=url.id)}}" class="text-decoration-none"><i class="fa-solid fa-chart-pie"></i> Analytics</a></button>
+
+
 
                     </div>
-                    <div class="mb-5">
-                        <a href="{{url_for('user_blp.short_url_details', url_id=url.id)}}" class="text-decoration-none"><i class="fa-solid fa-chart-pie"></i> Analytics</button>
-                    </div>
-                </div>
+
+
             </div>
         </div>
         {% endfor %}
-    </div>
+
 </div>
 {% else %}
 <div class="card" style="background-color: lavender;">
