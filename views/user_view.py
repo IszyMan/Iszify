@@ -28,8 +28,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import qrcode
 from PIL import Image
 from sqlalchemy import func, extract
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
 
 
 user_blp = Blueprint("user_blp", __name__)
