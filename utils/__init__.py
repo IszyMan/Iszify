@@ -116,7 +116,7 @@ def customize_qr_code_logo(data, logo_path, fill_color):
     logo = Image.open(logo_path)
 
     # Set the maximum size you want for the logo
-    basewidth = 100
+    basewidth = 50
     wpercent = basewidth / float(logo.size[0])
     hsize = int((float(logo.size[1]) * float(wpercent)))
     logo = logo.resize((basewidth, hsize))
@@ -139,7 +139,7 @@ def customize(data, logo_path, fill_color):
 
     # taking base width
 
-    basewidth = 100
+    basewidth = 70
 
     # adjust image size
     wpercent = basewidth / float(logo.size[0])
