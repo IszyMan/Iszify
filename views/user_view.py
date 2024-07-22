@@ -1324,7 +1324,7 @@ def qr_codes_customize(qr_id):
             print(e, "this is the error")
             db.session.rollback()
             return redirect(url_for("user_blp.qr_codes_customize", qr_id=qr_id))
-    return render_template("qr_codes_customize.html", qrcode=qrcode, qr=True)
+    return render_template("qr_codes_customize.html", qrcode=qrcode, qr=True, qr_id=qr_id)
 
 
 #                    Edit QR CODES
