@@ -97,9 +97,9 @@
                             <button><a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
                                 <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
                             </a></button>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#frameModal{{ url.id }}">
+                            <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#frameModal{{ url.id }}">
                                 Customize Frame
-                            </button>
+                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -212,10 +212,10 @@ function applyStoredFrame(qrId, frameUrl) {
 
         // Style the frame image to overlay on the QR code
         frameImg.style.position = 'absolute';
-        frameImg.style.top = '0';
-        frameImg.style.left = '0';
-        frameImg.style.width = '100%';
-        frameImg.style.height = '100%';
+        frameImg.style.top = '-5%';
+        frameImg.style.left = '-5%';
+        frameImg.style.width = '110%';
+        frameImg.style.height = '110%';
         frameImg.style.pointerEvents = 'none';
 
         // Append the frame image to the QR code container
