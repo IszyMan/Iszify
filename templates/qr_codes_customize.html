@@ -4,153 +4,194 @@
 
 <style>
     .flex-container {
-        height: 300px;
-        display: flex;
-        padding: 10px;
-    }
+         height: 300px;
+         display: flex;
+         padding: 10px;
+     }
     .item {
-        flex: auto;
-        background: white;
-        margin: 10px;
-    }
+         flex: auto;
+         background: white;
+         margin: 10px;
+     }
     .item2 {
-        flex: auto;
-        background: LightGray;
-        margin: 10px;
-        height: 800px
-        
-    }
-
-
-</style>
+         flex: auto;
+         background: LightGray;
+         margin: 10px;
+         height: 800px
+     }
+    .qr-frame {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         pointer-events: none;
+         object-fit: contain; /* Ensure frame image fits within QR code */
+     }
+    .selected-frame {
+         border: 2px solid #007bff;
+     }
+ </style>
 {% endblock head %}
 {% block content %}
 <!-- display in grids -->
 
 <main style="margin-top: 100px">
-
-            <ul class="breadcrumb mb-0">
-              <li><a href="#">Dashboard</a></li>
-              <li><a href="#">QR code</a></li>
-              <li>Customize</li>
-              </ul>
+    <ul class="breadcrumb mb-0">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">QR code</a></li>
+        <li>Customize</li>
+    </ul>
 
     <div class="flex-container">
-
         <div style="padding:2rem" class="item">
-
             <h2 class="text-primary"><b>Customize your QR Codes</b></h2><br>
-            
+
             <form action="" method="post" enctype="multipart/form-data">
-            <div class="rounded-pill h2">
-                <h3>Choose your colors</h3>
+                <div class="rounded-pill h2">
+                    <h3>Choose your colors</h3>
 
-            <!-- <p class="btn btn-dark rounded-pill" id="preset-0" style="background-color: rgb(0, 0, 0);"></p>
-            <p class="btn btn-danger rounded-pill"  id="preset-1" style="background-color: rgb(222, 49, 33);"></p>
-             <p class="btn btn-warning rounded-pill" id="preset-2" style="background-color: rgb(239, 128, 0);"></p>
-             <p class="btn btn-success rounded-pill" id="preset-3" style="background-color: rgb(25, 134, 57);"></p>
-             <p class="btn btn-primary rounded-pill" id="preset-4" style="background-color: rgb(34, 156, 224);"></p>
-             <p class="btn btn-info rounded-pill" id="preset-5" style="background-color: rgb(42, 91, 215);"></p> -->
+                    <input type="color" name="color" id="preset-0"> <br>
 
-             <!-- color input -->
+                    <div class="rounded-pill h2">
+                        <h3>Add a logo or center text</h3>
 
-             <input type="color" name="color" id="preset-0"> <br>
+                        <div class="">
+                            <i class="bi bi-images" id="image-icon" style="cursor: pointer;"></i> <span id="logo" style="font-size: .9rem;"></span>
+                            <input type="file" name="image" id="image_file" style="display: none;">
+                            <label>
+                                <input type="radio" name="placeholder_images" value="youtube"> <i class="bi bi-youtube text-danger"></i>
+                            </label>
+                            <label>
+                                <input type="radio" name="placeholder_images" value="facebook"> <i class="bi bi-facebook text-primary"></i>
+                            </label>
+                            <label>
+                                <input type="radio" name="placeholder_images" value="instagram"> <i class="fa-brands fa-instagram text-danger"></i>
+                            </label>
+                            <label>
+                                <input type="radio" name="placeholder_images" value="twitter"> <i class="fa-brands fa-twitter text-info"></i>
+                            </label>
+                        </div>
+                    </div>
 
-             <div class="rounded-pill h2">
-                <h3>Add a logo or center text</h3>
-
-                <div class="">
-                <i class="bi bi-images" id="image-icon" style="cursor: pointer;"></i> <span id="logo" style="font-size: .9rem;"></span>
-            <input type="file" name="image" id="image_file" style="display: none;">
-            <label>
-                <input type="radio" name="placeholder_images" value="youtube"> <i class="bi bi-youtube text-danger"></i>
-              </label>
-              
-              <label>
-                <input type="radio" name="placeholder_images" value="facebook"> <i class="bi bi-facebook text-primary"></i>
-              </label>
-              
-              <label>
-                <input type="radio" name="placeholder_images" value="instagram"> <i class="fa-brands fa-instagram text-danger"></i>
-              </label>
-            
-              <label>
-                <input type="radio" name="placeholder_images" value="twitter"> <i class="fa-brands fa-twitter text-info"></i>
-              </label>
-            </div>
-
-            </div>
-
-             <!-- submit button -->
-             <button type="submit" class="bg-success btn btn-success p-2 text-dark">save changes </button>
-
-            </div>
+                    <button type="submit" class="bg-success btn btn-success p-2 text-dark">Save changes</button>
+                </div>
             </form>
-              <br><br>
-            <!-- <div class="rounded-pill h2">
-                <h3>Add a logo or center text</h3>
-
-            <button type="button" class="btn-dark" id="preset-6" ><i class="bi bi-images"></i></button>
-            <button type="button"  class="btn-danger" id="preset-7" > <i class="bi bi-youtube "></i></button>
-             <button type="button"  class="btn-primary" id="preset-8"> <i class="bi bi-facebook"></i></button>
-             <button type="button"  class="btn-danger" id="preset-9" ><i class="fa-brands fa-instagram"></i></button>
-             <button type="button" id="preset-10"><i class="fa-brands fa-tiktok"></i></button>
-             <button  type="button" class="btn-primary" id="preset-11" ><i class="fa-brands fa-twitter"></i></button><br><br>
-
-
-
-            </div> -->
-            
             <br><br>
 
-            <!-- <div class="rounded-pill h2">
-                <h3>Select a frame </h3>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#frameModal{{ qr_id }}">
+                Customize Frame
+            </button>
 
-            <p> <img src="/static/qr-code-frame7.png" width="100" height="100">
-                <img src="/static/qr-code-frame2.png" width="100" height="100">
-                <img src="/static/qr-code-frame3.png" width="100" height="100">
-                <img src="/static/qr-code-frame4.png" width="100" height="100">
-                <img src="/static/qr-code-frame5.png" width="100" height="100">
-            </p>
-
-             <p class="text-center mt-5 mx-5">  <button type="submit" class="btn btn-outline-light">Cancel</button><button type="submit" class="btn btn-primary btn-block">Save Changes</button></p>
-
-            </div> -->
-
-
-
+            <!-- Modal -->
+            <div class="modal fade" id="frameModal{{ qr_id }}" tabindex="-1" aria-labelledby="frameModalLabel{{ qr_id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="frameModalLabel{{ qr_id }}">Select Frame</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Frame selection options (replace with your actual frames) -->
+                            <div class="d-flex justify-content-between">
+                                <img src="{{ url_for('static', filename='fr1.png') }}" alt="Frame 1" class="frame-option" data-frame-url="{{ url_for('static', filename='fr1.png') }}" width="50px" height="50px" />
+                                <img src="{{ url_for('static', filename='fr2.png') }}" alt="Frame 2" class="frame-option" data-frame-url="{{ url_for('static', filename='fr2.png') }}" width="50px" height="50px" />
+                                <img src="{{ url_for('static', filename='fr3.png') }}" alt="Frame 3" class="frame-option" data-frame-url="{{ url_for('static', filename='fr3.png') }}" width="50px" height="50px" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="applyFrame('{{ qr_id }}')">Apply Frame</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div style="padding:1rem" class="item2">
-                <img src="data:image/png;base64,{{ qrcode.qr_data }}" 
-                alt="QR Code"
-                class="mx-auto d-flex img-thumbnail mt-2 mb-0" 
-                style="margin-bottom: 4rem; width: 200px;">
+
+        <div class="mt-3 position-relative" id="qrContainer{{ qr_id }}">
+            <img src="data:image/png;base64,{{ qrcode.qr_data }}" 
+                 alt="QR Code" id="qrContainer{{ qr_id }}" data-qr-id="{{ qr_id }}"
+                 class="mx-auto d-flex img-thumbnail mt-2 mb-0 qr-code qr-code-container" style="margin-bottom: 4rem; width: 250px;">
         </div>
-
-
-
-
-
-
-
-  </div>
+    </div>
+        
+    </div>
 </main>
 
+
 <script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Frame selection event
+    document.querySelectorAll('.frame-option').forEach(function(frameOption) {
+        frameOption.addEventListener('click', function() {
+            selectedFrameUrl = this.dataset.frameUrl;
+            document.querySelectorAll('.frame-option').forEach(function(option) {
+                option.classList.remove('selected-frame');
+            });
+            this.classList.add('selected-frame');
+        });
+    });
+
+    // Apply stored frames from local storage
+    document.querySelectorAll('.qr-code-container').forEach(function(container) {
+        let qrId = container.dataset.qrId;
+        let storedFrameUrl = localStorage.getItem('frame_' + qrId);
+        if (storedFrameUrl) {
+            applyStoredFrame(qrId, storedFrameUrl);
+        }
+    });
+});
+
+function applyFrame(qrId) {
+    if (selectedFrameUrl) {
+        applyStoredFrame(qrId, selectedFrameUrl);
+        localStorage.setItem('frame_' + qrId, selectedFrameUrl);
+
+        // Hide the modal
+        let modal = bootstrap.Modal.getInstance(document.getElementById(`frameModal${qrId}`));
+        modal.hide();
+    }
+}
+
+function applyStoredFrame(qrId, frameUrl) {
+    let qrContainer = document.querySelector(`#qrContainer${qrId}`);
+    if (qrContainer) {
+        let existingFrame = qrContainer.querySelector('.qr-frame');
+        if (existingFrame) {
+            existingFrame.remove();
+        }
+
+        let frameImg = document.createElement('img');
+        frameImg.src = frameUrl;
+        frameImg.classList.add('qr-frame');
+        frameImg.style.position = 'absolute';
+        frameImg.style.top = '-5%';
+        frameImg.style.left = '-5%';
+        frameImg.style.width = '110%';
+        frameImg.style.height = '110%';
+        frameImg.style.pointerEvents = 'none';
+        frameImg.style.objectFit = 'contain'; // Ensure frame image fits within QR code
+
+        qrContainer.appendChild(frameImg);
+    }
+}
+
+
+
+
     // get the span
     var span = document.getElementById("logo");
 
     // get the input
     var input = document.getElementById("image_file");
 
-    // get the button
-    var button = document.getElementById("preset-6");
-
     // get the image icon
     var imageIcon = document.getElementById("image-icon");
 
-    // when the image icon is been cliicked, click the input
+    // when the image icon is been clicked, click the input
     imageIcon.addEventListener("click", function() {
         input.click();
     });
