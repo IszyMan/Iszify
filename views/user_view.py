@@ -194,7 +194,7 @@ def edit_bio(sub_path):
 
 
 # list all bio pages
-@user_blp.route("/BioLinkPages", methods=["GET", "POST"])
+@user_blp.route("/display_all/biolinkpages", methods=["GET", "POST"])
 @login_required
 def bio_link_pages():
     user_name = current_user.username
@@ -215,7 +215,7 @@ def bio_link_pages():
     print(bio_pages, "Pages bio")
     # update the bio name
     return render_template(
-        "BioLinkPages.html",
+        "biolinkpages.html",
         host_url=host_url,
         bio_pages=bio_pages,
         links_added=bio_links,
@@ -825,7 +825,7 @@ def delete_product(linkname):
 
 
 # SHORTEN URL SECTION
-@user_blp.route("/urls/shorten_url", methods=["GET", "POST"])
+@user_blp.route("/short_url/create", methods=["GET", "POST"])
 @login_required
 def shorten_url():
     if request.method == "POST":
@@ -928,7 +928,7 @@ def redirect_to_url(short_url):
 
 
 # display all shortened urls with their original urls and clicks
-@user_blp.route("/stats/urls", methods=["GET", "POST"])
+@user_blp.route("/display_all/shortened_urls", methods=["GET", "POST"])
 @login_required
 def display_urls():
     urls = Urlshort.query.filter_by(author_id=current_user.id).all()
@@ -1144,7 +1144,7 @@ def qr_codes_wifi():
 
 
 # display all qr codes for the current user
-@user_blp.route("/stats/qr_codes", methods=["GET", "POST"])
+@user_blp.route("/display_all/qr_codes", methods=["GET", "POST"])
 @login_required
 def display_qr_codes():
     qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
