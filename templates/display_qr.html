@@ -33,7 +33,7 @@
 
                 <h3><b>All QR CODES</b></h3>
                 <a href="{{url_for('user_blp.qr_codes')}}">
-                    <button class="btn badge fw-normal shadow-none bg-success text-right " style="font-size: 1.1rem;">
+                    <button class="btn badge fw-normal shadow-none bg-success text-right" style="font-size: 1.1rem;">
                         Create New QR Code<i class="fa fa-plus px-2"></i>
                     </button>
                 </a>
@@ -43,7 +43,7 @@
                     <input type="text" id="datepicker_input" name="date">
                 </form>
                 <button class="btn badge fw-normal bg-primary shadow-none" id="datepicker-btn" style="font-size: 1.1rem;">
-                    <i class="fa fa-calendar "></i>Filter by Date
+                    <i class="fa fa-calendar"></i>Filter by Date
                 </button>
                 <button class="{% if not refresh %} d-none {% endif %}">
                     <i class="fas fa-times" id="close_btn"></i>
@@ -56,15 +56,20 @@
         <div class="container-fluid">
 
                 {% for url in urls|reverse %}
-                <div class="card  rounded mb-4 ms-3" style="background-color:rgb(253, 253, 253); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 0px;">
-                    <div class="row mt-3 ms-3 mb-2" >
-                        <div class="col-sm-4 " id="qrContainer{{ url.id }}">
+                <div class="card rounded mb-4 ms-3" style="background-color:rgb(253, 253, 253); box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 2px 0px;">
+                    <div class="row mt-3 ms-3 mb-2">
+                        <!-- <div class="col-sm-4 position-relative" id="qrContainer{{ url.id }}">
                             <img src="data:image/png;base64,{{ url.qr_data }}" 
-                                 alt="QR Code" id="qrContainer{{ url.id }}" data-qr-id="{{ url.id }}"
+                                 alt="QR Code" id="qrCode{{ url.id }}" data-qr-id="{{ url.id }}"
                                  class="mx-auto d-flex img-thumbnail mt-2 mb-0 qr-code qr-code-container"
                                  style="margin-bottom: 4rem;" width="200" height="200">
+                        </div> -->
+                        <div class="col-sm-4 mt-3 position-relative" id="qrContainer{{ url.id }}">
+                            <img src="data:image/png;base64,{{ url.qr_data }}" 
+                                 alt="QR Code" id="qrContainer{{ url.id }}" data-qr-id="{{ url.id }}"
+                                 class="mx-auto d-flex img-thumbnail mt-2 mb-0 qr-code qr-code-container" style="margin-bottom: 4rem; width: 250px;">
                         </div>
-                        <div class="col-sm-4 mt-2 ">
+                        <div class="col-sm-4 mt-2">
                             <div class="card-text h4 mt-3"><strong>{{ url.title }}</strong></div><br>
                             {% if url.url %}
                             <p><b>Link</b><br>
@@ -103,9 +108,6 @@
                             <button><a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="">
                                 <i class="bi bi-bar-chart-fill h4 text-decoration-none"></i> View Details
                             </a></button>
-                            <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#frameModal{{ url.id }}">
-                                Customize Frame
-                            </button> -->
                         </div>
                     </div>
                 </div>
@@ -168,67 +170,66 @@
 
     let selectedFrameUrl = null;
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Frame selection event
-    document.querySelectorAll('.frame-option').forEach(function(frameOption) {
-        frameOption.addEventListener('click', function() {
-            selectedFrameUrl = this.dataset.frameUrl;
-            document.querySelectorAll('.frame-option').forEach(function(option) {
-                option.classList.remove('selected-frame');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Frame selection event
+        document.querySelectorAll('.frame-option').forEach(function(frameOption) {
+            frameOption.addEventListener('click', function() {
+                selectedFrameUrl = this.dataset.frameUrl;
+                document.querySelectorAll('.frame-option').forEach(function(option) {
+                    option.classList.remove('selected-frame');
+                });
+                this.classList.add('selected-frame');
             });
-            this.classList.add('selected-frame');
+        });
+
+        // Apply stored frames from local storage
+        document.querySelectorAll('.qr-code-container').forEach(function(container) {
+            let qrId = container.dataset.qrId;
+            let storedFrameUrl = localStorage.getItem('frame_' + qrId);
+            if (storedFrameUrl) {
+                applyStoredFrame(qrId, storedFrameUrl);
+            }
         });
     });
 
-    // Apply stored frames from local storage
-    document.querySelectorAll('.qr-code-container').forEach(function(container) {
-        let qrId = container.dataset.qrId;
-        let storedFrameUrl = localStorage.getItem('frame_' + qrId);
-        if (storedFrameUrl) {
-            applyStoredFrame(qrId, storedFrameUrl);
+    function applyFrame(qrId) {
+        if (selectedFrameUrl) {
+            applyStoredFrame(qrId, selectedFrameUrl);
+            localStorage.setItem('frame_' + qrId, selectedFrameUrl);
+
+            // Hide the modal
+            let modal = bootstrap.Modal.getInstance(document.getElementById(`frameModal${qrId}`));
+            modal.hide();
         }
-    });
-});
-
-function applyFrame(qrId) {
-    if (selectedFrameUrl) {
-        applyStoredFrame(qrId, selectedFrameUrl);
-        localStorage.setItem('frame_' + qrId, selectedFrameUrl);
-
-        // Hide the modal
-        let modal = bootstrap.Modal.getInstance(document.getElementById(`frameModal${qrId}`));
-        modal.hide();
     }
-}
 
-function applyStoredFrame(qrId, frameUrl) {
-    // Find the QR code container for the specific QR code
-    let qrContainer = document.querySelector(`#qrContainer${qrId}`);
-    if (qrContainer) {
-        // Remove any existing frame
-        let existingFrame = qrContainer.querySelector('.qr-frame');
-        if (existingFrame) {
-            existingFrame.remove();
+    function applyStoredFrame(qrId, frameUrl) {
+        // Find the QR code container for the specific QR code
+        let qrContainer = document.querySelector(`#qrContainer${qrId}`);
+        if (qrContainer) {
+            // Remove any existing frame
+            let existingFrame = qrContainer.querySelector('.qr-frame');
+            if (existingFrame) {
+                existingFrame.remove();
+            }
+
+            // Create a new frame image element
+            let frameImg = document.createElement('img');
+            frameImg.src = frameUrl;
+            frameImg.classList.add('qr-frame');
+
+            // Style the frame image to overlay on the QR code
+            frameImg.style.position = 'absolute';
+            frameImg.style.top = '2%';
+            frameImg.style.left = '10%';
+            frameImg.style.width = '80%';
+            frameImg.style.height = '90%';
+            frameImg.style.pointerEvents = 'none';
+
+            // Append the frame image to the QR code container
+            qrContainer.appendChild(frameImg);
         }
-
-        // Create a new frame image element
-        let frameImg = document.createElement('img');
-        frameImg.src = frameUrl;
-        frameImg.classList.add('qr-frame');
-
-        // Style the frame image to overlay on the QR code
-        frameImg.style.position = 'absolute';
-        frameImg.style.top = '-5%';
-        frameImg.style.left = '-5%';
-        frameImg.style.width = '110%';
-        frameImg.style.height = '110%';
-        frameImg.style.pointerEvents = 'none';
-
-        // Append the frame image to the QR code container
-        qrContainer.appendChild(frameImg);
     }
-}
-
 
     $(document).ready(function() {
         $('#datepicker-btn').click(function() {
@@ -239,13 +240,14 @@ function applyStoredFrame(qrId, frameUrl) {
                 $('#filter_form').submit();
             });
         });
-        
+
         $('#close_btn').click(function() {
             $('#filter_form')[0].reset();
             $('#filter_form').submit();
         });
     });
 </script>
+
 
 <style>
     .qr-frame {
