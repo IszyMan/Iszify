@@ -2,6 +2,49 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+<style>
+
+#ul_list li{
+    display: inline;
+}
+
+</style>
+<style>
+.dropbtn {
+  background-color: #e5f7d7;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #18db32;
+}
+
+.dropdown {
+  position: relative;
+  display: block;
+}
+
+.dropdown-content {
+  display: none;
+  padding: 16px 12px;
+  position: relative;
+  background-color: #e5f7d7;
+  min-width: 160px;
+  overflow: auto;
+  z-index: 1;
+}
+
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+
+
   {% endblock head %}
 {% block content %}
 
@@ -9,22 +52,68 @@
 
 
     <!-- CTA Section -->
-  <section class="cta-section row d-flex px-4 px-lg-5 mb-5">
-    <div class="container col-lg-4">
+  <section class="cta-section row d-flex px-4 px-lg-5 " style="background-color: #f8fff7">
+      <div class="row">
+    <div class="container col-md-6 col-lg-6 mt-5 mb-5 ms-5 me-4">
       <span class="text-dark px-3 py-2" style="font-size: .6rem; background: rgba(178, 178, 231, 0.498); border-radius: 16px; font-weight: 600;">Let's make with simply one click <i class="fa-solid fa-hand-point-up text-warning"></i></span>
-      <h1 class="display-6 mt-4" style="font-size: 3rem; font-weight: 700;">Authenticc, Secure<br> <span class="text-primary">&</span> Dynamic<br>
+      <h1 class="display-6 mt-4" style="font-size: 3rem; font-weight: 700;">Advanced, Secure<br> <span class="text-primary">&</span> Dynamic<br>
         <span class="gradient-primary clip-text" data-toggle="typed" data-list="Links.,QR Codes.,Bio Pages."></span></h1>
 
-      <p class="fs-6 mb-3">Build or customise Short URLs for free </p>
+
+      <div >
+      	<p>
+		<ul class="list-unstyled mb-2 text-muted small">
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Create Unlimited Links</li>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Free analytics & insights</li>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Easy to use</li>
+        <li class="mb-1"><i class="bi bi-check-circle me-2"></i> Redirect to https sites only</li>
+		</ul>
+		</p><br><br>
+        <a href="{{ url_for('auth_blp.register') }}" class="btn btn-primary border-0 d-flex align-items-center" style="font-size: 14px; width: fit-content; border-radius: 15px">
+          Get Started for Free &nbsp;<i class="bi bi-arrow-right-circle-fill h5"></i></a>
+		</div>
+
+    </div>
+
+      <div class="container col-md-6 col-lg-3 mt-5 mb-5 mx-3">
+           <img src="{{ url_for('static', filename='ai.jpg') }}" alt="Home UI" class="img-thumbnail" />
+      </div>
+
+      </div>
+
+
+
+  </section>
+
+
+      <section class="row" style="background-color: #18db32">
+
+
+      <div class="container col-md-6 ps-3" >
+          <h5 class="text-center mt-5" style="color:#170252"><b>CONNECT WITH CUSTOMERS USING SHORT LINKS AND QR CODES</b></h5>
+          <h3 class="mt-3 mb-3 ms-2" style="text-align: center; color:white"><b>Enjoy unlimited links and analytics <br> Join us for a free account</b></h3>
+           <br>
+          <p class="text-center"> <button ><i class="fa fa-link" aria-hidden="true"></i>Short link </button> <button><i class="fa fa-qrcode" aria-hidden="true"></i>  QR Codes</button></p>
+
+          </p>
+
+
+
+      <div class="p-3 px-5 pt-5 pb-5 mx-auto me-0 ms-1"  style="border: 1px solid rgb(218, 212, 212); border-radius: 30px; background-color: white" >
+          <h2 class=""><b>Shorten a long URL </b></h2>
+       <h3 class="fs-6 mb-3">And customize for free</h3>
+          <br>
+          <h3 class="fs-6 mb-3"><b>Paste long link to be shortened</b></h3>
+
       <form method="POST" action="" class="mb-3 border rounded">
 		<div class="input-group input-group-lg align-items-center">
       {% if show %}
-        <input type="text" class="form-control border-0 shadow-none" autocomplete="off" placeholder="" name="url" id="url" style="font-size: 14px;" value="{{ shortened_url }}">
+        <input type="text" class="form-control border-0 shadow-none" autocomplete="off" placeholder="" name="url" id="url" style="font-size: 14px; " value="{{ shortened_url }}">
       <div class="input-group-append">
         <span class="btn btn-primary border-0"  onclick="copyText()" name="bt1">Copy</span>
         </div>
       {% else %}
-      <input type="text" class="form-control border-0 shadow-none" autocomplete="off" placeholder="Paste a long url" name="url" id="url" style="font-size: 14px;">
+      <input type="text" class="form-control border-0 shadow-none " autocomplete="off" placeholder="Paste a long url" name="url" id="url" style="font-size: 14px;">
       <div class="input-group-append">
         <button class="btn btn-primary border-0" type="submit" name="bt1">Shorten</button>
         </div>
@@ -36,41 +125,147 @@
         <p class="text-success" style="font-size: 16px;">Successful! Sign up to get link QR code and more out of your link for free</p>
     </div>
     {% endif %}
-      <div >
-      	<p>
-		<ul class="list-unstyled mb-2 text-muted small">
-		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Start free, Unlimited Links</li>
-		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> No credit card required</li>
-		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Easy to use</li>
-        <li class="mb-1"><i class="bi bi-check-circle me-2"></i> We don't redirect to non https sites</li>
-		</ul>
-		</p>
-        <a href="{{ url_for('auth_blp.register') }}" class="btn btn-primary border-0 d-flex align-items-center" style="font-size: 14px; width: fit-content;">
-          Get Started for Free &nbsp;<i class="bi bi-arrow-right-circle-fill h5"></i></a>
-		</div>
+    </div>
+
+
+
+      <div class="col-md-6 col-lg-12">
+        <h3 class="fw-bold my-4 text-center" style="color:white">Join us for free and enjoy:</h3>
+        <!-- grid -->
+        <ul id="ul_list">
+          <li class="me-3 fw-bold" style="color:white"><i class="bi bi-check-circle me-2" style="color:yellow"></i> Unlimited links</li>
+          <li class="me-3 fw-bold"style="color:white" ><i class="bi bi-check-circle me-2" style="color:yellow"></i>Customize links</li>
+          <li class="fw-bold" style="color:white"><i class="bi bi-check-circle me-2" style="color:yellow"></i>Free analytics</li>
+        </ul>
+      </div>
 
     </div>
-    <div class="col-lg-5 mt-4">
-      <div class="p-3" style="border: 1px solid rgb(218, 212, 212); border-radius: 12px;">
-      <div class="d-flex align-items-center justify-content-between">
-        <p class="d-flex justify-content-start container fw-bold">QR CODE</p>
-        <p style="background: blue; color: white; font-size: 13px; width: fit-content; border-radius: 13px;" class="px-2 py-1">Download</p>
+
+    </section>
+
+
+
+
+
+
+<!--       <section class="cta-section row d-flex  mb-5" style="background-color: #18db32">-->
+<!--      <div class="col-lg-5 mt-4">-->
+<!--      <div class="p-3" style="border: 1px solid rgb(218, 212, 212); border-radius: 12px;">-->
+<!--      <div class="d-flex justify-content-between">-->
+<!--        <p class="d-flex justify-content-start container fw-bold">QR CODE</p>-->
+<!--        <p style="background: blue; color: white; font-size: 13px; width: fit-content; border-radius: 13px;" class="px-2 py-1">Download</p>-->
+<!--      </div>-->
+<!--      <div class="d-flex align-items-center justify-content-start">-->
+<!--        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={% if shortened_url %}{{ shortened_url }}{% else %}https://www.linktools.io/qr-link{% endif %}" alt="QR Code" class="img-thumbnail" />-->
+<!--        <div class="d-flex flex-column justify-content-start align-items-start ms-3">-->
+<!--          <div class="d-flex justify-content-start align-items-center"><i class="bi bi-box-arrow-up-right h5 text-primary me-1"></i> <span class="" style="font-size: 14px;"> {% if shortened_url %}{{ shortened_url }}{% else %}https://www.linktools.io{% endif %}</span> </div>-->
+<!--          &lt;!&ndash; date &ndash;&gt;-->
+<!--          <div class="d-flex justify-content-start align-items-center"><b> CUSTOMIZEa, ANALYZE & TRACK </b></div>-->
+<!--&lt;!&ndash;            <i class="bi bi-clock h5 text-primary me-1"></i><span style="font-size: 14px;">{% if created %}{{ created }}{% else %}22, May 2022{% endif %}</span>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    </div>-->
+<!--    </section>-->
+
+
+      <section class="row" style="background-color: #e5f7d7">
+    <div class="text-center">
+        <h2 class="mb-3 review container w-75 fw-bold text-center">GREAT CONNECTIONS START WITH JUST A CLICK</h2>
+
+       <h4 class="mb-5 text-center font-weight-light"> Use Iszify to create short URL, QR codes, and Landing pages to engage
+           your audience Iszzly.
+           </h4>
+
+          <div class="container px-1 mb-5 ">
+      <div class="row g-0" >
+        <div class="col-md-3 col-lg-3 mb-3 mx-auto">
+         <div class="p-3 border bg-light " style="border: 1px solid rgb(218, 212, 212); border-radius: 15px; background-color: white">
+             <div><img src="{{ url_for('static', filename='ai.jpg') }}" alt="Image" class="img-fluid"></div><br><br>
+             <div class="p-3 border bg-light " style="border: 1px solid rgb(218, 212, 212); border-radius: 15px; background-color: white">
+                 <h4 class="fw-bold">URL Shortener</h4>
+                 <p>Create powerful connection with your audience using our advanced URL Shortener .</p><br>
+            <div class="col-md-6 col-lg-12">
+
+         <h4 class="fw-bold">Short link Features</h4>
+
+        <ul class="list-unstyled ">
+          <li class="float-start " style=""><i class="bi bi-check-circle float-start me-1" style="color:#18db32"></i>URL shortening</li><br><br>
+          <li class="float-start "style="" ><i class="bi bi-check-circle float-start me-2" style="color:#18db32"></i>Customize back-halve</li><br><br>
+          <li class="float-start " style=""><i class="bi bi-check-circle  float-start me-2" style="color:#18db32 "></i>Click analytics & tracking</li>
+        </ul>
       </div>
-      <div class="d-flex align-items-center justify-content-start">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={% if shortened_url %}{{ shortened_url }}{% else %}https://www.linktools.io/qr-link{% endif %}" alt="QR Code" class="img-thumbnail" />
-        <div class="d-flex flex-column justify-content-start align-items-start ms-3">
-          <div class="d-flex justify-content-start align-items-center"><i class="bi bi-box-arrow-up-right h5 text-primary me-1"></i> <span class="" style="font-size: 14px;"> {% if shortened_url %}{{ shortened_url }}{% else %}https://www.linktools.io{% endif %}</span> </div>
-          <!-- date -->
-          <div class="d-flex justify-content-start align-items-center"><b> CUSTOMIZE, ANALYZE & TRACK </b></div>
-<!--            <i class="bi bi-clock h5 text-primary me-1"></i><span style="font-size: 14px;">{% if created %}{{ created }}{% else %}22, May 2022{% endif %}</span>-->
+             </div>
+             <button type="button" class="btn btn-primary border-0 align-items-center mt-3 " style="font-size: 14px; width: fit-content;" data-bs-toggle="" data-bs-target="#exampleModal">
+              Get Started for free
+            </button>
+
+         </div>
+        </div>
+        <div class="col-md-3 col-lg-3 mb-3 mx-auto">
+         <div class="p-3 border bg-light " style="border: 1px solid rgb(218, 212, 212); border-radius: 15px; background-color: white">
+             <div><img src="{{ url_for('static', filename='qr-code-image.png') }}" alt="Image" class="img-fluid"></div><br><br>
+             <div class="p-3 border bg-light " style="border: 1px solid rgb(218, 212, 212); border-radius: 15px; background-color: white">
+                 <h4 class="fw-bold">QR Code</h4>
+                 <p>Our QR codes are used by major brands for marketing, payments, and other quick-access applications.</p><br>
+
+                   <div class="col-md-6 col-lg-12">
+
+         <h4 class="fw-bold">QR Code Features</h4>
+
+        <ul class="list-unstyled ">
+          <li class="float-start " style=""><i class="bi bi-check-circle float-start me-1" style="color:#18db32"></i>Fully customizable QR Codes</li><br><br>
+          <li class="float-start "style="" ><i class="bi bi-check-circle float-start me-2" style="color:#18db32"></i>Dynamic QR Codes</li><br><br>
+            <li class="float-start " style=""><i class="bi bi-check-circle  float-start me-2" style="color:#18db32 "></i>QR Code types options</li><br><br>
+           <li class="float-start "style="" ><i class="bi bi-check-circle float-start me-2" style="color:#18db32"></i>Scan analytics & tracking</li>
+        </ul>
+          </div>
+             </div>
+             <button type="button" class="btn btn-primary border-0 align-items-center mt-3 " style="font-size: 14px; width: fit-content;" data-bs-toggle="" data-bs-target="#exampleModal">
+              Get Started for free
+            </button>
+         </div>
+        </div>
+          <div class="col-md-3 col-lg-3 mb-3 mx-auto">
+         <div class="p-3 border bg-light " style="border: 1px solid rgb(218, 212, 212); border-radius: 15px; background-color: white">
+             <div><img src="{{ url_for('static', filename='bio-page-image.png') }}" alt="Image" class="img-fluid"></div><br><br>
+             <div class="p-3 border bg-light " style="border: 1px solid rgb(218, 212, 212); border-radius: 15px; background-color: white">
+                 <h2 class="fw-bold">Bio Pages</h2>
+                 <p>Make it easy for your customers and followers to engage with your links. Design a stunning,
+                     compact page & share them iszzly.</p><br>
+
+         <div class="col-md-6 col-lg-12">
+
+         <h4 class="fw-bold">Page Features</h4>
+
+        <ul class="list-unstyled ">
+          <li class="float-start " style=""><i class="bi bi-check-circle float-start me-1" style="color:#18db32"></i>Custom URLs for social media</li><br><br>
+          <li class="float-start "style="" ><i class="bi bi-check-circle float-start me-2" style="color:#18db32"></i>Design Bio pages</li><br><br>
+          <li class="float-start " style=""><i class="bi bi-check-circle  float-start me-2" style="color:#18db32 "></i>Page analytics</li>
+        </ul>
+      </div>
+
+             </div>
+
+             <button type="button" class="btn btn-primary border-0 align-items-center mt-3 " style="font-size: 14px; width: fit-content;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Create Free Bio Page
+            </button>
+
+         </div>
+
+
+         </div>
         </div>
       </div>
     </div>
+      </section>
     </div>
-  </section>
 
-    <hr>
 
+
+
+
+<!--
     <section class="bg-dark" style="padding-top: 3rem;">
       <div class="container text-white">
         <div class="row justify-content-start container ms-5">
@@ -88,7 +283,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
   
   <!-- <div class="jumbotron">
@@ -100,10 +295,10 @@
     </button>
 
   </div> -->
-  <section class="container">
+  <section class="container mt-5 mb-5">
     <div class="row">
       <div class="col-md-6 col-lg-6">
-        <h2 class="fw-bold my-5">Why Choose LinkTools?</h2>
+        <h2 class="fw-bold my-5">Why Choose Iszify?</h2>
         <!-- grid -->
         <div class="row justify-content-start">
           <div class="col-md-6 col-lg-4 border-0 fw-bold py-3 ps-3 text-primary mx-1 mt-2" style="background: whitesmoke; border-radius: 10px;">100k <br><span class="fw-normal text-muted" style="font-size: 11px;">Active Users</span></div>
@@ -177,9 +372,9 @@
   </section> -->
 
 
-  <section class="">
-    <div class="m-auto">
-        <h2 class="mb-5 review container w-75 fw-bold">Reviews</h2>
+  <section class="row ms-5 mb-5 ">
+    <div class="m-auto mb-5">
+        <h2 class="mb-5 review container fw-bold ms-2 ">What Iszify Users are saying</h2>
         <div class="row w-100">
             <div class="col-md-3 col-lg-3 pad_this card ms-5">
                 <div class="firstreview">
@@ -236,6 +431,39 @@
         </div>
     </div>
 </section>
+
+
+<section class="row mt-5" style="background-color: #e5f7d7">
+    <div class="mt-5 mb-5">
+        <h1 class="container fw-bold ">Frequently asked questions (FAQ)</h1>
+    </div>
+
+    <div class="dropdown">
+  <h3 onclick="myFunction()" class="dropbtn container fw-bold float-start ms-2 mb-4 " style='font-size:26px'><i class='fas fa-angle-down ms-4' style='font-size:26px'></i>
+      What is a URL Shortener?</h3>
+  <div id="myDropdown" class="dropdown-content ms-4 mb-5">
+    <h3 class="ms-5" >A URL shortener is a tool that takes a long web address (URL) and converts it into a shorter, more manageable link.
+        This shorter link redirects users to the original, longer URL when clicked.</h3>
+  </div>
+
+
+  </div><hr>
+
+       <h3 class=" container fw-bold float-start ms-4 mb-5" style='font-size:26px'><i class='fas fa-angle-down ms-4' style='font-size:26px'></i> Benefits of using URL Shortener?</h3>
+
+        <hr>
+
+    <h3 class="container fw-bold float-start ms-4 mb-5" style='font-size:26px'><i class='fas fa-angle-down ms-4' style='font-size:26px'></i> What is QR Code?</h3>
+
+        <hr>
+
+    <h3 class="container fw-bold float-start ms-4 mb-5" style='font-size:26px'><i class='fas fa-angle-down ms-4' style='font-size:26px'></i> What can a QR Code do?</h3>
+
+
+</section>
+
+
+
 
   <!-- Features Section -->
   <!-- <section class="features-section">
@@ -407,6 +635,29 @@
 }
 
 
+</script>
+
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 </script>
 
 

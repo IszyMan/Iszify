@@ -77,7 +77,7 @@
        id="main-navbar"
        class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
     <!-- Container wrapper -->
-    <div class="container-fluid">
+    <div class="container-fluid" >
 
         <!-- Bootstrap Sidebar toggler -->
       <div style="width: fit-content; cursor: pointer;" class="mt-2 hamburger" onclick="toggleActiveClass()">
@@ -164,7 +164,7 @@
 <!--      <a href="#"  class="text-decoration-none text-white fw-bold px-4 my-5 active" style="width: 100%;">CREATE NEW <i class="fa fa-plus fa-fw me-3"></i></a>-->
 
 
-   <div class="btn-group dropend mt-5">
+   <div class="btn-group dropend mt-5" >
   <a class="btn-secondary dropdown-toggle ml-3 text-center p-3 bg-primary shadow-none text-white text-decoration-none w-100" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     CREATE NEW
   </a>
@@ -178,14 +178,14 @@
 
      <br>
         <hr>
-      <a href="{{url_for('user_blp.dashboard')}}" class="side_link text-decoration-none {% if dashboard %} text-dark bg-white {% else %}text-white {% endif %} fw-normal p-4" style="width: 100%;"><i class="fa fa-th" aria-hidden="true"></i>  Dashboard</a>
-      <a href="{{url_for('user_blp.display_urls')}}" class="side_link text-decoration-none {% if link %} text-dark bg-white {% else %}text-white {% endif %} fw-normal p-4" style="width: 100%;"><i class="fa fa-link" aria-hidden="true"></i>
+      <a href="{{url_for('user_blp.dashboard')}}" class="side_link text-decoration-none {% if dashboard %} text-dark bg-white border-start border-5 border-primary{% else %}text-white {% endif %} fw-normal p-4" style="width: 100%;"><i class="fa fa-th" aria-hidden="true"></i>  Dashboard</a>
+      <a href="{{url_for('user_blp.display_urls')}}" class="side_link text-decoration-none {% if link %} text-dark bg-white border-start border-5 border-primary{% else %}text-white {% endif %} fw-normal p-4" style="width: 100%;"><i class="fa fa-link" aria-hidden="true"></i>
    Links</a>
-       <a href="{{url_for('user_blp.display_qr_codes')}}" class="side_link text-decoration-none {% if qr %} text-dark bg-white {% else %}text-white {% endif %} fw-normal p-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
+       <a href="{{url_for('user_blp.display_qr_codes')}}" class="side_link text-decoration-none {% if qr %} text-dark bg-white border-start border-5 border-primary{% else %}text-white {% endif %} fw-normal p-4 " style="width: 100%;"><i class="fa fa-qrcode" aria-hidden="true"></i>  QR-Code</a>
 
-        <a href="{{url_for('user_blp.bio_link_pages')}}" class="side_link text-decoration-none {% if bio %} text-dark bg-white {% else %}text-white {% endif %} fw-normal p-4" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Pages </a>
+        <a href="{{url_for('user_blp.bio_link_pages')}}" class="side_link text-decoration-none {% if bio %} text-dark bg-white border-start border-5 border-primary{% else %}text-white {% endif %} fw-normal p-4" style="width: 100%;"><i class="fa fa-hashtag" aria-hidden="true"></i>  Bio-Pages </a>
 
-        <a href="{{url_for('user_blp.analytics_all')}}" class="side_link text-decoration-none {% if analytics %} text-dark bg-white {% else %}text-white {% endif %} fw-normal p-4 mb-1 " style="width: 100%;"><i class="bi bi-bar-chart-fill text-decoration-none"></i>   Analytics</a>
+        <a href="{{url_for('user_blp.analytics_all')}}" class="side_link text-decoration-none {% if analytics %} text-dark bg-white border-start border-5 border-primary{% else %}text-white {% endif %} fw-normal p-4 mb-1 " style="width: 100%;"><i class="bi bi-bar-chart-fill text-decoration-none"></i>   Analytics</a>
          <br><br>
       <a data-bs-toggle="modal" 
       data-bs-target="#exampleModall" class="text-decoration-none text-white px-3 py-2 fw-normal position-absolute bottom-0 mb-1 bg-danger badge "
