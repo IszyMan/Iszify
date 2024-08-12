@@ -13,9 +13,10 @@ def create_app():
     base_dir = os.path.dirname(os.path.realpath(__file__))
     app.config["SECRET_KEY"] = "any-secret-key-you-choose"
     # The configuration for the URI of the database, the link2ru.db is the name of this project's dev database
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
-        base_dir, "link2ru.sqlite3"
-    )
+    # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
+    #     base_dir, "link2ru.sqlite3"
+    # )
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SERVER_NAME"] = os.getenv("SERVER_NAME", "localhost:5000")
     app.config["MAIL_SERVER"] = "smtp.gmail.com"
