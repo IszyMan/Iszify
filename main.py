@@ -5,6 +5,9 @@ from auth import auth_blp
 from extensions import login_manager, db, bootstrap, migrate, qr_code, mail
 from models import User
 from views.user_view import user_blp
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def create_app():
