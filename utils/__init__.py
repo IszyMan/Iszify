@@ -10,6 +10,7 @@ import re
 import json
 from urllib.request import urlopen
 import socket
+import base64
 
 
 def get_browser_info(request):
@@ -90,6 +91,23 @@ def generate_and_save_qr(data):
     img.save(img_bytes_io, format="PNG")
 
     return img_bytes_io.getvalue()
+
+
+# def generate_and_save_qr(data):
+#     qr = qrcode.QRCode(version=1, box_size=10, border=5)
+#     qr.add_data(data)
+#     qr.make(fit=True)
+#     img = qr.make_image(fill_color="black", back_color="white")
+#
+#     # Save the QR code to BytesIO
+#     img_bytes_io = BytesIO()
+#     img.save(img_bytes_io, format="PNG")
+#
+#     # Encode the image to base64
+#     img_bytes_io.seek(0)  # Reset the stream position to the start
+#     img_base64 = base64.b64encode(img_bytes_io.getvalue()).decode('utf-8')
+#
+#     return img_base64
 
 
 def update_qr_code(data, fill_color):
