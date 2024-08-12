@@ -798,7 +798,7 @@ def delete_product(linkname):
     return redirect(referer or url_for("user_blp.dashboard"))
 
 
-# @user_blp.route("/qr_code/stats/<int:qr_id>", methods=["GET"])
+# @user_blp.route("/qr_code/stats/<qr_id>", methods=["GET"])
 # @login_required
 # def qr_code_stats(qr_id):
 #     qr_codes = QrcodeRecord.query.filter_by(qr_code_id=qr_id).all()
@@ -954,7 +954,7 @@ def display_urls():
 
 
 # delete a shortened url
-@user_blp.route("/urls/delete/<int:url_id>")
+@user_blp.route("/urls/delete/<url_id>")
 @login_required
 def delete_url(url_id):
     # check if the url exists and if its for the current user
@@ -1166,7 +1166,7 @@ def display_qr_codes():
 
 
 # View all qr codes details for the current user
-@user_blp.route("/stats/qr_codes/details/<int:qr_id>", methods=["GET"])
+@user_blp.route("/stats/qr_codes/details/<qr_id>", methods=["GET"])
 @login_required
 def qr_codes_details(qr_id):
     qrcodes = QrCode.query.filter_by(
@@ -1268,7 +1268,7 @@ def qr_codes_details(qr_id):
 
 
 #            Customize QR CODES
-@user_blp.route("/qr_codes/customize/<int:qr_id>", methods=["GET", "POST"])
+@user_blp.route("/qr_codes/customize/<qr_id>", methods=["GET", "POST"])
 @login_required
 def qr_codes_customize(qr_id):
     qrcode = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).first()
@@ -1328,7 +1328,7 @@ def qr_codes_customize(qr_id):
 
 
 #                    Edit QR CODES
-@user_blp.route("/qr_codes/edit/<int:qr_id>/contents", methods=["GET", "POST"])
+@user_blp.route("/qr_codes/edit/<qr_id>/contents", methods=["GET", "POST"])
 @login_required
 def qr_codes_content_edit(qr_id):
     qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
@@ -1355,7 +1355,7 @@ def qr_codes_content_edit(qr_id):
 
 
 # delete a qr code
-@user_blp.route("/qr_codes/delete/<int:qr_id>", methods=["GET"])
+@user_blp.route("/qr_codes/delete/<qr_id>", methods=["GET"])
 @login_required
 def delete_qr_code(qr_id):
     # check if the qr code exists and if it's for the current user
@@ -1446,7 +1446,7 @@ def see():
 #     return "No QR code data found."
 
 
-@user_blp.route("/stats/short_url_details/details/<int:url_id>", methods=["GET"])
+@user_blp.route("/stats/short_url_details/details/<url_id>", methods=["GET"])
 @login_required
 def short_url_details(url_id):
     current_month = datetime.now().month
