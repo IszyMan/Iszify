@@ -3,13 +3,14 @@ from extensions import db
 from sqlalchemy.orm import relationship
 import datetime
 from sqlalchemy import extract, func
+from func import hex_id
 
 
 class CreateBioPage(UserMixin, db.Model):
     __tablename__ = "bio_page"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
     # bio_page_id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    author_id = db.Column(db.String(50), db.ForeignKey("users.id"))
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.now())
     bio_name = db.Column(db.String(250), default="")
     clicks = db.Column(db.Integer, default=0)
@@ -19,9 +20,9 @@ class CreateBioPage(UserMixin, db.Model):
 # clicks record model
 class BioPageClicks(db.Model):
     __tablename__ = "bio_page_clicks"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
     count = db.Column(db.Integer, default=0)
-    bio_page_id = db.Column(db.Integer, db.ForeignKey("bio_page.id"))
+    bio_page_id = db.Column(db.String(50), db.ForeignKey("bio_page.id"))
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
     def __repr__(self):
@@ -37,13 +38,13 @@ class BioPageClicks(db.Model):
 
 class BioPageClickLocation(db.Model):
     __tablename__ = "bio_page_click_location"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
     ip_address = db.Column(db.String(250))
     country = db.Column(db.String(250))
     city = db.Column(db.String(250))
     device = db.Column(db.String(250))
     browser = db.Column(db.String(250))
-    bio_page_id = db.Column(db.Integer, db.ForeignKey("bio_page.id"))
+    bio_page_id = db.Column(db.String(50), db.ForeignKey("bio_page.id"))
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
 
