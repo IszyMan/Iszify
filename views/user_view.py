@@ -102,9 +102,6 @@ def dashboard():
         host_url = request.host_url
         brandie = current_user.brand_name
 
-        for qr in current_user.qr_code:
-            qr.qr_data = base64.b64encode(qr.qr_data).decode("utf-8")
-
         return render_template(
             "dashboard.html",
             brand_url=brand_url,
@@ -117,6 +114,7 @@ def dashboard():
     except Exception as e:
         print(e, "error@dashboard")
         db.session.rollback()
+        return redirect(url_for("user_blp.home"))
 
 
 @user_blp.route("/join", methods=["GET", "POST"])
