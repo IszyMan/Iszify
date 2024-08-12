@@ -3,25 +3,26 @@ from extensions import db
 import datetime
 from sqlalchemy import extract
 from sqlalchemy.orm import relationship
+from func import hex_id
 
 
 class QrcodeRecord(UserMixin, db.Model):
     __tablename__ = "qr_code_record"
-    id = db.Column(db.Integer, primary_key=True)
-    qr_code_id = db.Column(db.Integer, db.ForeignKey("qr_code.id"))
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
+    qr_code_id = db.Column(db.String(50), db.ForeignKey("qr_code.id"))
     date = db.Column(db.DateTime, nullable=False, default=db.func.now())
     clicks = db.Column(db.Integer, default=0)
 
 
 class QrCodeClickLocation(UserMixin, db.Model):
     __tablename__ = "qr_code_click_location"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
     ip_address = db.Column(db.String(250))
     country = db.Column(db.String(250))
     city = db.Column(db.String(250))
     device = db.Column(db.String(250))
     browser = db.Column(db.String(250))
-    qr_code_id = db.Column(db.Integer, db.ForeignKey("qr_code.id"))
+    qr_code_id = db.Column(db.String(50), db.ForeignKey("qr_code.id"))
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
 
