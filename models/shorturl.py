@@ -8,6 +8,7 @@ from urllib import request
 from urllib.error import HTTPError, URLError
 import datetime
 from sqlalchemy import extract
+from func import hex_id
 
 secret = "any-secret-key-you-choose"
 
@@ -19,8 +20,8 @@ default_title = f"untitled {datetime}"
 # url shortener table
 class Urlshort(UserMixin, db.Model):
     __tablename__ = "url_shortener"
-    id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
+    author_id = db.Column(db.String(50), db.ForeignKey("users.id"), nullable=True)
     url = db.Column(db.String(250))
     short_url = db.Column(db.String(250))
     title = db.Column(db.String(250))
@@ -40,9 +41,9 @@ class Urlshort(UserMixin, db.Model):
 # clicks model
 class UrlShortenerClicks(db.Model):
     __tablename__ = "url_shortener_clicks"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
     count = db.Column(db.Integer, default=0)
-    url_id = db.Column(db.Integer, db.ForeignKey("url_shortener.id"))
+    url_id = db.Column(db.String(50), db.ForeignKey("url_shortener.id"))
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
     def __repr__(self):
@@ -58,13 +59,13 @@ class UrlShortenerClicks(db.Model):
 
 class ShortUrlClickLocation(db.Model):
     __tablename__ = "short_url_click_location"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
     ip_address = db.Column(db.String(250))
     country = db.Column(db.String(250))
     city = db.Column(db.String(250))
     device = db.Column(db.String(250))
     browser = db.Column(db.String(250))
-    url_id = db.Column(db.Integer, db.ForeignKey("url_shortener.id"))
+    url_id = db.Column(db.String(50), db.ForeignKey("url_shortener.id"))
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
     def __repr__(self):
