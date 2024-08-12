@@ -37,6 +37,8 @@ platformdirs
 pyparsing
 pypng
 python-dateutil
+python-dotenv
+psycopg2-binary
 pytz
 qrcode
 requests
