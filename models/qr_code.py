@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from hashids import Hashids
 from urllib import request
 from urllib.error import HTTPError, URLError
+from func import hex_id
 
 secret = "any-secret-key-you-choose"
 
@@ -13,8 +14,8 @@ hashids = Hashids(min_length=6, salt=secret)
 # create qr code table
 class QrCode(UserMixin, db.Model):
     __tablename__ = "qr_code"
-    id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    id = db.Column(db.String(50), primary_key=True, default=hex_id)
+    author_id = db.Column(db.String(50), db.ForeignKey("users.id"))
     title = db.Column(db.String(250))
     qr_data = db.Column(db.Text)
     url = db.Column(db.Text)
