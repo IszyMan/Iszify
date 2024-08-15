@@ -137,7 +137,7 @@ def join():
     return render_template("join.html", form=form, current_user=current_user)
 
 
-@user_blp.route("/createBioPage", methods=["GET", "POST"])
+@user_blp.route("/create-bio-page", methods=["GET", "POST"])
 @login_required
 def create_Bio_Page():
     # Create Bio Pages.

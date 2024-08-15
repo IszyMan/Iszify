@@ -4,14 +4,14 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
 <style>
 
-#ul_list li{
+#ul_list {
     display: inline;
 }
 
 @media (max-width: 767px) {
-  #ul_list li {
+  #ul_list {
     display: block !important;
-    padding: 5px;
+    padding: 15px;
 
   }
 }
@@ -63,7 +63,7 @@
   <section class="cta-section row d-flex px-4 px-lg-5 " style="background-color: #f8fff7">
       <div class="row">
     <div class="container col-md-6 col-lg-6 mt-5 mb-5 ms-5 me-4">
-      <span class="text-dark px-3 py-2" style="font-size: .6rem; background: rgba(178, 178, 231, 0.498); border-radius: 16px; font-weight: 600;">Let's make with simply one click <i class="fa-solid fa-hand-point-up text-warning"></i></span>
+      <span class="text-dark px-3 py-2" style="font-size: .6rem; background: rgba(178, 178, 231, 0.498); border-radius: 16px; font-weight: 600;">Lett's make with simply one click <i class="fa-solid fa-hand-point-up text-warning"></i></span>
       <h1 class="display-6 mt-4" style="font-size: 3rem; font-weight: 700;">Advanced, Secure<br> <span class="text-primary">&</span> Dynamic<br>
         <span class="gradient-primary clip-text" data-toggle="typed" data-list="Links.,QR Codes.,Bio Pages."></span></h1>
 
@@ -71,10 +71,10 @@
       <div >
       	<p>
 		<ul class="list-unstyled mb-2 text-muted small">
-		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Create Unlimited Links</li>
-		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Free analytics & insights</li>
-		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Easy to use</li>
-        <li class="mb-1"><i class="bi bi-check-circle me-2"></i> Redirect to https sites only</li>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Create Unlimited Links</li><br>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Free analytics & insights</li><br>
+		<li class="mb-1"><i class="bi bi-check-circle me-2"></i> Easy to use</li><br>
+        <li class="mb-1"><i class="bi bi-check-circle me-2"></i> Redirect to https sites only</li><br>
 		</ul>
 		</p><br><br>
         <a href="{{ url_for('auth_blp.register') }}" class="btn btn-primary border-0 d-flex align-items-center" style="font-size: 14px; width: fit-content; border-radius: 15px">
@@ -137,11 +137,11 @@
 
 
 
-      <div class="col-md-6 col-lg-12">
-        <h3 class="fw-bold my-4 text-center" style="color:white">Join us for free and enjoy:</h3>
+      <div class="col-md-6 col-lg-12 mb-4 ">
+        <h3 class="fw-bold my-4 text-center " style="color:white">Join us for free and enjoy:</h3>
         <!-- grid -->
         <ul id="ul_list">
-          <li class="me-3 fw-bold" style="color:white"><i class="bi bi-check-circle me-2" style="color:yellow"></i> Unlimited links</li>
+          <li class="me-3 fw-bold " style="color:white"><i class="bi bi-check-circle me-2" style="color:yellow"></i> Unlimited links</li>
           <li class="me-3 fw-bold"style="color:white" ><i class="bi bi-check-circle me-2" style="color:yellow"></i>Customize links</li>
           <li class="fw-bold" style="color:white"><i class="bi bi-check-circle me-2" style="color:yellow"></i>Free analytics</li>
         </ul>

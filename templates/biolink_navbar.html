@@ -36,16 +36,23 @@
            <i class="fa fa-external-link mx-1" aria-hidden="true"></i> View </button></a>
       </li>
 
-      <li><button class="btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#">
-           <i class="fas fa-share"></i> Share</i>
+      <li>
+      <button class="popup btn-light text-center p-1 bg-light shadow-none  text-dark text-decoration-none rounded-3 border border-dark" href="#" onclick="myFunction()"><i class="fas fa-share"></i> Share</i>
+       <span class="popuptext mt-5" id="myPopup">
+
+
+
+       </span>
+
        </button>
        </li>
+
+
 
        <li class="text-end ms-5"><p class="btn-success text-end p-1 ms-5 bg-success shadow-none text-light text-decoration-none rounded-1 border border-success" >
             Publish Changes
        </p>
        </li>
-
 
 
        {% endfor %}
@@ -65,5 +72,8 @@
     </div>
     </div>
 </div>
+
+
+
 
 <!--End of bio link nav bar -->

@@ -12,7 +12,7 @@ from wtforms.widgets import TextInput
 
 
 class GenerateBrandName(FlaskForm):
-    domainname = StringField("Domain Name", render_kw={"placeholder": "Iszify.com/"})
+    domainname = SelectField(u'Select Domain name ▽', choices=[('iszzly', 'iszz.ly'), ('iszzto', 'iszz.to'), ('iszzit', 'iszz.it')])
     brandname = StringField("Bio Name", validators=[DataRequired()])
 
     submit = SubmitField("Create your Bio!")
