@@ -41,6 +41,32 @@
   <!-- Css link -->
   <link rel="stylesheet" href="" />
   <link rel="icon" href="">
+
+  <style>
+
+
+
+ul_list2 {
+  display: flex;
+  /* other CSS properties */
+}
+
+li {
+  display: inline;
+  /* other CSS properties */
+}
+
+@media screen and (max-width: 767px) {
+  ul_list2 {
+    display: block;
+  }
+
+  li {
+    display: block;
+  }
+}
+
+ </style>
 </head>
 
 <body>
@@ -112,14 +138,8 @@
 
         {% else %}
         <!-- If the user is not logged in, this nav links appears -->
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start" >
+        <ul id="ul_list2" class="nav col-md-auto mb-2 justify-content-center mb-md-0 flex-fill text-start" >
 
-          <!-- <li class="nav-item">
-            <a href="" class="nav-link text-dark">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link text-dark">Contact</a> -->
-<!--          </li>-->
 
           <li class="nav-item ">
             <a href="{{ url_for('user_blp.url_shortener_info') }}" class="nav-link text-dark" style="font-weight: 500; font-size: 16px !important;">URL Shortener</a>

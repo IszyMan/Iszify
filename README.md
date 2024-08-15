@@ -1,3 +1,3 @@
-# LinkTool
+# Iszify
 
-Nigeria's first Link shortener, QR Code generator and Link-in-bio website
+Nigeria's first and most secured Link shortener, QR Code generator and Link-in-bio website
