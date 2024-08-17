@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{% block content %}
+<style>
+    #body {
+        /* From https://css.glass */
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+</style>
+    <section class="p-5 bg-dark" id="body">
+        <form method="post" action="{{url_for('user_blp.create_post')}}" enctype="multipart/form-data"
+            class="form-group">
+            <!-- title of the postt -->
+            <input type="text" name="title" class="form-control mb-3 bg-dark text-warning shadow-none"
+                placeholder="Post title" required>
+            <select class="form-select bg-dark shadow-none mb-4 text-warning" name="category_id">
+                <option selected disabled>Categories</option>
+                {% for category in categories %}
+                <option value="{{category.id}}" class="text-white">{{category.name}}</option>
+                {% endfor %}
+            </select>
+            {{ ckeditor.create() }}
+            <!-- <input type="submit" class="form-control btn btn-warning mt-3" style="width: fit-content;" id="login_btn2" value="Post"> -->
+            <button type="submit" class="form-control btn btn-warning mt-3" style="width: fit-content;"
+                id="login_btn2">Post</button>
+        </form>
+    </section>
+</div>
+
+{% include 'footer.html' %}
+
+{% endblock content %}
