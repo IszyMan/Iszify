@@ -29,6 +29,9 @@
 
   <!-- ............................................ -->
 
+  <script src="https://cdn.ckeditor.com/4.10.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
   <!-- Block to be inherited from this file by other files if need be -->
   {% block head %}{% endblock head %}
   {% block extra_js %}{% endblock extra_js %}
@@ -41,6 +44,7 @@
   <!-- Css link -->
   <link rel="stylesheet" href="" />
   <link rel="icon" href="">
+  {{ ckeditor.load() }}
 
   <style>
 
