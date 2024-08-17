@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template
 import base64
 from auth import auth_blp
-from extensions import login_manager, db, bootstrap, migrate, qr_code, mail
+from extensions import login_manager, db, bootstrap, migrate, qr_code, mail, ckeditor
 from models import User
 from views.user_view import user_blp
 from dotenv import load_dotenv
@@ -31,6 +31,7 @@ def create_app():
 
     login_manager.init_app(app)
     db.init_app(app)
+    ckeditor.init_app(app)
     mail.init_app(app)
     bootstrap.init_app(app)
     qr_code.init_app(app)
