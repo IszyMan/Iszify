@@ -11,7 +11,11 @@
         border: 1px solid rgba(255, 255, 255, 0.3);
     }
 </style>
-    <section class="p-5 bg-dark" id="body">
+<!-- logout icon -->
+ <div class="my-4">
+    <a href="{{url_for('user_blp.blog_logout')}}" class="text-white bg-danger mx-5 p-2 rounded"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+ </div>
+    <section class="p-5 bg-dark m-auto mb-4" id="body" style="max-width: 800px;">
         <form method="post" action="{{url_for('user_blp.create_post')}}" enctype="multipart/form-data"
             class="form-group">
             <!-- title of the postt -->
@@ -25,7 +29,7 @@
             </select>
             {{ ckeditor.create() }}
             <!-- <input type="submit" class="form-control btn btn-warning mt-3" style="width: fit-content;" id="login_btn2" value="Post"> -->
-            <button type="submit" class="form-control btn btn-warning mt-3" style="width: fit-content;"
+            <button type="submit" class="form-control btn btn-primary mt-3" style="width: fit-content;"
                 id="login_btn2">Post</button>
         </form>
     </section>
