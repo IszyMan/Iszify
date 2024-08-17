@@ -1145,7 +1145,7 @@ def qr_codes_wifi():
 @user_blp.route("/display_all/qr_codes", methods=["GET", "POST"])
 @login_required
 def display_qr_codes():
-    qrcodes = QrCode.query.filter_by(author_id=current_user.id).all()
+    qrcodes = QrCode.query.filter_by(author_id=current_user.id).order_by(QrCode.created_at.desc()).all()
     display = True if qrcodes else False
     refresh = False
     for qr in qrcodes:
@@ -1330,6 +1330,7 @@ def qr_codes_customize(qr_id):
 @login_required
 def qr_codes_content_edit(qr_id):
     qrcodes = QrCode.query.filter_by(id=qr_id, author_id=current_user.id).all()
+    print(qrcodes, "qrcodes")
     datas = []
     for qr in qrcodes:
         if qr.url or qr.email:
@@ -1346,6 +1347,16 @@ def qr_codes_content_edit(qr_id):
                     "note": qr.note,
                 }
             )
+
+    if request.method == "POST":
+        title = request.form.get("title", qrcodes[0].title)
+        url = request.form.get("url", qrcodes[0].url)
+
+        qrcodes[0].title = title
+        qrcodes[0].url = url
+
+        db.session.commit()
+        return redirect(url_for("user_blp.qr_codes_content_edit", qr_id=qr_id))
 
     return render_template(
         "qr_codes_content_edit.html", urls=qrcodes, datas=datas, qr=True
@@ -1530,3 +1541,42 @@ def short_url_details(url_id):
         browsers=browsers,
         res=res,
     )
+
+
+# BLOG
+@user_blp.route("/blogs")
+# @login_required
+def retrieve_all_posts():
+    categories = get_categories()
+    cat_id = request.args.get("category_id")
+    page = request.args.get("page", 1, type=int)
+    per_page = 6
+    paginated_posts = get_posts(page, per_page, cat_id)
+
+    return render_template("posts.html",
+                           categories=categories, posts=paginated_posts.items,
+                           page=page, per_page=per_page, total_pages=paginated_posts.pages,
+                           total_items=paginated_posts.total, cat_id=cat_id)
+
+
+@user_blp.route("/blogs/<post_id>")
+# @login_required
+def post(post_id):
+    one_post = get_one_post(post_id)
+    return render_template("one_post.html", post=one_post)
+
+
+@user_blp.route("/blogs/create", methods=["GET", "POST"])
+# @login_required
+def create_post():
+    categories = get_categories()
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["ckeditor"]
+        category_id = request.form["category_id"]
+        if not title or not content or not category_id:
+            flash("All fields are required", "danger")
+            return redirect(url_for("user_blp.create_post"))
+        save_create_post(title, content, category_id)
+        return redirect(url_for("user_blp.retrieve_all_posts"))
+    return render_template("create_post.html", categories=categories)
