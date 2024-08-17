@@ -4,6 +4,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_qrcode import QRcode
+from flask_ckeditor import CKEditor
 
 
 qr_code = QRcode()
@@ -12,3 +13,4 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
 mail = Mail()
+ckeditor = CKEditor()
