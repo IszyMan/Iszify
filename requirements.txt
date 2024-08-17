@@ -11,6 +11,7 @@ dominate
 email-validator
 Flask
 Flask-Bootstrap
+Flask-CKEditor
 Flask-Login
 Flask-Mail
 Flask-Migrate
