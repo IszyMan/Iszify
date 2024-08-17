@@ -12,13 +12,13 @@
     position: relative; /* Needed for absolute positioning of comment icon */
     /* From https://css.glass */
     /* background: rgba(119, 117, 117, 0.17); */
-    background: rgba(255, 255, 255, 0.2);
+    background: rgb(255, 255, 255);
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
     backdrop-filter: blur(4px);
     border: 1px solid rgba(185, 188, 14, 0.3);
     -webkit-backdrop-filter: blur(4px);
-    color: white;
+    color: rgb(0, 0, 0);
   }
 
   .post img {
@@ -26,15 +26,6 @@
     height: auto;
     border-radius: 4px;
     margin-bottom: 10px;
-  }
-
-  .comment-icon {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    color: #6c757d;
-    cursor: pointer;
-    z-index: 999;
   }
 
 
@@ -58,19 +49,24 @@
 
   <section class="container">
     {% if posts %}
-    <h5 class="my-5 text-center text-warning">POSTS</h5>
+    <h5 class="my-5 text-center text-primary">POSTS</h5>
+    <button type="button" class="btn btn-primary border-0 mb-3 mx-4" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: fit-content !important;">
+      <!-- filter icon -->
+      <i class="fas fa-filter"></i>
+    </button>
     <div class="row">
       <!-- First Row -->
     {% for post in posts %}
     
-      <div class="col-md-4">
+    <div class="col-md-4">
+        <a href="{{url_for('user_blp.post', post_id=post.id)}}" class="text-decoration-none text-white">
         <!-- Post 1 -->
-        <div class="post bg-dark">
-          <a href="{{url_for('user_blp.post', post_id=post.id)}}" class="text-decoration-none text-white">
+        <div class="post bg-white">
 
-          <h5 class="mb-3 h6">{{post.post_title|truncate(37)}}</h5>
-        </a>
+          <h5 class="mb-3 h6" style="font-style: italic !important;">{{post.post_title|truncate(37)}}</h5> <hr>
+          <p class="">{{ post.post_content|safe|truncate(20) }}</p>
         </div>
+      </a>
       </div>
 
       {% endfor %}
@@ -106,6 +102,26 @@
       </div>
   </div> -->
     {% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Filter By Categories</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex flex-column align-items-center">
+        {% for cat in categories %}
+        <a href="{{ url_for('user_blp.retrieve_all_posts', category_id=cat.id) }}" 
+        class="text-decoration-none text-white bg-primary p-2 rounded w-100 mb-3">
+          {{ cat.name }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 
   </section>
 
