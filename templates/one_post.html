@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+
+  .post {
+    /* background-color: #fff; */
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative; /* Needed for absolute positioning of comment icon */
+    /* From https://css.glass */
+    background: rgba(0, 0, 0, 0.668);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(11, 11, 11, 0.28);
+    color: white;
+  }
+
+  .post img {
+    width: 600px;
+    height: 600px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .category_name {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
+  }
+</style>
+
+  <section class="container mt-5">
+      {% if post %}
+      <!-- First Row -->
+    
+        <!-- Post 1 -->
+        <div class="post">
+          <h5 class="mb-3 text-center">{{post.post_title}}</h5>
+          <hr>
+          <p>{{ post.post_content|safe }}</p>
+          <span class="category_name badge bg-warning text-dark">{{post.category.name}}</span>
+</div>
+        </div>
+
+    {% endif %}
+
+  </section>
+
+{% endblock content %}
