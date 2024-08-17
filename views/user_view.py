@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash, jsonify
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from forms import *
 from models import *
 from extensions import db
@@ -1550,13 +1550,39 @@ def retrieve_all_posts():
     categories = get_categories()
     cat_id = request.args.get("category_id")
     page = request.args.get("page", 1, type=int)
-    per_page = 6
+    per_page = 10
     paginated_posts = get_posts(page, per_page, cat_id)
 
     return render_template("posts.html",
                            categories=categories, posts=paginated_posts.items,
                            page=page, per_page=per_page, total_pages=paginated_posts.pages,
                            total_items=paginated_posts.total, cat_id=cat_id)
+
+
+# blog login
+@user_blp.route("/blog/login", methods=["GET", "POST"])
+def blog_login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if not username or not password:
+            flash("All fields are required", "danger")
+            return redirect(url_for("user_blp.blog_login"))
+        if username == "admin" and password == "admin":
+            # set create post session to true
+            session["create_post"] = True
+            return redirect(url_for("user_blp.create_post"))
+        flash("Wrong username or password", "danger")
+        return redirect(url_for("user_blp.blog_login"))
+    return render_template("blog_login.html")
+
+
+# blog logout
+@user_blp.route("/blog/logout")
+def blog_logout():
+    session.pop("create_post", None)
+    flash("You have been logged out", "success")
+    return redirect(url_for("user_blp.blog_login"))
 
 
 @user_blp.route("/blogs/<post_id>")
@@ -1566,9 +1592,12 @@ def post(post_id):
     return render_template("one_post.html", post=one_post)
 
 
-@user_blp.route("/blogs/create", methods=["GET", "POST"])
+@user_blp.route("/blog/create", methods=["GET", "POST"])
 # @login_required
 def create_post():
+    if not session.get("create_post"):
+        flash("You don't have permission to access this page", "danger")
+        return redirect(url_for("user_blp.blog_login"))
     categories = get_categories()
     if request.method == "POST":
         title = request.form["title"]
