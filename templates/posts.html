@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+
+  .post {
+    /* background-color: #fff; */
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative; /* Needed for absolute positioning of comment icon */
+    /* From https://css.glass */
+    /* background: rgba(119, 117, 117, 0.17); */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(185, 188, 14, 0.3);
+    -webkit-backdrop-filter: blur(4px);
+    color: white;
+  }
+
+  .post img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .comment-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #6c757d;
+    cursor: pointer;
+    z-index: 999;
+  }
+
+
+  .no-post-icon {
+    width: 20rem; /* Adjust the width as needed */
+    height: 20rem; /* Adjust the height as needed */
+    margin-bottom: 10px;
+}
+
+/* Additional styling for the message */
+.text_center {
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.text_center p {
+    margin-bottom: 20px;
+}
+
+</style>
+
+  <section class="container">
+    {% if posts %}
+    <h5 class="my-5 text-center text-warning">POSTS</h5>
+    <div class="row">
+      <!-- First Row -->
+    {% for post in posts %}
+    
+      <div class="col-md-4">
+        <!-- Post 1 -->
+        <div class="post bg-dark">
+          <a href="{{url_for('user_blp.post', post_id=post.id)}}" class="text-decoration-none text-white">
+
+          <h5 class="mb-3 h6">{{post.post_title|truncate(37)}}</h5>
+        </a>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+    <!-- Pagination Buttons -->
+    <!-- <div class="row">
+      <div class="col-md-12">
+          <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                  {% if page > 1 %}
+                      <li class="page-item">
+                          <a class="page-link" href="{{ url_for('user_blp.retrieve_all_posts', page=page-1, per_page=per_page) }}" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
+                  {% endif %}
+
+                  {% for p in range(1, total_pages + 1) %}
+                      <li class="page-item {% if p == page %}active{% endif %}">
+                          <a class="page-link" href="{{ url_for('user_blp.retrieve_all_posts', page=p, per_page=per_page) }}">{{ p }}</a>
+                      </li>
+                  {% endfor %}
+
+                  {% if page < total_pages %}
+                      <li class="page-item">
+                          <a class="page-link" href="{{ url_for('user_blp.retrieve_all_posts', page=page+1, per_page=per_page) }}" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
+                  {% endif %}
+              </ul>
+          </nav>
+      </div>
+  </div> -->
+    {% endif %}
+
+  </section>
+
+{% endblock content %}
