@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="post" action="" class="form-group container card p-4 my-5" style="max-width: 400px;">
+    <!-- Email input -->
+    <div data-mdb-input-init class="form-outline mb-4">
+      <input type="text" id="form2Example1" class="form-control shadow-none" name="username" />
+      <label class="form-label" for="form2Example1">Username</label>
+    </div>
+  
+    <!-- Password input -->
+    <div data-mdb-input-init class="form-outline mb-4">
+      <input type="password" id="form2Example2" class="form-control shadow-none" name="password" />
+      <label class="form-label" for="form2Example2">Password</label>
+    </div>
+  
+    <!-- Submit button -->
+    <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Sign in</button>
+  </form>
+
+  {% endblock content %}
