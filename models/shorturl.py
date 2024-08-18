@@ -9,6 +9,7 @@ from urllib.error import HTTPError, URLError
 import datetime
 from sqlalchemy import extract
 from func import hex_id
+import uuid, hashlib
 
 secret = "any-secret-key-you-choose"
 
@@ -120,13 +121,13 @@ def generate_short_url():
 
     if not last_url:
         # If no URLs exist in the database, initialize the counter to 1
-        counter = 1
+        new_uuid = uuid.uuid4().hex
     else:
-        last_id = last_url.id
-        counter = last_id + 1
+        # Use the last UUID if it exists
+        new_uuid = last_url.id
 
     # Generate the short URL using the counter
-    hashid = hashids.encode(counter)
+    hashid = hashlib.sha256(new_uuid.encode()).hexdigest()[:8]
     return hashid
 
 
