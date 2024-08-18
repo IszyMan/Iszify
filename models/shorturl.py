@@ -10,6 +10,7 @@ import datetime
 from sqlalchemy import extract
 from func import hex_id
 import uuid, hashlib
+from sqlalchemy.dialects.postgresql import BYTEA
 
 secret = "any-secret-key-you-choose"
 
@@ -28,7 +29,7 @@ class Urlshort(UserMixin, db.Model):
     title = db.Column(db.String(250))
     clicks = db.Column(db.Integer, default=0)
     want_qr_code = db.Column(db.Boolean, default=False)
-    qr_data = db.Column(db.Text, nullable=True)
+    qr_data = db.Column(BYTEA)
     created = db.Column(db.DateTime, nullable=False, default=db.func.now())
 
     def __repr__(self):
