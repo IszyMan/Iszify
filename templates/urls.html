@@ -91,11 +91,22 @@
                        <button><i class="fa fa-copy px-0" id="" style="cursor: pointer;"></i> Copy</button>
                         <button> <i class="fas fa-share px-0" style="cursor: pointer;"></i> Share</button>
                         <button> <i class="bi bi-pencil-square px-0" style="cursor: pointer;"></i></button>
-                        <button class="text-danger"><a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()" class="">
-                                  <i class="bi bi-trash px-0"></i>  </a>
-                        </button>
 
-                       <button> <a href="{{url_for('user_blp.short_url_details', url_id=url.id)}}" class="text-decoration-none"><i class="fa-solid fa-chart-pie"></i> Analytics</a></button>
+
+                        <div class="btn-group dropend mt-0">
+                         <button class="btn-light ml-3 text-center p-1 bg-light shadow-none text-dark text-decoration-none rounded-3 border border-dark" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         <i class="bi bi-three-dots"></i>
+                         </button>
+
+                         <div class="dropdown-menu dropdown-menu-end bg-white text-dark" aria-labelledby="dropdownMenuLink">
+                         <a href="{{url_for('user_blp.short_url_details', url_id=url.id)}}" class="dropdown-item hoth text-dark p-3"><i class="fa-solid fa-chart-pie"></i> View link Analytics</a>
+                         <a href="{{ url_for('user_blp.qr_codes_details', qr_id=url.id) }}" class="dropdown-item hoth text-dark p-3"><i class="fa-solid fa fa-qrcode"></i> View QR Code</a>
+                         <a href="/urls/delete/{{url.id}}" onclick="return confirmDelete()" class="dropdown-item hoth text-dark p-3">
+                                  <p class="text-danger"><i class="fa fa-trash-alt text-danger" aria-hidden="true"></i> Delete</p></a>
+
+
+                         </div>
+                         </div>
 
 
 
