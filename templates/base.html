@@ -37,7 +37,7 @@
   {% block extra_js %}{% endblock extra_js %}
 
    <!-- Title , the block to be inherited by other files so as to add a title for each page-->
-  <title>{% block title %}LinkTools - Nigeria's first URL Shortener, QR Codes generator and Bio Link Service{% endblock title %} </title>
+  <title>{% block title %}Iszify - Nigeria's first & most secure URL Shortener, QR Codes generator and Bio Link Website{% endblock title %} </title>
   <meta name="description" content="{% block description %}{% endblock %}" />
   <meta name="keywords" content="{% block keywords %}{% endblock %}" />
   <meta name="author" content="{% block author %}{% endblock %}" />
@@ -83,7 +83,7 @@ li {
     <div class="container">
       <!-- The navbar brand -->
       <!-- The navbar brand -->
-        <a href="{% if current_user.is_authenticated %}{{url_for('user_blp.dashboard')}}{% else %}{{url_for('user_blp.home')}}{% endif %}" class="navbar-brand text-primary " style="font-weight: 600;"> Link<i class="bi bi-link h5"></i>Tools</a>
+        <a href="{% if current_user.is_authenticated %}{{url_for('user_blp.dashboard')}}{% else %}{{url_for('user_blp.home')}}{% endif %}" class="navbar-brand text-primary " style="font-weight: 600;"> Iszify<i class="bi bi-link h5"></i></a>
       
       <!-- Bootstrap nav toggler -->
       <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
