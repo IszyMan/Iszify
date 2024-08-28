@@ -83,3 +83,17 @@ def validate_url(url):
         return True
     except (HTTPError, URLError):
         return False
+
+
+def create_qr_want(short_ur, url, title, current_user, res):
+    new_qr_code = QrCode(
+        author=current_user,
+        author_id=current_user.id,
+        url=url,
+        qr_data=res,
+        short_url=short_ur,
+        title=title,
+    )
+    new_qr_code.save()
+
+    return new_qr_code
