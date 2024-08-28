@@ -18,7 +18,7 @@ from utils import (
     get_computer_name,
 )
 from models.create_bio_page import CreateBioPage
-from models.qr_code import QrCode
+from models.qr_code import QrCode, create_qr_want
 from models.user import update_otp
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -865,6 +865,9 @@ def shorten_url():
 
         res = generate_and_save_qr(url_and_short_url) if generate_qr_code else ""
         # print(res, 'res')
+
+        if generate_qr_code:
+            create_qr_want(short_url, original_url, title, current_user, res)
 
         url = Urlshort(
             author=current_user,
