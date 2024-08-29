@@ -894,7 +894,7 @@ def shorten_url():
 
 
 # redirect short url to the original url
-@user_blp.route("/<short_url>")
+@user_blp.route("/<short_url>/")
 def redirect_to_url(short_url):
     try:
         current_date = datetime.now().strftime("%d-%m-%Y")
