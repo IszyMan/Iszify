@@ -863,7 +863,7 @@ def shorten_url():
 
         url_and_short_url = f"{request.host_url}{short_url}"
 
-        res = generate_and_save_qr(url_and_short_url) if generate_qr_code else ""
+        res = generate_and_save_qr(url_and_short_url) if generate_qr_code else None
         # print(res, 'res')
 
         if generate_qr_code:
