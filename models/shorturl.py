@@ -11,6 +11,8 @@ from sqlalchemy import extract
 from func import hex_id
 import uuid, hashlib
 from sqlalchemy.dialects.postgresql import BYTEA
+import random
+import string
 
 secret = "any-secret-key-you-choose"
 
@@ -117,19 +119,23 @@ def save_url_clicks(url_id, payload):
 
 
 # generate short url
-def generate_short_url():
-    last_url = Urlshort.query.order_by(Urlshort.id.desc()).first()
+# def generate_short_url():
+#     last_url = Urlshort.query.order_by(Urlshort.id.desc()).first()
+#
+#     if not last_url:
+#         # If no URLs exist in the database, initialize the counter to 1
+#         new_uuid = uuid.uuid4().hex
+#     else:
+#         # Use the last UUID if it exists
+#         new_uuid = last_url.id
+#
+#     # Generate the short URL using the counter
+#     hashid = hashlib.sha256(new_uuid.encode()).hexdigest()[:8]
+#     return hashid
 
-    if not last_url:
-        # If no URLs exist in the database, initialize the counter to 1
-        new_uuid = uuid.uuid4().hex
-    else:
-        # Use the last UUID if it exists
-        new_uuid = last_url.id
-
-    # Generate the short URL using the counter
-    hashid = hashlib.sha256(new_uuid.encode()).hexdigest()[:8]
-    return hashid
+def generate_short_url(length=8):
+    characters = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
 
 
 # validate url
