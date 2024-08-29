@@ -7,6 +7,8 @@ from urllib.error import HTTPError, URLError
 from func import hex_id
 import hashlib, uuid
 from sqlalchemy.dialects.postgresql import BYTEA
+import random
+import string
 
 secret = "any-secret-key-you-choose"
 
@@ -57,21 +59,26 @@ class QrCode(UserMixin, db.Model):
         return cls.query.filter_by(id=id).first()
 
 
-def generate_short_url2():
-    # Retrieve the last UUID (string) inserted in the database
-    last_url = QrCode.query.order_by(QrCode.id.desc()).first()
+# def generate_short_url2():
+#     # Retrieve the last UUID (string) inserted in the database
+#     last_url = QrCode.query.order_by(QrCode.id.desc()).first()
+#
+#     if not last_url:
+#         # If no URLs exist in the database, generate a new UUID-based ID
+#         new_uuid = uuid.uuid4().hex
+#     else:
+#         # Use the last UUID if it exists
+#         new_uuid = last_url.id
+#
+#     # Hash the UUID to create a shorter URL
+#     short_hash = hashlib.sha256(new_uuid.encode()).hexdigest()[:8]  # Use the first 8 characters for brevity
+#
+#     return f"Q{short_hash}"
 
-    if not last_url:
-        # If no URLs exist in the database, generate a new UUID-based ID
-        new_uuid = uuid.uuid4().hex
-    else:
-        # Use the last UUID if it exists
-        new_uuid = last_url.id
 
-    # Hash the UUID to create a shorter URL
-    short_hash = hashlib.sha256(new_uuid.encode()).hexdigest()[:8]  # Use the first 8 characters for brevity
-
-    return f"Q{short_hash}"
+def generate_short_url2(length=8):
+    characters = string.ascii_uppercase + string.digits
+    return ''.join(random.choice(characters) for _ in range(length))
 
 
 # validate url
