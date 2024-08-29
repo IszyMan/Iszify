@@ -1010,7 +1010,7 @@ def qr_codes():
             author_id=current_user.id,
             url=url,
             qr_data=res,
-            short_url=generate_short_url2(),
+            short_url=short_ur,
             title=title,
         )
         new_qr_code.save()
