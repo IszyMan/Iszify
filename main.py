@@ -6,6 +6,7 @@ from extensions import login_manager, db, bootstrap, migrate, qr_code, mail, cke
 from models import User
 from views.user_view import user_blp
 from dotenv import load_dotenv
+import traceback
 
 load_dotenv()
 
@@ -44,6 +45,9 @@ def create_app():
     # 500 error handler
     @app.errorhandler(500)
     def internal_error(error):
+        print(traceback.format_exc(), "error@500Traceback")
+        print(error, "error@500")
+        db.session.rollback()
         return render_template("500.html"), 500
 
     @app.template_filter("urlsafe")
