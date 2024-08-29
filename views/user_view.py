@@ -28,6 +28,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import qrcode
 from PIL import Image
 from sqlalchemy import func, extract
+import traceback
 
 
 user_blp = Blueprint("user_blp", __name__)
@@ -893,39 +894,44 @@ def shorten_url():
 
 
 # redirect short url to the original url
-@user_blp.route("/<short_url>/")
+@user_blp.route("/<short_url>")
 def redirect_to_url(short_url):
-    current_date = datetime.now().strftime("%d-%m-%Y")
-    if short_url == "qr-code":
-        return redirect(url_for("user_blp.qr_code_info"))
-    if short_url == "url-shortener":
-        return redirect(url_for("user_blp.url_shortener_info"))
-    if short_url == "biolink":
-        return redirect(url_for("user_blp.biolink"))
+    try:
+        current_date = datetime.now().strftime("%d-%m-%Y")
+        if short_url == "qr-code":
+            return redirect(url_for("user_blp.qr_code_info"))
+        if short_url == "url-shortener":
+            return redirect(url_for("user_blp.url_shortener_info"))
+        if short_url == "biolink":
+            return redirect(url_for("user_blp.biolink"))
 
-    ip, city, country = get_info()
-    browser_name = get_browser_info(request)
-    computer_name = get_computer_name()
-    payload = {
-        "ip_address": ip,
-        "city": city,
-        "country": country,
-        "browser_name": browser_name,
-        "device": computer_name,
-    }
-    url = Urlshort.query.filter_by(short_url=short_url).first()
-    if not url:
-        url = QrCode.query.filter_by(short_url=short_url).first()
+        ip, city, country = get_info()
+        browser_name = get_browser_info(request)
+        computer_name = get_computer_name()
+        payload = {
+            "ip_address": ip,
+            "city": city,
+            "country": country,
+            "browser_name": browser_name,
+            "device": computer_name,
+        }
+        url = Urlshort.query.filter_by(short_url=short_url).first()
         if not url:
-            return ""
-        save_qrcode_clicks(url.id, payload)
-    else:
-        save_url_clicks(url.id, payload)
+            url = QrCode.query.filter_by(short_url=short_url).first()
+            if not url:
+                return ""
+            save_qrcode_clicks(url.id, payload)
+        else:
+            save_url_clicks(url.id, payload)
 
-    url.clicks += 1
-    db.session.commit()
-    print(url.url, "the real url")
-    return redirect(url.url)
+        url.clicks += 1
+        db.session.commit()
+        print(url.url, "the real url")
+        return redirect(url.url)
+    except Exception as e:
+        print(traceback.format_exc(), "tracsBACK")
+        print(e)
+        return ""
 
 
 # display all shortened urls with their original urls and clicks
